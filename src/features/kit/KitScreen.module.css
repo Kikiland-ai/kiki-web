@@ -54,3 +54,20 @@
   font: var(--text-label);
   color: var(--pencil);
 }
+
+.card {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-3);
+}

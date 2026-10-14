@@ -2,7 +2,9 @@ import { useRef, type CSSProperties, type KeyboardEvent, type PointerEvent } fro
 import { ArrowForwardIcon } from './icons'
 import styles from './LanguageDial.module.css'
 
-export type DialLevel = 1 | 2 | 3 | 4 | 5
+import type { DialLevel } from '../contracts'
+
+export type { DialLevel }
 
 /** What each notch shows, from the team contract §9. Index 0 is notch 1. */
 export const DIAL_LEVEL_NAMES = [

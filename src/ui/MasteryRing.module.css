@@ -1,0 +1,99 @@
+.wrap {
+  display: inline-grid;
+  justify-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+
+/* Segments start at 12 o'clock and run clockwise */
+.ring svg {
+  display: block;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.track,
+.fill,
+.unassessed {
+  fill: none;
+}
+
+.track {
+  stroke: var(--line);
+}
+
+.fill {
+  stroke-linecap: butt;
+  transition: stroke-dasharray var(--motion-sheet);
+}
+
+.unassessed {
+  stroke: var(--pencil);
+}
+
+.concept {
+  stroke: var(--green);
+  background: var(--green);
+}
+
+.words {
+  stroke: var(--red);
+  background: var(--red);
+}
+
+.english {
+  stroke: var(--yellow);
+  background: var(--yellow);
+}
+
+.lab {
+  stroke: var(--blue);
+  background: var(--blue);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18%;
+  text-align: center;
+  font: var(--text-label);
+  color: var(--pencil);
+}
+
+.legend {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: var(--text-label);
+  color: var(--ink);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+}

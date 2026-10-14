@@ -1,0 +1,47 @@
+import { useState } from 'react'
+import type { LessonTerm } from '../contracts'
+import { Sheet } from './Sheet'
+import { TermDetails } from './TermDetails'
+import styles from './TermChip.module.css'
+
+export type TermChipProps = {
+  term: LessonTerm
+  /** Dial notch 1: show the Odia meaning inline, after the term (contract §9). */
+  showMeaning?: boolean
+  /** Called when the student opens the details, e.g. to record that they looked. */
+  onOpen?: (termId: string) => void
+}
+
+/**
+ * An English technical term inside running text, always in the same
+ * dotted-underline style. Tapping it opens the term details in a Sheet, at
+ * every dial notch. The term itself is never translated.
+ */
+export function TermChip({ term, showMeaning = false, onOpen }: TermChipProps) {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <button
+        type="button"
+        className={styles.chip}
+        lang="en"
+        aria-haspopup="dialog"
+        onClick={() => {
+          setOpen(true)
+          onOpen?.(term.id)
+        }}
+      >
+        {term.term}
+        {showMeaning && term.glossOr && (
+          <span className={styles.meaning} lang="or">
+            {' '}
+            ({term.glossOr})
+          </span>
+        )}
+      </button>
+      <Sheet open={open} onClose={() => setOpen(false)} title={term.term}>
+        <TermDetails term={term} showTerm={false} />
+      </Sheet>
+    </>
+  )
+}

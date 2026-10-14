@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
-import type { Dimension } from '../../contracts'
+import type { Dimension, LessonTerm } from '../../contracts'
 import {
   Button,
   ChoiceGroup,
@@ -13,6 +13,10 @@ import {
   StatusBadge,
   type DialLevel,
   type KikiState,
+  MapNode,
+  MasteryRing,
+  TermChip,
+  TermDetails,
 } from '../../ui'
 import { ArrowForwardIcon, RetryIcon } from '../../ui/icons'
 import styles from './KitScreen.module.css'
@@ -30,6 +34,33 @@ const KIKI_STATES: KikiState[] = [
   'unsure',
   'examiner',
 ]
+// Sample terms from the Analog Modulation content (T-AM-08-*); Odia is draft until reviewed
+const TERMS: LessonTerm[] = [
+  {
+    id: 'T-AM-08-1',
+    term: 'phase error',
+    definition: 'Relative phase mismatch between receiver and transmitter carriers.',
+    pronunciationOr: 'ଫେଜ୍ ଏରର୍',
+    glossOr: 'ଦୁଇ Carrier ମଧ୍ୟରେ ଆବଶ୍ୟକ ମେଳଠାରୁ Phase ତଫାତ।',
+    example: {
+      en: 'A 90-degree relative phase error suppresses the ideal recovered message.',
+      or: '90-degree relative Phase error ideal Recovered message କୁ କମାଏ।',
+    },
+  },
+  {
+    id: 'T-AM-08-2',
+    term: 'frequency mismatch',
+    definition: 'A difference between receiver and transmitter carrier frequencies.',
+    pronunciationOr: 'ଫ୍ରିକ୍ୱେନ୍ସି ମିସ୍ମ୍ୟାଚ୍',
+    glossOr: 'Receiver ଓ Transmitter carrier frequency ଅଲଗା ହେବା।',
+  },
+  {
+    id: 'T-AM-08-3',
+    term: 'beating',
+    definition: 'A varying signal envelope caused by interaction of nearby frequencies.',
+  },
+]
+
 const OPTIONS = [
   { id: 'a', text: 'The receiver multiplies by a carrier that is 90° out of phase.' },
   { id: 'b', text: 'The message frequency is higher than the carrier frequency.' },
@@ -229,6 +260,121 @@ export function KitScreen() {
           <Kiki state="speaking" size={32} />
           <Kiki state="speaking" />
           <Kiki state="speaking" size={96} />
+        </div>
+      </Section>
+
+      <Section title="TermChip and TermDetails">
+        <p>
+          A receiver with a <TermChip term={TERMS[0]} /> of 90° recovers almost nothing, and a{' '}
+          <TermChip term={TERMS[1]} /> of 10 Hz causes <TermChip term={TERMS[2]} />. Tap a term.
+        </p>
+        <p>At notch 1, chips also show the Odia meaning inline:</p>
+        <p lang="or">
+          <TermChip term={TERMS[0]} showMeaning /> ଓ <TermChip term={TERMS[1]} showMeaning /> {long && LONG_ODIA}
+        </p>
+        <div className={styles.card}>
+          <TermDetails term={TERMS[0]} />
+        </div>
+        <div className={styles.card}>
+          <TermDetails term={TERMS[2]} />
+        </div>
+      </Section>
+
+      <Section title="MasteryRing">
+        <div className={styles.row}>
+          <MasteryRing label="Nothing assessed" values={{}} />
+          <MasteryRing label="Concept only" values={{ concept: { done: 3, total: 5 } }} />
+          <MasteryRing
+            label="Mixed"
+            values={{ concept: { done: 5, total: 5 }, words: { done: 0, total: 3 }, english: null, lab: { done: 4, total: 12 } }}
+          />
+          <MasteryRing
+            label="Complete"
+            values={{
+              concept: { done: 5, total: 5 },
+              words: { done: 3, total: 3 },
+              english: { done: 2, total: 2 },
+              lab: { done: 12, total: 12 },
+            }}
+          />
+        </div>
+        <div className={styles.row}>
+          <MasteryRing label="Lesson header" size={96} values={{}} showLegend />
+          <MasteryRing
+            label="Lesson header"
+            size={96}
+            values={{ concept: { done: 3, total: 5 }, words: { done: 0, total: 3 } }}
+            showLegend
+          >
+            C-AM-08
+          </MasteryRing>
+        </div>
+      </Section>
+
+      <Section title="MapNode">
+        <div className={styles.map}>
+          <MapNode
+            to="/concepts/C-AM-07"
+            order={7}
+            title="Lowpass filtering and waveform comparison"
+            titleOr="Lowpass filtering ଓ Waveform ତୁଳନା"
+            status="passed"
+            rings={{ concept: { done: 5, total: 5 } }}
+            requiredForLab
+          />
+          <MapNode
+            to="/concepts/C-AM-08"
+            order={8}
+            title="Carrier mismatch and debugging"
+            titleOr={long ? LONG_ODIA : 'Carrier mismatch ଓ Debugging'}
+            status="not_started"
+            next
+            requiredForLab
+          />
+          <MapNode
+            to="/concepts/C-AM-05"
+            order={5}
+            title="SSB and VSB compared with DSB-SC"
+            status="revisit"
+            rings={{ concept: { done: 2, total: 5 } }}
+          />
+          <MapNode
+            to="/concepts/C-AM-09"
+            order={9}
+            title="Frequency modulation and deviation"
+            titleOr="Frequency modulation ଓ Deviation"
+            status="learning"
+          />
+        </div>
+        <div className={styles.list}>
+          <MapNode
+            layout="row"
+            to="/concepts/C-AM-07"
+            order={7}
+            title="Lowpass filtering and waveform comparison"
+            titleOr="Lowpass filtering ଓ Waveform ତୁଳନା"
+            status="passed"
+            rings={{ concept: { done: 5, total: 5 } }}
+            requiredForLab
+          />
+          <MapNode
+            layout="row"
+            to="/concepts/C-AM-08"
+            order={8}
+            title="Carrier mismatch and debugging"
+            titleOr={long ? LONG_ODIA : 'Carrier mismatch ଓ Debugging'}
+            status="not_started"
+            next
+            requiredForLab
+          />
+          <MapNode
+            layout="row"
+            to="/concepts/C-AM-05"
+            order={5}
+            title="SSB and VSB compared with DSB-SC"
+            status="revisit"
+            rings={{ concept: { done: 2, total: 5 } }}
+          />
         </div>
       </Section>
 

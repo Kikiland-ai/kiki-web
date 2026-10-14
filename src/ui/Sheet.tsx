@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { CloseIcon } from './icons'
 import styles from './Sheet.module.css'
 
@@ -17,6 +18,8 @@ export type SheetProps = {
  * the sheet. Esc and a tap on the backdrop call `onClose`. On close, focus
  * returns to the opener without scrolling, and the page keeps its scroll
  * position (the page is only locked from scrolling while the sheet is open).
+ * Rendered into document.body, so it can be opened from inside running text
+ * (a <dialog> can't sit inside a <p>).
  */
 export function Sheet({ open, onClose, title, children }: SheetProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -47,7 +50,7 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
     }
   }, [open])
 
-  return (
+  return createPortal(
     <dialog
       ref={dialogRef}
       className={styles.sheet}
@@ -83,6 +86,7 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
           <div className={styles.body}>{children}</div>
         </div>
       )}
-    </dialog>
+    </dialog>,
+    document.body,
   )
 }
