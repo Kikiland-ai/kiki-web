@@ -1,0 +1,275 @@
+.screen {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-self: start;
+  min-height: var(--tap-target);
+  color: var(--ink);
+  font: var(--text-term);
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  margin: 0;
+  font: var(--text-label);
+  color: var(--blue-ink);
+}
+
+.title {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.detail {
+  margin: 0;
+}
+
+.why summary,
+.prompts li {
+  overflow-wrap: anywhere;
+}
+
+.why summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  color: var(--pencil);
+  cursor: pointer;
+}
+
+.why ul {
+  margin: 0;
+  padding-left: var(--space-6);
+  color: var(--pencil);
+}
+
+.notice {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-node);
+  background: var(--paper-sunken);
+}
+
+.panel,
+.observer {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.panel p,
+.observer p {
+  margin: 0;
+}
+
+/* Another device has control: the lab (blue) tint, ink text */
+.observer {
+  border-color: var(--blue-ink);
+  background: var(--blue-tint);
+  justify-items: start;
+}
+
+.panelTitle {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.missing {
+  margin: 0;
+  padding-left: var(--space-6);
+}
+
+.missing a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.reconnect {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.checklist {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checklist li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.checkMark {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px dashed var(--pencil);
+  border-radius: 50%;
+  font: var(--text-label);
+  color: var(--pencil);
+}
+
+.checked .checkMark {
+  border: 2px solid var(--ink);
+  color: var(--ink);
+}
+
+.checkBody {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.checked .checkBody > p {
+  color: var(--pencil);
+}
+
+.external {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  color: var(--ink);
+  font: var(--text-term);
+}
+
+.target {
+  font: var(--text-label);
+  color: var(--blue-ink);
+}
+
+.instruction {
+  margin: 0;
+  font: var(--text-display-m);
+  overflow-wrap: anywhere;
+}
+
+.instruction:lang(or) {
+  font: var(--text-odia-display-m);
+}
+
+.alsoEnglish {
+  color: var(--pencil);
+}
+
+.evidenceNote {
+  font: var(--text-label);
+  color: var(--pencil);
+}
+
+.blocked {
+  padding: var(--space-3);
+  border: 1px dashed var(--pencil);
+  border-radius: var(--radius-node);
+  color: var(--pencil);
+}
+
+.prompts {
+  margin: 0;
+  padding-left: var(--space-6);
+  color: var(--pencil);
+}
+
+.observations {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.observations li {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-node);
+  background: var(--paper-sunken);
+  overflow-wrap: anywhere;
+}
+
+.obsCondition {
+  font-weight: 700;
+}
+
+.form {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+  width: 100%;
+  font: var(--text-label);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--pencil);
+  border-radius: var(--radius-node);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font: var(--text-body);
+}
+
+.handoff {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

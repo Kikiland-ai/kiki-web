@@ -1,0 +1,143 @@
+.screen {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+}
+
+/* The practical (blue) dimension: tint border, ink text */
+.card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-4);
+  border: 1px solid var(--blue-ink);
+  border-radius: var(--radius-card);
+  background: var(--paper-raised);
+  min-width: 0;
+}
+
+.card p {
+  margin: 0;
+}
+
+.eyebrow {
+  font: var(--text-label);
+  color: var(--blue-ink);
+}
+
+.cardTitle {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.facts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.facts div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+}
+
+.facts dt {
+  font-weight: 700;
+}
+
+.facts dt::after {
+  content: ":";
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.readiness {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-node);
+  background: var(--paper-sunken);
+}
+
+.readinessHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.readinessTitle {
+  margin: 0;
+  font: var(--text-term);
+  font-weight: 700;
+}
+
+.required {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.required li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+}
+
+.required svg {
+  flex: none;
+  color: var(--green-ink);
+}
+
+.required a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* A missing check: an empty dashed circle, not red */
+.mark {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 2px dashed var(--pencil);
+  border-radius: 50%;
+}
+
+.passed span {
+  color: var(--pencil);
+}
+
+.note {
+  margin: 0;
+  color: var(--pencil);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

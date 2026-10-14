@@ -22,7 +22,7 @@ describe('app routes', () => {
     ['/chapters/LP-ANALOG-MODULATION', 'Analog Modulation'],
     ['/concepts/C-AM-04', 'DSB-SC generation and sidebands'],
     ['/labs', 'Lab mode'],
-    ['/labs/demo-session', 'DSB-SC lab'],
+    ['/labs/demo-session', 'Lab session not found'],
     ['/assessments/A-1/R-1', 'Quiz'],
   ])('renders %s inside the shell', async (path, heading) => {
     renderAt(path)

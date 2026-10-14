@@ -1,0 +1,144 @@
+.stepper {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+/* Each step: a marker on a route line, then its text */
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+}
+
+/* The route: solid behind (done), dashed ahead */
+.step::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  bottom: 0;
+  border-left: 2px dashed var(--line);
+}
+
+.step:last-child::before {
+  display: none;
+}
+
+.done::before {
+  border-left-style: solid;
+  border-left-color: var(--ink);
+}
+
+/* Only verified steps use the lab blue: a student's own tick never looks verified (contract §8) */
+.done.isVerified::before {
+  border-left-color: var(--blue);
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font: var(--text-label);
+  font-weight: 700;
+}
+
+.done .marker {
+  border: 2px solid var(--ink);
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+.done.isVerified .marker {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--on-blue-ink);
+}
+
+.current .marker {
+  background: var(--ink);
+  color: var(--button-primary-fg);
+}
+
+/* Steps ahead: ghost (dashed) numbers */
+.upcoming .marker,
+.more .marker {
+  border: 2px dashed var(--pencil);
+  background: var(--paper-raised);
+  color: var(--pencil);
+}
+
+.main {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  padding-top: 5px;
+}
+
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.done .label,
+.upcoming .label,
+.more .label {
+  color: var(--pencil);
+}
+
+.current .label {
+  font: var(--text-term);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.verified,
+.selfReported {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  font: var(--text-label);
+}
+
+.verified {
+  background: var(--blue-tint);
+  color: var(--blue-ink);
+}
+
+.selfReported {
+  border: 1px dashed var(--pencil);
+  color: var(--pencil);
+}
+
+.card {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-card);
+  background: var(--paper-raised);
+  box-shadow: var(--lift);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
