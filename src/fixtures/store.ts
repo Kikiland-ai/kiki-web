@@ -96,6 +96,15 @@ export interface FixtureStore {
 export function createFixtureStore(storage: Storage | null = null, key = 'kiki.fixture.v1'): FixtureStore {
   let state: FixtureState | null = null
 
+  // Another tab saved (a reset, a passed check, a tick): drop this tab's copy so
+  // its next read or write starts from that save, instead of writing a stale
+  // copy back over it. Browsers fire "storage" only in the other tabs.
+  if (storage && typeof window !== 'undefined') {
+    window.addEventListener('storage', (event) => {
+      if (event.storageArea === storage && (event.key === key || event.key === null)) state = null
+    })
+  }
+
   function load(): FixtureState {
     if (state) return state
     try {

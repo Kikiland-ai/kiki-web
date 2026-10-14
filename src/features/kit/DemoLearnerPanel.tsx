@@ -86,8 +86,8 @@ export function DemoLearnerPanel({ store = fixtureStore }: DemoLearnerPanelProps
   return (
     <div className={styles.list}>
       <p className={styles.note}>
-        Changes the fixture learner in this browser. Close other Kiki tabs first: each tab keeps its own copy and
-        can write it back. The language dial is kept.
+        Changes the fixture learner in this browser. Other open Kiki tabs pick up the change on their next load or
+        save. The language dial is kept.
       </p>
       <div className={styles.row}>
         <span>C-AM-08 concept check</span>
