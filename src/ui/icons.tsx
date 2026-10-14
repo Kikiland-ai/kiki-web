@@ -92,3 +92,10 @@ export const ArrowForwardIcon = (p: IconProps) => (
     <path d="M5 12h14M13 6l6 6-6 6" />
   </Svg>
 )
+
+/** Go back, e.g. to the chapter. */
+export const ArrowBackIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </Svg>
+)

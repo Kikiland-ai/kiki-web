@@ -20,7 +20,7 @@ describe('app routes', () => {
 
   it.each([
     ['/chapters/LP-ANALOG-MODULATION', 'Analog Modulation'],
-    ['/concepts/C-AM-04', 'Concept'],
+    ['/concepts/C-AM-04', 'DSB-SC generation and sidebands'],
     ['/labs', 'Lab mode'],
     ['/labs/demo-session', 'DSB-SC lab'],
     ['/assessments/A-1/R-1', 'Quiz'],

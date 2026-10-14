@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router'
-import { PlaceholderScreen } from '../placeholders/PlaceholderScreen'
 import { ChapterMapScreen } from './ChapterMapScreen'
+import { LessonScreen } from './LessonScreen'
 
 /** The demo chapter: Analog Communication → Analog Modulation. */
 export const DEMO_PLAN_ID = 'LP-ANALOG-MODULATION'
@@ -13,6 +13,6 @@ export const learningRoutes: RouteObject[] = [
   },
   {
     path: 'concepts/:conceptId',
-    element: <PlaceholderScreen title="Concept" owner="Arpan" note="Definition → Concept → Application → Recap." />,
+    element: <LessonScreen />,
   },
 ]

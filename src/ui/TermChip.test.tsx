@@ -52,7 +52,10 @@ describe('TermChip', () => {
     const { rerender } = render(<TermChip term={phaseError} />)
     expect(screen.queryByText(/Phase ତଫାତ/)).toBeNull()
     rerender(<TermChip term={phaseError} showMeaning />)
-    expect(screen.getByRole('button', { name: /phase error.*Phase ତଫାତ/ })).toBeTruthy()
+    // The button stays the term; the meaning follows as text, so long meanings wrap with the sentence
+    const chip = screen.getByRole('button', { name: 'phase error' })
+    expect(chip.nextElementSibling?.textContent).toBe(` (${phaseError.glossOr})`)
+    expect(chip.nextElementSibling?.getAttribute('lang')).toBe('or')
   })
 })
 
