@@ -86,9 +86,11 @@ const OPTIONS = [
 ]
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
+  // aria-labelledby takes a space-separated list of ids, so the id has no spaces
+  const id = `kit-${title.replace(/\s+/g, '-')}`
   return (
-    <section className={styles.section} aria-labelledby={`kit-${title}`}>
-      <h2 id={`kit-${title}`}>{title}</h2>
+    <section className={styles.section} aria-labelledby={id}>
+      <h2 id={id}>{title}</h2>
       {children}
     </section>
   )
