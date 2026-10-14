@@ -45,6 +45,9 @@
   --button-primary-bg: var(--ink);
   --button-primary-fg: #ffffff;
 
+  /* Backdrop behind Sheet (kit, 14 Oct): ink at 40% so the page stays readable */
+  --scrim: rgba(31, 31, 31, 0.4);
+
   /* Type */
   --font-ui: "Google Sans", "Noto Sans Oriya", system-ui, sans-serif;
   --font-odia: "Noto Sans Oriya", "Google Sans", system-ui, sans-serif;
@@ -57,6 +60,11 @@
   --text-body-odia: 400 18px/30px var(--font-odia);
   --text-term: 500 15px/20px var(--font-ui);
   --text-label: 500 13px/18px var(--font-ui);
+  /* Odia labels (kit, 14 Oct): Odia script needs a size step and taller lines */
+  --text-label-odia: 600 14px/22px var(--font-odia);
+  /* Button labels (kit, 14 Oct): source uses 600, Google Sans is loaded at 500 */
+  --text-button: 500 16px/20px var(--font-ui);
+  --text-button-odia: 600 16px/26px var(--font-odia);
   --text-mono: 500 14px/20px var(--font-mono);
 
   /* Spacing */
@@ -76,10 +84,22 @@
   /* Elevation */
   --key-edge-neutral: 0 3px 0 #c9c5bc;
   --lift: 0 8px 24px rgba(31, 31, 31, 0.12);
+  /* Pill-key edges (kit, 14 Oct): the ink key's darker edge, and both edges
+     after the key presses down 2px */
+  --key-edge-ink: 0 3px 0 #000000;
+  --key-edge-ink-pressed: 0 1px 0 #000000;
+  --key-edge-neutral-pressed: 0 1px 0 #c9c5bc;
+
+  /* Motion (kit, 14 Oct). base.css cuts these under prefers-reduced-motion */
+  --motion-press: 120ms ease;
+  --motion-move: 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-sheet: 240ms cubic-bezier(0.2, 0, 0, 1);
 
   /* Layout contract: phone < 600px, tablet 600-1023px, laptop >= 1024px */
   --gutter: var(--space-4);
   --reading-width: 720px;
   --rail-width: 88px;
   --tap-target: 48px;
+  /* Sheet as a right side panel at >= 600px (kit, 14 Oct) */
+  --sheet-width: 420px;
 }

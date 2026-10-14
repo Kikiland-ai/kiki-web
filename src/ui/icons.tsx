@@ -55,3 +55,40 @@ export const LabIcon = (p: IconProps) => (
     <path d="M8 21h8" />
   </Svg>
 )
+
+/** Tick: "Correct", "Passed". */
+export const CheckIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </Svg>
+)
+
+/** Close a sheet or panel. */
+export const CloseIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6 6l12 12M18 6 6 18" />
+  </Svg>
+)
+
+/** Something needs attention: a circle with an exclamation mark. */
+export const AlertIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7.5v5.5M12 16.5v.01" />
+  </Svg>
+)
+
+/** Try again. */
+export const RetryIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M20 11a8 8 0 1 0-2.3 5.7" />
+    <path d="M20 4v7h-7" />
+  </Svg>
+)
+
+/** Move forward, e.g. accept a suggestion. */
+export const ArrowForwardIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </Svg>
+)

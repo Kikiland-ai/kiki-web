@@ -1,0 +1,13 @@
+.loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  color: var(--pencil);
+}
+
+.message {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

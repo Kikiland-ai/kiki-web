@@ -1,0 +1,26 @@
+.error {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-node);
+  background: var(--paper-sunken);
+  color: var(--ink);
+}
+
+.icon {
+  display: inline-flex;
+  color: var(--pencil);
+}
+
+.message {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.retry {
+  grid-column: 2;
+  justify-self: start;
+}

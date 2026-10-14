@@ -4,6 +4,7 @@ import { NotFoundScreen } from './NotFoundScreen'
 import { learningRoutes } from '../features/learning/routes'
 import { labRoutes } from '../features/labs/routes'
 import { placeholderRoutes } from '../features/placeholders/routes'
+import { kitRoutes } from '../features/kit/routes'
 
 /**
  * Central route registration (owner: Akshita). Feature owners export their
@@ -17,6 +18,8 @@ export const appRoutes: RouteObject[] = [
       ...placeholderRoutes,
       ...learningRoutes,
       ...labRoutes,
+      // Dev-only component gallery; dropped from production builds
+      ...(import.meta.env.DEV ? kitRoutes : []),
       { path: '*', element: <NotFoundScreen /> },
     ],
   },

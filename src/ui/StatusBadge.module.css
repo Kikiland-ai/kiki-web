@@ -1,0 +1,81 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 100%;
+  min-height: 28px;
+  padding: 2px var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font: var(--text-label);
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+
+.badge:lang(or) {
+  font: var(--text-label-odia);
+}
+
+.badge svg {
+  flex: none;
+}
+
+.neutral {
+  background: var(--paper-sunken);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.success {
+  background: var(--paper-raised);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* Not yet: open and unfinished, never red */
+.not_yet {
+  background: var(--paper-raised);
+  color: var(--pencil);
+  border: 1px dashed var(--pencil);
+}
+
+/* Dimensions: tint fill, ink text. These follow the tone so they win on colour. */
+.concept {
+  background: var(--green-tint);
+  color: var(--green-ink);
+}
+
+.words {
+  background: var(--red-tint);
+  color: var(--red-ink);
+}
+
+.english {
+  background: var(--yellow-tint);
+  color: var(--yellow-ink);
+}
+
+.lab {
+  background: var(--blue-tint);
+  color: var(--blue-ink);
+}
+
+.neutral:is(.concept, .words, .english, .lab) {
+  border-color: transparent;
+}
+
+.success.concept {
+  border-color: var(--green-ink);
+}
+
+.success.words {
+  border-color: var(--red-ink);
+}
+
+.success.english {
+  border-color: var(--yellow-ink);
+}
+
+.success.lab {
+  border-color: var(--blue-ink);
+}

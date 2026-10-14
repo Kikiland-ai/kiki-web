@@ -36,6 +36,12 @@ describe('app routes', () => {
     expect(await screen.findByText(/Fixture mode/)).toBeTruthy()
   })
 
+  it('serves the kit gallery in development', async () => {
+    renderAt('/kit')
+    expect(await screen.findByRole('heading', { name: 'Kit', level: 1 })).toBeTruthy()
+    expect(screen.getByRole('slider', { name: 'Language mix' })).toBeTruthy()
+  })
+
   it('shows a not-found page for unknown routes', async () => {
     renderAt('/nope')
     expect(await screen.findByRole('heading', { name: "This page doesn't exist" })).toBeTruthy()

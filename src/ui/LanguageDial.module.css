@@ -1,0 +1,154 @@
+.dial {
+  --knob: 36px;
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 420px;
+}
+
+.ends {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font: var(--text-label);
+  color: var(--pencil);
+}
+
+.odia {
+  font: var(--text-label-odia);
+}
+
+/* The whole 48px-tall track is the touch target */
+.track {
+  position: relative;
+  height: var(--tap-target);
+  cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position along the rail: half a track height in from each end */
+.rail,
+.notch,
+.ghost,
+.knob {
+  position: absolute;
+}
+
+.rail {
+  left: calc(var(--tap-target) / 2);
+  right: calc(var(--tap-target) / 2);
+  top: calc(50% - 2px);
+  height: 4px;
+  border-radius: 4px;
+  background: var(--line);
+}
+
+.notch,
+.ghost,
+.knob {
+  left: calc(var(--tap-target) / 2 + (100% - var(--tap-target)) * var(--at));
+}
+
+.notch {
+  top: calc(50% - 7px);
+  width: 2px;
+  height: 14px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: var(--pencil);
+}
+
+.ghost,
+.knob {
+  top: calc(50% - var(--knob) / 2);
+  width: var(--knob);
+  height: var(--knob);
+  margin-left: calc(var(--knob) / -2);
+  border-radius: 50%;
+}
+
+.ghost {
+  /* Neutral, not blue: blue marks the practical dimension */
+  border: 2px dashed var(--pencil);
+  background: var(--paper-sunken);
+  pointer-events: none;
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.knob {
+  background: var(--paper-raised);
+  border: 2px solid var(--ink);
+  box-shadow: var(--key-edge-neutral);
+  cursor: grab;
+  transition: left var(--motion-move);
+}
+
+/* The needle turns from Odia (left) to English (right) */
+.knob::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  width: 3px;
+  height: 11px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--ink);
+  transform-origin: 50% 13px;
+  transform: rotate(var(--angle));
+  transition: transform var(--motion-move);
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  font: var(--text-label);
+  color: var(--pencil);
+}
+
+.caption b {
+  color: var(--ink);
+}
+
+.suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-target);
+  max-width: 100%;
+  padding: var(--space-1) var(--space-3);
+  border: 1px dashed var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--paper-sunken);
+  color: var(--ink);
+  font: var(--text-label);
+  text-align: left;
+  cursor: pointer;
+}
+
+.suggestion svg {
+  flex: none;
+}
+
+@keyframes breathe {
+  50% {
+    transform: scale(0.86);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost {
+    animation: none;
+  }
+
+  .knob,
+  .knob::after {
+    transition: none;
+  }
+}

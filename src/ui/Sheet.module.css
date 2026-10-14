@@ -1,0 +1,117 @@
+/*
+ * A floating panel, rounded on every corner and inset from the screen edges.
+ * Phone (< 600px): along the bottom, just above the edge.
+ */
+.sheet {
+  --sheet-inset: var(--space-2);
+  /* No padding: a click on the dialog box itself always means the backdrop */
+  padding: 0;
+  border: 0;
+  margin: auto var(--sheet-inset) max(var(--sheet-inset), env(safe-area-inset-bottom));
+  width: calc(100% - 2 * var(--sheet-inset));
+  max-width: calc(100% - 2 * var(--sheet-inset));
+  max-height: min(85dvh, 100% - var(--space-6));
+  background: var(--paper-raised);
+  color: var(--ink);
+  border-radius: var(--radius-sheet);
+  box-shadow: var(--lift);
+  overflow: hidden;
+}
+
+.sheet[open] {
+  display: flex;
+  animation: rise var(--motion-sheet);
+}
+
+.sheet::backdrop {
+  background: var(--scrim);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-2) var(--space-2) var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  /* Centre one line of text against the 48px close button */
+  padding-top: var(--space-2);
+  overflow-wrap: anywhere;
+}
+
+.close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  margin-top: calc(-1 * var(--space-1));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--paper-sunken);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4) var(--gutter) var(--space-6);
+  overflow-wrap: anywhere;
+}
+
+/* 600px and up: a side panel on the right, inset from the top, right and bottom */
+@media (min-width: 600px) {
+  .sheet {
+    --sheet-inset: var(--space-4);
+    margin: max(var(--sheet-inset), env(safe-area-inset-top)) var(--sheet-inset)
+      max(var(--sheet-inset), env(safe-area-inset-bottom)) auto;
+    width: min(var(--sheet-width), 100% - 2 * var(--sheet-inset));
+    max-width: none;
+    height: auto;
+    max-height: none;
+  }
+
+  .sheet[open] {
+    animation-name: slide-in;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(32px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet[open] {
+    animation: none;
+  }
+}

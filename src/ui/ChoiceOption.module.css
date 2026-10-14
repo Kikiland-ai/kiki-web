@@ -1,0 +1,122 @@
+.group {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--space-3);
+  font: var(--text-body);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.legend:lang(or) {
+  font: var(--text-body-odia);
+  font-weight: 600;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  min-height: calc(var(--tap-target) + var(--space-2));
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-node);
+  background: var(--paper-raised);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color var(--motion-press);
+}
+
+.option:hover {
+  background: var(--paper-sunken);
+}
+
+/* The native radio stays in the accessibility tree and keyboard order */
+.input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.option:has(.input:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.option:has(.input:disabled) {
+  cursor: default;
+}
+
+.option:has(.input:disabled):hover {
+  background: var(--paper-raised);
+}
+
+/* Radio mark: an empty ring, filled when selected (shape, not just colour) */
+.mark {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--pencil);
+  border-radius: 50%;
+  background: var(--paper-raised);
+}
+
+.text {
+  flex: 1 1 12rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.result {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--text-label);
+  font-weight: 700;
+}
+
+.selected {
+  border-color: var(--ink);
+}
+
+.selected .mark {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 4px var(--paper-raised);
+  background: var(--ink);
+}
+
+.correct {
+  border-color: var(--green-ink);
+  background: var(--green-tint);
+}
+
+.correct:hover {
+  background: var(--green-tint);
+}
+
+.correct .result {
+  color: var(--green-ink);
+}
+
+/* Not yet: dashed pencil outline, never red */
+.not_yet {
+  border-style: dashed;
+  border-color: var(--pencil);
+}
+
+.not_yet .result {
+  color: var(--pencil);
+}

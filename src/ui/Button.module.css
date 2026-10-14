@@ -1,0 +1,71 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  max-width: 100%;
+  padding: var(--space-2) var(--space-6);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: var(--text-button);
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition:
+    transform var(--motion-press),
+    box-shadow var(--motion-press),
+    background-color var(--motion-press);
+}
+
+/* Odia labels need the taller Odia line height */
+.button:lang(or) {
+  font: var(--text-button-odia);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+
+.primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-fg);
+  box-shadow: var(--key-edge-ink);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: var(--key-edge-ink-pressed);
+}
+
+.secondary {
+  background: var(--paper-sunken);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--key-edge-neutral);
+}
+
+.secondary:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: var(--key-edge-neutral-pressed);
+}
+
+/* Neutral ink, not blue: blue marks the practical dimension */
+.text {
+  background: transparent;
+  color: var(--ink);
+  padding-inline: var(--space-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text:hover:not(:disabled),
+.text:active:not(:disabled) {
+  background: var(--paper-sunken);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
