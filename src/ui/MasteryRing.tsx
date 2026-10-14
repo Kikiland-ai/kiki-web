@@ -1,18 +1,16 @@
 import type { ReactNode } from 'react'
-import type { Dimension, DimensionCoverage } from '../contracts'
+import {
+  coverageFraction as fraction,
+  describeCoverage as describe,
+  describeMastery,
+  MASTERY_DIMENSIONS as DIMENSIONS,
+  type MasteryValues,
+} from './mastery'
 import styles from './MasteryRing.module.css'
-
-/** Clockwise from the top. The ring always shows all four, in this order. */
-const DIMENSIONS: { key: Dimension; name: string }[] = [
-  { key: 'concept', name: 'Concept' },
-  { key: 'words', name: 'Words' },
-  { key: 'english', name: 'English' },
-  { key: 'lab', name: 'Lab' },
-]
 
 export type MasteryRingProps = {
   /** Coverage per dimension. A missing or null value is "Not assessed", never 0%. */
-  values: Partial<Record<Dimension, DimensionCoverage>>
+  values: MasteryValues
   /** Pixel size. 44 on the map, 96 in the lesson header. Default 44. */
   size?: number
   /** What the ring is for, e.g. the concept title. Starts the accessible name. */
@@ -21,16 +19,6 @@ export type MasteryRingProps = {
   showLegend?: boolean
   /** Centre content, e.g. the concept number. Visual only: put anything important in `label`. */
   children?: ReactNode
-}
-
-/** done/total as 0–1, or null when nothing has been assessed. */
-function fraction(coverage: DimensionCoverage | undefined) {
-  if (!coverage || coverage.total <= 0) return null
-  return Math.max(0, Math.min(1, coverage.done / coverage.total))
-}
-
-function describe(coverage: DimensionCoverage | undefined) {
-  return coverage && coverage.total > 0 ? `${coverage.done} of ${coverage.total}` : 'Not assessed'
 }
 
 /**
@@ -51,7 +39,7 @@ export function MasteryRing({ values, size = 44, label, showLegend = false, chil
   // Big enough to say it in words; small rings rely on the dashed segments and the accessible name
   const centre = children ?? (noneAssessed && size >= 72 ? 'Not assessed' : null)
 
-  const summary = DIMENSIONS.map((d) => `${d.name} ${describe(values[d.key])}`).join(', ')
+  const summary = describeMastery(values)
   const name = label ? `${label}: ${summary}` : summary
 
   return (

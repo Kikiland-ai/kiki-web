@@ -1,7 +1,9 @@
+import { useId } from 'react'
 import { Link } from 'react-router'
 import type { ConceptProgress, Dimension, DimensionCoverage } from '../contracts'
 import { Kiki } from './Kiki'
 import { MasteryRing } from './MasteryRing'
+import { describeMastery } from './mastery'
 import { StatusBadge } from './StatusBadge'
 import styles from './MapNode.module.css'
 
@@ -50,11 +52,13 @@ export function MapNode({
   layout = 'tile',
 }: MapNodeProps) {
   const badge = STATUS_BADGE[status]
+  const descriptionId = useId()
   const classes = [styles.node, styles[layout], styles[status], next && styles.next].filter(Boolean).join(' ')
 
   return (
-    <Link to={to} className={classes}>
-      <span className={styles.body}>
+    // Named by the concept; the mastery summary is its description, read after a pause
+    <Link to={to} className={classes} aria-describedby={descriptionId}>
+      <span className={styles.body} aria-hidden="true">
         {next && (
           <span className={styles.pin}>
             <Kiki state="pointing" size={layout === 'tile' ? 28 : 24} label="" />
@@ -84,6 +88,9 @@ export function MapNode({
           )}
           {requiredForLab && <StatusBadge label="For the lab" dimension="lab" />}
         </span>
+      </span>
+      <span id={descriptionId} className={styles.srOnly}>
+        Mastery: {describeMastery(rings)}
       </span>
     </Link>
   )

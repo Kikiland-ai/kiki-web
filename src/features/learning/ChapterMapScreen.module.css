@@ -1,0 +1,124 @@
+.screen {
+  display: grid;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.title {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4) var(--space-6);
+}
+
+.summaryText {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.summaryText p {
+  margin: 0;
+}
+
+/* The lab is the practical (blue) dimension: tint fill, ink text */
+.lab {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--blue-ink);
+  border-radius: var(--radius-card);
+  background: var(--blue-tint);
+}
+
+.lab p {
+  margin: 0;
+}
+
+.labTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--blue-ink);
+}
+
+.missing {
+  margin: 0;
+  padding-left: var(--space-6);
+}
+
+.missing a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.sectionTitle {
+  margin: 0;
+  font: var(--text-term);
+  color: var(--pencil);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tiles,
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 600px and up: tiles in reading order */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 136px);
+  gap: var(--space-4);
+}
+
+/* Phone: one row per concept */
+.rows {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.test {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.test h2,
+.test p {
+  margin: 0;
+}

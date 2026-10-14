@@ -69,3 +69,12 @@
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+/* LinkButton: the same key, as a link */
+.link {
+  text-decoration: none;
+}
+
+.link.text {
+  text-decoration: underline;
+}

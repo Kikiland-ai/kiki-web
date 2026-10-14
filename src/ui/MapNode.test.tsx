@@ -49,12 +49,16 @@ describe('MapNode', () => {
     expect(screen.getByText('For the lab')).toBeTruthy()
   })
 
-  it('carries a mastery ring that reads unassessed dimensions as "Not assessed"', () => {
-    renderNode({ rings: { concept: { done: 5, total: 5 } } })
-    const ring = screen.getByRole('img', { name: /^Mastery:/ })
-    expect(ring.getAttribute('aria-label')).toBe(
+  it('is named by the concept, with mastery as its description ("Not assessed", never 0%)', () => {
+    renderNode({ rings: { concept: { done: 5, total: 5 } }, next: true })
+    const link = screen.getByRole('link', { name: /^Concept 8: Carrier mismatch and debugging/ })
+    expect(screen.getByRole('link').getAttribute('aria-label')).toBeNull()
+    const description = document.getElementById(link.getAttribute('aria-describedby')!)
+    expect(description?.textContent).toBe(
       'Mastery: Concept 5 of 5, Words Not assessed, English Not assessed, Lab Not assessed',
     )
+    // The ring, LED and Kiki pin repeat what the text says, so they're hidden from screen readers
+    expect(screen.queryByRole('img')).toBeNull()
   })
 
   it.each(['tile', 'row'] as const)('renders the %s layout', (layout) => {

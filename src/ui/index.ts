@@ -1,6 +1,7 @@
 // Shared kit (owner: Arpan). Feature screens import UI from here only.
 export { FixtureBanner } from './FixtureBanner'
 export { Button, type ButtonProps, type ButtonVariant } from './Button'
+export { LinkButton, type LinkButtonProps } from './LinkButton'
 export { Sheet, type SheetProps } from './Sheet'
 export { StatusBadge, type StatusBadgeProps, type StatusTone } from './StatusBadge'
 export {
