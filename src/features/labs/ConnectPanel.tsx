@@ -16,7 +16,8 @@ export type ConnectPanelProps = {
  * Getting Simulink ready on this device. The student opens Simulink Online
  * and their model themselves; a browser link opening is not proof the model
  * opened, so each step is confirmed here. Without the Kiki extension there
- * is no pointer: the written Manual guide is used instead.
+ * is no pointer: the written Manual guide is used instead. With it, and only
+ * while session.pointer.active, step 3 says the pointer is on.
  */
 export function ConnectPanel({ session, busy, onOpened, onModelConfirmed, onReconnect }: ConnectPanelProps) {
   const opened = session.software.opened
@@ -79,11 +80,20 @@ export function ConnectPanel({ session, busy, onOpened, onModelConfirmed, onReco
             3
           </span>
           <div className={styles.checkBody}>
-            <p>
-              Kiki's pointer needs the Kiki extension in desktop Chrome. It isn't connected here, so follow the written
-              steps below.
-            </p>
-            <StatusBadge label="Manual guide" />
+            {session.pointer.active ? (
+              <>
+                <p>Kiki's pointer is on in Simulink. It points; you do every step yourself.</p>
+                <StatusBadge label="Kiki's pointer on" dimension="lab" />
+              </>
+            ) : (
+              <>
+                <p>
+                  Kiki's pointer needs the Kiki extension in desktop Chrome. It isn't connected here, so follow the
+                  written steps below.
+                </p>
+                <StatusBadge label="Manual guide" />
+              </>
+            )}
           </div>
         </li>
       </ol>

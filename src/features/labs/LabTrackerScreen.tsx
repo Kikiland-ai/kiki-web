@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
 import type { ChapterView, LabSession, SessionHandoff } from '../../contracts'
-import { Button, ErrorState, LabStepper, LinkButton, LoadingState, StatusBadge, type LabStep } from '../../ui'
+import { Button, ErrorState, KikiPointer, LabStepper, LinkButton, LoadingState, StatusBadge, type LabStep } from '../../ui'
 import { ArrowBackIcon } from '../../ui/icons'
 import { learningApi } from '../learning/services'
 import { useDialLevel } from '../learning/useDialLevel'
@@ -109,10 +109,21 @@ export function LabTrackerScreen() {
         <h1 className={styles.title}>{DSB_SC.title}</h1>
         <div className={styles.badges}>
           <StatusBadge label={status.label} tone={status.tone} dimension={completed ? 'lab' : undefined} />
-          <StatusBadge label="Manual guide" />
+          {session.pointer.active ? (
+            <StatusBadge label="Kiki's pointer on" dimension="lab" />
+          ) : (
+            <StatusBadge label="Manual guide" />
+          )}
           <StatusBadge label={`${doneCount} of ${session.checkpoints.length} steps done`} />
         </div>
         <p className={styles.detail}>{status.detail}</p>
+        {/* Only while the server says the pointer is active (contract §8); it disappears the moment that turns off */}
+        {session.pointer.active && !completed && (
+          <p className={styles.pointerOn}>
+            <KikiPointer state="pointing" lead="lab" label="" />
+            Kiki is pointing in Simulink. Follow the pointer there, or the written step below.
+          </p>
+        )}
         {!session.pointer.active && !completed && (
           <details className={styles.why}>
             <summary>Why Kiki's pointer is off</summary>

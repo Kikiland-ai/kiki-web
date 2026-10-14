@@ -13,6 +13,7 @@ export {
 } from './ChoiceOption'
 export { LanguageDial, DIAL_LEVEL_NAMES, type DialLevel, type LanguageDialProps } from './LanguageDial'
 export { Kiki, type KikiProps, type KikiState } from './Kiki'
+export { KikiPointer, KIKI_POINTER_TIP, type KikiPointerProps, type KikiPointerState } from './KikiPointer'
 export { LoadingState, type LoadingStateProps } from './LoadingState'
 export { ErrorState, type ErrorStateProps } from './ErrorState'
 export { MasteryRing, type MasteryRingProps } from './MasteryRing'

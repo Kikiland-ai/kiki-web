@@ -1,4 +1,5 @@
 import type { Dimension } from '../contracts'
+import { KIKI_DOT_FILLS, KIKI_LEAD_DOT } from './kikiDots'
 import styles from './Kiki.module.css'
 
 export type KikiState =
@@ -37,12 +38,6 @@ const DEFAULT_LABELS: Record<KikiState, string> = {
   examiner: 'Kiki in examiner mode',
 }
 
-/** Kiki's identity colours, always in this order. They are not the skill colours. */
-const DOT_FILLS = ['var(--blue)', 'var(--red)', 'var(--yellow)', 'var(--green)']
-
-/** Which dot grows for each dimension: green concept, red words, yellow English, blue lab. */
-const LEAD_DOT: Record<Dimension, number> = { lab: 0, words: 1, english: 2, concept: 3 }
-
 export type KikiProps = {
   state: KikiState
   /** Pixel size of the square drawing. Default 64. */
@@ -61,7 +56,7 @@ export type KikiProps = {
  */
 export function Kiki({ state, size = 64, lead, label, className }: KikiProps) {
   const positions = POSITIONS[state] ?? POSITIONS.idle
-  const leadIndex = lead ? LEAD_DOT[lead] : -1
+  const leadIndex = lead ? KIKI_LEAD_DOT[lead] : -1
   const name = label ?? DEFAULT_LABELS[state]
   const a11y = name ? { role: 'img', 'aria-label': name } : { 'aria-hidden': true }
 
@@ -88,7 +83,7 @@ export function Kiki({ state, size = 64, lead, label, className }: KikiProps) {
               height={r * 2}
               rx={examiner ? 2 : r}
               // CSS variables only resolve in style, not in the fill attribute
-              style={{ fill: DOT_FILLS[i], animationDelay: `${i * 0.12}s` }}
+              style={{ fill: KIKI_DOT_FILLS[i], animationDelay: `${i * 0.12}s` }}
             />
           </g>
         )

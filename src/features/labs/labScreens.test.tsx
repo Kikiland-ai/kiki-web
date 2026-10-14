@@ -113,6 +113,44 @@ describe('Lab tracker (/labs/:sessionId)', () => {
     expect(screen.queryByText('Connecting')).toBeNull()
   })
 
+  it("shows Kiki's pointer only while the server says it is active", async () => {
+    passC08()
+    const s = await lab.start('PR-AM-DSB', deviceId())
+    let active = true
+    // What the extension would make true: the server reports the pointer active
+    const on = (x: LabSession): LabSession => (active ? { ...x, pointer: { active: true, reasons: [] } } : x)
+    setLabApi({
+      ...lab,
+      get: async (id) => on(await lab.get(id)),
+      heartbeat: async (id, r) => on(await lab.heartbeat(id, r)),
+      updateConnection: async (id, u) => on(await lab.updateConnection(id, u)),
+    })
+    renderAt(`/labs/${s.id}`)
+
+    expect(await screen.findByText('Kiki is pointing in Simulink. Follow the pointer there, or the written step below.')).toBeTruthy()
+    expect(screen.getAllByText("Kiki's pointer on")).toHaveLength(2)
+    expect(screen.queryByText('Manual guide')).toBeNull()
+    expect(screen.queryByText("Why Kiki's pointer is off")).toBeNull()
+
+    // The next read says it's off: the pointer goes at once and Manual guide is back
+    active = false
+    fireEvent.click(screen.getByRole('button', { name: "I've opened it" }))
+    expect((await screen.findAllByText('Manual guide')).length).toBeGreaterThan(0)
+    expect(screen.queryByText(/Kiki is pointing in Simulink/)).toBeNull()
+    expect(screen.queryByText("Kiki's pointer on")).toBeNull()
+    expect(screen.getByText("Why Kiki's pointer is off")).toBeTruthy()
+  })
+
+  it('never shows the pointer in Manual guide', async () => {
+    passC08()
+    const s = await lab.start('PR-AM-DSB', deviceId())
+    renderAt(`/labs/${s.id}`)
+    expect(await screen.findByText('Ready to connect')).toBeTruthy()
+    expect(screen.getAllByText('Manual guide')).toHaveLength(2)
+    expect(screen.queryByText("Kiki's pointer on")).toBeNull()
+    expect(document.querySelector('svg[viewBox="0 0 80 80"]')).toBeNull()
+  })
+
   it('shows "Running on another device" to an observer, who can take control', async () => {
     passC08()
     const s = await lab.start('PR-AM-DSB', 'other-device')

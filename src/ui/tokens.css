@@ -48,6 +48,11 @@
   /* Backdrop behind Sheet (kit, 14 Oct): ink at 40% so the page stays readable */
   --scrim: rgba(31, 31, 31, 0.4);
 
+  /* KikiPointer (kit, 15 Oct): the body stays dark with a white outline over
+     any surface, like a system cursor */
+  --kiki-pointer-body: var(--ink);
+  --kiki-pointer-outline: #ffffff;
+
   /* Type */
   --font-ui: "Google Sans", "Noto Sans Oriya", system-ui, sans-serif;
   --font-odia: "Noto Sans Oriya", "Google Sans", system-ui, sans-serif;

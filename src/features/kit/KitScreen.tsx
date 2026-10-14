@@ -7,6 +7,9 @@ import {
   ChoiceOption,
   ErrorState,
   Kiki,
+  KikiPointer,
+  KIKI_POINTER_TIP,
+  type KikiPointerState,
   LanguageDial,
   LoadingState,
   Sheet,
@@ -60,6 +63,20 @@ const TERMS: LessonTerm[] = [
     term: 'beating',
     definition: 'A varying signal envelope caused by interaction of nearby frequencies.',
   },
+]
+
+const POINTER_STATES: KikiPointerState[] = [
+  'idle',
+  'pointing',
+  'tapping',
+  'dragging',
+  'tracing',
+  'thinking',
+  'asking',
+  'listening',
+  'celebrating',
+  'unsure',
+  'waiting',
 ]
 
 const OPTIONS = [
@@ -265,6 +282,44 @@ export function KitScreen() {
           <Kiki state="speaking" size={32} />
           <Kiki state="speaking" />
           <Kiki state="speaking" size={96} />
+        </div>
+      </Section>
+
+      <Section title="KikiPointer">
+        <p className={styles.note}>Lab only, and only while the session's pointer is active.</p>
+        <div className={styles.grid}>
+          {POINTER_STATES.map((s) => (
+            <figure key={s} className={styles.figure}>
+              <KikiPointer state={s} />
+              <figcaption>{s}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className={styles.grid}>
+          {DIMENSIONS.map((d) => (
+            <figure key={d} className={styles.figure}>
+              <KikiPointer state="waiting" lead={d} />
+              <figcaption>lead: {d}</figcaption>
+            </figure>
+          ))}
+          <figure className={styles.figure}>
+            <KikiPointer state="pointing" flip />
+            <figcaption>flip</figcaption>
+          </figure>
+        </div>
+        <div className={styles.row}>
+          <KikiPointer state="idle" size={40} />
+          <KikiPointer state="idle" />
+          <KikiPointer state="idle" size={72} />
+        </div>
+        <div className={styles.stage}>
+          <span className={styles.target} style={{ left: 120, top: 32 }} />
+          <KikiPointer
+            state="tapping"
+            lead="lab"
+            className={styles.placed}
+            style={{ left: 120 - KIKI_POINTER_TIP.x * 48, top: 32 - KIKI_POINTER_TIP.y * 48 }}
+          />
         </div>
       </Section>
 

@@ -273,3 +273,11 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* Shown only while session.pointer.active */
+.pointerOn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+}

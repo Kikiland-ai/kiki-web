@@ -71,3 +71,25 @@
   display: grid;
   gap: var(--space-3);
 }
+
+/* KikiPointer tip placement: the tip lands on the target dot */
+.stage {
+  position: relative;
+  height: 96px;
+  max-width: 240px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-card);
+}
+
+.target {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+.placed {
+  position: absolute;
+}
