@@ -19,6 +19,7 @@ import {
   TermDetails,
 } from '../../ui'
 import { ArrowForwardIcon, RetryIcon } from '../../ui/icons'
+import { DemoLearnerPanel } from './DemoLearnerPanel'
 import styles from './KitScreen.module.css'
 
 const LONG_ODIA = Array(3).fill('ସଂଜ୍ଞା ଏବଂ ଉଦାହରଣ ସହିତ ବିସ୍ତୃତ ବ୍ୟାଖ୍ୟା').join(' ')
@@ -108,6 +109,10 @@ export function KitScreen() {
         />
         Long Odia text in the samples
       </label>
+
+      <Section title="Demo learner">
+        <DemoLearnerPanel />
+      </Section>
 
       <Section title="Button">
         <div className={styles.row}>
