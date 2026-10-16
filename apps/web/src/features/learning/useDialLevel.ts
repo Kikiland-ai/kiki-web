@@ -15,7 +15,9 @@ export function useDialLevel() {
     const uid = current.current?.id, attempt = ++revision.current;
     setValue(next); setSaving(true); setError('');
     queue.current = queue.current.catch(() => undefined).then(async () => {
-      if (!active.current || attempt !== revision.current || !uid || current.current?.id !== uid) return;
+      if (!active.current || attempt !== revision.current) return;
+      // Signed out or another account: nothing to save to, so stop showing "Saving…"
+      if (!uid || current.current?.id !== uid) { setSaving(false); return; }
       const saved = current.current;
       try {
         await update({ supportLanguage: saved.supportLanguage, onboarding: saved.onboarding, dialLevel: next });

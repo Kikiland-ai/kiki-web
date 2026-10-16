@@ -114,4 +114,6 @@
 .learning-scope :lang(or), .learning-sheet :lang(or) { font: var(--learning-text-body-odia); }
 .learning-scope p, .learning-sheet p { color: inherit; }
 .learning-scope a:focus-visible, .learning-sheet button:focus-visible { outline-color: var(--learning-focus-ring); }
+/* Text links read as links: the app-wide `a` rule removes colour and underline (kit, 16 Oct) */
+.learning-scope a:not([class]), .learning-sheet a:not([class]) { color: var(--learning-blue-ink); text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) { .learning-scope *, .learning-sheet * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }

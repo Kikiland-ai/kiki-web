@@ -8,6 +8,7 @@ import { ArrowBackIcon, ArrowForwardIcon } from '../../ui/learning/icons'
 import { lacksOdia, pick, placardMode, shouldShowKeyIdea } from './language'
 import { PlacardText } from './PlacardText'
 import { DsbDiagrams } from './DsbDiagrams'
+import { createPlaceSaver } from './placeSaver'
 import { useDialLevel } from './useDialLevel'
 import styles from './LessonScreen.module.css'
 
@@ -27,7 +28,7 @@ export function LessonScreen() {
   const { conceptId = '' } = useParams()
   const { services, profile } = useSession()
   const uid = profile?.id
-  const positionController = useRef<AbortController | null>(null)
+  const placeSaver = useRef<ReturnType<typeof createPlaceSaver> | null>(null)
   const [saveError, setSaveError] = useState(''), [savingPosition, setSavingPosition] = useState(false), [positionSaved, setPositionSaved] = useState(false)
   const [load, setLoad] = useState<Load>({ status: 'loading' })
   const [attempt, setAttempt] = useState(0)
@@ -41,8 +42,16 @@ export function LessonScreen() {
   useEffect(() => {
     let current = true
     const controller = new AbortController()
-    positionController.current?.abort()
+    placeSaver.current?.cancel()
     setSavingPosition(false); setPositionSaved(false); setSaveError('')
+    placeSaver.current = createPlaceSaver(
+      (placardId, signal) => services.learning.savePosition(conceptId, placardId, signal),
+      (state) => {
+        setSavingPosition(state.status === 'saving')
+        setPositionSaved(state.status === 'saved')
+        setSaveError(state.status === 'error' ? readableError(state.error) : '')
+      },
+    )
     setLoad({ status: 'loading' }); setSelectedTermId(null)
     const api = services.learning
     api
@@ -70,7 +79,7 @@ export function LessonScreen() {
     return () => {
       current = false
       controller.abort()
-      positionController.current?.abort()
+      placeSaver.current?.cancel()
     }
   }, [conceptId, attempt, services, uid])
 
@@ -119,15 +128,12 @@ export function LessonScreen() {
   const showKeyIdea =
     shouldShowKeyIdea(lesson.keyIdea, dial) && lesson.keyIdea.en.trim() !== placards[0]?.body.en.trim()
 
+  // Reading never waits for a save: the place saver sends the latest place in the background
   function goTo(index: number) {
-    if (savingPosition || !placards[index]) return
+    if (!placards[index]) return
     moved.current = true
-    setStep(index); setSaveError(''); setSavingPosition(true); setPositionSaved(false)
-    const operation = new AbortController(); positionController.current = operation
-    services.learning.savePosition(conceptId, placards[index].id, operation.signal)
-      .then(() => { if (!operation.signal.aborted) setPositionSaved(true) })
-      .catch(error => { if (!operation.signal.aborted) setSaveError(readableError(error)) })
-      .finally(() => { if (!operation.signal.aborted) setSavingPosition(false) })
+    setStep(index); setSaveError(''); setPositionSaved(false)
+    placeSaver.current?.save(placards[index].id)
   }
 
   const title = pick(placard.title, dial)
@@ -166,7 +172,7 @@ export function LessonScreen() {
         </p>
       )}
 
-      {missingPrerequisites.length > 0 && <aside aria-label="Prerequisite concepts" className="quiet-note"><div><strong>You can preview this lesson.</strong><p>Review these prerequisite concepts before progressing:</p><ul>{missingPrerequisites.map(id => <li key={id}><Link to={`/concepts/${id}`}>{chapter.concepts.find(c => c.id === id)?.title.en ?? id}</Link></li>)}</ul></div></aside>}
+      {missingPrerequisites.length > 0 && <aside aria-label="Prerequisite concepts" className="quiet-note"><div><strong>You can preview this lesson.</strong><p>Review these prerequisite concepts before progressing:</p><ul className={styles.prerequisites}>{missingPrerequisites.map(id => <li key={id}><Link to={`/concepts/${id}`}>{chapter.concepts.find(c => c.id === id)?.title.en ?? id}</Link></li>)}</ul></div></aside>}
       {savingPosition && <p role="status">Saving your place…</p>}
       {positionSaved && !savingPosition && !saveError && <p role="status">{services.mode === 'fixture' ? 'Place saved in this browser' : 'Place saved'}</p>}
       {saveError && <div role="alert">Your place was not saved. {saveError} <Button variant="text" onClick={() => goTo(step)}>Retry saving place</Button></div>}
@@ -183,7 +189,7 @@ export function LessonScreen() {
                     type="button"
                     className={styles.step}
                     aria-current={i === step ? 'step' : undefined}
-                    disabled={savingPosition} onClick={() => goTo(i)}
+                    onClick={() => goTo(i)}
                   >
                     <span className={styles.stepNumber} aria-hidden="true">
                       {i + 1}
@@ -239,13 +245,13 @@ export function LessonScreen() {
             <Button
               variant="secondary"
               icon={<ArrowBackIcon size={20} />}
-              disabled={step === 0 || savingPosition}
+              disabled={step === 0}
               onClick={() => goTo(step - 1)}
             >
               Back
             </Button>
             {nextTitle ? (
-              <Button icon={<ArrowForwardIcon size={20} />} disabled={savingPosition} onClick={() => goTo(step + 1)}>
+              <Button icon={<ArrowForwardIcon size={20} />} onClick={() => goTo(step + 1)}>
                 Next: <span lang={nextTitle.lang}>{nextTitle.text}</span>
               </Button>
             ) : (

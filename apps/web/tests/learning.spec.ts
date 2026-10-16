@@ -158,3 +158,48 @@ test('later concepts can be previewed with their prerequisite explanation',async
   await expect(prerequisites).toContainText('You can preview this lesson.');
   await expect(prerequisites.getByRole('link',{name:'Lowpass filtering and waveform comparison',exact:true})).toHaveAttribute('href','/concepts/C-AM-07');
 });
+
+// Arpan, 16 Oct: kit and lesson checks carried over from the original kit tests
+test('Kiki keeps its four colours on the map',async({page})=>{
+  await setup(page);
+  const fills=await page.evaluate(()=>[...document.querySelectorAll('svg rect')].filter(r=>(r.getAttribute('style')??'').includes('fill')).slice(0,4).map(r=>getComputedStyle(r).fill));
+  expect(fills).toEqual(['rgb(66, 133, 244)','rgb(234, 67, 53)','rgb(251, 188, 5)','rgb(52, 168, 83)']);
+});
+test('prerequisite links look like links and are full touch targets',async({page})=>{
+  await setup(page); await page.getByRole('link',{name:/^Concept 8:/}).click();
+  const link=page.getByRole('complementary',{name:'Prerequisite concepts'}).getByRole('link',{name:'Lowpass filtering and waveform comparison',exact:true});
+  expect(await link.evaluate(a=>getComputedStyle(a).textDecorationLine)).toContain('underline');
+  expect(await link.evaluate(a=>getComputedStyle(a).color)).toBe('rgb(25, 103, 210)');
+  expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(48);
+});
+test('moving through placards never waits for a save, and the latest place is kept',async({page})=>{
+  await setup(page); await openFirst(page);
+  const steps=page.getByRole('navigation',{name:'Lesson steps'}).getByRole('button');
+  for(const i of [1,2,3]) { await steps.nth(i).click(); await expect(steps.nth((i+1)%4)).toBeEnabled(); }
+  await expect(page.getByText('Saving your place…',{exact:true})).toHaveCount(0);
+  await expect(page.getByText('Place saved in this browser',{exact:true})).toBeVisible();
+  await page.reload(); await expect(page.getByText('Step 4 of 4',{exact:true})).toBeVisible();
+});
+test('term details close with Esc or the backdrop, return focus and keep the reading position',async({page})=>{
+  await page.setViewportSize({width:390,height:844}); await setup(page); await openFirst(page);
+  const chip=page.getByRole('region',{name:'Words in this lesson'}).getByRole('button').first();
+  await chip.scrollIntoViewIfNeeded(); const before=await page.evaluate(()=>scrollY);
+  await chip.click(); await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape'); await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(chip).toBeFocused();
+  expect(Math.abs(await page.evaluate(()=>scrollY)-before)).toBeLessThan(2);
+  await chip.click(); await expect(page.getByRole('dialog')).toBeVisible();
+  await page.mouse.click(8,8); await expect(page.getByRole('dialog')).toHaveCount(0);
+});
+test('term details open at every language notch, including 5',async({page})=>{
+  await setup(page); await openFirst(page);
+  const knob=page.getByRole('slider',{name:'Language mix',exact:true}); await knob.press('Home');
+  for(let notch=1;notch<=5;notch++) {
+    if(notch>1) await knob.press('ArrowRight');
+    await expect(knob).toHaveAttribute('aria-valuenow',String(notch));
+    await page.getByRole('region',{name:'Words in this lesson'}).getByRole('button').first().click();
+    const dialog=page.getByRole('dialog'); await expect(dialog).toBeVisible();
+    await expect(dialog.locator('[lang="or"]').first()).toBeVisible();
+    await page.keyboard.press('Escape'); await expect(dialog).toHaveCount(0);
+  }
+});

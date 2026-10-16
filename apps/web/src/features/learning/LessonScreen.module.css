@@ -266,3 +266,10 @@
   font: var(--learning-text-term);
   cursor: pointer;
 }
+
+/* Prerequisite links stand alone in a list, so they get a full touch target (kit, 16 Oct) */
+.prerequisites a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--learning-tap-target);
+}
