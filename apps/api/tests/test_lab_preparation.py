@@ -214,7 +214,8 @@ def test_theory_ready_changes_neither_monitoring_nor_assessment(lab_harness):
     folder.mkdir(exist_ok=True)
     practical = client.get("/practicals/PR-AM-DSB", headers=headers()).json()
     (folder / "lab-preparation-contract.json").write_text(
-        json.dumps({"practical": practical, "preparation": {"preparation": updated}})
+        json.dumps({"practical": practical, "preparation": {"preparation": updated}}),
+        encoding="utf-8",
     )
 
 

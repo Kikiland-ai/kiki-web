@@ -30,8 +30,8 @@ class CatalogImport:
 
 
 def build_catalog(ledger_path: Path, case_path: Path) -> CatalogImport:
-    ledger = json.loads(ledger_path.read_text())
-    case = json.loads(case_path.read_text())
+    ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+    case = json.loads(case_path.read_text(encoding="utf-8"))
     # Only authored fields influence content identity. Preview seeds never enter any write.
     case = {k: v for k, v in case.items() if k != "seeds"}
     if (

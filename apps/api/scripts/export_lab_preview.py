@@ -17,6 +17,6 @@ content = catalog.documents[
 ]
 practical = project_practical(content, catalog.manifest, catalog.version)
 (root / "apps/web/src/fixtures/lab-practical.json").write_text(
-    json.dumps(dump(practical), ensure_ascii=False, indent=2) + "\n"
+    json.dumps(dump(practical), ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
 )
 print("Exported public practical only; no account, scores, answers or trusted evidence.")
