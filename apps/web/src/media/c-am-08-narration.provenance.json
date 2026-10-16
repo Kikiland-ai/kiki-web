@@ -1,0 +1,341 @@
+{
+  "schema": "kiki-web/narration-provenance/v1",
+  "generated_at": "2026-10-16T17:37:08+00:00",
+  "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+  "provider": "Gemini Developer API, Interactions REST v1beta",
+  "status": "generated, not reviewed",
+  "clips": [
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-definition.or.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-definition",
+      "lang": "or",
+      "display_text_sha256": "e8a9d7c10ad435d5697862ec06af44a0bbfb5e6996addc757a3881fe39848ca1",
+      "speech_script": "Frequency ମେଳିଥିଲେ ଓ unit Carrier amplitude ପାଇଁ ideal gain-corrected recovery m of t times cos phi, ଯେଉଁଠି phi ହେଉଛି relative Phase error।",
+      "spoken_changes": [
+        [
+          "m(t)*cos(phi)",
+          "m of t times cos phi"
+        ],
+        [
+          "cos(phi)",
+          "cos phi"
+        ]
+      ],
+      "style": "clear, patient Odia-English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": null,
+      "voice": "Kore",
+      "speech_script_sha256": "e9fc3001fa871b188e035b2a31d025660d6adf7081d6feeb747f929bec57132d",
+      "usage": null,
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 334080,
+        "duration_seconds": 13.92,
+        "peak_pcm": 29424,
+        "rms_pcm": 4982.077005571637,
+        "sha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+        "bytes": 674274
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      },
+      "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-definition.en.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-definition",
+      "lang": "en",
+      "display_text_sha256": "7ba45a5b6afc0ae50b7ef786dc48191ae88bc4db6c92dab378c90c2f161cda14",
+      "speech_script": "With frequency matched and unit carrier amplitudes, ideal gain-corrected recovery is m of t times cos phi, where phi is relative phase error.",
+      "spoken_changes": [
+        [
+          "m(t)*cos(phi)",
+          "m of t times cos phi"
+        ],
+        [
+          "cos(phi)",
+          "cos phi"
+        ]
+      ],
+      "style": "clear, patient English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": null,
+      "voice": "Kore",
+      "speech_script_sha256": "62076c1b072b1bee6881d5ab4d5058ef637c1188020d8ff04b58717afe756f17",
+      "usage": null,
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 382080,
+        "duration_seconds": 15.92,
+        "peak_pcm": 28401,
+        "rms_pcm": 5425.365718072629,
+        "sha256": "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3",
+        "bytes": 770274
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      },
+      "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-concept.or.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-concept",
+      "lang": "or",
+      "display_text_sha256": "3fa9b17d6b2e4c204aa15d2852b213302c6878acd56beb7c49dba715939c72cf",
+      "speech_script": "Carrier mismatch receiver ର alignment ସମସ୍ୟା ହୋଇପାରେ; ତେଣୁ transmitter ଖରାପ ବୋଲି ସିଧାସଳଖ ଧରନ୍ତୁ ନାହିଁ। Frequency ସମାନ ହେଲେ relative Phase error phi ଦ୍ୱାରା ideal recovered message ର Amplitude cos phi ଗୁଣ ହୁଏ। 60 degree error ରେ ଅଧା Amplitude ରହେ। 90 degree error ରେ ideal message-band ଅଂଶ କମି ଶୂନ୍ୟ ହୁଏ; finite Filter ପାଇଁ କିଛି high-frequency Ripple ରହିପାରେ। Frequency mismatch ରେ recovery ସମୟ ସହିତ ବଦଳିପାରେ। ପ୍ରଥମେ transmitter ଦେଖନ୍ତୁ, ତାପରେ Local oscillator ର Frequency ଓ Phase ମେଳାନ୍ତୁ।",
+      "spoken_changes": [
+        [
+          "cos(phi)",
+          "cos phi"
+        ]
+      ],
+      "style": "clear, patient Odia-English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": null,
+      "voice": "Kore",
+      "speech_script_sha256": "3a2bef540647439912b8bf5c303c323d4ba6e84163dd6e0b01edca603de86c73",
+      "usage": null,
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 1125120,
+        "duration_seconds": 46.88,
+        "peak_pcm": 28159,
+        "rms_pcm": 5225.234420862211,
+        "sha256": "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30",
+        "bytes": 2256354
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      },
+      "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-concept.en.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-concept",
+      "lang": "en",
+      "display_text_sha256": "e7eb3101ac99b43d1173dfe7bc378a8650d6d905fd9ee3abd14195dcc9bfd001",
+      "speech_script": "Carrier mismatch is a receiver alignment problem, not automatically a failed transmitter. With equal carrier frequencies, a relative phase error phi scales the ideal recovered message by cos phi after gain correction. A 60 degree error leaves half amplitude; a 90 degree error suppresses the ideal message-band component. A finite filter can leave residual high-frequency ripple, so the observed trace need not be perfectly zero. A frequency mismatch adds a time-varying factor and can create a beating or distorted recovered waveform. Inspect the transmitter first, then compare the local oscillator frequency and phase with the carrier before changing unrelated blocks.",
+      "spoken_changes": [
+        [
+          "cos(phi)",
+          "cos phi"
+        ]
+      ],
+      "style": "clear, patient English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": null,
+      "voice": "Kore",
+      "speech_script_sha256": "97d692815ba01d991b1102d6beac8ec06b5dd8b2c85e1eb8dab36b7d006d0605",
+      "usage": null,
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 1321920,
+        "duration_seconds": 55.08,
+        "peak_pcm": 27545,
+        "rms_pcm": 4010.302548088973,
+        "sha256": "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7",
+        "bytes": 2649954
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      },
+      "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-application.or.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-application",
+      "lang": "or",
+      "display_text_sha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+      "speech_script": "କେବଳ Receiver phase କୁ 90 degree ବଦଳାନ୍ତୁ। Recovery ଦେଖି baseline Phase ଫେରାଇ ପୁଣି ଚଲାନ୍ତୁ।",
+      "spoken_changes": [],
+      "style": "clear, patient Odia-English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": "gemini-3.8-flash-lite-tts",
+      "voice": "Kore",
+      "speech_script_sha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+      "usage": {
+        "total_tokens": 300,
+        "total_input_tokens": 41,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 259,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      },
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 248640,
+        "duration_seconds": 10.36,
+        "peak_pcm": 27831,
+        "rms_pcm": 4712.182700849538,
+        "sha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+        "bytes": 503394
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      }
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-application.en.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-application",
+      "lang": "en",
+      "display_text_sha256": "d37e1de3cbdc204d7b6bde76aaf04b58c83874695e60d3e21dbb50fd3db4363a",
+      "speech_script": "Change only the receiver phase by 90 degrees, inspect recovery, then restore the baseline and rerun.",
+      "spoken_changes": [],
+      "style": "clear, patient English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": "gemini-3.8-flash-lite-tts",
+      "voice": "Kore",
+      "speech_script_sha256": "d37e1de3cbdc204d7b6bde76aaf04b58c83874695e60d3e21dbb50fd3db4363a",
+      "usage": {
+        "total_tokens": 257,
+        "total_input_tokens": 22,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 235,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      },
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 225600,
+        "duration_seconds": 9.4,
+        "peak_pcm": 27355,
+        "rms_pcm": 4923.1158696592165,
+        "sha256": "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b",
+        "bytes": 457314
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      }
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-recap.or.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-recap",
+      "lang": "or",
+      "display_text_sha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+      "speech_script": "Relative Phase ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। Frequency mismatch ରେ beating ହୋଇପାରେ। ଏକ ସମୟରେ ଗୋଟିଏ Parameter ଯାଞ୍ଚ କରନ୍ତୁ।",
+      "spoken_changes": [],
+      "style": "clear, patient Odia-English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": "gemini-3.8-flash-lite-tts",
+      "voice": "Kore",
+      "speech_script_sha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+      "usage": {
+        "total_tokens": 325,
+        "total_input_tokens": 48,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 277,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      },
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 265920,
+        "duration_seconds": 11.08,
+        "peak_pcm": 27454,
+        "rms_pcm": 5246.761741476222,
+        "sha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+        "bytes": 537954
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      }
+    },
+    {
+      "file": "audio/sample/C-AM-08/CARD-AM-08-recap.en.wav",
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-recap",
+      "lang": "en",
+      "display_text_sha256": "26d8c34a1ea909c89ea4f6d66e0751e9a453637209e0087f0b01514ab4322203",
+      "speech_script": "Relative phase matters. Frequency mismatch can create beating. Diagnose one parameter at a time.",
+      "spoken_changes": [],
+      "style": "clear, patient English teaching narration",
+      "model": "gemini-3.8-flash-lite-tts",
+      "returned_model": "gemini-3.8-flash-lite-tts",
+      "voice": "Kore",
+      "speech_script_sha256": "26d8c34a1ea909c89ea4f6d66e0751e9a453637209e0087f0b01514ab4322203",
+      "usage": {
+        "total_tokens": 270,
+        "total_input_tokens": 18,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 252,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      },
+      "audio": {
+        "format": "WAV PCM",
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bytes": 2,
+        "frames": 241920,
+        "duration_seconds": 10.08,
+        "peak_pcm": 30036,
+        "rms_pcm": 5036.316763397855,
+        "sha256": "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47",
+        "bytes": 489954
+      },
+      "timing_cues": null,
+      "alignment_status": "not_performed",
+      "review": {
+        "pronunciation": "pending",
+        "native_Odia": "pending",
+        "spoken_fidelity": "pending"
+      }
+    }
+  ]
+}

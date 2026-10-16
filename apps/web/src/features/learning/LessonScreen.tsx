@@ -3,8 +3,9 @@ import { Link, useParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptLesson } from '../../contracts/api'
 import { ServiceError, readableError } from '../../services/types'
 import { useSession } from '../../app/Session'
-import { Button, ErrorState, LanguageDial, LinkButton, LoadingState, StatusBadge, TermChip } from '../../ui/learning'
-import { ArrowBackIcon, ArrowForwardIcon } from '../../ui/learning/icons'
+import { AudioPlayer, Button, ErrorState, LanguageDial, LinkButton, LoadingState, StatusBadge, TermChip, type AudioPlayerHandle, type AudioSpeed } from '../../ui/learning'
+import { ArrowBackIcon, ArrowForwardIcon, SpeakerIcon } from '../../ui/learning/icons'
+import { findNarration, narrationLabel, type NarrationLang } from '../../media/narration'
 import { lacksOdia, pick, placardMode, shouldShowKeyIdea } from './language'
 import { PlacardText } from './PlacardText'
 import { DsbDiagrams } from './DsbDiagrams'
@@ -38,12 +39,26 @@ export function LessonScreen() {
   const { dial, setDial } = preference
   const headingRef = useRef<HTMLHeadingElement>(null)
   const moved = useRef(false)
+  // Narration: opened only by Listen, closed by moving placard or changing the dial
+  const [listening, setListening] = useState(false)
+  const [speed, setSpeed] = useState<AudioSpeed>(1)
+  const [narrationLang, setNarrationLang] = useState<NarrationLang | null>(null)
+  const player = useRef<AudioPlayerHandle>(null)
+
+  // Signing out stops the sound at once (contract: audio stops before the lease/session clean-up)
+  useEffect(() => services.auth.registerSignOutCleanup(() => player.current?.pause()), [services])
+  // A new dial notch can change the language on top of the card, so close the player
+  useEffect(() => {
+    setListening(false)
+    setNarrationLang(null)
+  }, [dial])
 
   useEffect(() => {
     let current = true
     const controller = new AbortController()
     placeSaver.current?.cancel()
     setSavingPosition(false); setPositionSaved(false); setSaveError('')
+    setListening(false); setNarrationLang(null)
     placeSaver.current = createPlaceSaver(
       (placardId, signal) => services.learning.savePosition(conceptId, placardId, signal),
       (state) => {
@@ -117,6 +132,18 @@ export function LessonScreen() {
   const placard = placards[step]
   const last = step === placards.length - 1
   const mode = placardMode(dial)
+  // The audio reads the text on top of the card; at notch 3 (both shown) the player can switch to English
+  const audioLang: NarrationLang = mode.alsoEnglish && narrationLang ? narrationLang : mode.primary
+  const clip = findNarration(lesson.conceptId, placard.id, audioLang)
+  const clipLanguages = mode.alsoEnglish
+    ? (['or', 'en'] as const)
+        .filter((l) => findNarration(lesson.conceptId, placard.id, l))
+        .map((l) => ({ value: l, label: l === 'or' ? 'Odia' : 'English' }))
+    : undefined
+  const openTerm = (id: string | null) => {
+    if (id) player.current?.pause()
+    setSelectedTermId(id)
+  }
 
   // This concept's own new terms (T-AM-08-* for C-AM-08); the rest were met in earlier concepts
   const ownPrefix = `${conceptId.replace(/^C-/, 'T-')}-`
@@ -132,7 +159,7 @@ export function LessonScreen() {
   function goTo(index: number) {
     if (!placards[index]) return
     moved.current = true
-    setStep(index); setSaveError(''); setPositionSaved(false)
+    setStep(index); setSaveError(''); setPositionSaved(false); setListening(false)
     placeSaver.current?.save(placards[index].id)
   }
 
@@ -210,17 +237,38 @@ export function LessonScreen() {
             <h2 id="placard-title" ref={headingRef} tabIndex={-1} lang={title.lang} className={styles.placardTitle}>
               {title.text}
             </h2>
+            {clip && !listening && (
+              <Button variant="secondary" icon={<SpeakerIcon size={20} />} onClick={() => setListening(true)} className={styles.listen}>
+                Listen
+              </Button>
+            )}
+            {clip && listening && (
+              <AudioPlayer
+                key={`audio-${placard.id}-${audioLang}`}
+                ref={player}
+                src={clip.src}
+                title={title.text}
+                label={narrationLabel(clip)}
+                speed={speed}
+                onSpeedChange={setSpeed}
+                languages={clipLanguages}
+                language={audioLang}
+                onLanguageChange={(l) => setNarrationLang(l as NarrationLang)}
+                onClose={() => setListening(false)}
+                autoPlay
+              />
+            )}
             <PlacardText
               key={`${placard.id}-${mode.primary}`}
               text={placard.body[mode.primary]}
               lang={mode.primary}
               terms={chipTerms}
               showMeaning={mode.showMeaning}
-              onTermOpen={setSelectedTermId}
+              onTermOpen={openTerm}
               className={styles.body}
             />
             {mode.alsoEnglish && <PlacardText text={placard.body.en} lang="en" terms={[]} className={styles.english} />}
-            {lesson.visual && (placard.kind === 'concept' || placard.kind === 'application') && <DsbDiagrams key={lesson.conceptId} visual={lesson.visual} terms={lesson.terms} selectedTermId={selectedTermId} onTermOpen={setSelectedTermId} />}
+            {lesson.visual && (placard.kind === 'concept' || placard.kind === 'application') && <DsbDiagrams key={lesson.conceptId} visual={lesson.visual} terms={lesson.terms} selectedTermId={selectedTermId} onTermOpen={openTerm} />}
             {placard.sources.length > 0 && (
               <details className={styles.sources}>
                 <summary>Sources ({placard.sources.length})</summary>
@@ -271,7 +319,7 @@ export function LessonScreen() {
         <ul className={styles.wordList}>
           {newTerms.map((t) => (
             <li key={t.id}>
-              <TermChip term={t} onOpen={setSelectedTermId} showMeaning={dial === 1} className={styles.listChip} />
+              <TermChip term={t} onOpen={openTerm} showMeaning={dial === 1} className={styles.listChip} />
             </li>
           ))}
         </ul>
@@ -281,7 +329,7 @@ export function LessonScreen() {
             <ul className={styles.wordList}>
               {earlierTerms.map((t) => (
                 <li key={t.id}>
-                  <TermChip term={t} onOpen={setSelectedTermId} className={styles.listChip} />
+                  <TermChip term={t} onOpen={openTerm} className={styles.listChip} />
                 </li>
               ))}
             </ul>

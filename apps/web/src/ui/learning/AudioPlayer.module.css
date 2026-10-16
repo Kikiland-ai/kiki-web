@@ -1,0 +1,120 @@
+.player {
+  display: grid;
+  gap: var(--learning-space-2);
+  padding: var(--learning-space-3);
+  border: 1px solid var(--learning-line);
+  border-radius: var(--learning-radius-card);
+  background: var(--learning-paper-sunken);
+  min-width: 0;
+}
+
+.top,
+.controls,
+.options {
+  display: flex;
+  align-items: center;
+  gap: var(--learning-space-2);
+  min-width: 0;
+}
+
+.top {
+  justify-content: space-between;
+}
+
+.options {
+  flex-wrap: wrap;
+}
+
+.icon,
+.play,
+.segment,
+.retry {
+  min-width: var(--learning-tap-target);
+  min-height: var(--learning-tap-target);
+  border: none;
+  font: var(--learning-text-button);
+  color: var(--learning-ink);
+  cursor: pointer;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  border-radius: var(--learning-radius-pill);
+  background: none;
+}
+
+.play {
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: var(--learning-radius-pill);
+  background: var(--learning-button-primary-bg);
+  color: var(--learning-button-primary-fg);
+}
+
+.play:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.scrub {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: var(--learning-tap-target);
+  margin: 0;
+  accent-color: var(--learning-ink);
+  cursor: pointer;
+}
+
+.time {
+  flex: none;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+  font-variant-numeric: tabular-nums;
+}
+
+.segments {
+  display: inline-flex;
+  border: 1px solid var(--learning-line);
+  border-radius: var(--learning-radius-pill);
+  overflow: hidden;
+}
+
+.segment {
+  padding: 0 var(--learning-space-3);
+  background: var(--learning-paper);
+}
+
+.segment + .segment {
+  border-left: 1px solid var(--learning-line);
+}
+
+/* Selected: inverted fill (dark on light, not a hue), plus aria-pressed for screen readers */
+.segment[aria-pressed='true'] {
+  background: var(--learning-ink);
+  color: var(--learning-paper);
+}
+
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--learning-space-2);
+  margin: 0;
+}
+
+.retry {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--learning-space-1);
+  padding: 0 var(--learning-space-3);
+  border-radius: var(--learning-radius-pill);
+  background: var(--learning-paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player * {
+    transition: none !important;
+  }
+}

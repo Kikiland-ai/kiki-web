@@ -99,3 +99,22 @@ export const ArrowBackIcon = (p: IconProps) => (
     <path d="M19 12H5M11 6l-6 6 6 6" />
   </Svg>
 )
+
+export const PlayIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" />
+  </Svg>
+)
+
+export const PauseIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9 5.5v13M15 5.5v13" strokeWidth={3} />
+  </Svg>
+)
+
+export const SpeakerIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" />
+    <path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10" />
+  </Svg>
+)

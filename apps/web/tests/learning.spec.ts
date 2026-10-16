@@ -203,3 +203,70 @@ test('term details open at every language notch, including 5',async({page})=>{
     await page.keyboard.press('Escape'); await expect(dialog).toHaveCount(0);
   }
 });
+
+// Arpan, 16 Oct: Listen player (labelled placeholder clips for C-AM-08)
+async function openC08(page: Page) {
+  await setup(page); await page.getByRole('link',{name:/^Concept 8:/}).click();
+  await expect(page.getByRole('heading',{level:1,name:'Carrier mismatch and debugging'})).toBeVisible();
+}
+async function setNotch(page: Page, notch: number) {
+  const knob=page.getByRole('slider',{name:'Language mix',exact:true}); await knob.press('Home');
+  for(let i=1;i<notch;i++) await knob.press('ArrowRight');
+  await expect(knob).toHaveAttribute('aria-valuenow',String(notch));
+}
+const audio=(page: Page)=>page.evaluate(()=>{const a=document.querySelector('audio');return a?{src:a.getAttribute('src')??'',paused:a.paused,time:a.currentTime,rate:a.playbackRate}:null;});
+async function playing(page: Page) { await expect.poll(async()=>(await audio(page))?.time??0).toBeGreaterThan(0.2); }
+
+test('Listen plays the text on top of the card and says it is unreviewed machine speech',async({page})=>{
+  await openC08(page); await setNotch(page,2);
+  await page.getByRole('button',{name:'Listen',exact:true}).click();
+  await expect(page.getByRole('region',{name:/^Listen: /})).toBeVisible();
+  await expect(page.getByText('Sample audio · machine voice, not reviewed',{exact:true})).toBeVisible();
+  await playing(page); expect((await audio(page))!.src).toMatch(/CARD-AM-08-definition\.or\.wav$/);
+  await page.getByRole('button',{name:'Pause narration',exact:true}).click();
+  await expect.poll(async()=>(await audio(page))!.paused).toBe(true);
+});
+test('notch 4 plays English; notch 3 shows both texts and offers both languages',async({page})=>{
+  await openC08(page); await setNotch(page,4);
+  await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
+  expect((await audio(page))!.src).toMatch(/\.en\.wav$/);
+  await setNotch(page,3); await expect(page.locator('audio')).toHaveCount(0);
+  await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
+  const languages=page.getByRole('group',{name:'Narration language'});
+  await expect(languages.getByRole('button',{name:'Odia',exact:true})).toHaveAttribute('aria-pressed','true');
+  expect((await audio(page))!.src).toMatch(/\.or\.wav$/);
+  await languages.getByRole('button',{name:'English',exact:true}).click(); await playing(page);
+  expect((await audio(page))!.src).toMatch(/\.en\.wav$/);
+});
+test('moving to another placard stops the sound; the chosen speed carries over',async({page})=>{
+  await openC08(page);
+  await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
+  await page.getByRole('button',{name:'1.25×',exact:true}).click();
+  await expect.poll(async()=>(await audio(page))!.rate).toBe(1.25);
+  await page.getByRole('button',{name:/^Next:/}).click();
+  await expect(page.locator('audio')).toHaveCount(0);
+  await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
+  expect((await audio(page))!.rate).toBe(1.25); expect((await audio(page))!.src).toMatch(/CARD-AM-08-concept/);
+});
+test('tapping a term pauses the narration and opens its details',async({page})=>{
+  await openC08(page); await setNotch(page,2);
+  await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
+  await page.getByRole('region',{name:'Words in this lesson'}).getByRole('button').first().click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect.poll(async()=>(await audio(page))!.paused).toBe(true);
+});
+test('lessons without audio show no Listen button',async({page})=>{
+  await setup(page); await openFirst(page);
+  await expect(page.getByRole('button',{name:'Listen',exact:true})).toHaveCount(0);
+});
+for(const width of [320,390,768,1280]) {
+  test(`open player fits and keeps 48px controls at ${width}px`,async({page})=>{
+    await page.setViewportSize({width,height:900}); await openC08(page);
+    await page.getByRole('button',{name:'Listen',exact:true}).click();
+    const player=page.getByRole('region',{name:/^Listen: /}); await expect(player).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+    const small=await player.evaluate(el=>[...el.querySelectorAll('button, input')].map(c=>c.getBoundingClientRect()).filter(r=>r.width&&r.height<47.5).length);
+    expect(small).toBe(0);
+    const box=(await player.boundingBox())!; expect(box.x).toBeGreaterThanOrEqual(0); expect(box.x+box.width).toBeLessThanOrEqual(width+1);
+  });
+}

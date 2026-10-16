@@ -273,3 +273,9 @@
   align-items: center;
   min-height: var(--learning-tap-target);
 }
+
+/* Listen sits under the placard title; the player takes its place while open (media, 16 Oct) */
+.listen {
+  justify-self: start;
+  align-self: start;
+}
