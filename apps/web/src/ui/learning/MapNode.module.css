@@ -1,0 +1,137 @@
+.node {
+  display: grid;
+  gap: var(--learning-space-2);
+  min-width: 0;
+  min-height: var(--learning-tap-target);
+  color: var(--learning-ink);
+  text-decoration: none;
+  border-radius: var(--learning-radius-node);
+}
+
+.node:hover .body {
+  background: var(--learning-paper-sunken);
+}
+
+/* The component body: a part on the breadboard with an LED in the corner */
+.body {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 76px;
+  height: 76px;
+  border: 2px solid var(--learning-line);
+  border-radius: var(--learning-radius-node);
+  background: var(--learning-paper-raised);
+  box-shadow: var(--learning-key-edge-neutral);
+}
+
+.led {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--learning-pencil);
+  background: var(--learning-line);
+}
+
+.pin {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 0;
+}
+
+.text {
+  display: grid;
+  gap: var(--learning-space-1);
+  min-width: 0;
+}
+
+.title {
+  font: var(--learning-text-term);
+  overflow-wrap: anywhere;
+}
+
+.titleOr {
+  font: var(--learning-text-label-odia);
+  font-weight: 400;
+  color: var(--learning-pencil);
+  overflow-wrap: anywhere;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--learning-space-1);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Tile: a node on the map, label underneath */
+.tile {
+  /* Keep body and title at the top when a neighbour's longer title makes the row taller */
+  align-content: start;
+  justify-items: center;
+  width: 136px;
+  padding-top: var(--learning-space-6);
+  text-align: center;
+}
+
+.tile .badges {
+  justify-content: center;
+}
+
+/* Row: one line of the phone list */
+.row {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--learning-space-4);
+  width: 100%;
+  padding: var(--learning-space-3);
+  border: 1px solid var(--learning-line);
+  background: var(--learning-paper-raised);
+}
+
+/* Room for Kiki's pin above the body */
+.row.next {
+  padding-top: var(--learning-space-6);
+}
+
+.row .body {
+  width: 64px;
+  height: 64px;
+}
+
+/* Statuses: outline and LED repeat the written badge */
+.learning .body {
+  border-color: var(--learning-ink);
+}
+
+.revisit .body {
+  border-style: dashed;
+  border-color: var(--learning-ink);
+}
+
+.passed .led {
+  border-color: var(--learning-green-ink);
+  background: var(--learning-green);
+}
+
+.next .body {
+  border-color: var(--learning-ink);
+  border-width: 3px;
+}

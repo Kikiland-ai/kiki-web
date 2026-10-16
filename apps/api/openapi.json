@@ -1,0 +1,3549 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Kiki API",
+    "version": "0.3.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/learners/me/bootstrap": {
+      "post": {
+        "summary": "Bootstrap",
+        "operationId": "bootstrap_learners_me_bootstrap_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/learners/me/profile": {
+      "get": {
+        "summary": "Read Profile",
+        "operationId": "read_profile_learners_me_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Profile",
+        "operationId": "update_profile_learners_me_profile_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Preferences"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/learners/me/enrollments": {
+      "post": {
+        "summary": "Enroll",
+        "operationId": "enroll_learners_me_enrollments_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Enrollment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/study-requests": {
+      "post": {
+        "summary": "Create Material",
+        "operationId": "create_material_study_requests_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 200,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "context",
+                  "files"
+                ],
+                "properties": {
+                  "context": {
+                    "type": "string",
+                    "description": "JSON IntakeContext: courseId, kind, topic, note, classDate"
+                  },
+                  "files": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List Material",
+        "operationId": "list_material_study_requests_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestsEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/study-requests/{request_id}": {
+      "get": {
+        "summary": "Get Material",
+        "operationId": "get_material_study_requests__request_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/source-docs/{source_id}": {
+      "get": {
+        "summary": "Get Source",
+        "operationId": "get_source_source_docs__source_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/source-docs/{source_id}/content": {
+      "get": {
+        "summary": "Get Original",
+        "operationId": "get_original_source_docs__source_id__content_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/study-requests/{request_id}/retry": {
+      "post": {
+        "summary": "Processing Unavailable",
+        "operationId": "processing_unavailable_study_requests__request_id__retry_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/study-requests/{request_id}/confirm": {
+      "post": {
+        "summary": "Processing Unavailable",
+        "operationId": "processing_unavailable_study_requests__request_id__confirm_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lesson-plans/{plan_id}": {
+      "get": {
+        "summary": "Chapter",
+        "operationId": "chapter_lesson_plans__plan_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Plan Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concepts/{concept_id}/lesson": {
+      "get": {
+        "summary": "Lesson",
+        "operationId": "lesson_concepts__concept_id__lesson_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "concept_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Concept Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/learners/me/progress": {
+      "get": {
+        "summary": "Progress",
+        "operationId": "progress_learners_me_progress_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "title": "Planid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgressEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/learners/me/positions/{concept_id}": {
+      "put": {
+        "summary": "Position",
+        "operationId": "position_learners_me_positions__concept_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "concept_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Concept Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PositionUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assessment-runs": {
+      "post": {
+        "summary": "Start",
+        "operationId": "start_assessment_runs_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Start"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assessment-runs/{run_id}": {
+      "get": {
+        "summary": "Get Run",
+        "operationId": "get_run_assessment_runs__run_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assessment-runs/{run_id}/draft": {
+      "put": {
+        "summary": "Draft",
+        "operationId": "draft_assessment_runs__run_id__draft_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Draft"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assessment-runs/{run_id}/submit": {
+      "post": {
+        "summary": "Submit",
+        "operationId": "submit_assessment_runs__run_id__submit_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Submission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assessment-runs/{run_id}/result": {
+      "get": {
+        "summary": "Result",
+        "operationId": "result_assessment_runs__run_id__result_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/learners/me/assessment-overview": {
+      "get": {
+        "summary": "Overview",
+        "operationId": "overview_learners_me_assessment_overview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "title": "Planid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/practicals/{practical_id}": {
+      "get": {
+        "summary": "Practical",
+        "operationId": "practical_practicals__practical_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "practical_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Practical Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PracticalEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lab-preparations": {
+      "post": {
+        "summary": "Start",
+        "operationId": "start_lab_preparations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartPreparation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreparationEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/lab-preparations/active": {
+      "get": {
+        "summary": "Active",
+        "operationId": "active_lab_preparations_active_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "practicalId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "title": "Practicalid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActiveEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lab-preparations/{session_id}": {
+      "get": {
+        "summary": "Get",
+        "operationId": "get_lab_preparations__session_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreparationEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update",
+        "operationId": "update_lab_preparations__session_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreparationDraft"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreparationEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActiveEnvelope": {
+        "properties": {
+          "preparation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Preparation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "preparation"
+        ],
+        "title": "ActiveEnvelope"
+      },
+      "Attempt": {
+        "properties": {
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Result"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "run",
+          "result"
+        ],
+        "title": "Attempt"
+      },
+      "Breakdown": {
+        "properties": {
+          "correct": {
+            "type": "integer",
+            "title": "Correct"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "missedQuestionIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missedquestionids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "correct",
+          "total",
+          "missedQuestionIds"
+        ],
+        "title": "Breakdown"
+      },
+      "BroadConcept": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "order": {
+            "type": "integer",
+            "title": "Order"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "order"
+        ],
+        "title": "BroadConcept"
+      },
+      "Chapter": {
+        "properties": {
+          "planId": {
+            "type": "string",
+            "const": "LP-ANALOG-MODULATION",
+            "title": "Planid"
+          },
+          "courseId": {
+            "type": "string",
+            "const": "CRS-AC-ECE",
+            "title": "Courseid"
+          },
+          "title": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "broadConcepts": {
+            "items": {
+              "$ref": "#/components/schemas/BroadConcept"
+            },
+            "type": "array",
+            "title": "Broadconcepts"
+          },
+          "concepts": {
+            "items": {
+              "$ref": "#/components/schemas/ChapterConcept"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 10,
+            "title": "Concepts"
+          },
+          "chapterAssessmentId": {
+            "type": "string",
+            "const": "AS-AM-CHAPTER",
+            "title": "Chapterassessmentid"
+          },
+          "practicalId": {
+            "type": "string",
+            "const": "PR-AM-DSB",
+            "title": "Practicalid"
+          },
+          "review": {
+            "$ref": "#/components/schemas/Review"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "planId",
+          "courseId",
+          "title",
+          "broadConcepts",
+          "concepts",
+          "chapterAssessmentId",
+          "practicalId",
+          "review"
+        ],
+        "title": "Chapter"
+      },
+      "ChapterConcept": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "order": {
+            "type": "integer",
+            "title": "Order"
+          },
+          "broadConceptId": {
+            "type": "string",
+            "title": "Broadconceptid"
+          },
+          "title": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "canDo": {
+            "type": "string",
+            "title": "Cando"
+          },
+          "prerequisiteIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Prerequisiteids"
+          },
+          "requiredForLab": {
+            "type": "boolean",
+            "title": "Requiredforlab"
+          },
+          "estMinutes": {
+            "type": "integer",
+            "title": "Estminutes"
+          },
+          "assessmentId": {
+            "type": "string",
+            "title": "Assessmentid"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "order",
+          "broadConceptId",
+          "title",
+          "canDo",
+          "prerequisiteIds",
+          "requiredForLab",
+          "estMinutes",
+          "assessmentId"
+        ],
+        "title": "ChapterConcept"
+      },
+      "ChapterEnvelope": {
+        "properties": {
+          "chapter": {
+            "$ref": "#/components/schemas/Chapter"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "chapter"
+        ],
+        "title": "ChapterEnvelope"
+      },
+      "Check": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_attempted",
+              "revisit",
+              "passed"
+            ],
+            "title": "Status"
+          },
+          "latestRunId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latestrunid"
+          },
+          "attemptPercent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attemptpercent"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "Check"
+      },
+      "Checkpoint": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "stepNumber": {
+            "type": "integer",
+            "title": "Stepnumber"
+          },
+          "targetLabel": {
+            "type": "string",
+            "title": "Targetlabel"
+          },
+          "instruction": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "why": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "expected": {
+            "type": "string",
+            "title": "Expected"
+          },
+          "evidenceKind": {
+            "type": "string",
+            "title": "Evidencekind"
+          },
+          "prerequisiteCheckpointIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Prerequisitecheckpointids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "stepNumber",
+          "targetLabel",
+          "instruction",
+          "why",
+          "expected",
+          "evidenceKind",
+          "prerequisiteCheckpointIds"
+        ],
+        "title": "Checkpoint"
+      },
+      "Choice": {
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Questionid"
+          },
+          "optionIndex": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 0.0,
+            "title": "Optionindex"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "questionId",
+          "optionIndex"
+        ],
+        "title": "Choice"
+      },
+      "ConceptProgress": {
+        "properties": {
+          "conceptId": {
+            "type": "string",
+            "title": "Conceptid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "learning",
+              "revisit",
+              "passed"
+            ],
+            "title": "Status"
+          },
+          "theoryCheck": {
+            "$ref": "#/components/schemas/Check"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Position"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "conceptId",
+          "status",
+          "theoryCheck"
+        ],
+        "title": "ConceptProgress"
+      },
+      "Coverage": {
+        "properties": {
+          "done": {
+            "type": "integer",
+            "title": "Done"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "done",
+          "total"
+        ],
+        "title": "Coverage"
+      },
+      "Draft": {
+        "properties": {
+          "responses": {
+            "items": {
+              "$ref": "#/components/schemas/Choice"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Responses"
+          },
+          "currentQuestionIndex": {
+            "type": "integer",
+            "maximum": 9.0,
+            "minimum": 0.0,
+            "title": "Currentquestionindex"
+          },
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expectedrevision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "responses",
+          "currentQuestionIndex",
+          "expectedRevision"
+        ],
+        "title": "Draft"
+      },
+      "DsbVisual": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "dsb_sc",
+            "title": "Kind"
+          },
+          "schema": {
+            "type": "string",
+            "const": "dsb-sc-visual/v1",
+            "title": "Schema"
+          },
+          "messageFrequencyHz": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Messagefrequencyhz"
+          },
+          "carrierFrequencyHz": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Carrierfrequencyhz"
+          },
+          "messageRangeHz": {
+            "$ref": "#/components/schemas/FrequencyRange"
+          },
+          "sidebandTermId": {
+            "type": "string",
+            "const": "T-AM-04-2",
+            "title": "Sidebandtermid"
+          },
+          "carrierTermId": {
+            "type": "string",
+            "const": "T-AM-02-2",
+            "title": "Carriertermid"
+          },
+          "signalTermId": {
+            "type": "string",
+            "const": "T-AM-04-1",
+            "title": "Signaltermid"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/VisualSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "schema",
+          "messageFrequencyHz",
+          "carrierFrequencyHz",
+          "messageRangeHz",
+          "sidebandTermId",
+          "carrierTermId",
+          "signalTermId",
+          "sources"
+        ],
+        "title": "DsbVisual"
+      },
+      "Enrollment": {
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "const": "CRS-AC-ECE",
+            "title": "Courseid"
+          },
+          "semester": {
+            "type": "integer",
+            "maximum": 8.0,
+            "minimum": 1.0,
+            "title": "Semester"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "courseId",
+          "semester"
+        ],
+        "title": "Enrollment"
+      },
+      "Example": {
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "scenario": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "takeaway": {
+            "$ref": "#/components/schemas/Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "scenario",
+          "takeaway"
+        ],
+        "title": "Example"
+      },
+      "Feedback": {
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "title": "Questionid"
+          },
+          "correct": {
+            "type": "boolean",
+            "title": "Correct"
+          },
+          "explanation": {
+            "$ref": "#/components/schemas/Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "questionId",
+          "correct",
+          "explanation"
+        ],
+        "title": "Feedback"
+      },
+      "FrequencyRange": {
+        "properties": {
+          "min": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Min"
+          },
+          "max": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Max"
+          },
+          "step": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Step"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "min",
+          "max",
+          "step"
+        ],
+        "title": "FrequencyRange"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LabReadiness": {
+        "properties": {
+          "practicalId": {
+            "type": "string",
+            "const": "PR-AM-DSB",
+            "title": "Practicalid"
+          },
+          "ready": {
+            "type": "boolean",
+            "title": "Ready"
+          },
+          "requiredConceptIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Requiredconceptids"
+          },
+          "missingConceptIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missingconceptids"
+          },
+          "evidenceRunIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidencerunids"
+          },
+          "chapterTestRequired": {
+            "type": "boolean",
+            "const": false,
+            "title": "Chaptertestrequired",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "practicalId",
+          "ready",
+          "requiredConceptIds",
+          "missingConceptIds",
+          "evidenceRunIds"
+        ],
+        "title": "LabReadiness"
+      },
+      "Lesson": {
+        "properties": {
+          "conceptId": {
+            "type": "string",
+            "title": "Conceptid"
+          },
+          "planId": {
+            "type": "string",
+            "const": "LP-ANALOG-MODULATION",
+            "title": "Planid"
+          },
+          "title": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "keyIdea": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "placards": {
+            "items": {
+              "$ref": "#/components/schemas/Placard"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Placards"
+          },
+          "terms": {
+            "items": {
+              "$ref": "#/components/schemas/Term"
+            },
+            "type": "array",
+            "title": "Terms"
+          },
+          "example": {
+            "$ref": "#/components/schemas/Example"
+          },
+          "media": {
+            "$ref": "#/components/schemas/Media"
+          },
+          "assessmentId": {
+            "type": "string",
+            "title": "Assessmentid"
+          },
+          "visual": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DsbVisual"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "conceptId",
+          "planId",
+          "title",
+          "keyIdea",
+          "placards",
+          "terms",
+          "example",
+          "media",
+          "assessmentId"
+        ],
+        "title": "Lesson"
+      },
+      "LessonEnvelope": {
+        "properties": {
+          "lesson": {
+            "$ref": "#/components/schemas/Lesson"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lesson"
+        ],
+        "title": "LessonEnvelope"
+      },
+      "Media": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "none",
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "Media"
+      },
+      "Monitoring": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "pending_integration",
+            "title": "Status",
+            "default": "pending_integration"
+          },
+          "pointerActive": {
+            "type": "boolean",
+            "const": false,
+            "title": "Pointeractive",
+            "default": false
+          },
+          "assessmentStatus": {
+            "type": "string",
+            "const": "not_assessed",
+            "title": "Assessmentstatus",
+            "default": "not_assessed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Monitoring"
+      },
+      "Onboarding": {
+        "properties": {
+          "step": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Step"
+          },
+          "completedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completedat"
+          },
+          "fluencySelfRatings": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SelfRatings"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "easyLanguageAnswer": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "regional",
+                  "mixed",
+                  "english"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Easylanguageanswer"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "step",
+          "completedAt",
+          "fluencySelfRatings",
+          "easyLanguageAnswer"
+        ],
+        "title": "Onboarding"
+      },
+      "Overview": {
+        "properties": {
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "planId": {
+            "type": "string",
+            "const": "LP-ANALOG-MODULATION",
+            "title": "Planid"
+          },
+          "contentVersion": {
+            "type": "string",
+            "title": "Contentversion"
+          },
+          "concepts": {
+            "items": {
+              "$ref": "#/components/schemas/OverviewConcept"
+            },
+            "type": "array",
+            "title": "Concepts"
+          },
+          "chapterAllowed": {
+            "type": "boolean",
+            "title": "Chapterallowed"
+          },
+          "chapterMissingConceptIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Chaptermissingconceptids"
+          },
+          "labReady": {
+            "type": "boolean",
+            "title": "Labready"
+          },
+          "labMissingConceptIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Labmissingconceptids"
+          },
+          "chapterTestRequired": {
+            "type": "boolean",
+            "const": false,
+            "title": "Chaptertestrequired",
+            "default": false
+          },
+          "attempts": {
+            "items": {
+              "$ref": "#/components/schemas/Attempt"
+            },
+            "type": "array",
+            "title": "Attempts"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ownerLearnerId",
+          "planId",
+          "contentVersion",
+          "concepts",
+          "chapterAllowed",
+          "chapterMissingConceptIds",
+          "labReady",
+          "labMissingConceptIds",
+          "attempts"
+        ],
+        "title": "Overview"
+      },
+      "OverviewConcept": {
+        "properties": {
+          "conceptId": {
+            "type": "string",
+            "title": "Conceptid"
+          },
+          "assessmentId": {
+            "type": "string",
+            "title": "Assessmentid"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_attempted",
+              "passed",
+              "revisit"
+            ],
+            "title": "Status"
+          },
+          "latestRunId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latestrunid"
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "conceptId",
+          "assessmentId",
+          "title",
+          "status",
+          "latestRunId",
+          "percent"
+        ],
+        "title": "OverviewConcept"
+      },
+      "OverviewEnvelope": {
+        "properties": {
+          "overview": {
+            "$ref": "#/components/schemas/Overview"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "overview"
+        ],
+        "title": "OverviewEnvelope"
+      },
+      "Placard": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "definition",
+              "concept",
+              "application",
+              "recap"
+            ],
+            "title": "Kind"
+          },
+          "title": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "body": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "termIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Termids"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "body",
+          "termIds",
+          "sources"
+        ],
+        "title": "Placard"
+      },
+      "Position": {
+        "properties": {
+          "placardId": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Placardid"
+          },
+          "updatedAt": {
+            "type": "string",
+            "title": "Updatedat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "placardId",
+          "updatedAt"
+        ],
+        "title": "Position"
+      },
+      "PositionEnvelope": {
+        "properties": {
+          "position": {
+            "$ref": "#/components/schemas/ConceptProgress"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "position"
+        ],
+        "title": "PositionEnvelope"
+      },
+      "PositionUpdate": {
+        "properties": {
+          "placardId": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Placardid"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "placardId"
+        ],
+        "title": "PositionUpdate"
+      },
+      "Practical": {
+        "properties": {
+          "practicalId": {
+            "type": "string",
+            "const": "PR-AM-DSB",
+            "title": "Practicalid"
+          },
+          "planId": {
+            "type": "string",
+            "const": "LP-ANALOG-MODULATION",
+            "title": "Planid"
+          },
+          "contentVersion": {
+            "type": "string",
+            "title": "Contentversion"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "aim": {
+            "type": "string",
+            "title": "Aim"
+          },
+          "softwareName": {
+            "type": "string",
+            "title": "Softwarename"
+          },
+          "softwareUrl": {
+            "type": "string",
+            "const": "https://matlab.mathworks.com/",
+            "title": "Softwareurl"
+          },
+          "predictionPrompt": {
+            "type": "string",
+            "title": "Predictionprompt"
+          },
+          "observationPrompts": {
+            "items": {
+              "$ref": "#/components/schemas/Text"
+            },
+            "type": "array",
+            "title": "Observationprompts"
+          },
+          "checkpoints": {
+            "items": {
+              "$ref": "#/components/schemas/Checkpoint"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 12,
+            "title": "Checkpoints"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "reviewStatus": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "reviewed"
+            ],
+            "title": "Reviewstatus"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "practicalId",
+          "planId",
+          "contentVersion",
+          "title",
+          "aim",
+          "softwareName",
+          "softwareUrl",
+          "predictionPrompt",
+          "observationPrompts",
+          "checkpoints",
+          "sources",
+          "reviewStatus"
+        ],
+        "title": "Practical"
+      },
+      "PracticalEnvelope": {
+        "properties": {
+          "practical": {
+            "$ref": "#/components/schemas/Practical"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "practical"
+        ],
+        "title": "PracticalEnvelope"
+      },
+      "Preferences": {
+        "properties": {
+          "supportLanguage": {
+            "type": "string",
+            "enum": [
+              "or",
+              "en"
+            ],
+            "title": "Supportlanguage"
+          },
+          "dialLevel": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Diallevel"
+          },
+          "onboarding": {
+            "$ref": "#/components/schemas/Onboarding"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "supportLanguage",
+          "dialLevel",
+          "onboarding"
+        ],
+        "title": "Preferences"
+      },
+      "Preparation": {
+        "properties": {
+          "schema": {
+            "type": "string",
+            "const": "lab-preparation/v1",
+            "title": "Schema"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "practicalId": {
+            "type": "string",
+            "const": "PR-AM-DSB",
+            "title": "Practicalid"
+          },
+          "contentVersion": {
+            "type": "string",
+            "pattern": "^am-[a-f0-9]{24}$",
+            "title": "Contentversion"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "currentCheckpointId": {
+            "type": "string",
+            "title": "Currentcheckpointid"
+          },
+          "prediction": {
+            "type": "string",
+            "maxLength": 3000,
+            "title": "Prediction"
+          },
+          "projectRef": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Projectref"
+          },
+          "observationNotes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Observationnotes"
+          },
+          "createdAt": {
+            "type": "string",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "title": "Updatedat"
+          },
+          "readiness": {
+            "$ref": "#/components/schemas/LabReadiness"
+          },
+          "monitoring": {
+            "$ref": "#/components/schemas/Monitoring"
+          },
+          "sessionPath": {
+            "type": "string",
+            "title": "Sessionpath"
+          },
+          "practical": {
+            "$ref": "#/components/schemas/Practical"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema",
+          "id",
+          "ownerLearnerId",
+          "practicalId",
+          "contentVersion",
+          "revision",
+          "currentCheckpointId",
+          "prediction",
+          "projectRef",
+          "observationNotes",
+          "createdAt",
+          "updatedAt",
+          "readiness",
+          "monitoring",
+          "sessionPath",
+          "practical"
+        ],
+        "title": "Preparation"
+      },
+      "PreparationDraft": {
+        "properties": {
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expectedrevision"
+          },
+          "currentCheckpointId": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Currentcheckpointid"
+          },
+          "prediction": {
+            "type": "string",
+            "maxLength": 3000,
+            "title": "Prediction"
+          },
+          "projectRef": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Projectref"
+          },
+          "observationNotes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Observationnotes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expectedRevision",
+          "currentCheckpointId",
+          "prediction",
+          "projectRef",
+          "observationNotes"
+        ],
+        "title": "PreparationDraft"
+      },
+      "PreparationEnvelope": {
+        "properties": {
+          "preparation": {
+            "$ref": "#/components/schemas/Preparation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "preparation"
+        ],
+        "title": "PreparationEnvelope"
+      },
+      "Profile": {
+        "properties": {
+          "supportLanguage": {
+            "type": "string",
+            "enum": [
+              "or",
+              "en"
+            ],
+            "title": "Supportlanguage"
+          },
+          "dialLevel": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Diallevel"
+          },
+          "onboarding": {
+            "$ref": "#/components/schemas/Onboarding"
+          },
+          "schema": {
+            "type": "string",
+            "const": "profile/v1",
+            "title": "Schema"
+          },
+          "id": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "courseIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Courseids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "supportLanguage",
+          "dialLevel",
+          "onboarding",
+          "schema",
+          "id",
+          "displayName",
+          "courseIds"
+        ],
+        "title": "Profile"
+      },
+      "ProfileEnvelope": {
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile"
+        ],
+        "title": "ProfileEnvelope"
+      },
+      "Progress": {
+        "properties": {
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "planId": {
+            "type": "string",
+            "const": "LP-ANALOG-MODULATION",
+            "title": "Planid"
+          },
+          "concepts": {
+            "items": {
+              "$ref": "#/components/schemas/ConceptProgress"
+            },
+            "type": "array",
+            "title": "Concepts"
+          },
+          "chapterTest": {
+            "$ref": "#/components/schemas/Check"
+          },
+          "rings": {
+            "$ref": "#/components/schemas/Rings"
+          },
+          "labReadiness": {
+            "$ref": "#/components/schemas/LabReadiness"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ownerLearnerId",
+          "planId",
+          "concepts",
+          "chapterTest",
+          "rings",
+          "labReadiness"
+        ],
+        "title": "Progress"
+      },
+      "ProgressEnvelope": {
+        "properties": {
+          "progress": {
+            "$ref": "#/components/schemas/Progress"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "progress"
+        ],
+        "title": "ProgressEnvelope"
+      },
+      "Question": {
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "title": "Questionid"
+          },
+          "conceptId": {
+            "type": "string",
+            "title": "Conceptid"
+          },
+          "prompt": {
+            "$ref": "#/components/schemas/Text"
+          },
+          "options": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "propertyNames": {
+              "enum": [
+                "en",
+                "or"
+              ]
+            },
+            "type": "object",
+            "title": "Options"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "questionId",
+          "conceptId",
+          "prompt",
+          "options"
+        ],
+        "title": "Question"
+      },
+      "RequestEnvelope": {
+        "properties": {
+          "request": {
+            "$ref": "#/components/schemas/StoredRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request"
+        ],
+        "title": "RequestEnvelope"
+      },
+      "RequestsEnvelope": {
+        "properties": {
+          "requests": {
+            "items": {
+              "$ref": "#/components/schemas/StoredRequest"
+            },
+            "type": "array",
+            "title": "Requests"
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nextcursor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "requests"
+        ],
+        "title": "RequestsEnvelope"
+      },
+      "Result": {
+        "properties": {
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "contentVersion": {
+            "type": "string",
+            "title": "Contentversion"
+          },
+          "runId": {
+            "type": "string",
+            "title": "Runid"
+          },
+          "assessmentId": {
+            "type": "string",
+            "title": "Assessmentid"
+          },
+          "correct": {
+            "type": "integer",
+            "title": "Correct"
+          },
+          "total": {
+            "type": "integer",
+            "enum": [
+              5,
+              10
+            ],
+            "title": "Total"
+          },
+          "percent": {
+            "type": "number",
+            "title": "Percent"
+          },
+          "passPercent": {
+            "type": "integer",
+            "enum": [
+              60,
+              80
+            ],
+            "title": "Passpercent"
+          },
+          "passed": {
+            "type": "boolean",
+            "title": "Passed"
+          },
+          "byConcept": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Breakdown"
+            },
+            "type": "object",
+            "title": "Byconcept"
+          },
+          "revisitConceptIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Revisitconceptids"
+          },
+          "nextAction": {
+            "type": "string",
+            "enum": [
+              "continue",
+              "revisit_then_retry"
+            ],
+            "title": "Nextaction"
+          },
+          "feedback": {
+            "items": {
+              "$ref": "#/components/schemas/Feedback"
+            },
+            "type": "array",
+            "title": "Feedback"
+          },
+          "completedAt": {
+            "type": "string",
+            "title": "Completedat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ownerLearnerId",
+          "contentVersion",
+          "runId",
+          "assessmentId",
+          "correct",
+          "total",
+          "percent",
+          "passPercent",
+          "passed",
+          "byConcept",
+          "revisitConceptIds",
+          "nextAction",
+          "feedback",
+          "completedAt"
+        ],
+        "title": "Result"
+      },
+      "ResultEnvelope": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/Result"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "title": "ResultEnvelope"
+      },
+      "Review": {
+        "properties": {
+          "content": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "reviewed"
+            ],
+            "title": "Content"
+          },
+          "odia": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "reviewed"
+            ],
+            "title": "Odia"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "content",
+          "odia"
+        ],
+        "title": "Review"
+      },
+      "Rings": {
+        "properties": {
+          "concept": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Coverage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "words": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Coverage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "english": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Coverage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lab": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Coverage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "concept"
+        ],
+        "title": "Rings"
+      },
+      "Run": {
+        "properties": {
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "runId": {
+            "type": "string",
+            "title": "Runid"
+          },
+          "assessmentId": {
+            "type": "string",
+            "title": "Assessmentid"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "concept",
+              "chapter"
+            ],
+            "title": "Scope"
+          },
+          "attemptNumber": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Attemptnumber"
+          },
+          "passPercent": {
+            "type": "integer",
+            "enum": [
+              60,
+              80
+            ],
+            "title": "Passpercent"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "type": "array",
+            "title": "Questions"
+          },
+          "contentVersion": {
+            "type": "string",
+            "title": "Contentversion"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "submitted"
+            ],
+            "title": "Status"
+          },
+          "responses": {
+            "items": {
+              "$ref": "#/components/schemas/Choice"
+            },
+            "type": "array",
+            "title": "Responses"
+          },
+          "currentQuestionIndex": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Currentquestionindex"
+          },
+          "origin": {
+            "type": "string",
+            "const": "student_attempt",
+            "title": "Origin"
+          },
+          "createdAt": {
+            "type": "string",
+            "title": "Createdat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ownerLearnerId",
+          "runId",
+          "assessmentId",
+          "scope",
+          "attemptNumber",
+          "passPercent",
+          "questions",
+          "contentVersion",
+          "revision",
+          "status",
+          "responses",
+          "currentQuestionIndex",
+          "origin",
+          "createdAt"
+        ],
+        "title": "Run"
+      },
+      "RunEnvelope": {
+        "properties": {
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "run"
+        ],
+        "title": "RunEnvelope"
+      },
+      "SelfRatings": {
+        "properties": {
+          "support": {
+            "$ref": "#/components/schemas/SupportRating"
+          },
+          "englishOutOf10": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Englishoutof10"
+          },
+          "assessedBy": {
+            "type": "string",
+            "const": "self",
+            "title": "Assessedby"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "support",
+          "englishOutOf10",
+          "assessedBy"
+        ],
+        "title": "SelfRatings"
+      },
+      "Source": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origin",
+          "label"
+        ],
+        "title": "Source"
+      },
+      "SourceAsset": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}(?:-[0-4])?$",
+            "title": "Id"
+          },
+          "requestId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}(?:-[0-4])?$",
+            "title": "Requestid"
+          },
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "mime": {
+            "type": "string",
+            "enum": [
+              "application/pdf",
+              "image/jpeg",
+              "image/png"
+            ],
+            "title": "Mime"
+          },
+          "size": {
+            "type": "integer",
+            "maximum": 10485760.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Size"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Sha256"
+          },
+          "createdAt": {
+            "type": "string",
+            "title": "Createdat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "requestId",
+          "ownerLearnerId",
+          "title",
+          "mime",
+          "size",
+          "sha256",
+          "createdAt"
+        ],
+        "title": "SourceAsset"
+      },
+      "SourceEnvelope": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/SourceAsset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "title": "SourceEnvelope"
+      },
+      "Start": {
+        "properties": {
+          "assessmentId": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Assessmentid"
+          },
+          "previousRunId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previousrunid"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assessmentId"
+        ],
+        "title": "Start"
+      },
+      "StartPreparation": {
+        "properties": {
+          "practicalId": {
+            "type": "string",
+            "const": "PR-AM-DSB",
+            "title": "Practicalid"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "practicalId"
+        ],
+        "title": "StartPreparation"
+      },
+      "StoredRequest": {
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "const": "CRS-AC-ECE",
+            "title": "Courseid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "syllabus",
+              "notes",
+              "experiment_sheet"
+            ],
+            "title": "Kind"
+          },
+          "topic": {
+            "type": "string",
+            "maxLength": 180,
+            "minLength": 1,
+            "title": "Topic"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Note",
+            "default": ""
+          },
+          "classDate": {
+            "type": "string",
+            "title": "Classdate",
+            "default": ""
+          },
+          "schema": {
+            "type": "string",
+            "const": "intake-view/v1",
+            "title": "Schema",
+            "default": "intake-view/v1"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}(?:-[0-4])?$",
+            "title": "Id"
+          },
+          "ownerLearnerId": {
+            "type": "string",
+            "title": "Ownerlearnerid"
+          },
+          "status": {
+            "type": "string",
+            "const": "stored",
+            "title": "Status",
+            "default": "stored"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceAsset"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Sources"
+          },
+          "outline": {
+            "type": "null",
+            "title": "Outline"
+          },
+          "jobId": {
+            "type": "string",
+            "title": "Jobid"
+          },
+          "lessonPlanId": {
+            "type": "null",
+            "title": "Lessonplanid"
+          },
+          "failure": {
+            "type": "null",
+            "title": "Failure"
+          },
+          "createdAt": {
+            "type": "string",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "title": "Updatedat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "courseId",
+          "kind",
+          "topic",
+          "id",
+          "ownerLearnerId",
+          "sources",
+          "jobId",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "StoredRequest"
+      },
+      "Submission": {
+        "properties": {
+          "responses": {
+            "items": {
+              "$ref": "#/components/schemas/Choice"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Responses"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "responses"
+        ],
+        "title": "Submission"
+      },
+      "SupportRating": {
+        "properties": {
+          "language": {
+            "type": "string",
+            "enum": [
+              "or",
+              "en"
+            ],
+            "title": "Language"
+          },
+          "outOf10": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Outof10"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "language",
+          "outOf10"
+        ],
+        "title": "SupportRating"
+      },
+      "Term": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "term": {
+            "type": "string",
+            "title": "Term"
+          },
+          "definition": {
+            "type": "string",
+            "title": "Definition"
+          },
+          "pronunciationOr": {
+            "type": "string",
+            "title": "Pronunciationor"
+          },
+          "glossOr": {
+            "type": "string",
+            "title": "Glossor"
+          },
+          "example": {
+            "$ref": "#/components/schemas/Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "term",
+          "definition",
+          "pronunciationOr",
+          "glossOr",
+          "example"
+        ],
+        "title": "Term"
+      },
+      "Text": {
+        "properties": {
+          "en": {
+            "type": "string",
+            "minLength": 1,
+            "title": "En"
+          },
+          "or": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Or"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "en",
+          "or"
+        ],
+        "title": "Text"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VisualSource": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origin",
+          "label"
+        ],
+        "title": "VisualSource"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

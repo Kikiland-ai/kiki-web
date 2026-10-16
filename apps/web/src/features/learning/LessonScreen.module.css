@@ -1,0 +1,268 @@
+.screen {
+  display: grid;
+  gap: var(--learning-space-6);
+  min-width: 0;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--learning-space-2);
+  justify-self: start;
+  min-height: var(--learning-tap-target);
+  color: var(--learning-ink);
+  font: var(--learning-text-term);
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.header {
+  display: grid;
+  gap: var(--learning-space-2);
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.title {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.titleOr {
+  margin: 0;
+  color: var(--learning-pencil);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--learning-space-1);
+  margin-bottom: var(--learning-space-2);
+}
+
+.keyIdea {
+  margin: 0;
+  padding: var(--learning-space-3) var(--learning-space-4);
+  border-left: 4px solid var(--learning-green);
+  background: var(--learning-green-tint);
+  border-radius: 0 var(--learning-radius-node) var(--learning-radius-node) 0;
+}
+
+.reader,
+.content {
+  display: grid;
+  gap: var(--learning-space-6);
+  min-width: 0;
+}
+
+/* 768px and up: a step column on the left, the card fixed in place on the right */
+@media (min-width: 768px) {
+  .reader {
+    grid-template-columns: 208px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  /* The steps stay in view while a long card scrolls; clear of the sticky app header */
+  .stepsNav {
+    position: sticky;
+    top: calc(var(--learning-tap-target) + var(--learning-space-8));
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .step {
+    border-radius: var(--learning-radius-node);
+  }
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: var(--learning-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--learning-space-2);
+  width: 100%;
+  min-height: var(--learning-tap-target);
+  padding: var(--learning-space-2) var(--learning-space-3);
+  border: 1px solid var(--learning-line);
+  border-radius: var(--learning-radius-pill);
+  background: var(--learning-paper-raised);
+  color: var(--learning-ink);
+  font: var(--learning-text-term);
+  text-align: left;
+  cursor: pointer;
+}
+
+.step:lang(or),
+.step [lang="or"] {
+  font: var(--learning-text-label-odia);
+}
+
+.step:hover {
+  background: var(--learning-paper-sunken);
+}
+
+.stepNumber {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--learning-pencil);
+  border-radius: 50%;
+  font: var(--learning-text-label);
+}
+
+/* Current step: ink outline and a filled number, not colour alone */
+.step[aria-current="step"] {
+  border: 2px solid var(--learning-ink);
+}
+
+.step[aria-current="step"] .stepNumber {
+  border-color: var(--learning-ink);
+  background: var(--learning-ink);
+  color: var(--learning-button-primary-fg);
+}
+
+.placard {
+  display: grid;
+  gap: var(--learning-space-3);
+  min-width: 0;
+  padding: var(--learning-space-6) var(--learning-space-4);
+  border: 1px solid var(--learning-line);
+  border-radius: var(--learning-radius-card);
+  background: var(--learning-paper-raised);
+  box-shadow: var(--learning-lift);
+}
+
+.stepOf {
+  margin: 0;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.placardTitle {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.placardTitle:lang(or) {
+  font: var(--learning-text-odia-display-m);
+}
+
+/* Focus lands here after Back or Next; it's not a control, so no ring */
+.placardTitle:focus {
+  outline: none;
+}
+
+.body {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Notch 3: the English under the Odia */
+.english {
+  margin: 0;
+  padding-top: var(--learning-space-3);
+  border-top: 1px dashed var(--learning-line);
+  color: var(--learning-pencil);
+  overflow-wrap: anywhere;
+}
+
+.sources {
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.sources summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--learning-tap-target);
+  cursor: pointer;
+}
+
+.sources ul {
+  display: grid;
+  margin: 0;
+  padding-left: var(--learning-space-6);
+}
+
+/* Full-size tap targets: one source per 48px row */
+.sources a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--learning-tap-target);
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--learning-space-3);
+}
+
+.words {
+  display: grid;
+  gap: var(--learning-space-2);
+  padding-top: var(--learning-space-6);
+  border-top: 1px solid var(--learning-line);
+}
+
+.wordsTitle {
+  margin: 0;
+}
+
+.wordsHint {
+  margin: 0;
+  color: var(--learning-pencil);
+}
+
+.wordList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--learning-space-2) var(--learning-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* At notch 1 the Odia meaning sits under its word */
+.wordList li {
+  display: grid;
+  justify-items: start;
+  max-width: 100%;
+}
+
+/* Listed words get a full-size target, unlike chips inside running text */
+.listChip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--learning-tap-target);
+}
+
+.earlier summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--learning-tap-target);
+  color: var(--learning-ink);
+  font: var(--learning-text-term);
+  cursor: pointer;
+}

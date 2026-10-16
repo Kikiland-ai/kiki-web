@@ -1,0 +1,61 @@
+.visuals { display:grid; gap:24px; min-width:0; border-top:2px solid #34a853; margin-top:24px; padding-top:24px; color:#1f1f1f; }
+.visuals p { margin:0; line-height:1.6; }
+.visuals h2 { margin:6px 0 12px; font-size:clamp(24px,3vw,34px); line-height:1.2; }
+.eyebrow { font-weight:700; font-size:13px; letter-spacing:.08em; color:#137333; }
+.flowFigure,.spectrumFigure { margin:0; display:grid; gap:16px; border:1px solid #dadce0; border-radius:18px; padding:20px; min-width:0; }
+.visuals figcaption { display:grid; gap:6px; }
+.visuals figcaption strong { font-size:20px; }
+.visuals figcaption span,.note { font-size:14px; color:#5f6368; }
+.flow { display:grid; grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr); gap:8px; align-items:center; }
+.inputs { display:grid; gap:12px; }
+.signalBox { display:grid; gap:6px; min-width:0; padding:12px; border:1px solid #dadce0; border-radius:12px; font-size:14px; }
+.signalBox b { font-size:16px; }
+.trace { display:block; width:100%; height:auto; }
+.inputTrace { stroke:#1967d2; stroke-width:1.5; }
+.productTrace { stroke:#137333; stroke-width:1.5; }
+.zero { stroke:#bdc1c6; stroke-width:1; }
+.multiply { position:relative; display:grid; place-items:center; gap:6px; font-size:14px; }
+.multiply b { display:grid; place-items:center; border:2px solid #137333; border-radius:50%; width:44px; height:44px; font-size:30px; }
+.incoming,.outgoing { position:absolute; top:10px; font-size:24px; }
+.incoming { left:-10px; }.outgoing { right:-10px; }
+.selectedSignal { border:3px solid #c5221f; padding:10px; }
+.math { font-size:14px; overflow-wrap:anywhere; }
+.spectrum { display:block; width:100%; height:auto; overflow:visible; }
+.axis { stroke:#5f6368; stroke-width:2; }
+.grid { stroke:#e8eaed; stroke-width:1; stroke-dasharray:6 7; }
+.stems { stroke:#137333; stroke-width:5; fill:#137333; }
+.highlight { fill:none; stroke:#c5221f; stroke-width:3; stroke-dasharray:8 4; }
+.reference { fill:white; stroke:#5f6368; stroke-width:2; }
+.selectedReference { fill:white; stroke:#c5221f; stroke-width:4; }
+.ticks { display:flex; justify-content:space-between; margin:-16px 7.33% 0; font-size:14px; font-variant-numeric:tabular-nums; }
+.axisLabel { text-align:center; font-size:14px; margin-top:6px!important; }
+.readings { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:16px; }
+.readings>div { display:grid; gap:6px; text-align:center; font-size:14px; padding:10px 4px; border-bottom:2px solid #dadce0; }
+.readings b { font-size:clamp(16px,2vw,24px); font-variant-numeric:tabular-nums; }
+.readings strong { font-size:14px; }
+.takeaway { border-left:4px solid #34a853; padding:10px 12px; background:#f3fbf5; }
+.controls { display:grid; gap:12px; }
+.controls label { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; font-weight:600; }
+.controls input { width:100%; min-height:44px; accent-color:#137333; }
+.reset { justify-self:start; min-height:44px; border:1px solid #9aa0a6; border-radius:24px; padding:8px 16px; font:inherit; background:white; color:#1f1f1f; cursor:pointer; }
+.terms { display:grid; gap:12px; }
+.termButtons { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.termButtons>button { min-height:44px; }
+.sheetContext { padding:20px 0 12px; margin-top:20px; border-top:1px solid #dadce0; }
+.compact .readings { gap:4px; }.compact .readings b { font-size:16px; }.compact .readings strong { font-size:12px; }
+.sources { font-size:14px; overflow-wrap:anywhere; }.sources summary { min-height:44px; cursor:pointer; }
+@media(max-width:600px){
+ .flowFigure,.spectrumFigure { padding:12px; }
+ .flow { grid-template-columns:minmax(0,1fr); gap:14px; }
+ .inputs { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+ .signalBox { padding:8px; }
+ .signalBox b { font-size:14px; }
+ .multiply { gap:4px; }
+ .incoming { left:calc(50% - 34px); top:-16px; transform:rotate(90deg); }
+ .outgoing { right:calc(50% - 34px); top:-16px; transform:rotate(90deg); }
+ .readings { gap:4px; }
+ .readings>div { padding:8px 2px; font-size:12px; }
+ .readings strong { font-size:12px; }
+ .ticks { margin-top:-8px; }
+ .selectedSignal { padding:6px; }
+}

@@ -1,0 +1,42 @@
+.details {
+  display: grid;
+  gap: var(--learning-space-3);
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--learning-space-2) var(--learning-space-3);
+}
+
+.term {
+  margin: 0;
+  font: var(--learning-text-display-m);
+  overflow-wrap: anywhere;
+}
+
+.symbol {
+  margin: 0;
+  font: var(--learning-text-mono);
+  color: var(--learning-pencil);
+}
+
+.list {
+  display: grid;
+  gap: var(--learning-space-4);
+  margin: 0;
+}
+
+.list dt {
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.list dd {
+  display: grid;
+  gap: var(--learning-space-1);
+  margin: 0;
+  overflow-wrap: anywhere;
+}

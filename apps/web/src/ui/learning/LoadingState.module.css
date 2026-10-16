@@ -1,0 +1,13 @@
+.loading {
+  display: flex;
+  align-items: center;
+  gap: var(--learning-space-3);
+  padding: var(--learning-space-4) 0;
+  color: var(--learning-pencil);
+}
+
+.message {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,99 @@
+.wrap {
+  display: inline-grid;
+  justify-items: center;
+  gap: var(--learning-space-2);
+  min-width: 0;
+}
+
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+
+/* Segments start at 12 o'clock and run clockwise */
+.ring svg {
+  display: block;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.track,
+.fill,
+.unassessed {
+  fill: none;
+}
+
+.track {
+  stroke: var(--learning-line);
+}
+
+.fill {
+  stroke-linecap: butt;
+  transition: stroke-dasharray var(--learning-motion-sheet);
+}
+
+.unassessed {
+  stroke: var(--learning-pencil);
+}
+
+.concept {
+  stroke: var(--learning-green);
+  background: var(--learning-green);
+}
+
+.words {
+  stroke: var(--learning-red);
+  background: var(--learning-red);
+}
+
+.english {
+  stroke: var(--learning-yellow);
+  background: var(--learning-yellow);
+}
+
+.lab {
+  stroke: var(--learning-blue);
+  background: var(--learning-blue);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18%;
+  text-align: center;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.legend {
+  display: grid;
+  gap: var(--learning-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: var(--learning-text-label);
+  color: var(--learning-ink);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--learning-space-2);
+}
+
+.swatch {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+}

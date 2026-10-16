@@ -1,0 +1,80 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--learning-space-2);
+  min-height: var(--learning-tap-target);
+  max-width: 100%;
+  padding: var(--learning-space-2) var(--learning-space-6);
+  border: 0;
+  border-radius: var(--learning-radius-pill);
+  font: var(--learning-text-button);
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition:
+    transform var(--learning-motion-press),
+    box-shadow var(--learning-motion-press),
+    background-color var(--learning-motion-press);
+}
+
+/* Odia labels need the taller Odia line height */
+.button:lang(or) {
+  font: var(--learning-text-button-odia);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+
+.primary {
+  background: var(--learning-button-primary-bg);
+  color: var(--learning-button-primary-fg);
+  box-shadow: var(--learning-key-edge-ink);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: var(--learning-key-edge-ink-pressed);
+}
+
+.secondary {
+  background: var(--learning-paper-sunken);
+  color: var(--learning-ink);
+  border: 1px solid var(--learning-line);
+  box-shadow: var(--learning-key-edge-neutral);
+}
+
+.secondary:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: var(--learning-key-edge-neutral-pressed);
+}
+
+/* Neutral ink, not blue: blue marks the practical dimension */
+.text {
+  background: transparent;
+  color: var(--learning-ink);
+  padding-inline: var(--learning-space-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text:hover:not(:disabled),
+.text:active:not(:disabled) {
+  background: var(--learning-paper-sunken);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* LinkButton: the same key, as a link */
+.link {
+  text-decoration: none;
+}
+
+.link.text {
+  text-decoration: underline;
+}

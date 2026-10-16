@@ -1,0 +1,81 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--learning-space-1);
+  max-width: 100%;
+  min-height: 28px;
+  padding: 2px var(--learning-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--learning-radius-pill);
+  font: var(--learning-text-label);
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+
+.badge:lang(or) {
+  font: var(--learning-text-label-odia);
+}
+
+.badge svg {
+  flex: none;
+}
+
+.neutral {
+  background: var(--learning-paper-sunken);
+  color: var(--learning-ink);
+  border-color: var(--learning-line);
+}
+
+.success {
+  background: var(--learning-paper-raised);
+  color: var(--learning-ink);
+  border-color: var(--learning-ink);
+}
+
+/* Not yet: open and unfinished, never red */
+.not_yet {
+  background: var(--learning-paper-raised);
+  color: var(--learning-pencil);
+  border: 1px dashed var(--learning-pencil);
+}
+
+/* Dimensions: tint fill, ink text. These follow the tone so they win on colour. */
+.concept {
+  background: var(--learning-green-tint);
+  color: var(--learning-green-ink);
+}
+
+.words {
+  background: var(--learning-red-tint);
+  color: var(--learning-red-ink);
+}
+
+.english {
+  background: var(--learning-yellow-tint);
+  color: var(--learning-yellow-ink);
+}
+
+.lab {
+  background: var(--learning-blue-tint);
+  color: var(--learning-blue-ink);
+}
+
+.neutral:is(.concept, .words, .english, .lab) {
+  border-color: transparent;
+}
+
+.success.concept {
+  border-color: var(--learning-green-ink);
+}
+
+.success.words {
+  border-color: var(--learning-red-ink);
+}
+
+.success.english {
+  border-color: var(--learning-yellow-ink);
+}
+
+.success.lab {
+  border-color: var(--learning-blue-ink);
+}
