@@ -12,4 +12,4 @@ export { MasteryRing } from './MasteryRing';
 export { MapNode } from './MapNode';
 export { TermChip } from './TermChip';
 export { TermDetails } from './TermDetails';
-export { AudioPlayer, AUDIO_SPEEDS, type AudioPlayerHandle, type AudioSpeed } from './AudioPlayer';
+export { AudioPlayer, AUDIO_SPEEDS, type AudioPlayerHandle, type AudioPlayerProps, type AudioSpeed } from './AudioPlayer';

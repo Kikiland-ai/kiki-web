@@ -179,11 +179,17 @@ def firebase_services(settings: Settings) -> Services:
         if settings.storage_bucket
         else None
     )
+    from .concept_media import BucketMediaAssets, ConceptMedia
     from .lab_preparation import LabPreparations
     from .learning import FirestoreLearning
 
+    media_assets = (
+        BucketMediaAssets(storage.bucket(settings.media_bucket, app=app))
+        if settings.media_bucket
+        else None
+    )
     profiles = FirestoreProfiles(client)
-    learning = FirestoreLearning(client, profiles)
+    learning = FirestoreLearning(client, profiles, ConceptMedia(client, media_assets))
     return Services(
         FirebaseVerifier(app),
         profiles,

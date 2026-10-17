@@ -20,4 +20,11 @@ try {
   lab.PreparationEnvelope.parse(labReceipts.preparation);
   console.log('Python → React practical/preparation: passed');
   assessment.checkResultForRun(receipts.run.run, receipts.result.result);
+  const media = await server.ssrLoadModule('/src/contracts/concept-media.ts');
+  const mediaReceipts=JSON.parse(await readFile(new URL('../../api/test-artifacts/media-contract.json',import.meta.url),'utf8'));
+  const { lesson } = learning.LessonEnvelope.parse(mediaReceipts.mediaLesson);
+  const { manifest } = media.MediaManifestEnvelope.parse(mediaReceipts.mediaManifest);
+  media.checkManifestForLesson(manifest, lesson);
+  if (manifest.unsupportedArtifacts.length || manifest.artifacts.length !== lesson.mediaExperience.artifacts.length) throw new Error('React does not render every published scene.');
+  console.log('Python → React media lesson/manifest: passed');
 } finally { await server.close(); }

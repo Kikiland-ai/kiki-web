@@ -54,3 +54,7 @@ Keep current package/lock/toolchain. Required Arpan components are namespaced in
 ## 16 October — optional teaching visual
 
 C-AM-04 now exposes the optional public `lesson.visual` projection and renders signal-flow/spectrum diagrams on Concept/Application placards. Existing immutable catalog and progress version remain unchanged. Source defaults/range come from the stored authored concept; local exploration never saves evidence. See [TEACHING_VISUALS.md](TEACHING_VISUALS.md) for DTO, math assumptions, source references, fixture isolation, verification and rollback. Current acceptance counts remain in active.md.
+
+## 17 October — preprocessed concept media
+
+Lessons may carry an optional `mediaExperience` pointer. `Services.media` reads the published manifest and private clips through Python. C-AM-08 gets per-placard English/Odia narration and its own phase-recovery scene. Text-only responses, `lesson.media` and `lesson.visual` are unchanged. See [CONCEPT_MEDIA.md](CONCEPT_MEDIA.md).

@@ -1,0 +1,32 @@
+.scene { display: grid; gap: var(--learning-space-6); min-width: 0; margin-top: var(--learning-space-6); padding-top: var(--learning-space-6); border-top: 2px solid var(--learning-green); color: var(--learning-ink); }
+.scene p { margin: 0; line-height: 1.6; }
+.scene h2 { margin: 6px 0 12px; font-size: clamp(24px, 3vw, 34px); line-height: 1.2; }
+.eyebrow { font: var(--learning-text-label); font-weight: 700; letter-spacing: 0.08em; color: var(--learning-green-ink); }
+.figure { display: grid; gap: var(--learning-space-4); min-width: 0; margin: 0; padding: 20px; border: 1px solid var(--learning-line); border-radius: 18px; }
+.figure figcaption { display: grid; gap: 6px; }
+.figure figcaption strong { font-size: 20px; }
+.figure figcaption span, .note { font-size: 14px; color: var(--learning-pencil); }
+.trace { display: block; width: 100%; height: auto; overflow: visible; }
+.zero { stroke: var(--learning-line); stroke-width: 1; }
+.aligned { stroke: var(--learning-pencil); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.recovered { stroke: var(--learning-green-ink); stroke-width: 2.5; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--learning-space-2) var(--learning-space-6); margin: 0; padding: 0; list-style: none; font-size: 14px; }
+.legend li { display: flex; align-items: center; gap: var(--learning-space-2); }
+.swatchAligned, .swatchRecovered { display: inline-block; width: 28px; height: 0; border-top: 2px dashed var(--learning-pencil); }
+.swatchRecovered { border-top: 3px solid var(--learning-green-ink); }
+.reading { display: grid; gap: 4px; padding: var(--learning-space-3) var(--learning-space-4); border-left: 4px solid var(--learning-green); background: var(--learning-green-tint); }
+.reading > span:first-child { font: var(--learning-text-label); }
+.reading output { font-size: clamp(24px, 3vw, 32px); font-weight: 700; font-variant-numeric: tabular-nums; }
+.controls { display: grid; gap: var(--learning-space-3); }
+.controls label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--learning-space-2); font-weight: 600; }
+.controls input { width: 100%; min-height: var(--learning-tap-target); margin: 0; accent-color: var(--learning-green-ink); }
+.presets { display: flex; flex-wrap: wrap; gap: var(--learning-space-2); }
+.presets button, .reset { min-height: var(--learning-tap-target); padding: 6px 16px; border: 1px solid var(--learning-pencil); border-radius: var(--learning-radius-pill); font: inherit; color: var(--learning-ink); background: var(--learning-paper); cursor: pointer; }
+.presets button { display: grid; justify-items: center; min-width: 88px; font-variant-numeric: tabular-nums; }
+.presets button small { font-size: 12px; color: var(--learning-pencil); }
+.presets button[aria-pressed='true'] { border: 2px solid var(--learning-green-ink); background: var(--learning-green-tint); }
+.reset { justify-self: start; }
+.residual { display: grid; gap: 6px; padding: var(--learning-space-3) var(--learning-space-4); border: 1px dashed var(--learning-pencil); border-radius: 12px; font-size: 14px; }
+.sources { font-size: 14px; overflow-wrap: anywhere; }
+.sources summary { min-height: 44px; cursor: pointer; }
+@media (max-width: 600px) { .figure { padding: 12px; } }

@@ -28,6 +28,7 @@ import type {
 import type { LabPreparationApi } from './lab-preparation'
 import type { IntakeApi } from './intake'
 import type { AssessmentOverview, DraftUpdate } from './assessment'
+import type { MediaManifest, NarrationRendition } from './concept-media'
 
 export interface Identity { uid: Id; displayName: string }
 
@@ -61,6 +62,7 @@ export interface Services {
   intake: IntakeApi
   assessments: AssessmentApi
   learning: LearningApi
+  media: MediaApi
   labPreparation: LabPreparationApi
 }
 
@@ -69,6 +71,16 @@ export interface LearningApi {
   getConceptLesson(conceptId: Id, signal?: AbortSignal): Promise<ConceptLesson>
   getProgress(planId: Id, signal?: AbortSignal): Promise<ChapterProgress>
   savePosition(conceptId: Id, placardId: Id, signal?: AbortSignal): Promise<ConceptProgress>
+}
+
+/** A playable copy of one private asset; release() frees it (blob URLs are revocable). */
+export interface LoadedMedia { url: string; release(): void }
+
+/** Published, preprocessed lesson media. Reading never asks the server to generate anything. */
+export interface MediaApi {
+  /** Only for a lesson whose mediaExperience points at a published revision. */
+  getManifest(conceptId: Id, signal?: AbortSignal): Promise<MediaManifest>
+  loadNarration(conceptId: Id, mediaRevision: string, rendition: NarrationRendition, signal?: AbortSignal): Promise<LoadedMedia>
 }
 
 export interface AssessmentApi {

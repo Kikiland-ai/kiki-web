@@ -21,6 +21,7 @@
 /* ------------------------------------------------------------------ */
 
 import type { DsbVisual } from './teaching-visual'
+import type { MediaExperience } from './concept-media'
 import type { Profile, DialLevel as SavedDialLevel, ProfileUpdate as SavedProfileUpdate } from './profile'
 
 export const CONTRACT_REVISION = 'kiki-web/v0.4-aligned' as const
@@ -148,6 +149,8 @@ export interface LessonTerm {
 export interface ConceptLesson {
   /** Optional public teaching visual from authored catalog source, not lab telemetry. */
   visual?: DsbVisual
+  /** Points to published per-placard narration and scenes; text placards work without it. */
+  mediaExperience?: MediaExperience
   conceptId: Id
   planId: Id
   title: BilingualText

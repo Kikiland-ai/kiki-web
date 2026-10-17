@@ -5,6 +5,7 @@ import { createFixtureIntake } from './intake';
 import { createFixtureAssessments } from './assessments';
 import { createFixtureLabPreparation } from './lab-preparation';
 import { createFixtureLearning } from './learning';
+import { createFixtureMedia } from './media';
 
 const SESSION = 'kiki:fixture:session:v1';
 const PROFILE = 'kiki:fixture:profile:v1';
@@ -29,7 +30,7 @@ export function createFixtureServices(): Services {
   const requireUid = () => { const user = current(); if (!user) throw new ServiceError('Sign in to continue.', 401); return user.uid; };
   const assessments = createFixtureAssessments(requireUid);
   const learning = createFixtureLearning(requireUid, assessments);
-  return { labPreparation:createFixtureLabPreparation(requireUid,learning), mode: 'fixture', learning, intake: createFixtureIntake(requireUid), assessments, auth: withResourceCleanup({
+  return { labPreparation:createFixtureLabPreparation(requireUid,learning), mode: 'fixture', learning, media: createFixtureMedia(requireUid), intake: createFixtureIntake(requireUid), assessments, auth: withResourceCleanup({
     subscribe: (listener) => { listeners.add(listener); queueMicrotask(() => { if (listeners.has(listener)) listener(current()); }); return () => { listeners.delete(listener); }; },
     signIn: async () => { sessionStorage.setItem(SESSION, identity.uid); listeners.forEach(l => l(identity)); },
     signOut: async () => { sessionStorage.removeItem(SESSION); listeners.forEach(l => l(null)); },

@@ -1,6 +1,7 @@
 from typing import Annotated
 
-from fastapi import Depends, Header, Query
+from fastapi import Depends, Header, Path, Query
+from fastapi.responses import Response
 
 from .backend import BoundaryError
 from .learning_models import (
@@ -16,6 +17,7 @@ from .learning_models import (
     Start,
     Submission,
 )
+from .media_models import MediaManifestEnvelope
 from .models import Identity
 
 
@@ -42,6 +44,38 @@ def register_learning_routes(app, identity, backend, call):
     )
     def lesson(concept_id: str, user: user_dep):
         return {"lesson": call(lambda: service().lesson(user.uid, concept_id))}
+
+    @app.get(
+        "/concepts/{concept_id}/media",
+        response_model=MediaManifestEnvelope,
+        response_model_exclude_unset=True,
+    )
+    def media(concept_id: str, user: user_dep):
+        return {"manifest": call(lambda: service().media_manifest(user.uid, concept_id))}
+
+    @app.get(
+        "/concepts/{concept_id}/media/{media_revision}/assets/{asset_id}",
+        response_class=Response,
+        responses={200: {"content": {"audio/wav": {}}, "description": "Verified private bytes"}},
+    )
+    def media_asset(
+        concept_id: str,
+        user: user_dep,
+        media_revision: str = Path(pattern=r"^cm-[a-f0-9]{24}$"),
+        asset_id: str = Path(pattern=r"^[a-f0-9]{64}$"),
+    ):
+        content, meta = call(
+            lambda: service().media_asset(user.uid, concept_id, media_revision, asset_id)
+        )
+        return Response(
+            content,
+            media_type=meta["mimeType"],
+            headers={
+                "Cache-Control": "private, no-store",
+                "X-Content-Type-Options": "nosniff",
+                "ETag": f'"{asset_id}"',
+            },
+        )
 
     @app.get(
         "/learners/me/progress", response_model=ProgressEnvelope, response_model_exclude_unset=True

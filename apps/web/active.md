@@ -18,6 +18,26 @@ React + TypeScript + Vite. Full laptop workflows adapt to phone widths; physical
 
 ## Latest completed implementation
 
+**17 October — preprocessed concept media, first package (Arpan).** C-AM-08's existing eight narration clips are now a versioned, source-bound media package. It is delivered through authenticated Python routes and the `lesson.mediaExperience` pointer, and the hard-coded clip lookup is gone. Listen plays the API-delivered English/Odia clip with the same controls. Steps 2–3 add C-AM-08's own phase-recovery scene through a trusted renderer registry, whose first entry is C-AM-04's unchanged DSB-SC diagrams.
+- Catalog `am-51187527300cba2fa3cca868` and learner state are untouched: media revisions are separate records.
+- Connected media needs an approved private bucket (`KIKI_MEDIA_BUCKET`, not set). Until then connected lessons are text-only.
+- Sample mode serves the identical package.
+- The production build no longer ships any WAV.
+
+Details, checks and remaining steps: [CONCEPT_MEDIA.md](CONCEPT_MEDIA.md).
+
+Checks:
+- Python: 9 new media tests; the existing suite unchanged.
+- Web unit: contract, adapter, cache, phase model and player tests.
+- All ten Python→React receipt checks, including the media lesson and manifest.
+- 89 browser tests in installed Chrome, 8 of them new.
+- axe: 0 violations with the player over the scene at 390/1280px.
+- Lint, typecheck and build.
+
+Not checked: live connected publication (blocked on storage), actual phones, and native-Odia/pronunciation/audio-quality/scientific review.
+
+Exact next action: once an approved private bucket exists, run `scripts/publish_concept_media.py` (dry run, then `--apply`). Then repeat the signed-in C-AM-08 check on 5174: Listen, seek, speed, scene explore/reset, leave/reopen with progress intact. Backend media then owns durable preprocessing for the other nine concepts.
+
 **16 October — DSB-SC teaching diagrams are connected.** Open http://127.0.0.1:5174/concepts/C-AM-04 → Step 2 (Concept), then scroll to **From two signals to two sidebands**. Step 3 (Application) also includes the visuals. The message × carrier → signed Product diagram and ideal positive-frequency spectrum show baseline **100/2000 Hz → 1900/2100 Hz**, with no separate carrier stem. The local 10–200 Hz message control updates waveform, stem geometry, text readings and accessible descriptions; reset returns to 100 Hz.
 
 **Sideband / carrier / DSB-SC** open the existing English/Odia glossary plus relevant diagram context. Closing restores focus and retains a labelled target highlight; Clear diagram highlight removes it. Meaning appears before diagram context on small screens. Existing lesson word/text chips also select the target. Local exploration is not saved evidence and never changes lab settings or mastery. No narration or audio playback was added.

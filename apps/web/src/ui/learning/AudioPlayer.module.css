@@ -118,3 +118,10 @@
     transition: none !important;
   }
 }
+
+.loading,
+.detail {
+  margin: 0;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}

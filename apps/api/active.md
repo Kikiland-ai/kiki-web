@@ -7,6 +7,12 @@ See [../web/active.md](../web/active.md) for the student walkthrough/current acc
 
 ## Completed
 
+- **17 October — concept media (Arpan).** Read-only media delivery:
+  - Optional `lesson.mediaExperience`, plus `GET /concepts/{id}/media` and `…/media/{revision}/assets/{assetId}`, gated by identity and enrollment.
+  - Source-bound package building and create-only private assets behind an injected store.
+  - One-transaction head switch (`scripts/publish_concept_media.py`, dry run by default).
+
+  Media records sit beside catalog `am-51187527300cba2fa3cca868`, so learner state is unaffected. `KIKI_MEDIA_BUCKET` is unset and no storage exists yet, so connected lessons stay text-only. Covered by 9 tests in `tests/test_concept_media.py` and Python→React receipts. Details: [../web/CONCEPT_MEDIA.md](../web/CONCEPT_MEDIA.md).
 - Existing FastAPI/Pydantic profile bootstrap, GET/PATCH and enrollment; Firebase Admin Google token signature/project/expiry/revocation checks; UID-derived ownership. Locked Python 3.12.15/uv dependencies.
 - Existing private-original upload/list/source/content adapters and real owned Firestore Library metadata reads. Originals remain unavailable until usable private Storage is identified.
 - Versioned catalog importer from the original analog-modulation ledger/Odia case; credential-free dry run, seed exclusion, lossless authored-content preservation, immutable version documents and atomic compare-before-activate. Live initial import and repeated unchanged import succeeded; all 68 version documents read back and matched exactly. Active head adds one document. Version am-51187527300cba2fa3cca868.

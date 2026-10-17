@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptLesson } from '../../contracts/api'
 import { ServiceError, readableError } from '../../services/types'
 import { useSession } from '../../app/Session'
-import { AudioPlayer, Button, ErrorState, LanguageDial, LinkButton, LoadingState, StatusBadge, TermChip, type AudioPlayerHandle, type AudioSpeed } from '../../ui/learning'
+import { Button, ErrorState, LanguageDial, LinkButton, LoadingState, StatusBadge, TermChip, type AudioPlayerHandle, type AudioSpeed } from '../../ui/learning'
 import { ArrowBackIcon, ArrowForwardIcon, SpeakerIcon } from '../../ui/learning/icons'
-import { findNarration, narrationLabel, type NarrationLang } from '../../media/narration'
+import { checkManifestForLesson, findRendition, narrationLabel, type MediaManifest } from '../../contracts/concept-media'
 import { lacksOdia, pick, placardMode, shouldShowKeyIdea } from './language'
 import { PlacardText } from './PlacardText'
-import { DsbDiagrams } from './DsbDiagrams'
+import { NarrationPlayer } from './NarrationPlayer'
+import { createNarrationCache, type NarrationCache } from './narrationCache'
+import { scenesFor } from './scenes'
 import { createPlaceSaver } from './placeSaver'
 import { useDialLevel } from './useDialLevel'
 import styles from './LessonScreen.module.css'
@@ -18,6 +20,13 @@ type Load =
   | { status: 'not_found' }
   | { status: 'error'; message: string }
   | { status: 'ready'; lesson: ConceptLesson; chapter: ChapterView; progress: ChapterProgress }
+
+type NarrationLang = 'or' | 'en'
+// Published media for the lesson: absent media leaves the complete text lesson
+type Media =
+  | { status: 'none' | 'loading' }
+  | { status: 'error'; message: string }
+  | { status: 'ready'; manifest: MediaManifest; cache: NarrationCache }
 
 /**
  * A concept lesson (/concepts/:conceptId): four placards in order
@@ -44,6 +53,9 @@ export function LessonScreen() {
   const [speed, setSpeed] = useState<AudioSpeed>(1)
   const [narrationLang, setNarrationLang] = useState<NarrationLang | null>(null)
   const player = useRef<AudioPlayerHandle>(null)
+  const [media, setMedia] = useState<Media>({ status: 'none' })
+  const [mediaAttempt, setMediaAttempt] = useState(0)
+  const mediaLesson = load.status === 'ready' ? load.lesson : null
 
   // Signing out stops the sound at once (contract: audio stops before the lease/session clean-up)
   useEffect(() => services.auth.registerSignOutCleanup(() => player.current?.pause()), [services])
@@ -98,6 +110,22 @@ export function LessonScreen() {
     }
   }, [conceptId, attempt, services, uid])
 
+  // Fetch the manifest the lesson points to; each clip is fetched only when Listen is pressed.
+  // Leaving the lesson or signing out stops the sound and frees every loaded clip.
+  useEffect(() => {
+    const pointer = mediaLesson?.mediaExperience
+    if (!mediaLesson || !pointer) { setMedia({ status: 'none' }); return }
+    const controller = new AbortController()
+    const cache = createNarrationCache((rendition, signal) => services.media.loadNarration(mediaLesson.conceptId, pointer.mediaRevision, rendition, signal))
+    setMedia({ status: 'loading' })
+    services.media
+      .getManifest(mediaLesson.conceptId, controller.signal)
+      .then((manifest) => { if (!controller.signal.aborted) setMedia({ status: 'ready', manifest: checkManifestForLesson(manifest, mediaLesson), cache }) })
+      .catch((error: unknown) => { if (!controller.signal.aborted) setMedia({ status: 'error', message: error instanceof ServiceError ? error.message : 'The lesson media does not match this lesson.' }) })
+    const unregister = services.auth.registerSignOutCleanup(() => { player.current?.pause(); cache.clear() })
+    return () => { controller.abort(); cache.clear(); unregister() }
+  }, [mediaLesson, services, mediaAttempt])
+
   // After Back or Next, move focus to the new placard so it's read out and in view
   useEffect(() => {
     if (moved.current) headingRef.current?.focus()
@@ -134,10 +162,11 @@ export function LessonScreen() {
   const mode = placardMode(dial)
   // The audio reads the text on top of the card; at notch 3 (both shown) the player can switch to English
   const audioLang: NarrationLang = mode.alsoEnglish && narrationLang ? narrationLang : mode.primary
-  const clip = findNarration(lesson.conceptId, placard.id, audioLang)
+  const manifest = media.status === 'ready' ? media.manifest : null
+  const clip = findRendition(manifest, placard.id, audioLang)
   const clipLanguages = mode.alsoEnglish
     ? (['or', 'en'] as const)
-        .filter((l) => findNarration(lesson.conceptId, placard.id, l))
+        .filter((l) => findRendition(manifest, placard.id, l))
         .map((l) => ({ value: l, label: l === 'or' ? 'Odia' : 'English' }))
     : undefined
   const openTerm = (id: string | null) => {
@@ -242,13 +271,15 @@ export function LessonScreen() {
                 Listen
               </Button>
             )}
-            {clip && listening && (
-              <AudioPlayer
+            {clip && listening && media.status === 'ready' && (
+              <NarrationPlayer
                 key={`audio-${placard.id}-${audioLang}`}
                 ref={player}
-                src={clip.src}
+                cache={media.cache}
+                rendition={clip}
                 title={title.text}
-                label={narrationLabel(clip)}
+                label={narrationLabel(clip, media.manifest.release)}
+                detail="Plays this whole step. Words are not highlighted: the clip has no sentence timing yet."
                 speed={speed}
                 onSpeedChange={setSpeed}
                 languages={clipLanguages}
@@ -268,7 +299,15 @@ export function LessonScreen() {
               className={styles.body}
             />
             {mode.alsoEnglish && <PlacardText text={placard.body.en} lang="en" terms={[]} className={styles.english} />}
-            {lesson.visual && (placard.kind === 'concept' || placard.kind === 'application') && <DsbDiagrams key={lesson.conceptId} visual={lesson.visual} terms={lesson.terms} selectedTermId={selectedTermId} onTermOpen={openTerm} />}
+            {media.status === 'error' && (
+              <p className="helper-note">
+                Audio and interactives for this lesson are unavailable: {media.message} The text is complete.{' '}
+                <Button variant="text" onClick={() => setMediaAttempt((n) => n + 1)}>Retry lesson media</Button>
+              </p>
+            )}
+            {scenesFor(lesson, manifest, placard, { terms: lesson.terms, selectedTermId, onTermOpen: openTerm }).map((slot) => (
+              <Fragment key={slot.key}>{slot.node}</Fragment>
+            ))}
             {placard.sources.length > 0 && (
               <details className={styles.sources}>
                 <summary>Sources ({placard.sources.length})</summary>

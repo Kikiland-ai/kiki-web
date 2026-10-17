@@ -54,3 +54,7 @@ No migration of sample IndexedDB files, no proficiency award, no existing profil
 After cloud approval/setup: choose a deliberately non-sensitive PDF + image; enroll Analog Communication if needed; upload → `Saved in Library`; open/download originals; verify exact hashes; reload Library; sign out/sign in and reopen; verify a second account cannot retrieve the source/content (requires a second account). Check private rules/public-access prevention and scoped API IAM. Do not describe this slice as cloud-complete until these checks run.
 
 References: [Admin Storage](https://firebase.google.com/docs/storage/admin/start), [generation preconditions](https://cloud.google.com/storage/docs/request-preconditions), [Python Blob API](https://docs.cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.blob.Blob).
+
+## Lesson media bucket — 17 October
+
+Published concept media (narration clips, later scene posters) uses a separate optional setting, `KIKI_MEDIA_BUCKET`. It is unset, so lessons stay text-only in connected mode. The same no-billing decision applies: use an approved existing private bucket and access only. The API identity needs object viewer on it; the publisher needs object creator. There are no public objects or signed public links. See [../web/CONCEPT_MEDIA.md](../web/CONCEPT_MEDIA.md).

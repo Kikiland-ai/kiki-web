@@ -71,3 +71,15 @@ Live catalog import and a second unchanged import succeeded. All 68 Firestore do
 ## Teaching-visual read projection — 16 October
 
 `GET /concepts/C-AM-04/lesson` additionally projects an optional `lesson.visual` (`dsb-sc-visual/v1`) from the same version's `sourceConcepts/C-AM-04`: allowlisted renderer kind, Hz baseline/range, glossary references and authored source citations. Original immutable lesson documents remain untouched. No import, catalog-head/version change, new document, student-data migration or access change is needed. Other lessons omit the field. React validates it and implements a known analytic teaching model; authored strings are never evaluated. Parameter exploration is local and creates no evidence. See ../web/TEACHING_VISUALS.md for UI assumptions/rollback and active.md for current verification.
+
+## Concept media revisions — 17 October
+
+Published lesson media is stored beside the catalog, never inside its immutable version documents:
+
+- `conceptMedia/LP-ANALOG-MODULATION/catalogVersions/{catalogVersion}/concepts/{conceptId}` holds the head (`currentRevision`).
+- `…/revisions/{mediaRevision}` holds the immutable manifest plus an internal asset index.
+- Audio bytes live in private object storage at `concept-media/LP-ANALOG-MODULATION/assets/sha256/{sha256}`, never in Firestore.
+
+Adding, replacing or rolling back media changes no catalog version, head, learning state, position, pass or attempt.
+
+`GET /concepts/{id}/lesson` adds optional `mediaExperience` only when a compatible revision is published and a media bucket is configured. It reads; it never generates or writes. `GET /concepts/{id}/media` and `GET /concepts/{id}/media/{mediaRevision}/assets/{assetId}` use the same identity and enrollment checks. Publication is `scripts/publish_concept_media.py`: a dry run by default; `--apply` uploads create-only assets, then creates the revision and moves the head in one transaction. Contract, checks and limits: [../web/CONCEPT_MEDIA.md](../web/CONCEPT_MEDIA.md).

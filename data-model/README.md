@@ -14,6 +14,7 @@ The model no longer assumes Electronics, Odia, a circuit lab or a full chapter. 
 | `ANALOG-MODULATION.md` | Readable chapter outline, lab route, relationships, storage mapping and verification |
 | `validate-case.js`, `runtime/learning-case.js` | Case checks and pure quiz/lab-entry/pointer/handoff domain rules |
 | `validate.js` | Generic validator; run it on a file or a folder |
+| `media/C-AM-08/` | Prepared C-AM-08 narration clips and their provenance: the source of the published media package (`apps/web/CONCEPT_MEDIA.md`) |
 | `tools/migrate-v1-to-v2.js` | Converts a v1 ledger, with the content fixes the new validator found |
 | `tools/test-validator.js` | Seeds 13 known errors and checks each is caught |
 | `archive-v1/` | The original diode-only schema, ledger, validator and README, unchanged |
