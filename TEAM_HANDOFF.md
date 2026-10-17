@@ -1,3 +1,5 @@
+> **Local redesign, 17 October:** `redesign/engineering-sketchbook` starts at PR #2 `ba40218`, preserving the queued place saver and C-AM-08 Listen work. The user’s separate in-progress PR build stays separate. Read [the current status](apps/web/active.md) and [theme/integration handoff](apps/web/ENGINEERING_SKETCHBOOK.md) for the complete first visual pass and local preview on 5192. The user authorized commit and push of this source checkpoint on 17 October; deployment remains separate. The original integration checkpoint below is retained as history.
+
 # Team handoff — 16 October 2026
 
 Branch: `integration/connected-kiki-2026-10-16`.

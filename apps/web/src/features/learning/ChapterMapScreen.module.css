@@ -124,3 +124,20 @@
 }
 
 .lab summary { cursor: pointer; min-height: var(--learning-tap-target); display: list-item; padding-block: var(--learning-space-3); }
+
+/* A chapter index: reading order is explicit, rather than implied prerequisite edges. */
+.header { border-bottom: 2px solid var(--learning-ink); padding-bottom: 28px; }
+.titleRow { display: block; }
+.title { margin: 14px 0 18px; font: var(--learning-text-display-l); letter-spacing: -.05em; }
+.eyebrow { display: block; font: var(--learning-text-label); letter-spacing: .12em; font-weight: 700; }
+.summary { border: 1.5px solid var(--learning-ink); border-radius: var(--learning-radius-card); background: var(--learning-paper-sunken); padding: 24px; }
+.summaryText { align-self: center; }
+.body { display: grid; grid-template-columns: minmax(0,1fr) 280px; gap: 32px; align-items: start; }
+.contents { grid-column: 1; grid-row: 1; display: grid; gap: 36px; min-width: 0; }
+.lab { grid-column: 2; grid-row: 1; border: 1.5px solid var(--learning-ink); border-top: 7px solid var(--learning-blue); padding: 24px 20px; }
+.labTitle { color: var(--learning-ink); font-size: 24px; }
+.sectionTitle { color: var(--learning-ink); font-weight: 700; border-bottom: 1px solid var(--learning-ink); padding-bottom: 12px; letter-spacing: .08em; }
+.tiles, .rows { grid-template-columns: minmax(0,1fr); gap: 16px; }
+.test { border: 1.5px solid var(--learning-ink); border-top: 7px solid var(--learning-green); border-radius: var(--learning-radius-card); padding: 24px; }
+@media (max-width: 1100px) { .body { grid-template-columns: minmax(0,1fr); } .lab { grid-column: 1; grid-row: 2; } .contents { grid-row: 1; } }
+@media (max-width: 599px) { .summary { padding: 20px 16px; } .header { padding-bottom: 24px; } .title { font-size: 36px; } }

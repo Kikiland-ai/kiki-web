@@ -1,3 +1,20 @@
+## Engineering Sketchbook review — 17 October 2026
+
+Use **http://127.0.0.1:5192** for the local redesign on `redesign/engineering-sketchbook`. This is the existing React app in labelled browser-only sample mode, based on PR #2 `ba40218`. It is separate from the in-progress PR build and the connected app.
+
+1. First-time sample: Get started → Open sample student → finish the four setup steps → add Analog Communication with your semester.
+2. Home's **Continue learning** uses the same saved-progress policy as the chapter. **Learn** opens its numbered contents; all ten concepts remain available.
+3. Open C-AM-04 → Concept page for the dark waveform/spectrum. The same slider, language dial and term sheet work; moving pages still saves in the background.
+4. Open C-AM-08 for **Listen**, where sample clips exist. Its machine-voice review label, language options, speed, pause and cleanup are preserved.
+5. **Checks** now has a direct navigation entry. Start or resume a concept check and inspect written feedback. A sample result is not real proficiency evidence.
+6. **Subjects**, **Library** and material intake retain their existing service flows with notebook styling. Browser automation of file selection is permission-blocked; ordinary user file selection can be reviewed manually.
+7. Top-right **Lab mode** opens blue manual preparation; saved notes/checkpoint reading do not verify execution. Save changes before switching pages or devices.
+8. **Profile** is now the labelled circular initial button at the top right. Home, Subjects, Learn, Checks and Library appear in the rail or phone bottom navigation.
+
+[Current status](../../apps/web/active.md) · [Theme/integration handoff and exact verification](../../apps/web/ENGINEERING_SKETCHBOOK.md). Historical walkthroughs below describe earlier checkpoints; their old navigation and pending-feature statements do not override the current record.
+
+---
+
 ## Latest lab walkthrough — 16 October 2026
 
 1. Open **http://127.0.0.1:5174/labs**, or click top-right **Lab mode**.

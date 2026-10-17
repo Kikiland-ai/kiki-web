@@ -1,9 +1,25 @@
 # Kiki web — active frontend status
 
-Updated: 16 October 2026
-Current step: connected DSB-SC teaching diagrams + linked Odia term context completed; Aditya monitoring remains deferred
+Updated: 17 October 2026
+Current step: Engineering Sketchbook first visual pass completed locally; review and component iteration next
 
 This is the **current frontend status record**. Update it after each completed step. [Build history](../../docs/plans/ui-build-progress.md) preserves earlier work; [student walkthrough](../../docs/ux/ui-slice-review.md) explains navigation.
+
+## Engineering Sketchbook branch — current work
+
+Branch `redesign/engineering-sketchbook`, separate checkout `kiki-web-sketchbook`, based on PR #2 `ba40218`. PR #2’s in-progress next build stays separate. [Implementation plan](../../docs/plans/engineering-sketchbook.md).
+
+Foundation and first page pass implemented: local Space Grotesk/Noto Sans Oriya, canonical shared theme with learning aliases, outlined controls and surfaces, desktop/phone shell, Profile in header, direct Subjects/Checks navigation, real next-concept Home continuation, chapter index, notebook lesson pages, dark calculated waveform/spectrum plots, glossary/dial/sheets/audio player, materials/checks/account styles and blue manual preparation. No API/content/grade/catalog/auth changes.
+
+ESLint, TypeScript/production build and **122 frontend unit/contract tests** pass. Browser review covers account/setup/enrollment, Home/subjects, chapter/lesson resume, five language levels, glossary focus/phone sheet, accurate spectrum/reset, C-AM-08 narration/languages/speed/pause/cleanup, sample quiz results, Profile persistence and preparation Save and leave/resume. Eight-width overflow checks pass for welcome, Home, chapter, lesson, material form, Profile and lab preparation. All setup steps pass at 320px; quiz/result and glossary were reviewed at 390px. PR #2’s queued place saver and audio behavior are retained.
+
+Populated upload/review/original screens are styled but browser upload checking remains blocked by the extension’s file-URL permission. Library empty state was inspected. Full automated browser suite and live connected acceptance were not rerun. Physical devices/text zoom and content/Odia/audio review remain separate. [Theme source, coverage and integration handoff](ENGINEERING_SKETCHBOOK.md).
+
+Local preview: **http://127.0.0.1:5192** (labelled browser-only sample). Original connected app and standalone demos are separate and preserved. No env file was copied or deployment performed. On 17 October the user authorized committing and pushing this completed source checkpoint to `origin/redesign/engineering-sketchbook`; authenticated account and author/committer are `akshitanitr`.
+
+**Last completed action:** complete the first visual pass, checks and local review artifacts; document the shared token source and small TS wrapper changes for the separate in-progress PR build. **Exact next action:** review http://127.0.0.1:5192, choose component refinements, and integrate against the other build when its code is ready. Source publication is authorized on the separate `redesign/engineering-sketchbook` branch. No deployment.
+
+The 16 October connected evidence below is historical baseline acceptance, not verification of this redesign.
 
 ## Current review links
 

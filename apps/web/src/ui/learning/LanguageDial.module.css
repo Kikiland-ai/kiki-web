@@ -152,3 +152,7 @@
     transition: none;
   }
 }
+
+.dial { padding: 14px 16px 8px; border: 1.5px solid var(--learning-ink); border-radius: var(--learning-radius-card); background: var(--learning-paper); }
+.rail { background: var(--learning-ink); height: 2px; }
+.knob { background: var(--learning-yellow); box-shadow: 2px 2px 0 var(--learning-ink); }

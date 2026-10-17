@@ -1,0 +1,33 @@
+/* Canonical Engineering Sketchbook palette. Dimension is distinct from outcome. */
+:root {
+  font-family: 'Space Grotesk', 'Noto Sans Oriya', system-ui, sans-serif;
+  font-synthesis: none;
+  color: #111;
+  background: #fff;
+  --paper: #fff;
+  --ink: #111;
+  --muted: #555a53;
+  --line: #111;
+  --rule: #d9ded6;
+  --surface: #f6f7f2;
+  --concept: #34a853;
+  --concept-ink: #176b32;
+  --concept-tint: #edf8ed;
+  --words: #ea4335;
+  --words-ink: #b3261e;
+  --words-tint: #fff0eb;
+  --english: #fbbc05;
+  --english-ink: #705000;
+  --english-tint: #fff8d8;
+  --lab: #4285f4;
+  --lab-ink: #185abc;
+  --lab-tint: #eef3ff;
+  --focus: #111;
+  --radius: 6px;
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-small: 2px 2px 0 var(--ink);
+  --plot-bg: #131914;
+  --plot-grid: #354638;
+  --plot-trace: #79df95;
+  --plot-text: #d4e5d6;
+}

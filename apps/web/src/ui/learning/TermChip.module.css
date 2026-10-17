@@ -5,7 +5,7 @@
   padding: 1px var(--learning-space-1);
   margin: 0 1px;
   border: 0;
-  border-radius: var(--learning-space-2);
+  border-radius: 2px;
   background: transparent;
   color: var(--learning-ink);
   font: inherit;

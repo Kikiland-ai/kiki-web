@@ -135,3 +135,17 @@
   border-color: var(--learning-ink);
   border-width: 3px;
 }
+
+/* Numbered notebook entries retain the same status/ring semantics in every layout. */
+.tile, .row { display: grid; grid-template-columns: 64px minmax(0,1fr); align-items: start; gap: 20px; width: 100%; padding: 24px 20px; text-align: left; border: 1.5px solid var(--learning-ink); background: var(--learning-paper); justify-items: stretch; }
+.tile .body, .row .body { width: 64px; height: 64px; border-color: var(--learning-ink); box-shadow: none; }
+.tile .badges { justify-content: flex-start; }
+.title { font-size: 19px; font-weight: 700; line-height: 1.3; }
+.text { gap: 10px; }
+.text > span:not(.title):not(.titleOr):not(.badges) { font: var(--learning-text-label); color: var(--learning-pencil); }
+.next { border-left: 7px solid var(--learning-green); box-shadow: var(--learning-key-edge-neutral); background: var(--learning-green-tint); }
+.pin { top: -20px; }
+.passed .body { background: var(--learning-green-tint); }
+.revisit { border-style: dashed; }
+.node:hover { box-shadow: var(--learning-key-edge-neutral); }
+@media (max-width: 599px) { .row, .tile { gap: 14px; padding: 22px 14px; grid-template-columns: 52px minmax(0,1fr); } .row .body, .tile .body { width: 52px; height: 56px; } .title { font-size: 17px; } }

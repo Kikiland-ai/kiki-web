@@ -5,6 +5,7 @@ import { createServices } from './services/create-services';
 import { readableError } from './services/types';
 import { Button, StateScreen } from './ui/kit';
 import './ui/styles.css';
+import './ui/sketchbook.css';
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<StateScreen title="Opening Kiki…" />);

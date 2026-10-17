@@ -6,7 +6,7 @@
   --learning-sheet-inset: var(--learning-space-2);
   /* No padding: a click on the dialog box itself always means the backdrop */
   padding: 0;
-  border: 0;
+  border: 2px solid var(--learning-ink);
   margin: auto var(--learning-sheet-inset) max(var(--learning-sheet-inset), env(safe-area-inset-bottom));
   width: calc(100% - 2 * var(--learning-sheet-inset));
   max-width: calc(100% - 2 * var(--learning-sheet-inset));
@@ -39,7 +39,7 @@
   align-items: flex-start;
   gap: var(--learning-space-2);
   padding: var(--learning-space-4) var(--learning-space-2) var(--learning-space-2) var(--learning-gutter);
-  border-bottom: 1px solid var(--learning-line);
+  border-bottom: 5px solid var(--learning-red);
 }
 
 .title {

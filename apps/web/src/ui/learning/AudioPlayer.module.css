@@ -2,7 +2,7 @@
   display: grid;
   gap: var(--learning-space-2);
   padding: var(--learning-space-3);
-  border: 1px solid var(--learning-line);
+  border: 1.5px solid var(--learning-line);
   border-radius: var(--learning-radius-card);
   background: var(--learning-paper-sunken);
   min-width: 0;
@@ -76,7 +76,7 @@
 
 .segments {
   display: inline-flex;
-  border: 1px solid var(--learning-line);
+  border: 1.5px solid var(--learning-line);
   border-radius: var(--learning-radius-pill);
   overflow: hidden;
 }
@@ -118,3 +118,6 @@
     transition: none !important;
   }
 }
+
+.player { border-left: 5px solid var(--learning-ink); background: var(--learning-paper-sunken); }
+.play { border: 2px solid var(--learning-ink); box-shadow: var(--learning-key-edge-neutral); }

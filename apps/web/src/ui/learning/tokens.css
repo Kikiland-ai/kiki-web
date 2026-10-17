@@ -1,49 +1,42 @@
-/*
- * Breadboard tokens, reconciled for the Kiki app (13 Oct 2026 decisions).
- * Source: Design-Thinking design-system/project/tokens.json.
- * Changes from source: white app background (paper = #ffffff), Google Sans
- * for English UI with Noto Sans Oriya fallback, neutral-ink primary button.
- * Dimension colours: green = concept, red = words, yellow = English,
- * blue = practical. Only these tokens may define colour; no page overrides.
- */
+/* Compatibility aliases for Arpan’s learning kit. Canonical values: ../theme.css. */
 :root {
   /* Surfaces and neutrals */
-  --learning-paper: #ffffff;
-  --learning-paper-raised: #ffffff;
-  --learning-paper-sunken: #f8f9fa;
-  --learning-ink: #1f1f1f;
-  --learning-pencil: #5f6368;
-  --learning-line: #dadce0;
-  --learning-grid-dot: #e8eaed;
+  --learning-paper: var(--paper);
+  --learning-paper-raised: var(--paper);
+  --learning-paper-sunken: var(--surface);
+  --learning-ink: var(--ink);
+  --learning-pencil: var(--muted);
+  --learning-line: var(--line);
+  --learning-grid-dot: var(--rule);
 
   /* Dimensions: fills are for shapes only; use -ink for text and icons */
-  --learning-green: #34a853;
-  --learning-green-ink: #137333;
-  --learning-green-tint: #e6f4ea;
-  --learning-red: #ea4335;
-  --learning-red-ink: #c5221f;
-  --learning-red-strong: #c5221f;
-  --learning-red-tint: #fce8e6;
-  --learning-yellow: #fbbc05;
-  --learning-yellow-ink: #9a5500;
-  --learning-yellow-tint: #fef7e0;
-  --learning-on-yellow: #1f1f1f;
-  --learning-blue: #4285f4;
-  --learning-blue-ink: #1967d2;
-  --learning-blue-tint: #e8f0fe;
-  --learning-on-blue-ink: #ffffff;
+  --learning-green: var(--concept);
+  --learning-green-ink: var(--concept-ink);
+  --learning-green-tint: var(--concept-tint);
+  --learning-red: var(--words);
+  --learning-red-ink: var(--words-ink);
+  --learning-red-strong: var(--words-ink);
+  --learning-red-tint: var(--words-tint);
+  --learning-yellow: var(--english);
+  --learning-yellow-ink: var(--english-ink);
+  --learning-yellow-tint: var(--english-tint);
+  --learning-on-yellow: var(--ink);
+  --learning-blue: var(--lab);
+  --learning-blue-ink: var(--lab-ink);
+  --learning-blue-tint: var(--lab-tint);
+  --learning-on-blue-ink: var(--paper);
 
   /* Lab scope surfaces stay dark inside the white shell */
-  --learning-scope-glass: #0e1116;
-  --learning-scope-grid: #23303a;
-  --learning-scope-trace: #5be38a;
-  --learning-scope-text: #c9d6df;
+  --learning-scope-glass: var(--plot-bg);
+  --learning-scope-grid: var(--plot-grid);
+  --learning-scope-trace: var(--plot-trace);
+  --learning-scope-text: var(--plot-text);
 
-  --learning-focus-ring: #1967d2;
+  --learning-focus-ring: var(--focus);
 
   /* Generic primary action is neutral ink; dimension colours mark skill signals */
   --learning-button-primary-bg: var(--learning-ink);
-  --learning-button-primary-fg: #ffffff;
+  --learning-button-primary-fg: var(--paper);
 
   /* Backdrop behind Sheet (kit, 14 Oct): ink at 40% so the page stays readable */
   --learning-scrim: rgba(31, 31, 31, 0.4);
@@ -51,24 +44,24 @@
   /* KikiPointer (kit, 15 Oct): the body stays dark with a white outline over
      any surface, like a system cursor */
   --learning-kiki-pointer-body: var(--learning-ink);
-  --learning-kiki-pointer-outline: #ffffff;
+  --learning-kiki-pointer-outline: var(--paper);
 
   /* Type */
-  --learning-font-ui: "Google Sans", "Noto Sans Oriya", system-ui, sans-serif;
-  --learning-font-odia: "Noto Sans Oriya", "Google Sans", system-ui, sans-serif;
+  --learning-font-ui: "Space Grotesk", "Noto Sans Oriya", system-ui, sans-serif;
+  --learning-font-odia: "Noto Sans Oriya", "Space Grotesk", system-ui, sans-serif;
   --learning-font-mono: "Roboto Mono", ui-monospace, monospace;
 
-  --learning-text-display-l: 700 32px/38px var(--learning-font-ui);
-  --learning-text-display-m: 700 24px/30px var(--learning-font-ui);
+  --learning-text-display-l: 700 clamp(34px, 4vw, 48px)/1.1 var(--learning-font-ui);
+  --learning-text-display-m: 700 26px/1.2 var(--learning-font-ui);
   --learning-text-odia-display-m: 600 26px/38px var(--learning-font-odia);
-  --learning-text-body: 400 16px/24px var(--learning-font-ui);
-  --learning-text-body-odia: 400 18px/30px var(--learning-font-odia);
+  --learning-text-body: 400 16px/1.7 var(--learning-font-ui);
+  --learning-text-body-odia: 400 18px/1.95 var(--learning-font-odia);
   --learning-text-term: 500 15px/20px var(--learning-font-ui);
   --learning-text-label: 500 13px/18px var(--learning-font-ui);
   /* Odia labels (kit, 14 Oct): Odia script needs a size step and taller lines */
   --learning-text-label-odia: 600 14px/22px var(--learning-font-odia);
   /* Button labels (kit, 14 Oct): source uses 600, Google Sans is loaded at 500 */
-  --learning-text-button: 500 16px/20px var(--learning-font-ui);
+  --learning-text-button: 600 15px/22px var(--learning-font-ui);
   --learning-text-button-odia: 600 16px/26px var(--learning-font-odia);
   --learning-text-mono: 500 14px/20px var(--learning-font-mono);
 
@@ -81,19 +74,19 @@
   --learning-space-8: 32px;
 
   /* Radius */
-  --learning-radius-node: 16px;
-  --learning-radius-card: 24px;
-  --learning-radius-sheet: 28px;
-  --learning-radius-pill: 999px;
+  --learning-radius-node: var(--radius);
+  --learning-radius-card: var(--radius);
+  --learning-radius-sheet: 8px;
+  --learning-radius-pill: 5px;
 
   /* Elevation */
-  --learning-key-edge-neutral: 0 3px 0 #c9c5bc;
-  --learning-lift: 0 8px 24px rgba(31, 31, 31, 0.12);
+  --learning-key-edge-neutral: var(--shadow-small);
+  --learning-lift: var(--shadow);
   /* Pill-key edges (kit, 14 Oct): the ink key's darker edge, and both edges
      after the key presses down 2px */
-  --learning-key-edge-ink: 0 3px 0 #000000;
-  --learning-key-edge-ink-pressed: 0 1px 0 #000000;
-  --learning-key-edge-neutral-pressed: 0 1px 0 #c9c5bc;
+  --learning-key-edge-ink: var(--shadow);
+  --learning-key-edge-ink-pressed: 1px 1px 0 var(--ink);
+  --learning-key-edge-neutral-pressed: 1px 1px 0 var(--ink);
 
   /* Motion (kit, 14 Oct). base.css cuts these under prefers-reduced-motion */
   --learning-motion-press: 120ms ease;
@@ -115,5 +108,5 @@
 .learning-scope p, .learning-sheet p { color: inherit; }
 .learning-scope a:focus-visible, .learning-sheet button:focus-visible { outline-color: var(--learning-focus-ring); }
 /* Text links read as links: the app-wide `a` rule removes colour and underline (kit, 16 Oct) */
-.learning-scope a:not([class]), .learning-sheet a:not([class]) { color: var(--learning-blue-ink); text-decoration: underline; }
+.learning-scope a:not([class]), .learning-sheet a:not([class]) { color: var(--learning-ink); text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) { .learning-scope *, .learning-sheet * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }

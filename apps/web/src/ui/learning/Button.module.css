@@ -6,7 +6,7 @@
   min-height: var(--learning-tap-target);
   max-width: 100%;
   padding: var(--learning-space-2) var(--learning-space-6);
-  border: 0;
+  border: 2px solid var(--learning-ink);
   border-radius: var(--learning-radius-pill);
   font: var(--learning-text-button);
   text-align: center;
@@ -35,24 +35,25 @@
 }
 
 .primary:active:not(:disabled) {
-  transform: translateY(2px);
+  transform: translate(2px, 2px);
   box-shadow: var(--learning-key-edge-ink-pressed);
 }
 
 .secondary {
-  background: var(--learning-paper-sunken);
+  background: var(--learning-paper);
   color: var(--learning-ink);
-  border: 1px solid var(--learning-line);
+  border: 2px solid var(--learning-line);
   box-shadow: var(--learning-key-edge-neutral);
 }
 
 .secondary:active:not(:disabled) {
-  transform: translateY(2px);
+  transform: translate(2px, 2px);
   box-shadow: var(--learning-key-edge-neutral-pressed);
 }
 
 /* Neutral ink, not blue: blue marks the practical dimension */
 .text {
+  border-color: transparent;
   background: transparent;
   color: var(--learning-ink);
   padding-inline: var(--learning-space-3);
@@ -76,5 +77,8 @@
 }
 
 .link.text {
+  border-color: transparent;
   text-decoration: underline;
 }
+
+.primary:hover, .secondary:hover { filter: brightness(.96); }

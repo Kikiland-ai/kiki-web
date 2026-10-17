@@ -40,3 +40,7 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
+
+.head { border-bottom: 1px solid var(--learning-line); padding-bottom: 16px; }
+.list { gap: 20px; }
+.list dt { font-weight: 700; letter-spacing: .04em; margin-bottom: 5px; color: var(--learning-red-ink); }

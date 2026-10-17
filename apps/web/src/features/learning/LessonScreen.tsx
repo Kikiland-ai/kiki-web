@@ -187,7 +187,7 @@ export function LessonScreen() {
           {status === 'revisit' && <StatusBadge label="Revisit" tone="not_yet" />}
           {concept?.requiredForLab && <StatusBadge label="For the lab" dimension="lab" />}
         </div>
-        <LanguageDial value={dial} onChange={setDial} />
+        <aside className={styles.support} aria-label="Language support"><span className={styles.supportLabel}>YOUR LANGUAGE SUPPORT</span><LanguageDial value={dial} onChange={setDial} /></aside>
         {preference.saving && <p role="status">Saving your language preference…</p>}
         {preference.error && <div role="alert">Language preference not saved: {preference.error} <Button variant="text" onClick={preference.retry}>Retry language preference</Button></div>}
       </header>
@@ -207,6 +207,7 @@ export function LessonScreen() {
       {/* From 768px: steps in a column on the left, the card held in place on the right */}
       <div className={styles.reader}>
         <nav aria-label="Lesson steps" className={styles.stepsNav}>
+          <p className={styles.marginLabel}>FOUR PAGES / ONE IDEA</p>
           <ol className={styles.steps}>
             {placards.map((p, i) => {
               const t = pick(p.title, dial)

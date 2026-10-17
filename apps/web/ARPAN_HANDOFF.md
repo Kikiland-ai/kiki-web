@@ -51,3 +51,7 @@ Adapted the lab-selection/readiness/checkpoint flow to current Services/router a
 ## Shared repository checkpoint — 16 October
 
 Combined source now follows the kiki-web integration branch layout: one frontend in apps/web, current Python API in apps/api, required content/assets and plans at root. Read ../../TEAM_HANDOFF.md and active.md before continuing. The old root app/fixture stores are superseded; Arpan's original feature ancestry is retained. Coordinate new work against the existing connected services. Aditya's monitoring/assessment stays deferred.
+
+## Engineering Sketchbook first pass — 17 October
+
+Local `redesign/engineering-sketchbook` is based on PR #2 `ba40218`; the next build in progress on PR #2 remains separate. Ownership and contracts above stay intact. [Theme handoff](ENGINEERING_SKETCHBOOK.md) maps canonical CSS/font assets and the small ChapterMap/LessonScreen wrappers so the consuming build can preserve its latest logic. Queued place saving, term focus/scroll, five-level language behavior and sample Listen/provenance/cleanup are retained. Current verification and limitations are in [active.md](active.md). No backend, grading, schema, catalog or auth changes. The user authorized commit and push of this source checkpoint on 17 October. Deployment remains separate.

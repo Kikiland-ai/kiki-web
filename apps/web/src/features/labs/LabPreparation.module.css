@@ -1,16 +1,16 @@
 .screen { min-width: 0; }
-.notice { padding:20px; border:1px solid #a8c7fa; border-left:5px solid #4285f4; border-radius:16px; background:#f5f8ff; color:#1f1f1f; }
+.notice { padding:20px; border:1px solid var(--ink); border-left:5px solid var(--lab); border-radius:var(--radius); background:var(--lab-tint); color:var(--ink); }
 .notice p { margin-bottom:0; }
 .layout { display:grid; gap:24px; align-items:start; grid-template-columns:minmax(260px,1fr) minmax(0,2fr); }
 .sidebar, .main { display:grid; gap:24px; min-width:0; }
 .required { padding-left:0; list-style:none; display:grid; gap:12px; }
 .required li { display:grid; gap:4px; }
 .required a { justify-content:flex-start; white-space:normal; text-align:left; padding:0; }
-.required li span { color:#5f6368; font-size:14px; }
+.required li span { color:var(--muted); font-size:14px; }
 .form { display:grid; gap:12px; }
 .form label { font-weight:600; }
 .form p { margin:0; }
-.form textarea,.form input,.sidebar input { width:100%; min-width:0; box-sizing:border-box; padding:12px; border:1px solid #9aa0a6; border-radius:10px; font:inherit; background:white; color:#1f1f1f; }
+.form textarea,.form input,.sidebar input { width:100%; min-width:0; box-sizing:border-box; padding:12px; border:1px solid var(--ink); border-radius:var(--radius); font:inherit; background:white; color:var(--ink); }
 .form textarea { resize:vertical; }
 .steps { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
 .steps button { min-width:44px; padding-inline:12px; }
@@ -20,3 +20,12 @@
 .sidebar label { display:block; margin-bottom:8px; }
 .sidebar input { margin-bottom:12px; }
 @media (max-width:900px) { .layout { grid-template-columns:minmax(0,1fr); } .main { grid-row:1; } }
+
+.screen :global(.card) { border-top:6px solid var(--lab); }
+.notice { border:1.5px solid var(--ink); border-left:7px solid var(--lab); padding:22px; }
+.steps { padding-block:16px; border-block:1px solid var(--rule); }
+.steps button { border-radius:4px; box-shadow:none; }
+.steps button[aria-current='step'] { color:var(--ink); background:var(--lab); border-width:2px; }
+.required li { padding-bottom:10px; border-bottom:1px solid var(--rule); }
+.form textarea { background:repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px),var(--paper); line-height:32px; }
+@media(min-width:1200px) { .sidebar { position:sticky; top:24px; } }

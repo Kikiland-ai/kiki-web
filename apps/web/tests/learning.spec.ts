@@ -169,7 +169,8 @@ test('prerequisite links look like links and are full touch targets',async({page
   await setup(page); await page.getByRole('link',{name:/^Concept 8:/}).click();
   const link=page.getByRole('complementary',{name:'Prerequisite concepts'}).getByRole('link',{name:'Lowpass filtering and waveform comparison',exact:true});
   expect(await link.evaluate(a=>getComputedStyle(a).textDecorationLine)).toContain('underline');
-  expect(await link.evaluate(a=>getComputedStyle(a).color)).toBe('rgb(25, 103, 210)');
+  // General links use ink; blue is reserved for practical work in Sketchbook.
+  expect(await link.evaluate(a=>getComputedStyle(a).color)).toBe('rgb(17, 17, 17)');
   expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(48);
 });
 test('moving through placards never waits for a save, and the latest place is kept',async({page})=>{

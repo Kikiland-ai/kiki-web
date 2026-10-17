@@ -12,7 +12,7 @@ const files = sources.flatMap((dir) =>
 )
 // Defined in the tokens, the app styles, or locally by a component (CSS `--x:` or an inline style key `'--x'`)
 const defined = new Set(
-  [readFileSync(join(here, 'tokens.css'), 'utf8'), readFileSync(join(here, '../styles.css'), 'utf8'), ...files.map((f) => f.text)].flatMap(
+  [readFileSync(join(here, 'tokens.css'), 'utf8'), readFileSync(join(here, '../styles.css'), 'utf8'), readFileSync(join(here, '../theme.css'), 'utf8'), ...files.map((f) => f.text)].flatMap(
     (text) => [...text.matchAll(/(--[\w-]+)['"]?\s*:/g)].map((m) => m[1]),
   ),
 )

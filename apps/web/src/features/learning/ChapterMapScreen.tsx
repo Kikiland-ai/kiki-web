@@ -78,6 +78,7 @@ export function ChapterMapScreen() {
     <div className={`learning-scope ${styles.screen}`}>
       <header className={styles.header}>
         <div className={styles.titleRow}>
+          <span className={styles.eyebrow}>THEORY NOTEBOOK · CHAPTER 01</span>
           <h1 className={styles.title}>{chapter.title.en}</h1>
           {chapter.review.content === 'draft' && <StatusBadge label="Draft content" />}
           {services.mode === 'fixture' && <p className="helper-note">Sample chapter content. Progress comes from your saved preview checks, including any explicitly loaded preview setup.</p>}
@@ -99,6 +100,7 @@ export function ChapterMapScreen() {
         </div>
       </header>
 
+      <div className={styles.body}>
       {progress.labReadiness && (
         <section className={styles.lab} aria-labelledby="lab-title">
           <h2 id="lab-title" className={styles.labTitle}>
@@ -139,6 +141,7 @@ export function ChapterMapScreen() {
         </section>
       )}
 
+      <div className={styles.contents}>
       {sections.map((section) => {
         const concepts = chapter.concepts
           .filter((c) => c.broadConceptId === section.id)
@@ -182,6 +185,8 @@ export function ChapterMapScreen() {
           Take the chapter test
         </LinkButton> : <><p>Pass all ten concept checks at 60% or above to unlock this test.</p><button className="button button-secondary" disabled>Chapter test locked</button></>}
       </section>
+      </div>
+      </div>
     </div>
   )
 }
