@@ -1,9 +1,17 @@
 # Kiki web — active frontend status
 
 Updated: 18 October 2026
-Current step: Engineering Sketchbook publication checkpoint — checks passed
+Current step: Engineering Sketchbook published — PR #5 open for review
 
 This is the **current frontend status record**. Update it after each completed step. [Build history](../../docs/plans/ui-build-progress.md) preserves earlier work; [student walkthrough](../../docs/ux/ui-slice-review.md) explains navigation.
+
+## Published redesign — PR #5
+
+The user-authorized redesign is committed as `e951a83` and pushed to `origin/redesign/sketchbook-refinement`; [PR #5](https://github.com/Kikiland-ai/kiki-web/pull/5) is open into `main`. Author/committer and authenticated GitHub publisher are `akshitanitr`. This is source publication only; no deployment or Firebase/billing/storage write.
+
+Publication checks pass:154 frontend/104 Python/28 data-model tests, lint/format/typecheck/build, source-case validation, Python→React receipts, OpenAPI consistency and source/production scans. The optional-media enrollment-order regression is fixed and covered. Full automated browser suite and physical-device checks were not rerun; recorded native responsive/keyboard/zoom acceptance remains in the sections below.
+
+**Exact next:** review/merge PR #5 through the team's normal process. The user requested closing #1–#3 only after this merge and a fresh coverage check against their current heads; all three stay open until then. Do not force-push or delete teammate branches. No automatic merge in this publication step.
 
 ## Source publication checkpoint — 18 October 2026
 

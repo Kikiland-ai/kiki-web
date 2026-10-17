@@ -1,5 +1,7 @@
 # Engineering Sketchbook component refinement — 17–18 October 2026
 
+> **Published:** `e951a83` on `origin/redesign/sketchbook-refinement`; [PR #5](https://github.com/Kikiland-ai/kiki-web/pull/5) into `main`. The local-only statements below describe earlier checkpoints. No deployment; older PR closure waits for merge and fresh coverage confirmation.
+
 ## Final UI pass complete — 18 October
 
 All current application routes now have the Sketchbook presentation, including shared loading, retry, missing-page and leave-dialog states. `ui/feedback.css` extends the canonical tokens for neutral notebook panels and safe scrolling dialogs. `ui/kit.tsx` adds an accessible LoadingNotice and embedded/busy StateScreen variants; route loading views use them. Learning loading/error modules use the same outline treatment. Lab Escape now means Keep editing; short-viewport save bars leave room for reading. No service/persistence/auth/grading/backend/cloud change. The prior local integration remains preserved; PR work is deferred at the user's request.

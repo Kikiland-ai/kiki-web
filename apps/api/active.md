@@ -5,6 +5,10 @@ Current step: PR #2 media and PR #3 Windows fixes integrated alongside Library t
 
 See [../web/active.md](../web/active.md) for the student walkthrough/current acceptance and [LEARNING_STORAGE.md](LEARNING_STORAGE.md) for data paths, migration, rollback and API rules.
 
+## Published source
+
+Combined source checkpoint `e951a83` is pushed on `redesign/sketchbook-refinement`; [PR #5](https://github.com/Kikiland-ai/kiki-web/pull/5) targets `main`.104 Python tests and API/contract checks pass. No deployment or cloud media publication. Older PRs stay open pending replacement merge/coverage check.
+
 ## Publication review — 18 October
 
 104 Python tests, Ruff/format, OpenAPI consistency and Python→React receipts pass. Optional media calls now validate learner context before resolving the adapter method: absent adapter returns503 to enrolled learners and403 to unenrolled learners, with complete text lessons preserved. New regression covers manifest/assets. No DTO/cloud/storage change. User authorized branch publication/new replacement PR; older PRs remain open pending merge/coverage confirmation. [Current combined status](../web/active.md).

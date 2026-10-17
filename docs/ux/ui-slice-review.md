@@ -1,5 +1,7 @@
 ## Complete local redesign review — 18 October 2026
 
+Source review: [PR #5](https://github.com/Kikiland-ai/kiki-web/pull/5) contains the completed redesign on `redesign/sketchbook-refinement`. Local review links below still apply; no deployment was performed.
+
 Open **http://localhost:5195/** for the fresh browser-only sample; Open sample student → setup → add Analog Communication → Home. Review Subjects, Learn, Checks, Library and Profile, plus Lab mode in the header. All current pages have the Engineering Sketchbook theme. Library continues to show static upload history; extraction stays internal. Existing connected data is available through **http://127.0.0.1:5194/**.
 
 The final pass adds matching notebook loading/recovery views and phone leave dialogs. For a recovery example visit `/subjects/not-a-subject` or `/not-a-page` on the sample server. Concept-not-found returns to the chapter. In lab preparation, change a checkpoint then choose Home: Escape keeps the unsaved draft, and Save and leave confirms persistence before navigating. This remains reading position, not lab evidence.
