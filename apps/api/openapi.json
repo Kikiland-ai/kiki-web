@@ -151,6 +151,117 @@
         ]
       }
     },
+    "/study-requests/text": {
+      "post": {
+        "summary": "Create Text",
+        "operationId": "create_text_study_requests_text_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 200,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextIntake"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/source-docs/{source_id}/text": {
+      "get": {
+        "summary": "Source Text",
+        "operationId": "source_text_source_docs__source_id__text_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceTextEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/study-requests": {
       "post": {
         "summary": "Create Material",
@@ -3173,7 +3284,9 @@
             "enum": [
               "application/pdf",
               "image/jpeg",
-              "image/png"
+              "image/png",
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+              "text/plain"
             ],
             "title": "Mime"
           },
@@ -3184,9 +3297,31 @@
             "title": "Size"
           },
           "sha256": {
-            "type": "string",
-            "pattern": "^[a-f0-9]{64}$",
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Sha256"
+          },
+          "originalAvailable": {
+            "type": "boolean",
+            "title": "Originalavailable",
+            "default": true
+          },
+          "textSummary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -3202,7 +3337,6 @@
           "title",
           "mime",
           "size",
-          "sha256",
           "createdAt"
         ],
         "title": "SourceAsset"
@@ -3218,6 +3352,38 @@
           "source"
         ],
         "title": "SourceEnvelope"
+      },
+      "SourceTextEnvelope": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/SourceAsset"
+          },
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/TextChunk"
+            },
+            "type": "array",
+            "title": "Chunks"
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nextcursor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "chunks",
+          "nextCursor"
+        ],
+        "title": "SourceTextEnvelope"
       },
       "Start": {
         "properties": {
@@ -3313,7 +3479,10 @@
           },
           "status": {
             "type": "string",
-            "const": "stored",
+            "enum": [
+              "stored",
+              "text_saved"
+            ],
             "title": "Status",
             "default": "stored"
           },
@@ -3331,7 +3500,14 @@
             "title": "Outline"
           },
           "jobId": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Jobid"
           },
           "lessonPlanId": {
@@ -3467,6 +3643,240 @@
           "or"
         ],
         "title": "Text"
+      },
+      "TextChunk": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "text"
+        ],
+        "title": "TextChunk"
+      },
+      "TextDocument": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "mime": {
+            "type": "string",
+            "enum": [
+              "application/pdf",
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+              "text/plain"
+            ],
+            "title": "Mime"
+          },
+          "size": {
+            "type": "integer",
+            "maximum": 10485760.0,
+            "minimum": 1.0,
+            "title": "Size"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "pdf-text",
+              "pptx-text",
+              "pasted"
+            ],
+            "title": "Method"
+          },
+          "unitLabel": {
+            "type": "string",
+            "enum": [
+              "page",
+              "slide",
+              "section"
+            ],
+            "title": "Unitlabel"
+          },
+          "unitCount": {
+            "type": "integer",
+            "maximum": 500.0,
+            "minimum": 1.0,
+            "title": "Unitcount"
+          },
+          "units": {
+            "items": {
+              "$ref": "#/components/schemas/TextUnit"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Units"
+          },
+          "warnings": {
+            "items": {
+              "type": "string",
+              "maxLength": 240
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Warnings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "mime",
+          "size",
+          "method",
+          "unitLabel",
+          "unitCount",
+          "units",
+          "warnings"
+        ],
+        "title": "TextDocument"
+      },
+      "TextIntake": {
+        "properties": {
+          "courseId": {
+            "type": "string",
+            "const": "CRS-AC-ECE",
+            "title": "Courseid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "syllabus",
+              "notes",
+              "experiment_sheet"
+            ],
+            "title": "Kind"
+          },
+          "topic": {
+            "type": "string",
+            "maxLength": 180,
+            "minLength": 1,
+            "title": "Topic"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Note",
+            "default": ""
+          },
+          "classDate": {
+            "type": "string",
+            "title": "Classdate",
+            "default": ""
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/TextDocument"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Documents"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "courseId",
+          "kind",
+          "topic",
+          "documents"
+        ],
+        "title": "TextIntake"
+      },
+      "TextSummary": {
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "pdf-text",
+              "pptx-text",
+              "pasted"
+            ],
+            "title": "Method"
+          },
+          "unitLabel": {
+            "type": "string",
+            "enum": [
+              "page",
+              "slide",
+              "section"
+            ],
+            "title": "Unitlabel"
+          },
+          "unitCount": {
+            "type": "integer",
+            "maximum": 500.0,
+            "minimum": 1.0,
+            "title": "Unitcount"
+          },
+          "chunkCount": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Chunkcount"
+          },
+          "byteCount": {
+            "type": "integer",
+            "maximum": 1078576.0,
+            "minimum": 1.0,
+            "title": "Bytecount"
+          },
+          "warnings": {
+            "items": {
+              "type": "string",
+              "maxLength": 240
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Warnings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "method",
+          "unitLabel",
+          "unitCount",
+          "chunkCount",
+          "byteCount",
+          "warnings"
+        ],
+        "title": "TextSummary"
+      },
+      "TextUnit": {
+        "properties": {
+          "number": {
+            "type": "integer",
+            "maximum": 500.0,
+            "minimum": 1.0,
+            "title": "Number"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 1048576,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "number",
+          "text"
+        ],
+        "title": "TextUnit"
       },
       "ValidationError": {
         "properties": {

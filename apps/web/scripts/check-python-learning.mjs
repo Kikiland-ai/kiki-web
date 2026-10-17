@@ -19,5 +19,12 @@ try {
   lab.PracticalEnvelope.parse(labReceipts.practical);
   lab.PreparationEnvelope.parse(labReceipts.preparation);
   console.log('Python → React practical/preparation: passed');
+  const intake = await server.ssrLoadModule('/src/contracts/intake.ts');
+  const text = await server.ssrLoadModule('/src/contracts/document-text.ts');
+  const textReceipts = JSON.parse(await readFile(new URL('../../api/test-artifacts/document-text-contract.json', import.meta.url), 'utf8'));
+  intake.RequestEnvelope.parse(textReceipts.receipt);
+  intake.RequestsEnvelope.parse(textReceipts.list);
+  text.SourceTextSchema.parse(textReceipts.text);
+  console.log('Python → React document text create/list/read: passed');
   assessment.checkResultForRun(receipts.run.run, receipts.result.result);
 } finally { await server.close(); }

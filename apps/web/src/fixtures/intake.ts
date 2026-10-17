@@ -1,7 +1,8 @@
+import { documentText, splitDocumentText, TextDocumentSchema } from '../contracts/document-text';
 import { COURSE } from '../contracts/profile';
 import { assertOwner, MAX_FILES, validateMaterial, type IntakeApi, type IntakeRequest, type Outline } from '../contracts/intake';
 import { ServiceError } from '../services/types';
-import { listRequests, readBlob, storeRequest } from './material-store';
+import { listRequests, readBlob, readText, storeRequest } from './material-store';
 import { SAMPLE_CONCEPTS } from './material-concepts';
 
 export function createFixtureIntake(requireUid: () => string): IntakeApi {
@@ -15,6 +16,44 @@ export function createFixtureIntake(requireUid: () => string): IntakeApi {
   const keep = async (request: IntakeRequest) => { assertOwner(request, requireUid()); return storeRequest({ ...request, updatedAt: new Date().toISOString() }); };
   const sameOutline = (a: Outline | null, b: Outline) => JSON.stringify(a) === JSON.stringify(b);
   return {
+    createText: async (input, key, signal) => {
+      const uid = requireUid();
+      if (input.courseId !== COURSE.id || !input.topic.trim() || !input.documents.length || input.documents.length > MAX_FILES || !/^[a-zA-Z0-9_-]{8,200}$/.test(key)) throw new ServiceError('Check your subject, topic and text documents.');
+      const documents = input.documents.map(d => TextDocumentSchema.parse(d));
+      const id = `text-req-${key}`, fingerprint = JSON.stringify(input);
+      const existing = (await listRequests()).find(r => r.id === id);
+      signal?.throwIfAborted();
+      if (requireUid() !== uid) throw new ServiceError('Your account changed.');
+      if (existing) {
+        assertOwner(existing, uid);
+        if (await readText(id) !== fingerprint) throw new ServiceError('This save key has different text or details.', 409);
+        return existing;
+      }
+      const now = new Date().toISOString();
+      const text = documents.map(documentText);
+      const request: IntakeRequest = {
+        schema: 'intake-view/v1', id, ownerLearnerId: uid, courseId: input.courseId, kind: input.kind,
+        topic: input.topic.trim(), note: input.note, classDate: input.classDate, status: 'text_saved',
+        outline: null, jobId: null, lessonPlanId: null, failure: null, createdAt: now, updatedAt: now,
+        sources: documents.map((d, i) => ({ id: `text-src-${key}-${i}`, requestId: id, ownerLearnerId: uid,
+          title: d.title, mime: d.mime, size: d.size, createdAt: now, originalAvailable: false,
+          textSummary: { method: d.method, unitLabel: d.unitLabel, unitCount: d.unitCount,
+            byteCount: new TextEncoder().encode(text[i]).length, chunkCount: splitDocumentText(text[i]).length, warnings: d.warnings } })),
+      };
+      signal?.throwIfAborted();
+      return storeRequest(request, [], [{ id, text: fingerprint }, ...request.sources.map((s, i) => ({ id: s.id, text: text[i] }))]);
+    },
+    text: async (id, cursor = 0, signal) => {
+      const uid = requireUid();
+      const source = (await listRequests()).filter(r => r.ownerLearnerId === uid).flatMap(r => r.sources).find(s => s.id === id);
+      if (!source) throw new ServiceError('This document could not be found.', 404);
+      if (!source.textSummary) throw new ServiceError('No extracted text is saved for this original.', 409);
+      const text = await readText(id), chunks = splitDocumentText(text), end = Math.min(cursor + 5, chunks.length);
+      signal?.throwIfAborted();
+      if (requireUid() !== uid) throw new ServiceError('Your account changed.');
+      if (!Number.isInteger(cursor) || cursor < 0 || cursor >= chunks.length) throw new ServiceError('Reopen saved text from Library.', 422);
+      return { source, chunks: chunks.slice(cursor, end).map((text, i) => ({ index: cursor + i, text })), nextCursor: end < chunks.length ? end : null };
+    },
     list: async () => { const uid = requireUid(); const all = await listRequests(); if (requireUid() !== uid) throw new ServiceError('Your account changed.'); return all.filter(r => r.ownerLearnerId === uid).sort((a,b) => b.createdAt.localeCompare(a.createdAt)); },
     get,
     create: async (input, key, signal) => {

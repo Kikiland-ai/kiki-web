@@ -35,3 +35,16 @@ it('accepts stored receipts, follows explicit page cursors and never invents a r
   await api.listPage!('older-page');
   expect(fetcher.mock.calls[1][0]).toBe('http://localhost/study-requests?cursor=older-page');
 });
+it('sends reviewed text as authenticated JSON without original bytes and reads explicit chunk cursors', async () => {
+  const fetcher = vi.fn<typeof fetch>(async () => new Response('', { status: 503 }));
+  const api = createIntakeApi('http://localhost', auth, fetcher);
+  const document = { title: 'Slide notes', mime: 'text/plain' as const, size: 13, method: 'pasted' as const, unitLabel: 'section' as const, unitCount: 1, units: [{ number: 1, text: 'Carrier notes' }], warnings: [] };
+  await expect(api.createText!({ courseId: COURSE.id, kind: 'notes', topic: COURSE.chapter, note: '', classDate: '', documents: [document] }, 'text-save-key')).rejects.toThrow();
+  expect(fetcher.mock.calls[0][0]).toBe('http://localhost/study-requests/text');
+  const options = fetcher.mock.calls[0][1]!;
+  expect(options.headers).toEqual({ Authorization: 'Bearer synthetic-unit-token', 'Content-Type': 'application/json', 'Idempotency-Key': 'text-save-key' });
+  expect(JSON.parse(options.body as string)).toMatchObject({ documents: [document] });
+  expect(JSON.parse(options.body as string)).not.toHaveProperty('files');
+  await expect(api.text!('source-one', 5)).rejects.toThrow();
+  expect(fetcher.mock.calls[1][0]).toBe('http://localhost/source-docs/source-one/text?cursor=5');
+});

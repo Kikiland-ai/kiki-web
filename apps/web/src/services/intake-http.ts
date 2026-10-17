@@ -1,3 +1,4 @@
+import { SourceTextSchema, TextDocumentSchema } from '../contracts/document-text';
 import type { z } from 'zod';
 import { RequestEnvelope, RequestsEnvelope, SourceEnvelope, type IntakeApi, validateMaterial } from '../contracts/intake';
 import type { AuthService } from '../contracts/services';
@@ -25,6 +26,12 @@ export function createIntakeApi(baseUrl: string, auth: AuthService, fetcher: typ
     return result.data;
   }
   return {
+    createText: async (input, key, signal) => {
+      if (!input.documents.length || input.documents.length > 5) throw new ServiceError('Choose one to five text documents.');
+      input.documents.forEach(document => TextDocumentSchema.parse(document));
+      return (await json('/study-requests/text', RequestEnvelope, 'POST', JSON.stringify(input), key, signal)).request;
+    },
+    text: (id, cursor = 0, signal) => json(`/source-docs/${pathId(id)}/text?cursor=${cursor}`, SourceTextSchema, 'GET', undefined, undefined, signal),
     list: async signal => (await json('/study-requests', RequestsEnvelope, 'GET', undefined, undefined, signal)).requests,
     listPage: async (cursor, signal) => {
       const page = await json(`/study-requests${cursor ? `?cursor=${pathId(cursor)}` : ''}`, RequestsEnvelope, 'GET', undefined, undefined, signal);

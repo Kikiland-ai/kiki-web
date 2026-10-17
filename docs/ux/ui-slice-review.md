@@ -1,3 +1,16 @@
+## Library upload history — 17 October 2026
+
+Use **http://127.0.0.1:5194/library** for the connected local build, or **5193** for the labelled browser-only sample. The published redesign preview remains on 5192.
+
+1. Sign in, add Analog Communication if needed, then open **Library → Add material**.
+2. Choose PDF/PPTX and check the selected filenames. Add a topic, optional class date and note.
+3. Click **Upload material**. On success, Kiki returns to Library.
+4. **Previous uploads** shows one static card per document with filename, material type, topic and upload date. Cards do not open anything. Refresh Library to see new uploads.
+
+Extraction and Firestore text persistence stay internal; there is no text review/reader/paste UI. Old text-reader links return to Library. The user verified a real lecture PDF upload and its text in Firestore before this presentation change. Current local checks and connected card/refresh/redirect review pass; automated file-picker acceptance remains permission-blocked and the full browser suite was not rerun. [Internal implementation and verification](../../apps/web/LIBRARY_TEXT_CONTENT.md).
+
+---
+
 ## Engineering Sketchbook review — 17 October 2026
 
 Use **http://127.0.0.1:5192** for the local redesign on `redesign/engineering-sketchbook`. This is the existing React app in labelled browser-only sample mode, based on PR #2 `ba40218`. It is separate from the in-progress PR build and the connected app.

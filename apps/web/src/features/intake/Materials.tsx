@@ -1,3 +1,4 @@
+import type { CreateTextIntake } from '../../contracts/document-text';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useSession } from '../../app/Session';
 import { assertOwner, type CreateIntake, type IntakeRequest } from '../../contracts/intake';
@@ -8,7 +9,7 @@ interface MaterialsValue {
   hasMore: boolean; loadingMore: boolean; loadMore(): Promise<void>;
   uploading: boolean; uploadError: string; refresh(): Promise<void>;
   upsert(request: IntakeRequest): void;
-  upload(input: CreateIntake, key: string): Promise<IntakeRequest>; cancelUpload(): void;
+  upload(input: CreateIntake | CreateTextIntake, key: string): Promise<IntakeRequest>; cancelUpload(): void;
 }
 const Context = createContext<MaterialsValue | null>(null);
 export function MaterialsProvider({ children }: { children: ReactNode }) {
@@ -65,11 +66,13 @@ export function MaterialsProvider({ children }: { children: ReactNode }) {
     } catch (e) { if (!operation.signal.aborted) setError(readableError(e)); }
     finally { if (!operation.signal.aborted) setLoadingMore(false); }
   };
-  const upload = async (input: CreateIntake, key: string) => {
+  const upload = async (input: CreateIntake | CreateTextIntake, key: string) => {
     if (!uid || controller.current) throw new Error('An upload is already running or sign-in is required.');
     const operation = new AbortController(); controller.current = operation; setUploading(true); setUploadError('');
     try {
-      const request = await services.intake.create(input, key, operation.signal);
+      const request = 'documents' in input
+        ? await (services.intake.createText ? services.intake.createText(input, key, operation.signal) : Promise.reject(new Error('Text saving is not available in this build.')))
+        : await services.intake.create(input, key, operation.signal);
       operation.signal.throwIfAborted();
       if (activeUid.current !== uid) throw new Error('Your account changed.');
       assertOwner(request, uid); upsert(request); return request;

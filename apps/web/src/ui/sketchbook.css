@@ -178,3 +178,18 @@ button, input, select, textarea { font: inherit; }
   .setup-actions { flex-direction: column-reverse; align-items: stretch; }
   .setup-actions .button-primary { flex: auto; }
 }
+
+/* Upload history cards are informational and have no click or hover action. */
+.upload-card { min-width:0; display:flex; flex-direction:column; cursor:default; }
+.upload-card h2 { margin-block:22px 16px; font-size:22px; line-height:1.35; overflow-wrap:anywhere; }
+.upload-file-icon { display:grid; place-items:center; width:48px; height:52px; border:1.5px solid var(--ink); border-radius:var(--radius); background:var(--words-tint); }
+.upload-file-icon .material-symbols-rounded { font-size:28px; }
+.upload-card .subject-top { justify-content:space-between; }
+.upload-card > p { overflow-wrap:anywhere; }
+.upload-card-footer { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 20px; border-top:1px solid var(--rule); padding-top:16px; margin-top:auto; font-size:12px; }
+.selected-materials { padding:0; margin:0; list-style:none; display:grid; gap:12px; }
+.selected-materials li { display:flex; gap:12px; align-items:center; padding:14px; border:1.5px solid var(--ink); border-radius:var(--radius); min-width:0; }
+.selected-materials li > div { flex:1; min-width:0; overflow-wrap:anywhere; }
+.selected-materials strong,.selected-materials small { display:block; }
+.selected-materials small { margin-top:4px; color:var(--muted); }
+.selected-materials .button { flex-shrink:0; padding-inline:8px; }

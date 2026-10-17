@@ -1,3 +1,7 @@
+> **Latest UI decision — 17 October:** extraction and Firestore text persistence stay internal. Upload material returns to Library's static, non-clickable upload cards. No text reader/review/paste controls or technical storage copy are exposed. The internal text API and saved content are preserved; no billing/Storage change. [Current frontend status](../web/active.md).
+
+> **Current decision — 17 October 2026:** new material intake saves reviewed PDF/PPTX **text** to Firestore, with originals/media not retained. This works without Cloud Storage; no billing upgrade is requested. See [text-only implementation, API and acceptance](../web/LIBRARY_TEXT_CONTENT.md). The original-storage contract/setup below is retained for legacy original records and does not describe the new Add material form. Live text save/read/refresh/Library return is verified with one labelled synthetic English/Odia text entry; browser PDF/PPTX file selection remains pending.
+
 # Private cloud originals — setup and acceptance
 
 15 October 2026 · Implementation ready locally; cloud Storage is **not active**.

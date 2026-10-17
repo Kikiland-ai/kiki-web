@@ -5,10 +5,17 @@ export const MATERIAL_LABELS = { syllabus: 'Syllabus', notes: 'Class notes', exp
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
 export const MAX_FILES = 5;
 export const MimeSchema = z.enum(['application/pdf', 'image/jpeg', 'image/png']);
+export const TextSummarySchema = z.object({
+  method: z.enum(['pdf-text', 'pptx-text', 'pasted']), unitLabel: z.enum(['page', 'slide', 'section']),
+  unitCount: z.number().int().min(1).max(500), chunkCount: z.number().int().min(1).max(200),
+  byteCount: z.number().int().min(1).max(1024 * 1024 + 30000),
+  warnings: z.array(z.string().max(240)).max(5),
+});
 export const SourceSchema = z.object({
   id: z.string().min(1), requestId: z.string().min(1), ownerLearnerId: z.string().min(1),
-  title: z.string().min(1), mime: MimeSchema, size: z.number().int().positive().max(MAX_FILE_BYTES),
-  sha256: z.string().optional(),
+  title: z.string().min(1), mime: z.enum(['application/pdf', 'image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain']), size: z.number().int().positive().max(MAX_FILE_BYTES),
+  sha256: z.string().nullable().optional(),
+  originalAvailable: z.boolean().optional(), textSummary: TextSummarySchema.nullable().optional(),
   createdAt: z.string().datetime(),
 });
 export const OutlineSchema = z.object({
@@ -20,12 +27,14 @@ export const IntakeRequestSchema = z.object({
   schema: z.literal('intake-view/v1'), id: z.string().min(1), ownerLearnerId: z.string().min(1),
   courseId: z.string().min(1), kind: z.enum(MATERIAL_KINDS), topic: z.string().trim().min(1).max(180),
   note: z.string().max(1000), classDate: z.string(),
-  status: z.enum(['stored', 'reading', 'needs_review', 'generating', 'ready', 'failed']),
+  status: z.enum(['stored', 'text_saved', 'reading', 'needs_review', 'generating', 'ready', 'failed']),
   sources: z.array(SourceSchema).min(1).max(MAX_FILES), outline: OutlineSchema.nullable(),
-  jobId: z.string().min(1), lessonPlanId: z.string().nullable(),
+  jobId: z.string().min(1).nullable(), lessonPlanId: z.string().nullable(),
   failure: z.object({ message: z.string(), canRetry: z.boolean() }).nullable(),
   createdAt: z.string().datetime(), updatedAt: z.string().datetime(),
 }).superRefine((r, ctx) => {
+  if (r.status === 'text_saved' && (r.jobId !== null || r.sources.some(s => s.originalAvailable !== false || !s.textSummary))) ctx.addIssue({ code: 'custom', message: 'Text records require saved text and no original or processing job.' });
+  if (r.status !== 'text_saved' && !r.jobId) ctx.addIssue({ code: 'custom', message: 'Original-file requests require a processing job.' });
   if (r.sources.some(s => s.ownerLearnerId !== r.ownerLearnerId || s.requestId !== r.id)) ctx.addIssue({ code: 'custom', message: 'Source ownership or request mismatch.' });
   if (r.outline?.sourceIds.some(id => !r.sources.some(s => s.id === id))) ctx.addIssue({ code: 'custom', message: 'Outline references an unknown source.' });
   if (['needs_review', 'generating', 'ready'].includes(r.status) && !r.outline) ctx.addIssue({ code: 'custom', message: 'This stage requires an outline.' });
@@ -41,6 +50,8 @@ export interface CreateIntake {
   courseId: string; kind: typeof MATERIAL_KINDS[number]; topic: string; note: string; classDate: string; files: File[];
 }
 export interface IntakeApi {
+  createText?(input: import('./document-text').CreateTextIntake, operationKey: string, signal?: AbortSignal): Promise<IntakeRequest>;
+  text?(id: string, cursor?: number, signal?: AbortSignal): Promise<import('./document-text').SourceText>;
   list(signal?: AbortSignal): Promise<IntakeRequest[]>;
   listPage?(cursor?: string, signal?: AbortSignal): Promise<{ requests: IntakeRequest[]; nextCursor: string | null }>;
   get(id: string, signal?: AbortSignal): Promise<IntakeRequest>;

@@ -5,7 +5,7 @@ import { MemoryRouter, Route, Routes } from 'react-router';
 import { MaterialsProvider, useMaterials } from './Materials';
 import { MaterialRequest } from './Request';
 import { IntakeRequestSchema, type IntakeRequest } from '../../contracts/intake';
-import { Library } from '../library/Library';
+import { Library, SourceViewer } from '../library/Library';
 import { ServiceError } from '../../services/types';
 
 const mocks = vi.hoisted(() => ({
@@ -68,6 +68,31 @@ it('does not describe a failed Library fetch as an empty library', async () => {
   render(<MemoryRouter><MaterialsProvider><Library /></MaterialsProvider></MemoryRouter>);
   await screen.findByText('Library is temporarily unavailable.');
   expect(screen.queryByText('A home for your first notes.')).toBeNull();
+});
+it('shows one static upload card per document without exposing extraction or source links', async () => {
+  const record = receipt('uploaded');
+  record.status = 'text_saved'; record.jobId = null;
+  record.sources = ['Lecture 5.pdf', 'Lecture 6.pptx'].map((title, i) => ({
+    ...record.sources[0], id: `uploaded-${i}`, title, originalAvailable: false,
+    textSummary: { method: 'pdf-text', unitLabel: 'page', unitCount: 1, byteCount: 100, chunkCount: 1, warnings: ['Internal extraction warning'] },
+  }));
+  mocks.listPage.mockResolvedValue({ requests: [record], nextCursor: null });
+  render(<MemoryRouter><MaterialsProvider><Library /></MaterialsProvider></MemoryRouter>);
+  await screen.findByRole('heading', { name: 'Lecture 5.pdf' });
+  expect(screen.getAllByRole('article')).toHaveLength(2);
+  for (const card of screen.getAllByRole('article')) expect(card.querySelector('a,button,[tabindex]')).toBeNull();
+  for (const card of screen.getAllByRole('article')) expect(card.textContent).toContain('Uploaded');
+  expect(screen.queryByText(/Internal extraction warning|Text saved|original not stored|Read saved text/)).toBeNull();
+  expect(screen.queryByRole('link', { name: 'Open request' })).toBeNull();
+});
+it('redirects old text-reader URLs to the static Library without retrieving document content', async () => {
+  mocks.listPage.mockResolvedValue({ requests: [receipt('saved')], nextCursor: null });
+  render(<MemoryRouter initialEntries={['/library/saved-0?view=text']}><MaterialsProvider><Routes>
+    <Route path="/library/:sourceId" element={<SourceViewer />} />
+    <Route path="/library" element={<Library />} />
+  </Routes></MaterialsProvider></MemoryRouter>);
+  await screen.findByRole('heading', { name: 'Your Library' });
+  expect(mocks.get).not.toHaveBeenCalled();
 });
 it('does not poll stored originals when no processing worker is active', async () => {
   mocks.listPage.mockResolvedValue({ requests: [receipt('first')], nextCursor: null });

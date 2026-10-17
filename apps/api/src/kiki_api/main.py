@@ -12,6 +12,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from .backend import BoundaryError, Services, firebase_services
 from .config import Settings
+from .document_text import register_text_routes
 from .lab_preparation import register_lab_preparation_routes
 from .learning_routes import register_learning_routes
 from .material_routes import UploadBodyLimit, register_material_routes
@@ -95,6 +96,7 @@ def create_app(settings: Settings, factory: Callable[[], Services] | None = None
     def enroll(body: Enrollment, user: Annotated[Identity, Depends(identity)]):
         return ProfileEnvelope(profile=call(lambda: backend().profiles.enroll(user.uid, body)))
 
+    register_text_routes(application, identity, backend, call)
     register_material_routes(application, identity, backend, call)
     register_learning_routes(application, identity, backend, call)
     register_lab_preparation_routes(application, identity, backend, call)

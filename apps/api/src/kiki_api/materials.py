@@ -62,7 +62,9 @@ class FirestoreMaterials:
         parent = self.get(uid, source.requestId)
         if source not in parent.sources:
             raise BoundaryError(503, "This original does not match its saved request.")
-        return source, data["generation"]
+        if source.originalAvailable and "generation" not in data:
+            raise BoundaryError(503, "This original record needs a compatibility check.")
+        return source, data.get("generation")
 
     def list(self, uid, cursor=None, page_size=25):
         query = self.collection(uid, "studyRequests").order_by(
@@ -248,6 +250,10 @@ class MaterialLibrary:
 
     def content(self, uid, source_id):
         source, generation = self.records.source(uid, source_id)
+        if not source.originalAvailable:
+            raise BoundaryError(
+                409, "Only text was saved for this document. The original was not stored."
+            )
         if not self.originals:
             raise BoundaryError(503, "Cloud file storage is not configured yet.")
         return source, self.originals.read(uid, source, generation)

@@ -1,9 +1,31 @@
 # Python API — active status
 
-Updated: 16 October 2026
-Current step: optional authored DSB-SC teaching projection completed; screen-share monitoring/assessment deferred to Aditya
+Updated: 17 October 2026
+Current step: Internal text persistence retained; frontend shows static upload history
 
 See [../web/active.md](../web/active.md) for the student walkthrough/current acceptance and [LEARNING_STORAGE.md](LEARNING_STORAGE.md) for data paths, migration, rollback and API rules.
+
+## Current product decision — static upload history
+
+The user confirmed a real lecture PDF extracts/saves successfully and its text is visible in Firestore. They now want extraction kept as an internal implementation detail. Library shows one static, non-interactive card per source: filename, material type, topic, uploaded date and Uploaded status. No Open request, text reader or original-download links. The upload form keeps processing internal, shows selected filenames, and returns directly to Library after successful Upload material. Paste/review/extraction/storage copy is removed from the product UI; old text source/receipt links redirect to Library. Home uses generic upload wording. Existing Firestore text/chunk APIs, auth, ownership and saved records are unchanged.
+
+Verification: **138 frontend tests**, ESLint and TypeScript/production build pass. Regression checks cover static cards, old-reader redirects, hidden content still reaching the existing save transport, mixed document failures and empty-upload prevention. Connected Library reads both existing records, including the user's actual lecture; cards contain zero interactive controls. Library and upload form have no horizontal overflow at eight widths, 320–1440px. The browser material suite was updated for the new flow but not executed. Final publication recheck: all 94 Python tests, Ruff/format, Python→React response contracts, OpenAPI consistency and production fixture/answer-key exclusion checks pass. No new live record, learner evidence, billing or security change in this UI step.
+
+Proof: ignored `apps/web/test-results/document-text/library-upload-cards.png`. Local connected review remains **http://127.0.0.1:5194/library**; sample 5193. Last completed: user accepted the PDF upload/static Library flow; final source review and checks pass, including a fresh connected Library reload. User authorized commit and push on 17 October to `origin/feature/library-text-content`, authenticated/attributed as `akshitanitr`. This checkpoint is for source publication only; no deployment. Exact next product step: real PPTX smoke test and later integration with the separate in-progress build when ready. Full automated browser suite was not rerun.
+
+The text-reader/review acceptance below is historical implementation evidence and is superseded by the current product decision.
+
+## Text-only Library — 17 October
+
+User clarified that PDF/PowerPoint content should be retained as text in Firestore; original media does not need to be stored. Work is isolated in `feature/library-text-content` / `kiki-web-library-text`, based on published redesign `2cfc241`. [Plan](../../docs/plans/library-text-content.md).
+
+Implemented browser PDF/PPTX extraction/review and paste-text fallback, explicit authenticated JSON text intake and paginated reads, atomic UID-owned Firestore text chunks, honest Text saved/original not stored views, and browser-only sample persistence using the same text extraction. Existing original-file endpoints and saved records are preserved. No billing, Storage, IAM, auth bypass or source-catalog changes.
+
+Verification: **134 frontend and 94 Python tests** pass, with ESLint, Ruff/format, TypeScript/production build and Python→React response checks. Actual PDF/PPTX parsers are tested. Browser sample review/save/read/reload and 198 KiB Unicode pagination pass; reader has no horizontal overflow at eight widths from 320–1440px. Live Google sign-in → authenticated text save → Firestore read → full refresh → Library return passed on 17 October with one explicitly labelled synthetic English/Odia text document. File-picker automation remains extension-permission-blocked; the updated material browser suite was not run. Earlier original-upload blockers below are historical for original files and do not prevent this text path.
+
+Local links: **5193** labelled browser-only sample; **http://127.0.0.1:5194** connected build → new API **8001** using existing approved configuration in process environments. Original apps/servers are preserved. New API routes and unauthenticated 401 verified; real Google sign-in, text save and subsequent reads return successfully. No original/media upload or learning evidence was created. [Text content implementation, limits and integration handoff](../web/LIBRARY_TEXT_CONTENT.md).
+
+Last completed: live Google → API → Firestore text persistence, full-refresh recovery and Library reopening verified with the labelled “Kiki Library verification — 17 Oct 2026” test entry. Proof is ignored under `test-results/document-text/live-saved-text.png`. Exact next: ordinary PDF/PPTX file-picker extraction/fidelity acceptance when browser upload access is available; actual parsers already pass unit tests. Feature remains local/uncommitted; no push/deployment performed.
 
 ## Completed
 

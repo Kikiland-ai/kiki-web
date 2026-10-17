@@ -9,6 +9,7 @@ from starlette.datastructures import UploadFile
 from starlette.exceptions import HTTPException
 
 from .backend import BoundaryError
+from .document_text import MAX_TEXT_BODY_BYTES
 from .material_files import inspect_file
 from .material_models import (
     MAX_BODY_BYTES,
@@ -29,25 +30,31 @@ class UploadBodyLimit:
     async def __call__(self, scope, receive, send):
         if (
             scope["type"] != "http"
-            or scope["path"] != "/study-requests"
+            or scope["path"] not in {"/study-requests", "/study-requests/text"}
             or scope["method"] != "POST"
         ):
             return await self.app(scope, receive, send)
+        limit = MAX_TEXT_BODY_BYTES if scope["path"].endswith("/text") else MAX_BODY_BYTES
+        message = (
+            "Save a smaller batch of document text."
+            if scope["path"].endswith("/text")
+            else "Choose up to five files, no larger than 10 MB each."
+        )
         total = 0
 
         async def limited_receive():
             nonlocal total
-            message = await receive()
-            if message["type"] == "http.request":
-                total += len(message.get("body", b""))
-                if total > MAX_BODY_BYTES:
-                    raise BoundaryError(413, "Choose up to five files, no larger than 10 MB each.")
-            return message
+            event = await receive()
+            if event["type"] == "http.request":
+                total += len(event.get("body", b""))
+                if total > limit:
+                    raise BoundaryError(413, message)
+            return event
 
         try:
             length = dict(scope["headers"]).get(b"content-length")
-            if length and (not length.isdigit() or int(length) > MAX_BODY_BYTES):
-                raise BoundaryError(413, "Choose up to five files, no larger than 10 MB each.")
+            if length and (not length.isdigit() or int(length) > limit):
+                raise BoundaryError(413, message)
             await self.app(scope, limited_receive, send)
         except BoundaryError as exc:
             await JSONResponse({"detail": exc.message}, status_code=exc.status)(
@@ -169,7 +176,9 @@ def register_material_routes(application, identity, backend, call):
     @application.post("/study-requests/{request_id}/confirm", response_model=RequestEnvelope)
     @application.post("/study-requests/{request_id}/retry", response_model=RequestEnvelope)
     def processing_unavailable(request_id: str, user: Annotated[Identity, Depends(identity)]):
-        call(lambda: library().records.get(user.uid, request_id))
+        record = call(lambda: library().records.get(user.uid, request_id))
+        if record.status == "text_saved":
+            raise BoundaryError(409, "Your text is saved. Lesson preparation is not available yet.")
         raise BoundaryError(
             409, "Your originals are saved. Reading and lesson preparation are not available yet."
         )
