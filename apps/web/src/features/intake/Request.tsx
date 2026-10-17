@@ -4,7 +4,7 @@ import { useSession } from '../../app/Session';
 import { assertOwner, MATERIAL_LABELS, type IntakeRequest, type Outline } from '../../contracts/intake';
 import { readableError } from '../../services/types';
 import { useMaterials } from './Materials';
-import { ActionLink, Alert, Button, Card, Icon, PageTitle } from '../../ui/kit';
+import { ActionLink, Alert, Button, Card, Icon, LoadingNotice, PageTitle } from '../../ui/kit';
 import { IntakeStatus } from '../../ui/IntakeStatus';
 
 export function MaterialRequest() {
@@ -21,7 +21,7 @@ export function MaterialRequest() {
     try { const next = await operation(); if (profile) assertOwner(next, profile.id); upsert(next); actionKey.current = crypto.randomUUID(); }
     catch (e) { setError(readableError(e)); } finally { setBusy(false); }
   };
-  if (loading && !request) return <PageTitle title="Opening your material…" />;
+  if (loading && !request) return <LoadingNotice>Opening your material…</LoadingNotice>;
   if (!request) return <div className="page-stack"><PageTitle title="This material couldn’t open." />{error && <Alert>{error}</Alert>}<ActionLink to="/library">Back to Library</ActionLink></div>;
   if (request.status === 'text_saved') return <Navigate to="/library" replace />;
   return <div className="page-stack"><PageTitle eyebrow={`ANALOG COMMUNICATION · ${MATERIAL_LABELS[request.kind].toUpperCase()}`} title={request.topic}>Your material is saved in Library.</PageTitle><div className="intake-stage-header"><IntakeStatus status={request.status} /><span className="helper-note">{services.mode === 'fixture' ? 'Saved in this browser' : 'Saved request'} · {request.sources.length} document{request.sources.length > 1 ? 's' : ''}</span><ActionLink to="/library" variant="text">Library<Icon name="folder_open" /></ActionLink></div>{error && <Alert>{error}</Alert>}

@@ -1,9 +1,63 @@
 # Kiki web — active frontend status
 
-Updated: 17 October 2026
-Current step: Library static upload history — internal text persistence retained
+Updated: 18 October 2026
+Current step: Engineering Sketchbook publication checkpoint — checks passed
 
 This is the **current frontend status record**. Update it after each completed step. [Build history](../../docs/plans/ui-build-progress.md) preserves earlier work; [student walkthrough](../../docs/ux/ui-slice-review.md) explains navigation.
+
+## Source publication checkpoint — 18 October 2026
+
+The user authorized committing/pushing `redesign/sketchbook-refinement` and opening a new PR into `main`. Existing PRs #1–#3 stay open until the replacement is merged and coverage is rechecked against their then-current heads. No automatic merge, branch deletion or deployment is part of this publication. Authenticated GitHub account/push permission and configured author/committer are verified as `akshitanitr`.
+
+Fresh checks: **154 frontend /104 Python /28 data-model tests**, ESLint, TypeScript/production build, Ruff/format, source-case validation, Python→React response contracts and OpenAPI consistency pass. Prepared media packaging validates8clips in dry run only. Full candidate source scan finds no credential signatures, local env, dependency/build/test artifacts or files over10MiB. Production excludes fixture/private grading markers and WAV files. Recorded native phone/keyboard/200% zoom QA is retained; full automated browser suite and physical devices were not rerun for this checkpoint. No fresh authenticated learner writes, storage activation, billing/IAM or cloud media publication.
+
+Thorough review found an optional-media edge case: method lookup happened before enrollment/context validation when the media adapter was absent. Requests now validate context first, preserving503 for an enrolled user and403 for an unenrolled one while keeping the complete text lesson. The added API regression covers both manifest and asset requests. No DTO/schema change.
+
+Coverage was checked against PR #1 `39bdef9`, #2 `df2de21` and #3 `1ad4d58`: #1 is an ancestor; #2 has48 identical paths,12 intentional adaptations (combined Library schema/contracts, Sketchbook UI, handoffs and the guard regression) and12 removals matching upstream; no missing additions. All7 #3 paths match exactly. Existing Akshita/Arpan ownership is preserved. Recheck heads before closing superseded PRs after merge. [Integration evidence and closure gate](../../docs/plans/sketchbook-pr-integration.md).
+
+Last completed: publication review and fresh validation. Exact next: commit/push the approved branch, open the replacement PR, verify the remote head/base/mergeability, and retain #1–#3 until merge.
+
+## Redesign completed locally — 18 October 2026
+
+User prioritized finishing the Engineering Sketchbook redesign before returning to the PRs. All three accepted page passes are retained. The final pass completes shared UI states: notebook recovery/connection/not-found panels, neutral outlined loading notices across routes, consistent retry alerts, scrolling phone leave dialogs and short-viewport lab saving. Embedded missing-subject/chapter/concept screens now sit inside the existing main landmark instead of introducing another full-height page. Missing concepts return directly to the chapter. Escape in the unsaved lab dialog keeps the current draft; both quiz/lab dialogs describe their consequences to assistive technology. No services, learner payloads, authentication, grading, authored lesson content, catalog, backend or cloud settings changed in this pass.
+
+Coverage is complete for the current routes: welcome/sign-in/setup, Home/subjects, chapter/lessons/glossary/diagrams/narration, Checks/quiz/results, lab landing/preparation, upload/static Library, Profile and shared loading/recovery/leave states. This closes the local visual implementation pass; remaining media publication, content review and future monitoring work are separate feature dependencies. No further PR work or GitHub changes were made.
+
+Final verification: **154 frontend tests / 32 files**, ESLint and TypeScript/production build pass on the required Node24. Initial shell invocation used the machine's default Node20 and could not start Vite/Vitest; reruns used Node24, without dependency or timeout changes. Production excludes checked fixture-store/private-answer markers and WAVs. Native Chrome Guest review: unknown subject/concept/chapter and global404 recovery, recovery cards at320/390px, scrolling/stacked lab dialog at320px, Escape retaining unsaved checkpoint change, keyboard Save and leave returning Home, read-only missing-attempt recovery, keyboard Home continuation focus, and Home plus bilingual lesson reflow at confirmed200% browser zoom. Browser zoom was restored to100% and DevTools closed. No real account/data writes, graded submission or experiment observations were made. Earlier eight-width page reviews remain prior evidence; the full automated browser suite, complete zoom matrix and physical-device checks were not run here.
+
+Current local review: **http://localhost:5195/** for a fresh sample origin; **http://127.0.0.1:5195/** was used for temporary Chrome Guest QA, including a saved lesson place and checkpoint2 preparation; Guest data is temporary. Connected app **http://127.0.0.1:5194/** continues using existing config/API8001. Source stays local/uncommitted on `redesign/sketchbook-refinement`. Last completed: final shared-state/design verification and handoff. Exact next: user review of the complete local application; return to PR/source-publication decisions after design acceptance. No commit/push/merge/closure/deployment in this step.
+
+Proof is ignored under `test-results/sketchbook-final/`: `subject-recovery-320.png`, `page-recovery-320.png`, `lab-leave-320.png`, `home-zoom-200.png`, `lesson-reading-zoom-200.png`.
+
+## PR integration — 18 October 2026
+
+The user approved integrating the reviewed additions into `redesign/sketchbook-refinement` after comparing PRs #1–#3. PR #1 `39bdef9` is already an ancestor; no unique code is needed. Applied PR #2 `ba40218` → `df2de21` concept-media delta and PR #3 commits `4290e0f`/`1ad4d58` (UTF-8 JSON and bounded pytest IDs) by three-way merging against the actual local refinement source. All 40 pre-existing modified/untracked paths were preserved. No GitHub PR merge/closure, commit, push or deployment was performed. [Integration plan and evidence](../../docs/plans/sketchbook-pr-integration.md).
+
+C-AM-08 now consumes source-bound versioned media through authenticated API adapters; sample mode uses the same validated package. Revocable blob narration, the phase-recovery scene and no-bucket text fallback are retained. The new scene uses Sketchbook borders/controls and the existing dark Signal Studio waveform surface. Static Library cards, Firestore text persistence, queued lesson-place saves, all three refinement passes and C-AM-04 diagrams are preserved. OpenAPI was regenerated from both document-text and media routes.
+
+Verification: **154 frontend tests / 32 files and 103 Python tests**, ESLint, Ruff/format, TypeScript/production build and Python→React response contracts pass. Media packaging dry run validates 8 clips/revision `cm-e0f086007cc9f2062af093f3`; no cloud writes. Production contains zero WAV files or private `correctIndex` fields; no dependency/lock/env change. Native Chrome Guest sample review confirms C-AM-08 phase presets 0/60/90°, keyboard 180°, reset, Odia playback progress/pause/1.25×, notch-3 English switching and player cleanup on step change, step-3 recovery after reload, C-AM-04 sidebands changing 1900/2100 → 1880/2120 Hz and the empty static Library route. Screenshot: ignored `test-results/pr-media-integration/phase-scene.png`.
+
+Current previews restarted from this checkout: **http://127.0.0.1:5195/** sample; **http://127.0.0.1:5194/** connected → API8001. Connected uses the original approved env in process only. Frontend returns 200; unauthenticated media returns 401. No live account sign-in or learner write was repeated in this integration pass. No media bucket is configured/provisioned/published, so connected lessons remain text-only. Existing live Library acceptance above is historical; backend/contract tests revalidate its text transport here. Full browser suite, responsive matrix, physical devices, media publication and native Odia/scientific review were not repeated or completed. Next: review the combined local UI, then publish source only when explicitly instructed; cloud media activation remains separate.
+
+## Sketchbook refinement — three component passes ready
+
+Local branch `redesign/sketchbook-refinement` starts from published Library checkpoint `f3bae05`; the connected app 5194 and sample 5193 use this checkout. No push/commit/deployment for this new iteration. [Plan](../../docs/plans/sketchbook-refinement.md).
+
+Implemented: Home foregrounds continuation and checks, with tools/language preferences in the main column and evidence/preparation/static upload history alongside. Compact cover/greeting and a direct View chapter action. Chapter has check progress, concise next action, expandable four-area evidence and responsive numbered concepts with compact prerequisite counts/full accessible descriptions. Lesson has a compact visible language dial, expandable prerequisite reference, clearer reading-state placement and English/Odia spacing. Existing queued saves, audio, diagrams, glossary and authored data are retained.
+
+Verification: **138 frontend tests**, ESLint and TypeScript/production build pass. Browser sample checks cover all five dial levels, prerequisite expansion, saved-step reload, glossary focus, narration play/speed/pause/cleanup, chapter evidence/gates and accurate diagram exploration/reset. No overflow at eight widths (320–1440px) for Home, chapter and lesson; 390px Odia reading inspected. Connected Home/chapter reviewed read-only with existing 1/10 checks preserved. Full automated browser suite, physical devices and text zoom were not run. No API/auth/grading/catalog/storage changes.
+
+Second pass implemented after user acceptance: compact Checks progress/list with chapter/history aside; quiz answer progress/navigation, bilingual cards and keyboard focus repair; result feedback with revision/breakdown aside; lab landing and checkpoint/notes-first preparation with sticky save status, software/session tools and expandable theory readiness. Existing save/submit/ownership/revision guards retained.
+
+Second-pass verification: **140 frontend tests**, ESLint and TypeScript/production build pass. Two interaction tests cover answer focus after autosave and respecting focus on another control. Browser sample quiz save/navigation/incomplete-submit/pause/resume, actual 2/5 sample result/reload/retry gate, lab checkpoint/note save/reload/Save and leave/resume and all 12 checkpoints verified. All five second-pass screens fit eight widths, 320–1440px. Connected Checks, existing 4/5 result and lab landing reviewed read-only; actual 1/10 and 1/7 progress retained. No new live attempt, preparation or preference write. Full automated browser suite/physical devices/text zoom not run.
+
+Third pass completed on 18 October after user acceptance: notebook welcome composition, compact Google/session choices, grouped onboarding/Profile preferences, confirmed-step heading focus, subject enrollment/overview actions, document-first upload form and neutral static Library cards/history toolbar. Existing authentication, preference/enrollment payloads, material extraction/transport and old-reader redirects retained.
+
+Third-pass verification: **141 frontend tests** pass using `npm test -- --pool=threads --maxWorkers=1`; ESLint and TypeScript/production build pass. Initial fork-based runs timed out; no assertion timeout was relaxed. New onboarding interaction regression covers failed-save retention and heading focus after confirmed save/Back. Browser-only fresh journey on 127.0.0.1:5195 covers keyboard confidence/support, four-step recovery after reload, enrollment, Profile save/reload/sign-out/return, Library empty state, upload keyboard focus, lesson step-2 recovery, quiz draft pause/resume at question 2 and lab checkpoint-2 save/reload/Home resume. No graded attempt was submitted and no experiment observations were entered in this fresh sample.
+
+Welcome, sign-in, all four setup steps, enrollment/enrolled subject/overview, Profile, empty Library and loaded upload form fit 320/360/390/430/768/1024/1280/1440px. Populated connected Library reviewed at its actual 896px viewport after existing Google sign-in: three prior upload cards, zero interactive children and no overflow. No new live material, preference, enrollment, grade or lab-preparation edit. File-picker end-to-end upload was not repeated; existing extraction/save/static-card tests pass and prior user PDF acceptance remains authoritative. Full automated browser suite, physical devices and browser text zoom were not run.
+
+Last completed: all three refinement passes and a fresh sample journey through account, subject, learning, check draft and lab preparation. Exact next: user review on connected 5194 (Subjects/Profile/Library) or fresh browser-only **http://localhost:5195/** for welcome/setup. The separate QA origin 127.0.0.1:5195 retains the completed test journey. All source remains local/uncommitted; commit/push/deployment require a separate instruction. [Changes, files, verification and integration handoff](SKETCHBOOK_REFINEMENT.md). Source stays local on `redesign/sketchbook-refinement`; published Library branch remains at `f3bae05`.
 
 ## Current product decision — static upload history
 
@@ -55,6 +109,26 @@ The 16 October connected evidence below is historical baseline acceptance, not v
 React + TypeScript + Vite. Full laptop workflows adapt to phone widths; physical-device checks remain separate.
 
 ## Latest completed implementation
+
+**17 October — preprocessed concept media, first package (Arpan).** C-AM-08's existing eight narration clips are now a versioned, source-bound media package. It is delivered through authenticated Python routes and the `lesson.mediaExperience` pointer, and the hard-coded clip lookup is gone. Listen plays the API-delivered English/Odia clip with the same controls. Steps 2–3 add C-AM-08's own phase-recovery scene through a trusted renderer registry, whose first entry is C-AM-04's unchanged DSB-SC diagrams.
+- Catalog `am-51187527300cba2fa3cca868` and learner state are untouched: media revisions are separate records.
+- Connected media needs an approved private bucket (`KIKI_MEDIA_BUCKET`, not set). Until then connected lessons are text-only.
+- Sample mode serves the identical package.
+- The production build no longer ships any WAV.
+
+Details, checks and remaining steps: [CONCEPT_MEDIA.md](CONCEPT_MEDIA.md).
+
+Checks:
+- Python: 9 new media tests; the existing suite unchanged.
+- Web unit: contract, adapter, cache, phase model and player tests.
+- All ten Python→React receipt checks, including the media lesson and manifest.
+- 89 browser tests in installed Chrome, 8 of them new.
+- axe: 0 violations with the player over the scene at 390/1280px.
+- Lint, typecheck and build.
+
+Not checked: live connected publication (blocked on storage), actual phones, and native-Odia/pronunciation/audio-quality/scientific review.
+
+Exact next action: once an approved private bucket exists, run `scripts/publish_concept_media.py` (dry run, then `--apply`). Then repeat the signed-in C-AM-08 check on 5174: Listen, seek, speed, scene explore/reset, leave/reopen with progress intact. Backend media then owns durable preprocessing for the other nine concepts.
 
 **16 October — DSB-SC teaching diagrams are connected.** Open http://127.0.0.1:5174/concepts/C-AM-04 → Step 2 (Concept), then scroll to **From two signals to two sidebands**. Step 3 (Application) also includes the visuals. The message × carrier → signed Product diagram and ideal positive-frequency spectrum show baseline **100/2000 Hz → 1900/2100 Hz**, with no separate carrier stem. The local 10–200 Hz message control updates waveform, stem geometry, text readings and accessible descriptions; reset returns to 100 Hz.
 

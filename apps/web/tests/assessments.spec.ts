@@ -24,9 +24,12 @@ test('drafts survive language change, refresh, confirmed leave and resume; incom
   await setup(page); await page.getByRole('link',{name:'Start concept check',exact:true}).first().click();
   await expect(page.getByText('QUESTION 1 OF 5',{exact:true})).toBeVisible();
   await page.getByRole('radio').nth(2).check(); await expect(page.getByText('Draft saved · 1/5 answered',{exact:true})).toBeVisible();
+  await expect(page.getByRole('radio').nth(2)).toBeFocused();
   await page.getByRole('button',{name:'English',exact:true}).click(); await expect(page.getByRole('radio').nth(2)).toBeChecked();
   const runUrl=page.url(); await page.reload(); await expect(page.getByRole('radio').nth(2)).toBeChecked();
-  await page.getByRole('button',{name:'Question 5, unanswered',exact:true}).click(); await expect(page.getByRole('button',{name:'Submit check',exact:true})).toBeDisabled();
+  await page.getByRole('button',{name:'Question 5, unanswered',exact:true}).click();
+  await expect(page.locator('.question-card h2')).toBeFocused();
+  await expect(page.getByRole('button',{name:'Submit check',exact:true})).toBeDisabled();
   await page.getByRole('link',{name:'Library',exact:true}).click(); await expect(page.getByRole('dialog',{name:'Pause this check?'})).toBeVisible();
   await page.getByRole('button',{name:'Save and leave',exact:true}).click(); await expect(page.getByRole('heading',{name:'Your Library'})).toBeVisible();
   await page.goto('/practice'); await page.getByRole('link',{name:'Resume check',exact:true}).first().click(); await expect(page).toHaveURL(runUrl);

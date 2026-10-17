@@ -21,4 +21,8 @@ export function Rating({ label, value, onChange, helper }: { label: string; valu
   const id = useId();
   return <div className="rating"><label htmlFor={id}>{label}<strong>{value}<span>/10</span></strong></label><input id={id} type="range" min="1" max="10" step="1" value={value} onChange={e => onChange(Number(e.target.value))} aria-describedby={`${id}-help`} /><div className="range-ends"><span>Need more support</span><span>Very comfortable</span></div><small id={`${id}-help`}>{helper}</small></div>;
 }
-export function StateScreen({ title, children, action }: { title: string; children?: ReactNode; action?: ReactNode }) { return <main className="state-screen"><KikiDots size={64} /><h1>{title}</h1>{children && <p>{children}</p>}{action}</main>; }
+export function LoadingNotice({ children }: { children: ReactNode }) { return <div className="loading-notice" role="status"><KikiDots size={32} /><p>{children}</p></div>; }
+export function StateScreen({ title, children, action, embedded = false, busy = false }: { title: string; children?: ReactNode; action?: ReactNode; embedded?: boolean; busy?: boolean }) {
+  const Container = embedded ? 'section' : 'main';
+  return <Container className={`state-screen${embedded ? ' state-screen-embedded' : ''}`}><div className="state-paper" role={busy ? 'status' : undefined}><div className="state-heading"><KikiDots size={40} /><span>KIKI · YOUR LEARNING SPACE</span></div><h1>{title}</h1>{children && <div className="state-description">{children}</div>}{action && <div className="state-actions">{action}</div>}</div></Container>;
+}

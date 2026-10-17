@@ -6,9 +6,11 @@ import { readableError } from './services/types';
 import { Button, StateScreen } from './ui/kit';
 import './ui/styles.css';
 import './ui/sketchbook.css';
+import './ui/account-material.css';
+import './ui/feedback.css';
 
 const root = createRoot(document.getElementById('root')!);
-root.render(<StateScreen title="Opening Kiki…" />);
+root.render(<StateScreen busy title="Opening Kiki…" />);
 let startupDeadline: number;
 const deadline = new Promise<never>((_, reject) => { startupDeadline = window.setTimeout(() => reject(new Error('Startup timeout')), 15000); });
 Promise.race([createServices(), deadline]).then(services => root.render(<StrictMode><App router={createAppRouter(services)} /></StrictMode>)).catch(error => {

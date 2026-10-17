@@ -20,9 +20,11 @@ export type MapNodeProps = {
   status: ConceptStatus
   /** Mastery ring values. Missing or null dimensions read "Not assessed". */
   rings?: Partial<Record<Dimension, DimensionCoverage>>
-  /** The concept to study next: Kiki marks it. */
+  /** Compact count; full prerequisite names remain in the accessible description. */
+  prerequisiteCount?: number
   prerequisiteNote?: string
   checkPercent?: number
+  /** The concept to study next: Kiki marks it. */
   next?: boolean
   /** One of the concepts the lab needs. */
   requiredForLab?: boolean
@@ -50,6 +52,7 @@ export function MapNode({
   status,
   rings = {},
   prerequisiteNote,
+  prerequisiteCount,
   checkPercent,
   next = false,
   requiredForLab = false,
@@ -61,6 +64,7 @@ export function MapNode({
 
   return (
     // Named by the concept; the mastery summary is its description, read after a pause
+    <>
     <Link to={to} className={classes} aria-describedby={descriptionId}>
       <span className={styles.body} aria-hidden="true">
         {next && (
@@ -83,7 +87,7 @@ export function MapNode({
             {titleOr}
           </span>
         )}
-        {prerequisiteNote && <span>{prerequisiteNote}</span>}
+        {prerequisiteNote && <span className={styles.prerequisite}>{prerequisiteCount === undefined ? prerequisiteNote : `${prerequisiteCount} prerequisite ${prerequisiteCount === 1 ? 'check' : 'checks'} pending`}</span>}
         {checkPercent !== undefined && <span>Latest check: {checkPercent}%</span>}
         <span className={styles.badges}>
           {next && <StatusBadge label="Up next" tone="neutral" />}
@@ -95,9 +99,10 @@ export function MapNode({
           {requiredForLab && <StatusBadge label="For the lab" dimension="lab" />}
         </span>
       </span>
-      <span id={descriptionId} className={styles.srOnly}>
-        Mastery: {describeMastery(rings)}
-      </span>
     </Link>
+    <span id={descriptionId} className={styles.srOnly}>
+      Mastery: {describeMastery(rings)}{prerequisiteNote && <>. {prerequisiteNote}</>}
+    </span>
+    </>
   )
 }

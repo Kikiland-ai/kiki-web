@@ -42,14 +42,14 @@ export function LearningContinuation() {
       <p>{next ? `Concept ${String(next.order).padStart(2, '0')} of ${total} · Read the idea, explore its words, then check your understanding.` : data ? 'Revisit the chapter or bring your understanding together in its chapter test.' : 'Your chapter and saved place belong together.'}</p>
       {error ? <div role="alert"><p>{error}</p><Button variant="secondary" onClick={() => setRetry(n => n + 1)}>Retry learning continuation</Button></div> : <div className="form-actions">
         <ActionLink to={next ? `/concepts/${next.id}` : `/chapters/${COURSE.chapterId}`}>Continue learning<Icon name="arrow_forward" /></ActionLink>
-        <ActionLink to={`/subjects/${COURSE.id}`} variant="text">Open subject</ActionLink>
+        <ActionLink to={`/chapters/${COURSE.chapterId}`} variant="text">View chapter</ActionLink>
       </div>}
       {!data && !error && <small role="status">Finding your next concept…</small>}
     </div>
     <aside className={styles.index} aria-label="Chapter check progress">
       <span className={styles.pageNumber}>{next ? String(next.order).padStart(2, '0') : data ? '10' : '—'}</span>
       <span className={styles.indexLabel}>{next ? 'YOUR NEXT PAGE' : data ? 'CHAPTER REVIEW' : 'OPEN NOTEBOOK'}</span>
-      <div className={styles.pages} aria-hidden="true">{Array.from({ length: total }, (_, i) => <i key={i} className={data?.progress.concepts.some(c => c.conceptId === data.chapter.concepts[i]?.id && c.status === 'passed') ? styles.passed : ''} />)}</div>
+      <div className={styles.pages} aria-hidden="true">{Array.from({ length: total }, (_, i) => <i key={i} className={[data?.progress.concepts.some(c => c.conceptId === data.chapter.concepts[i]?.id && c.status === 'passed') && styles.passed, data?.chapter.concepts[i]?.id === nextId && styles.current].filter(Boolean).join(' ')} />)}</div>
       <strong>{data ? `${passed} / ${total} checks passed` : 'Loading progress'}</strong>
       <span>Reading is a start.<br />Checks show what stuck.</span>
     </aside>

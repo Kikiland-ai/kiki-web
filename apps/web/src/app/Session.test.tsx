@@ -12,7 +12,7 @@ function harness(bootstrap: Services['api']['bootstrap']) {
   let listener: (user: Identity | null) => void = () => undefined;
   const unsubscribe = vi.fn();
   let authError: (error: Error) => void = () => undefined;
-  const services: Services = { mode: 'connected', labPreparation:{practical:vi.fn(),active:vi.fn(),start:vi.fn(),get:vi.fn(),save:vi.fn()}, learning: { getChapter: vi.fn(), getConceptLesson: vi.fn(), getProgress: vi.fn(), savePosition: vi.fn() }, assessments: { start: vi.fn(), get: vi.fn(), saveDraft: vi.fn(), submit: vi.fn(), getResult: vi.fn(), overview: vi.fn() }, intake: { list: vi.fn(), get: vi.fn(), create: vi.fn(), confirm: vi.fn(), retry: vi.fn(), source: vi.fn() }, auth: {
+  const services: Services = { mode: 'connected', labPreparation:{practical:vi.fn(),active:vi.fn(),start:vi.fn(),get:vi.fn(),save:vi.fn()}, learning: { getChapter: vi.fn(), getConceptLesson: vi.fn(), getProgress: vi.fn(), savePosition: vi.fn() }, media: { getManifest: vi.fn(), loadNarration: vi.fn() }, assessments: { start: vi.fn(), get: vi.fn(), saveDraft: vi.fn(), submit: vi.fn(), getResult: vi.fn(), overview: vi.fn() }, intake: { list: vi.fn(), get: vi.fn(), create: vi.fn(), confirm: vi.fn(), retry: vi.fn(), source: vi.fn() }, auth: {
     registerSignOutCleanup: () => () => undefined, subscribe: (callback, onError) => { listener = callback; authError = onError; return unsubscribe; }, signIn: vi.fn(), signOut: async () => listener(null), getIdToken: async () => 'synthetic-unit-token',
   }, api: { bootstrap, getProfile: vi.fn(), updateProfile: vi.fn(), enroll: vi.fn() } };
   const view = render(<SessionProvider services={services}><Probe /></SessionProvider>);

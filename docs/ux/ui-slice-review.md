@@ -1,3 +1,30 @@
+## Complete local redesign review — 18 October 2026
+
+Open **http://localhost:5195/** for the fresh browser-only sample; Open sample student → setup → add Analog Communication → Home. Review Subjects, Learn, Checks, Library and Profile, plus Lab mode in the header. All current pages have the Engineering Sketchbook theme. Library continues to show static upload history; extraction stays internal. Existing connected data is available through **http://127.0.0.1:5194/**.
+
+The final pass adds matching notebook loading/recovery views and phone leave dialogs. For a recovery example visit `/subjects/not-a-subject` or `/not-a-page` on the sample server. Concept-not-found returns to the chapter. In lab preparation, change a checkpoint then choose Home: Escape keeps the unsaved draft, and Save and leave confirms persistence before navigating. This remains reading position, not lab evidence.
+
+Local visual implementation is complete; PR decisions/publication follow design review. Actual tests and device/feature limits: [current status](../../apps/web/active.md). No live learner data or GitHub changes in this pass.
+
+## Sketchbook component refinement — 17 October 2026
+
+## Combined Sketchbook + media review — 18 October 2026
+
+Use **http://127.0.0.1:5195/** for the labelled local sample. Open sample student, complete setup and add Analog Communication if this browser has no saved setup. Open **[Concept 8](http://127.0.0.1:5195/concepts/C-AM-08)**. Step 2/3 show the dark-grid phase scene: compare0/60/90°, drag or keyboard to180°, then Reset. Listen supports pause/seek/speed; dial level3 exposes Odia/English switching. Changing step closes playback; reload restores the confirmed step. This is machine narration with pending review and an ideal teaching model, not saved lab evidence.
+
+The connected app is **http://127.0.0.1:5194/**. Existing Library text persistence/static cards remain; live lessons stay text-only until media is separately published to an approved private bucket. This integration pass verified the sample in native Chrome and code/contract checks, without new live-account writes. Earlier responsive/journey evidence below is retained, not claimed as a repeat of this combined build. [Exact integration status](../../docs/plans/sketchbook-pr-integration.md).
+
+Review **http://127.0.0.1:5194/home** with your existing Google sign-in, or use the labelled sample on **5193**.
+
+1. Home foregrounds **Continue learning**, with **View chapter** alongside it. Checks/tools lead; evidence, saved lab preparation and recent uploads sit in the secondary column.
+2. **View chapter** opens the numbered concept index, actual passed-check count and next lesson. Expand **View all four learning areas** for evidence details. Every concept stays open; lab and chapter-test requirements are unchanged.
+3. A lesson keeps its language dial visible in a smaller panel. Expand the prior-concepts reference if needed, use the same four page controls and check the save feedback beside the reader.
+4. Terms, Listen, diagrams and checks retain their existing actions. Library stays static upload history.
+
+This pass is local on `redesign/sketchbook-refinement`; no publication. [Exact changes and verification](../../apps/web/SKETCHBOOK_REFINEMENT.md).
+
+---
+
 ## Library upload history — 17 October 2026
 
 Use **http://127.0.0.1:5194/library** for the connected local build, or **5193** for the labelled browser-only sample. The published redesign preview remains on 5192.
@@ -210,3 +237,26 @@ Open http://127.0.0.1:5180/chapters/LP-ANALOG-MODULATION. This is a separate lab
 6. Step 3 (Application) also shows the diagrams. Step 4 still leads to the existing concept check. Reload restores the saved placard; diagram exploration resets to the lesson baseline.
 
 Reviewed in the real Google/Firestore lesson and a 390 px browser viewport. These are calculated teaching figures, not Simulink recordings or screen-share assessment. Narration and content/Odia review remain pending; Aditya's monitoring integration remains separate. Latest tests/status: [active.md](../../apps/web/active.md).
+
+
+## Checks and lab refinement review — 17 October
+
+1. Open **http://127.0.0.1:5194/practice**. Check the two actual-progress summaries, numbered concept list, chapter-test gate and previous attempts. Use **Last result** for an existing score, or start/resume your own check.
+2. In a check, select an answer and wait for Draft saved. Switch English/Odia, use the numbered questions or Next, and confirm the new question is brought into focus. Unanswered questions block submission. Pause and leave → Save and leave retains the draft.
+3. A submitted result shows bilingual per-question feedback, revision links and concept breakdown. A revisit result requires the existing feedback-review confirmation before retry. Scores retain the original thresholds.
+4. Open **http://127.0.0.1:5194/labs** → Start/Resume lab preparation. Checkpoints and notes are primary; software/session tools and expandable Theory readiness are alongside. **Save preparation** stays available while scrolling; **Save notes** at the bottom saves the same preparation.
+5. Save your own checkpoint/notes, reload, and use Save and leave when prompted. These are manual preparation records; monitoring, verified simulator steps and assessed lab evidence remain unavailable.
+
+Use **5193** instead for browser-only sample grading/preparation. All new agent-entered answers/notes were confined to that sample. Connected review only read the existing progress/result/lab overview. Full automated browser suite and physical-device/text-zoom testing were not performed. Both refinement passes remain local on `redesign/sketchbook-refinement`.
+
+
+## Remaining pages and complete journey — 18 October
+
+1. Open **http://localhost:5195/** for the fresh labelled sample. Read the notebook cover, use Get started, choose session/personal-device preference and Open sample student. This is a different browser-storage origin from the completed QA journey at 127.0.0.1:5195.
+2. Complete Language → Comfort → Support → Confirm. Back edits the current choices; Save and continue retains completed steps. Each confirmed transition focuses its heading. Preferences can be changed later in Profile.
+3. Home → Add your subject → choose Semester → Add subject → Open subject. View chapter leads to the actual ten-concept index; material actions lead to the same existing upload form with their selected kind.
+4. Add material now starts with Choose documents, then About this material and Optional details. Normal PDF/PPTX selection/upload behavior is retained. Library shows static upload cards and a Refresh Library toolbar; the cards have no detail action.
+5. Profile groups language/support and self-confidence separately from account/sign-out. Save preferences shows confirmation. Sign out protects the route, and returning restores saved preferences.
+6. Continue through chapter → lesson → Checks → Lab mode. Reading position, unanswered drafts and preparation resume normally; reading/confidence/uploads never award checks or verified lab execution.
+
+Existing connected review: **http://127.0.0.1:5194/subjects**, **http://127.0.0.1:5194/profile**, **http://127.0.0.1:5194/library**. Google sign-in to the existing account and its three prior static Library cards were rechecked; no live learning/material/preferences were edited. Fresh sample setup/enrollment/Profile/lesson/draft/preparation recovery was exercised in this pass. Upload parser/transport/static-card regressions pass, but a new file-picker upload and full automated browser suite were not repeated. Physical-device/text-zoom review remains pending.

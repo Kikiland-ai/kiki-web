@@ -139,6 +139,33 @@ describe('AudioPlayer', () => {
     expect(onClose).toHaveBeenCalled()
   })
 
+  it('opens at once while a private clip loads, then starts once it arrives', () => {
+    const props = { title: 'Carrier mismatch', label: 'x', speed: 1 as const, onSpeedChange: vi.fn(), onClose: vi.fn(), autoPlay: true }
+    const { rerender } = render(<AudioPlayer src={null} {...props} />)
+    expect(screen.getByRole('region', { name: 'Listen: Carrier mismatch' })).toBeTruthy()
+    expect(screen.getByRole('status').textContent).toBe('Loading narration…')
+    expect((screen.getByRole('button', { name: 'Play narration' }) as HTMLButtonElement).disabled).toBe(true)
+    expect(play).not.toHaveBeenCalled()
+    rerender(<AudioPlayer src="blob:clip" {...props} />)
+    expect(play).toHaveBeenCalledTimes(1)
+    rerender(<AudioPlayer src="blob:clip" {...props} speed={1.25} />)
+    expect(play).toHaveBeenCalledTimes(1)
+  })
+
+  it('says when a clip could not be fetched and asks for it again', () => {
+    const onRetryLoad = vi.fn()
+    renderPlayer({ src: null, loadError: "Couldn't load this narration. Lesson audio is unavailable.", onRetryLoad })
+    expect(screen.getByRole('alert').textContent).toContain("Couldn't load this narration.")
+    expect(screen.queryByRole('status')).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'Retry' }))
+    expect(onRetryLoad).toHaveBeenCalled()
+  })
+
+  it('states its timing limitation beside the label', () => {
+    renderPlayer({ detail: 'Words are not highlighted.' })
+    expect(screen.getByText('Words are not highlighted.')).toBeTruthy()
+  })
+
   it('stops the sound when it goes away', () => {
     const { unmount } = renderPlayer({ autoPlay: true })
     pause.mockClear()

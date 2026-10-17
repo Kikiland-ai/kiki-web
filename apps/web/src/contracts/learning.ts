@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { DsbVisualSchema } from './teaching-visual';
+import { MediaExperienceSchema } from './concept-media';
 import type { ChapterView, ChapterProgress, ConceptLesson, ConceptProgress } from './api';
 import { ASSESSMENT_CONCEPTS } from './assessment-catalog';
 import { COURSE } from './profile';
@@ -21,13 +22,15 @@ export const ChapterSchema = z.object({
   if (new Set(chapter.concepts.map(c => c.id)).size !== 10 || chapter.concepts.some(c => !ASSESSMENT_CONCEPTS.some(expected => expected.id === c.id && expected.assessmentId === c.assessmentId && expected.requiredForLab === c.requiredForLab) || !chapter.broadConcepts.some(b => b.id === c.broadConceptId) || c.prerequisiteIds.some(id => !chapter.concepts.some(p => p.id === id)))) ctx.addIssue({ code: 'custom', message: 'Chapter IDs or prerequisites do not match this learning case.' });
 }) satisfies z.ZodType<ChapterView>;
 export const LessonSchema = z.object({
-  visual: DsbVisualSchema.optional(), conceptId: z.string(), planId: z.literal(COURSE.chapterId), title: Text, keyIdea: Text,
+  visual: DsbVisualSchema.optional(), mediaExperience: MediaExperienceSchema.optional(), conceptId: z.string(), planId: z.literal(COURSE.chapterId), title: Text, keyIdea: Text,
   placards: z.array(z.object({ id: z.string(), kind: z.enum(['definition', 'concept', 'application', 'recap']), title: Text, body: Text, termIds: z.array(z.string()), sources: z.array(z.object({ origin: z.string(), label: z.string(), url: z.string().url().optional() })) })).length(4),
   terms: z.array(z.object({ id: z.string(), term: z.string(), definition: z.string(), symbol: z.string().optional(), unit: z.string().optional(), pronunciationOr: z.string(), glossOr: z.string(), example: Text.optional() })),
   example: z.object({ title: Text, scenario: Text, takeaway: Text }),
   media: z.object({ status: z.enum(['none','pending','ready','failed']), posterUrl: z.string().optional(), audioUrl: z.string().optional(), narrationKind: z.enum(['generated','recorded','fixture']).optional(), timing: z.enum(['none','clip_duration_only','sentence_aligned']).optional() }), assessmentId: z.string(),
 }).superRefine((lesson, ctx) => {
   if (!ASSESSMENT_CONCEPTS.some(c => c.id === lesson.conceptId && c.assessmentId === lesson.assessmentId) || new Set(lesson.placards.map(p => p.id)).size !== 4 || lesson.placards.some((p, i) => p.kind !== ['definition','concept','application','recap'][i] || p.termIds.some(id => !lesson.terms.some(t => t.id === id)))) ctx.addIssue({ code:'custom', message:'Lesson IDs, placards or terms do not match.' });
+  const cards = new Set(lesson.placards.map(p => p.id));
+  if (lesson.mediaExperience && [...lesson.mediaExperience.narration.map(n => n.placardId), ...lesson.mediaExperience.artifacts.flatMap(a => a.placardIds)].some(id => !cards.has(id))) ctx.addIssue({ code:'custom', message:'Lesson media refers to placards outside this lesson.' });
   if (lesson.visual && (lesson.conceptId !== 'C-AM-04' || [lesson.visual.sidebandTermId,lesson.visual.carrierTermId,lesson.visual.signalTermId].some(id=>!lesson.terms.some(t=>t.id===id)))) ctx.addIssue({code:'custom',message:'Visual and glossary do not match this concept.'});
 }) satisfies z.ZodType<ConceptLesson>;
 const Coverage = z.object({ done: z.number().nonnegative(), total: z.number().positive() }).refine(c => c.done <= c.total).nullable();

@@ -77,7 +77,8 @@ test.describe('touch language dial', () => {
 });
 test('combined app shares lesson position, profile dial, quiz result and map; reading grants no pass',async({page})=>{
   await setup(page);
-  await expect(page.getByText('0 of 10',{exact:true})).toBeVisible();
+  await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','0');
+  await page.getByText('View all four learning areas',{exact:true}).click();
   await expect(page.getByRole('img',{name:/^This chapter: Concept Not assessed/})).toBeVisible();
   await expect(page.getByRole('button',{name:'Chapter test locked'})).toBeDisabled();
   await openFirst(page);
@@ -91,11 +92,11 @@ test('combined app shares lesson position, profile dial, quiz result and map; re
   await page.reload(); await expect(page.getByText('Step 2 of 4',{exact:true})).toBeVisible();
   await expect(page.getByRole('slider',{name:'Language mix',exact:true})).toHaveAttribute('aria-valuenow','5');
   await page.getByRole('link',{name:'Learn',exact:true}).click();
-  await expect(page.getByText('0 of 10',{exact:true})).toBeVisible();
+  await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','0');
   await expect(page.getByRole('link',{name:/^Concept 1:/})).toContainText('Learning');
   await openFirst(page); await lastPlacard(page); await result(page,3);
   await page.getByRole('link',{name:'Chapter map',exact:true}).click();
-  await expect(page.getByText('1 of 10',{exact:true})).toBeVisible();
+  await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','1');
   await expect(page.getByRole('link',{name:/^Concept 1:/})).toContainText('Check passed');
   await expect(page.getByRole('link',{name:/^Concept 1:/})).toContainText('Latest check: 60%');
   await page.getByRole('link',{name:'Profile',exact:true}).click();
@@ -104,7 +105,7 @@ test('combined app shares lesson position, profile dial, quiz result and map; re
   await page.goto('/concepts/C-AM-01'); await expect(page.getByRole('button',{name:'Open sample student'})).toBeVisible();
   await page.getByRole('button',{name:'Open sample student'}).click();
   await expect(page.getByText('Step 4 of 4',{exact:true})).toBeVisible();
-  await page.getByRole('link',{name:'Learn',exact:true}).click(); await expect(page.getByText('1 of 10',{exact:true})).toBeVisible();
+  await page.getByRole('link',{name:'Learn',exact:true}).click(); await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','1');
 });
 test('failed concept and retry update the same map, preserving prior attempts',async({page})=>{
   await setup(page); await openFirst(page); await lastPlacard(page); await result(page,2);
@@ -112,7 +113,7 @@ test('failed concept and retry update the same map, preserving prior attempts',a
   await expect(page.getByRole('link',{name:/^Concept 1:/})).toContainText('Revisit');
   await page.goto(url); await page.getByRole('checkbox',{name:'I reviewed the feedback or revisited my notes.'}).check();
   await page.getByRole('link',{name:'Retry this check',exact:true}).click(); await result(page,3);
-  await page.getByRole('link',{name:'Chapter map',exact:true}).click(); await expect(page.getByText('1 of 10',{exact:true})).toBeVisible();
+  await page.getByRole('link',{name:'Chapter map',exact:true}).click(); await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','1');
   await page.goto('/practice'); await expect(page.getByText('Attempt 1 · 2/5 correct',{exact:true})).toBeVisible(); await expect(page.getByText('Attempt 2 · 3/5 correct',{exact:true})).toBeVisible();
 });
 async function failWrites(page: Page, prefix: string) {
@@ -156,6 +157,7 @@ test('later concepts can be previewed with their prerequisite explanation',async
   await setup(page); await page.getByRole('link',{name:/^Concept 8:/}).click();
   const prerequisites=page.getByRole('complementary',{name:'Prerequisite concepts'});
   await expect(prerequisites).toContainText('You can preview this lesson.');
+  await prerequisites.locator('summary').click();
   await expect(prerequisites.getByRole('link',{name:'Lowpass filtering and waveform comparison',exact:true})).toHaveAttribute('href','/concepts/C-AM-07');
 });
 
@@ -167,6 +169,7 @@ test('Kiki keeps its four colours on the map',async({page})=>{
 });
 test('prerequisite links look like links and are full touch targets',async({page})=>{
   await setup(page); await page.getByRole('link',{name:/^Concept 8:/}).click();
+  await page.getByRole('complementary',{name:'Prerequisite concepts'}).locator('summary').click();
   const link=page.getByRole('complementary',{name:'Prerequisite concepts'}).getByRole('link',{name:'Lowpass filtering and waveform comparison',exact:true});
   expect(await link.evaluate(a=>getComputedStyle(a).textDecorationLine)).toContain('underline');
   // General links use ink; blue is reserved for practical work in Sketchbook.
@@ -205,7 +208,7 @@ test('term details open at every language notch, including 5',async({page})=>{
   }
 });
 
-// Arpan, 16 Oct: Listen player (labelled placeholder clips for C-AM-08)
+// Arpan, 16 Oct: Listen player; 17 Oct: clips come from the published C-AM-08 media manifest
 async function openC08(page: Page) {
   await setup(page); await page.getByRole('link',{name:/^Concept 8:/}).click();
   await expect(page.getByRole('heading',{level:1,name:'Carrier mismatch and debugging'})).toBeVisible();
@@ -215,7 +218,7 @@ async function setNotch(page: Page, notch: number) {
   for(let i=1;i<notch;i++) await knob.press('ArrowRight');
   await expect(knob).toHaveAttribute('aria-valuenow',String(notch));
 }
-const audio=(page: Page)=>page.evaluate(()=>{const a=document.querySelector('audio');return a?{src:a.getAttribute('src')??'',paused:a.paused,time:a.currentTime,rate:a.playbackRate}:null;});
+const audio=(page: Page)=>page.evaluate(()=>{const a=document.querySelector('audio');return a?{src:a.getAttribute('src')??'',clip:a.dataset.mediaId??'',paused:a.paused,time:a.currentTime,rate:a.playbackRate}:null;});
 async function playing(page: Page) { await expect.poll(async()=>(await audio(page))?.time??0).toBeGreaterThan(0.2); }
 
 test('Listen plays the text on top of the card and says it is unreviewed machine speech',async({page})=>{
@@ -223,21 +226,21 @@ test('Listen plays the text on top of the card and says it is unreviewed machine
   await page.getByRole('button',{name:'Listen',exact:true}).click();
   await expect(page.getByRole('region',{name:/^Listen: /})).toBeVisible();
   await expect(page.getByText('Sample audio · machine voice, not reviewed',{exact:true})).toBeVisible();
-  await playing(page); expect((await audio(page))!.src).toMatch(/CARD-AM-08-definition\.or\.wav$/);
+  await playing(page); expect((await audio(page))!.clip).toBe('CARD-AM-08-definition.or'); expect((await audio(page))!.src).toMatch(/^blob:/);
   await page.getByRole('button',{name:'Pause narration',exact:true}).click();
   await expect.poll(async()=>(await audio(page))!.paused).toBe(true);
 });
 test('notch 4 plays English; notch 3 shows both texts and offers both languages',async({page})=>{
   await openC08(page); await setNotch(page,4);
   await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
-  expect((await audio(page))!.src).toMatch(/\.en\.wav$/);
+  expect((await audio(page))!.clip).toMatch(/\.en$/);
   await setNotch(page,3); await expect(page.locator('audio')).toHaveCount(0);
   await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
   const languages=page.getByRole('group',{name:'Narration language'});
   await expect(languages.getByRole('button',{name:'Odia',exact:true})).toHaveAttribute('aria-pressed','true');
-  expect((await audio(page))!.src).toMatch(/\.or\.wav$/);
+  expect((await audio(page))!.clip).toMatch(/\.or$/);
   await languages.getByRole('button',{name:'English',exact:true}).click(); await playing(page);
-  expect((await audio(page))!.src).toMatch(/\.en\.wav$/);
+  expect((await audio(page))!.clip).toMatch(/\.en$/);
 });
 test('moving to another placard stops the sound; the chosen speed carries over',async({page})=>{
   await openC08(page);
@@ -247,7 +250,7 @@ test('moving to another placard stops the sound; the chosen speed carries over',
   await page.getByRole('button',{name:/^Next:/}).click();
   await expect(page.locator('audio')).toHaveCount(0);
   await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
-  expect((await audio(page))!.rate).toBe(1.25); expect((await audio(page))!.src).toMatch(/CARD-AM-08-concept/);
+  expect((await audio(page))!.rate).toBe(1.25); expect((await audio(page))!.clip).toMatch(/^CARD-AM-08-concept\./);
 });
 test('tapping a term pauses the narration and opens its details',async({page})=>{
   await openC08(page); await setNotch(page,2);

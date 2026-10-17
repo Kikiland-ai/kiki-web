@@ -25,7 +25,7 @@ test('frequency exploration moves the actual two stems and never creates a carri
   await slider.press('Home');await expect(lower).toHaveAttribute('data-frequency-hz','1990');
   await visual.getByRole('button',{name:'Reset to lesson example'}).click();await expect(lower).toHaveAttribute('data-frequency-hz','1900');
   expect(await page.evaluate(()=>JSON.stringify(Object.entries(localStorage)))).toBe(state);
-  await page.getByRole('link',{name:'Learn',exact:true}).click();await expect(page.getByText('0 of 10',{exact:true})).toBeVisible();
+  await page.getByRole('link',{name:'Learn',exact:true}).click();await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','0');
   await page.getByRole('link',{name:/^Concept 4:/}).click();await expect(page.getByText('Step 2 of 4',{exact:true})).toBeVisible();
 });
 test('sideband term opens the existing Odia meaning beside its diagram and restores focus',async({page})=>{

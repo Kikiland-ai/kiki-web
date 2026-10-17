@@ -4,6 +4,7 @@ from typing import Literal
 
 from pydantic import Field, model_validator
 
+from .media_models import MediaExperience
 from .models import WireModel
 from .teaching_visuals import DsbVisual
 
@@ -114,6 +115,7 @@ class Lesson(WireModel):
     media: Media
     assessmentId: str
     visual: DsbVisual | None = None
+    mediaExperience: MediaExperience | None = None
 
     @model_validator(mode="after")
     def valid_cards(self):

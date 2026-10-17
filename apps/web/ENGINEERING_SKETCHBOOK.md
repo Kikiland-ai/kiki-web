@@ -1,3 +1,7 @@
+> **Current, 18 October:** the full local UI pass is complete on `redesign/sketchbook-refinement`, including account/subjects/material/Profile, learning/assessments/labs and shared loading/recovery/dialog states. Review http://localhost:5195/ or connected http://127.0.0.1:5194/. Latest evidence and exact remaining dependencies live in [active.md](active.md); earlier checkpoint instructions below are history. PR work is deferred; no new commit/push/deployment.
+
+> **Latest component pass, 17 October:** Home, chapter and lesson refinements are ready locally on `redesign/sketchbook-refinement`, based on the published Library feature `f3bae05`. Review the connected app on 5194 or sample on 5193. [Refinement changes and integration handoff](SKETCHBOOK_REFINEMENT.md). The first-pass checkpoint below remains published on its original branch.
+
 # Engineering Sketchbook — local first pass
 
 17 October 2026 · `redesign/engineering-sketchbook`
@@ -75,3 +79,9 @@ No contracts, DTOs, source lessons, catalog/version hashes, auth/services, backe
 - Screenshots are local ignored review artifacts in `test-results/sketchbook/`.
 
 This is a complete first visual pass, with component polish available for subsequent iterations. The user authorized source publication on 17 October to `Kikiland-ai/kiki-web`, branch `redesign/engineering-sketchbook`, with author and committer `akshitanitr`. Deployment remains a separate action.
+
+
+17 October second refinement: Checks, quiz/results and Lab preparation are ready locally on `redesign/sketchbook-refinement`, including keyboard answer-save/question focus and a sticky lab save bar. 140 frontend tests, lint/build and sample behavior/8-width checks pass; connected review read-only. Both refinement passes remain uncommitted/unpushed. See `apps/web/SKETCHBOOK_REFINEMENT.md` (or `SKETCHBOOK_REFINEMENT.md` from this app folder) for integration guidance and verification limits.
+
+
+18 October: third refinement completes welcome/sign-in/onboarding, subjects, upload/Library and Profile. Fresh local sample http://localhost:5195/; connected app 5194. 141 frontend tests pass with one worker thread, lint/build pass, recorded responsive and fresh-journey checks pass; existing connected Library contains three static cards. Full browser/file-picker/physical-device checks were not repeated. All three refinement passes remain uncommitted/unpushed on `redesign/sketchbook-refinement`. [Current refinement handoff](SKETCHBOOK_REFINEMENT.md).

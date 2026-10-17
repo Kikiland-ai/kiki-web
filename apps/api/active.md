@@ -1,9 +1,17 @@
 # Python API — active status
 
-Updated: 17 October 2026
-Current step: Internal text persistence retained; frontend shows static upload history
+Updated: 18 October 2026
+Current step: PR #2 media and PR #3 Windows fixes integrated alongside Library text
 
 See [../web/active.md](../web/active.md) for the student walkthrough/current acceptance and [LEARNING_STORAGE.md](LEARNING_STORAGE.md) for data paths, migration, rollback and API rules.
+
+## Publication review — 18 October
+
+104 Python tests, Ruff/format, OpenAPI consistency and Python→React receipts pass. Optional media calls now validate learner context before resolving the adapter method: absent adapter returns503 to enrolled learners and403 to unenrolled learners, with complete text lessons preserved. New regression covers manifest/assets. No DTO/cloud/storage change. User authorized branch publication/new replacement PR; older PRs remain open pending merge/coverage confirmation. [Current combined status](../web/active.md).
+
+## Local integration — 18 October
+
+PR #2 `df2de21` concept-media source and PR #3 `4290e0f`/`1ad4d58` Windows fixes are integrated locally into `redesign/sketchbook-refinement`, alongside the existing Firestore document-text endpoints and static Library UI. Regenerated OpenAPI includes both boundaries. **103 Python tests**, Ruff/format and Python→React contracts pass; frontend has 154 passing tests. Publish script dry run validates all 8 assets without cloud writes. No media bucket is configured; optional media stays absent on connected lessons, preserving complete text. API8001 restarted with existing approved config in process only; unauthenticated media returns 401. No fresh authenticated live-data acceptance, IAM/billing/storage change, commit/push/PR merge or deployment. [Combined integration evidence](../../docs/plans/sketchbook-pr-integration.md). Historical status below describes earlier checkpoints.
 
 ## Current product decision — static upload history
 
@@ -29,6 +37,12 @@ Last completed: live Google → API → Firestore text persistence, full-refresh
 
 ## Completed
 
+- **17 October — concept media (Arpan).** Read-only media delivery:
+  - Optional `lesson.mediaExperience`, plus `GET /concepts/{id}/media` and `…/media/{revision}/assets/{assetId}`, gated by identity and enrollment.
+  - Source-bound package building and create-only private assets behind an injected store.
+  - One-transaction head switch (`scripts/publish_concept_media.py`, dry run by default).
+
+  Media records sit beside catalog `am-51187527300cba2fa3cca868`, so learner state is unaffected. `KIKI_MEDIA_BUCKET` is unset and no storage exists yet, so connected lessons stay text-only. Covered by 9 tests in `tests/test_concept_media.py` and Python→React receipts. Details: [../web/CONCEPT_MEDIA.md](../web/CONCEPT_MEDIA.md).
 - Existing FastAPI/Pydantic profile bootstrap, GET/PATCH and enrollment; Firebase Admin Google token signature/project/expiry/revocation checks; UID-derived ownership. Locked Python 3.12.15/uv dependencies.
 - Existing private-original upload/list/source/content adapters and real owned Firestore Library metadata reads. Originals remain unavailable until usable private Storage is identified.
 - Versioned catalog importer from the original analog-modulation ledger/Odia case; credential-free dry run, seed exclusion, lossless authored-content preservation, immutable version documents and atomic compare-before-activate. Live initial import and repeated unchanged import succeeded; all 68 version documents read back and matched exactly. Active head adds one document. Version am-51187527300cba2fa3cca868.

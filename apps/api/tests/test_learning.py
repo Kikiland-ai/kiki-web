@@ -172,7 +172,10 @@ def test_catalog_atomic_idempotent_seed_free_and_versioned(learning_harness):
 def test_all_authored_data_is_preserved_and_seeds_do_not_change_version(catalog, tmp_path):
     ledger_path = ROOT / "data-model/ledgers/electronics/analog-modulation.json"
     case_path = ROOT / "data-model/cases/analog-modulation-odia.json"
-    ledger, case = json.loads(ledger_path.read_text()), json.loads(case_path.read_text())
+    ledger, case = (
+        json.loads(ledger_path.read_text(encoding="utf-8")),
+        json.loads(case_path.read_text(encoding="utf-8")),
+    )
     root = f"learningCatalog/{PLAN}/versions/{catalog.version}"
     docs = catalog.documents
     restored_ledger = {
@@ -191,7 +194,7 @@ def test_all_authored_data_is_preserved_and_seeds_do_not_change_version(catalog,
     assert restored_case == {k: v for k, v in case.items() if k != "seeds"}
     case["seeds"] = {"synthetic": "different preview learner and scores"}
     changed_case = tmp_path / "case.json"
-    changed_case.write_text(json.dumps(case))
+    changed_case.write_text(json.dumps(case), encoding="utf-8")
     assert build_catalog(ledger_path, changed_case).documents == catalog.documents
 
 
@@ -509,7 +512,9 @@ def test_put_cors_and_public_contract_export(learning_harness):
     }
     folder = ROOT / "apps/api/test-artifacts"
     folder.mkdir(exist_ok=True)
-    (folder / "learning-contract.json").write_text(json.dumps(data, ensure_ascii=False))
+    (folder / "learning-contract.json").write_text(
+        json.dumps(data, ensure_ascii=False), encoding="utf-8"
+    )
 
 
 def test_teaching_visual_reads_existing_source_without_migration_or_progress_writes(

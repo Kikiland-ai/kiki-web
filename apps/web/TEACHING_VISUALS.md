@@ -27,3 +27,7 @@ Tests verify the numeric sidebands, actual SVG stem coordinates, signed waveform
 Connected browser review verifies the real Google/Firestore lesson and its frequency control/Odia term sheet. Phone-sized browser emulation is not physical-device acceptance. Authored content remains draft; expert/Odia review and reviewed narration are still pending. These are teaching calculations, not live Simulink output. Aditya's observation/assessment and Hey Clickky integration remain deferred.
 
 Rollback: remove the optional render/projection and regenerate the public contract; no database rollback or student progress reset is involved. Current counts and exact next action live in [active.md](active.md).
+
+## 17 October — renderer registry
+
+The DSB-SC diagrams are now the first entry (`dsb-sc-visual/v1`) of the trusted renderer registry in `features/learning/scenes.tsx`. They have the same projection, placement and behavior. Published scenes (first: C-AM-08 `coherent-phase-recovery/v1`) use the same registry. See [CONCEPT_MEDIA.md](CONCEPT_MEDIA.md).

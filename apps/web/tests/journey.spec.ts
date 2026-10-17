@@ -17,6 +17,7 @@ async function onboarding(page: Page) {
 test('account-first onboarding resumes, subject saves, profile updates and sign-out protects records', async ({ page }) => {
   await sample(page);
   await page.getByRole('button', { name: 'Save and continue' }).click();
+  await expect(page.getByRole('heading', { name: 'How comfortable do you feel?' })).toBeFocused();
   await page.reload();
   await expect(page.getByRole('heading', { name: 'How comfortable do you feel?' })).toBeVisible();
   await page.getByRole('slider', { name: 'Odia confidence' }).fill('9');

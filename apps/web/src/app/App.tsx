@@ -11,7 +11,7 @@ import { Home, Subjects, SubjectOverview } from '../features/home/Home';
 import { Profile } from '../features/profile/Profile';
 import { AssessmentProvider } from '../features/assessment/AssessmentState';
 import { MaterialsProvider } from '../features/intake/Materials';
-import { ActionLink, Button, StateScreen } from '../ui/kit';
+import { ActionLink, Button, LoadingNotice, StateScreen } from '../ui/kit';
 import type { Services } from '../services/types';
 
 const LabHome = lazy(() => import('../features/labs/LabPreparation').then(m => ({ default: m.LabHome })));
@@ -26,12 +26,12 @@ const Checks = lazy(() => import('../features/assessment/Checks').then(m => ({ d
 const StartCheck = lazy(() => import('../features/assessment/StartCheck').then(m => ({ default: m.StartCheck })));
 const RunCheck = lazy(() => import('../features/assessment/RunCheck').then(m => ({ default: m.RunCheck })));
 const ConnectionCheck = import.meta.env.DEV ? lazy(() => import('../features/auth/ConnectionCheck').then(m => ({ default: m.ConnectionCheck }))) : null;
-function Deferred({ children }: { children: ReactNode }) { return <Suspense fallback={<p role="status">Opening your page…</p>}>{children}</Suspense>; }
+function Deferred({ children }: { children: ReactNode }) { return <Suspense fallback={<LoadingNotice>Opening your page…</LoadingNotice>}>{children}</Suspense>; }
 
 function Gate({ onboarding = false }: { onboarding?: boolean }) {
   const { status, identity, services, profile, error, retry, logout } = useSession();
   const location = useLocation();
-  if (status === 'checking' || status === 'loading') return <StateScreen title={status === 'checking' ? 'Checking your sign-in…' : 'Opening your learning space…'} />;
+  if (status === 'checking' || status === 'loading') return <StateScreen busy title={status === 'checking' ? 'Checking your sign-in…' : 'Opening your learning space…'} />;
   if (status === 'error') return <StateScreen title={identity && services.mode === 'connected' ? 'You’re signed in. Your learning profile couldn’t open.' : 'Your learning space couldn’t open.'} action={<div className="form-actions"><Button onClick={retry}>Retry</Button><Button variant="secondary" onClick={() => { logout().catch(() => undefined); }}>Sign out</Button></div>}>{error}</StateScreen>;
   if (!profile) return <Navigate to={`/auth?returnTo=${encodeURIComponent(safeReturn(location.pathname + location.search))}`} replace />;
   if (!onboarding && !onboardingComplete(profile)) return <Navigate to={`/onboarding?returnTo=${encodeURIComponent(safeReturn(location.pathname + location.search))}`} replace />;
@@ -40,11 +40,11 @@ function Gate({ onboarding = false }: { onboarding?: boolean }) {
 }
 function PublicGate() {
   const { status, identity, services, error, retry, logout } = useSession();
-  if (status === 'checking' || status === 'loading') return <StateScreen title={status === 'checking' ? 'Checking your sign-in…' : 'Opening your learning space…'} />;
+  if (status === 'checking' || status === 'loading') return <StateScreen busy title={status === 'checking' ? 'Checking your sign-in…' : 'Opening your learning space…'} />;
   if (status === 'error') return <StateScreen title={identity && services.mode === 'connected' ? 'You’re signed in. Your learning profile couldn’t open.' : 'We couldn’t finish opening Kiki.'} action={<div className="form-actions"><Button onClick={retry}>Retry</Button><Button variant="secondary" onClick={() => { logout().catch(() => undefined); }}>Sign out</Button></div>}>{error}</StateScreen>;
   return <Outlet />;
 }
-function SelectedSubject() { const { courseId } = useParams(); return courseId === COURSE.id ? <SubjectOverview /> : <StateScreen title="This subject wasn’t found." action={<ActionLink to="/subjects">My subjects</ActionLink>} />; }
+function SelectedSubject() { const { courseId } = useParams(); return courseId === COURSE.id ? <SubjectOverview /> : <StateScreen embedded title="This subject wasn’t found." action={<ActionLink to="/subjects">My subjects</ActionLink>}>Choose one of your subjects to continue.</StateScreen>; }
 class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
@@ -71,7 +71,7 @@ export function createAppRouter(services: Services) {
       <Route path="/assessments/:assessmentId/new" element={<Deferred><StartCheck /></Deferred>} />
       <Route path="/assessments/:assessmentId/:runId" element={<Deferred><RunCheck /></Deferred>} />
     </Route></Route>
-    <Route path="*" element={<StateScreen title="We couldn’t find that page." action={<ActionLink to="/home">Go to home</ActionLink>} />} />
+    <Route path="*" element={<StateScreen title="We couldn’t find that page." action={<ActionLink to="/home">Go to home</ActionLink>}>Return to your learning space to pick up where you left off.</StateScreen>} />
   </Route>));
 }
 export function App({ router }: { router: ReturnType<typeof createAppRouter> }) { return <ErrorBoundary><RouterProvider router={router} /></ErrorBoundary>; }

@@ -269,6 +269,8 @@ def test_invalid_or_forged_context_never_reserves_or_uploads(material_harness, c
         ("large.pdf", b"%PDF-" + b"a" * MAX_FILE_BYTES, "application/pdf", 413),
         ("text.txt", b"text", "text/plain", 422),
     ],
+    # Short ids: pytest puts the id in PYTEST_CURRENT_TEST; Windows caps env vars at 32,767 chars.
+    ids=["fake-pdf", "invalid-png", "jpeg-as-png", "empty-pdf", "large-pdf", "text"],
 )
 def test_invalid_originals_never_commit_receipts(material_harness, name, data, mime, status):
     client, store, bucket, _ = material_harness

@@ -193,3 +193,37 @@ button, input, select, textarea { font: inherit; }
 .selected-materials strong,.selected-materials small { display:block; }
 .selected-materials small { margin-top:4px; color:var(--muted); }
 .selected-materials .button { flex-shrink:0; padding-inline:8px; }
+
+/* Refinement: one clear reading continuation, with quieter tools and evidence below. */
+.home-refined .home-greeting .page-title { border:0; padding:0; margin:0; }
+.home-refined .home-greeting h1 { font-size:clamp(28px,3vw,38px); line-height:1.2; margin-bottom:8px; }
+.home-refined .home-greeting .eyebrow { font-size:10px; margin-bottom:10px; }
+.home-refined .home-greeting p { font-size:14px; margin-top:0; }
+.home-workbench { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(270px,1fr); gap:28px; align-items:start; min-width:0; }
+.home-main,.home-aside { display:grid; gap:24px; min-width:0; }
+.home-refined .home-check-entry { display:grid; gap:20px; padding:26px; }
+.home-refined .home-check-entry h2 { font-size:24px; line-height:1.25; max-width:24ch; }
+.home-refined .home-check-entry .eyebrow { font-size:10px; }
+.home-refined .home-check-entry > .button { justify-self:start; }
+.home-tools .section-title { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
+.home-tools .section-title h2,.home-tools .eyebrow { margin:0; }
+.home-tools .section-title .eyebrow { font-size:9px; white-space:nowrap; }
+.home-refined .quick-grid { grid-template-columns:minmax(0,1fr); }
+.home-refined .quick-card { grid-template-columns:40px minmax(0,1fr) 24px; align-items:center; gap:4px 14px; min-height:98px; padding:18px 20px; }
+.home-refined .quick-card .quick-icon { grid-column:1; grid-row:1/3; margin:0; }
+.home-refined .quick-card strong { grid-column:2; grid-row:1; }
+.home-refined .quick-card > span:not(.quick-icon) { grid-column:2; grid-row:2; }
+.home-refined .quick-card > .material-symbols-rounded { grid-column:3; grid-row:1/3; margin:0; }
+.home-refined .learning-preference { margin:0; padding:22px; flex-wrap:wrap; }
+.home-refined .dimensions-card { padding:24px; }
+.home-refined .dimension-list { display:grid; grid-template-columns:1fr; }
+.home-refined .dimension-list li { display:grid; grid-template-columns:8px minmax(0,1fr); gap:4px 10px; padding-block:12px; border-bottom:1px solid var(--rule); }
+.home-refined .dimension-list li:last-child { border:0; padding-bottom:0; }
+.home-refined .dimension-list small { grid-column:2; }
+.home-refined .recent-material { padding:24px; }
+.home-refined .recent-material > div { display:grid; gap:8px; }
+.home-refined .recent-material .status-pill { justify-self:start; font-size:11px; }
+.home-refined .lab-resume { padding:24px; }
+.home-refined .lab-resume h2 { font-size:24px; line-height:1.25; }
+@media (max-width:1000px) { .home-workbench { grid-template-columns:minmax(0,1fr); } .home-aside { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; } }
+@media (max-width:599px) { .home-aside { grid-template-columns:minmax(0,1fr); } .home-refined .home-check-entry { padding:22px 18px; } .home-refined .home-check-entry > .button { justify-self:stretch; } .home-tools .section-title .eyebrow { display:none; } }

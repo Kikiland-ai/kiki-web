@@ -1,18 +1,30 @@
-.cover.cover { display: grid; grid-template-columns: minmax(0,1fr) 230px; gap: 36px; padding: 0; border: 2px solid var(--ink); box-shadow: var(--shadow); overflow: hidden; }
-.copy { padding: 36px 0 36px 36px; min-width: 0; }
-.copy h2 { font-size: clamp(30px,3.4vw,46px); line-height: 1.08; max-width: 20ch; margin: 24px 0 18px; }
-.copy p { max-width: 52ch; font-size: 15px; margin-bottom: 28px; }
-.copy small { display: block; margin-top: 18px; }
-.copy :global(.button-primary) { flex-shrink: 0; white-space: nowrap; }
-.chapter { font-size: 13px; color: var(--muted); }
-.index { padding: 30px 26px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; border-left: 2px solid var(--ink); background: repeating-linear-gradient(0deg, transparent 0 27px, #1112 27px 28px), var(--concept-tint); }
-.pageNumber { font-size: 92px; font-weight: 700; line-height: 1; letter-spacing: -.08em; }
-.indexLabel { font-size: 10px; letter-spacing: .12em; font-weight: 700; margin: 12px 0 28px; }
-.index strong { font-size: 13px; margin: 14px 0; }
-.index > span:last-child { font-size: 12px; color: var(--muted); line-height: 1.6; }
-.pages { display: flex; gap: 5px; width: 100%; }
-.pages i { width: 12px; height: 24px; border: 1px solid var(--ink); background: var(--paper); }
-.pages .passed { background: var(--concept); }
-@media (max-width: 1000px) { .cover.cover { grid-template-columns: minmax(0,1fr) 180px; gap: 24px; } .copy { padding: 28px 0 28px 24px; } .index { padding: 24px 18px; } }
-@media (max-width: 767px) { .cover.cover { grid-template-columns: minmax(0,1fr); gap: 0; } .copy { padding: 28px 24px; } .index { border-left: 0; border-top: 2px solid var(--ink); display: grid; grid-template-columns: auto 1fr; gap: 6px 22px; padding: 20px 24px; } .pageNumber { font-size: 64px; grid-row: 1/4; } .indexLabel { margin: 0; } .index strong { margin: 0; } .index > span:last-child { display: none; } .pages { max-width: 190px; } .pages i { height: 18px; } }
-@media (max-width: 599px) { .copy { padding: 26px 20px; } .copy h2 { font-size: 34px; } .index { padding-inline: 20px; } }
+.cover.cover { display:grid; grid-template-columns:minmax(0,1fr) 200px; gap:0; padding:0; border:2px solid var(--ink); box-shadow:var(--shadow); overflow:hidden; }
+.copy { padding:32px; min-width:0; }
+.copy :global(.eyebrow) { margin-bottom:12px; font-size:10px; }
+.copy h2 { font-size:clamp(28px,3.2vw,42px); line-height:1.14; max-width:23ch; margin:20px 0 14px; letter-spacing:-.045em; }
+.copy p { max-width:52ch; font-size:14px; line-height:1.75; margin-bottom:24px; }
+.copy small { display:block; margin-top:16px; }
+.copy :global(.form-actions) { align-items:center; gap:12px 20px; }
+.chapter { display:block; font-size:12px; line-height:1.6; color:var(--muted); }
+.index { padding:26px 22px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; border-left:2px solid var(--ink); background:repeating-linear-gradient(0deg,transparent 0 27px,#1111 27px 28px),var(--concept-tint); }
+.pageNumber { font-size:76px; font-weight:700; line-height:1; letter-spacing:-.07em; }
+.indexLabel { font-size:10px; letter-spacing:.1em; font-weight:700; margin:10px 0 24px; }
+.index strong { font-size:12px; margin:14px 0; }
+.index > span:last-child { font-size:12px; color:var(--muted); line-height:1.6; }
+.pages { display:flex; gap:4px; width:100%; }
+.pages i { flex:1; max-width:12px; height:22px; border:1px solid var(--ink); background:var(--paper); }
+.pages .passed { background:var(--concept); }
+.pages .current { outline:2px solid var(--ink); outline-offset:2px; }
+@media (max-width:1000px) { .cover.cover { grid-template-columns:minmax(0,1fr) 170px; } .copy { padding:26px; } .index { padding:22px 18px; } }
+@media (max-width:767px) {
+  .cover.cover { grid-template-columns:minmax(0,1fr); }
+  .copy { padding:26px 24px; }
+  .index { border-left:0; border-top:1.5px solid var(--ink); display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:6px 22px; padding:18px 24px; }
+  .pageNumber { font-size:52px; grid-row:1/4; }
+  .indexLabel { margin:0; }
+  .index strong { margin:0; }
+  .index > span:last-child { display:none; }
+  .pages { max-width:190px; }
+  .pages i { height:16px; }
+}
+@media (max-width:599px) { .copy { padding:24px 20px; } .copy h2 { font-size:28px; } .copy :global(.form-actions) { align-items:stretch; } .copy :global(.button-primary) { flex-basis:100%; } .index { padding-inline:20px; } }

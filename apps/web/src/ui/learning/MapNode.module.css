@@ -149,3 +149,15 @@
 .revisit { border-style: dashed; }
 .node:hover { box-shadow: var(--learning-key-edge-neutral); }
 @media (max-width: 599px) { .row, .tile { gap: 14px; padding: 22px 14px; grid-template-columns: 52px minmax(0,1fr); } .row .body, .tile .body { width: 52px; height: 56px; } .title { font-size: 17px; } }
+
+/* A readable index entry: short prerequisite counts, full details in its description. */
+.tile,.row { grid-template-columns:48px minmax(0,1fr); gap:16px; padding:22px 18px; align-content:start; }
+.tile .body,.row .body { width:48px; height:52px; border-width:1.5px; }
+.title { font-size:18px; line-height:1.4; letter-spacing:-.025em; }
+.titleOr { font-size:15px; line-height:1.85; }
+.text { gap:8px; }
+.badges { gap:6px; margin-top:4px; }
+.prerequisite { font-size:12px; line-height:1.7; }
+.next .body { border-width:2px; }
+.pin { top:-18px; }
+@media (max-width:599px) { .tile,.row { grid-template-columns:44px minmax(0,1fr); padding:20px 14px; gap:14px; } .tile .body,.row .body { width:44px; height:50px; } .title { font-size:17px; } .titleOr { font-size:14px; } }

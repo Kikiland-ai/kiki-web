@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 import { useSession } from '../../app/Session';
 import { readableError } from '../../services/types';
-import { ActionLink, Alert, Button, PageTitle } from '../../ui/kit';
+import { ActionLink, Alert, Button, LoadingNotice, PageTitle } from '../../ui/kit';
 
 export function StartCheck() {
   const { assessmentId = '' } = useParams(); const [params] = useSearchParams(); const previousRunId = params.get('previousRunId') ?? undefined;
@@ -22,5 +22,5 @@ export function StartCheck() {
     }).catch(e => { if (!controller.signal.aborted) setError(readableError(e)); });
     return () => controller.abort();
   }, [profile, services, assessmentId, previousRunId, retry, navigate]);
-  return <div className="page-stack"><PageTitle title={error ? 'This check couldn’t start.' : 'Opening your assigned questions…'} />{error && <Alert>{error}</Alert>}{error && <Button onClick={() => setRetry(n => n+1)}>Retry start</Button>}<ActionLink to="/practice" variant="secondary">Back to concept checks</ActionLink></div>;
+  return <div className="page-stack">{error ? <><PageTitle title="This check couldn’t start." /><Alert>{error}</Alert><Button onClick={() => setRetry(n => n+1)}>Retry start</Button></> : <LoadingNotice>Opening your assigned questions…</LoadingNotice>}<ActionLink to="/practice" variant="secondary">Back to concept checks</ActionLink></div>;
 }

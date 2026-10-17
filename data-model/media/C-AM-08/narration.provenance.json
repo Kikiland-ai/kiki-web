@@ -6,7 +6,7 @@
   "status": "generated, not reviewed",
   "clips": [
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-definition.or.wav",
+      "file": "CARD-AM-08-definition.or.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-definition",
       "lang": "or",
@@ -50,7 +50,7 @@
       "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-definition.en.wav",
+      "file": "CARD-AM-08-definition.en.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-definition",
       "lang": "en",
@@ -94,7 +94,7 @@
       "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-concept.or.wav",
+      "file": "CARD-AM-08-concept.or.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-concept",
       "lang": "or",
@@ -134,7 +134,7 @@
       "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-concept.en.wav",
+      "file": "CARD-AM-08-concept.en.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-concept",
       "lang": "en",
@@ -174,7 +174,7 @@
       "note": "metadata rebuilt from the staged WAV; provider usage not recorded"
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-application.or.wav",
+      "file": "CARD-AM-08-application.or.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-application",
       "lang": "or",
@@ -215,7 +215,7 @@
       }
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-application.en.wav",
+      "file": "CARD-AM-08-application.en.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-application",
       "lang": "en",
@@ -256,7 +256,7 @@
       }
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-recap.or.wav",
+      "file": "CARD-AM-08-recap.or.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-recap",
       "lang": "or",
@@ -297,7 +297,7 @@
       }
     },
     {
-      "file": "audio/sample/C-AM-08/CARD-AM-08-recap.en.wav",
+      "file": "CARD-AM-08-recap.en.wav",
       "conceptId": "C-AM-08",
       "placardId": "CARD-AM-08-recap",
       "lang": "en",

@@ -121,3 +121,9 @@
 
 .player { border-left: 5px solid var(--learning-ink); background: var(--learning-paper-sunken); }
 .play { border: 2px solid var(--learning-ink); box-shadow: var(--learning-key-edge-neutral); }
+.loading,
+.detail {
+  margin: 0;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}

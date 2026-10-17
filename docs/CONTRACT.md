@@ -9,6 +9,7 @@ The combined app uses one verified session/composition root under apps/web. Runt
 - [Material intake/Library](../apps/web/INTAKE_CONTRACT.md)
 - [Lab preparation and Aditya boundary](../apps/web/LAB_PREPARATION_CONTRACT.md)
 - [Teaching visuals](../apps/web/TEACHING_VISUALS.md)
+- [Preprocessed concept media](../apps/web/CONCEPT_MEDIA.md)
 - [Python OpenAPI](../apps/api/openapi.json)
 - [Current completion/verification](../apps/web/active.md)
 

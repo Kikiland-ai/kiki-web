@@ -13,10 +13,12 @@ class Settings(BaseSettings):
     firebase_project_id: str
     firestore_database: str = "(default)"
     storage_bucket: str | None = None
+    # Private bucket holding published lesson media; unset keeps lessons text-only.
+    media_bucket: str | None = None
     environment: Literal["cloud", "emulator"] = "cloud"
     cors_origins: list[str] = ["http://127.0.0.1:5174", "http://localhost:5174"]
 
-    @field_validator("storage_bucket")
+    @field_validator("storage_bucket", "media_bucket")
     @classmethod
     def valid_bucket(cls, value):
         if value is not None and (not value or "/" in value or ":" in value or " " in value):

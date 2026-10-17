@@ -56,8 +56,8 @@ class State(WireModel):
 
 
 class FirestoreLearning:
-    def __init__(self, client, profiles):
-        self.client, self.profiles = client, profiles
+    def __init__(self, client, profiles, media=None):
+        self.client, self.profiles, self.media = client, profiles, media
 
     def access(self, uid):
         if COURSE not in self.profiles.get(uid).courseIds:
@@ -119,8 +119,27 @@ class FirestoreLearning:
         return self.context(uid, plan_id)[2]
 
     def lesson(self, uid, concept_id):
-        _, root, _ = self.context(uid)
-        return self._lesson(root, concept_id)
+        version, root, _ = self.context(uid)
+        lesson = self._lesson(root, concept_id)
+        # Published media is only referenced here; a lesson read never prepares media.
+        media = self.media.experience(version, lesson) if self.media else None
+        return lesson.model_copy(update={"mediaExperience": media}) if media else lesson
+
+    def _media(self, uid, concept_id):
+        version, root, _ = self.context(uid)
+        if self.media is None:
+            raise BoundaryError(503, "Lesson media storage is not available yet.")
+        lesson = self._lesson(root, concept_id)
+        source = self.read(root.collection("sourceConcepts").document(concept_id))
+        return version, lesson, source
+
+    def media_manifest(self, uid, concept_id):
+        context = self._media(uid, concept_id)
+        return self.media.manifest(*context)
+
+    def media_asset(self, uid, concept_id, revision, asset_id):
+        context = self._media(uid, concept_id)
+        return self.media.asset(*context, revision, asset_id)
 
     def _lesson(self, root, concept_id):
         if concept_id not in CONCEPTS:

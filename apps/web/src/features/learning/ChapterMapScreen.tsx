@@ -1,3 +1,4 @@
+import { StateScreen } from '../../ui/kit'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptProgress } from '../../contracts/api'
@@ -51,17 +52,7 @@ export function ChapterMapScreen() {
   }, [planId, attempt, services, uid])
 
   if (load.status === 'loading') return <LoadingState message="Loading your chapter…" />
-  if (load.status === 'not_found') {
-    return (
-      <section>
-        <h1>Chapter not found</h1>
-        <p>This chapter isn't in your course. Go back to Home to pick up where you left off.</p>
-        <LinkButton to="/home" variant="secondary">
-          Go to Home
-        </LinkButton>
-      </section>
-    )
-  }
+  if (load.status === 'not_found') return <StateScreen embedded title="Chapter not found" action={<LinkButton to="/home" variant="secondary">Go to Home</LinkButton>}>This chapter isn't in your course. Go back to Home to pick up where you left off.</StateScreen>
   if (load.status === 'error') {
     return <ErrorState message={load.message} onRetry={() => setAttempt((n) => n + 1)} />
   }
@@ -82,25 +73,66 @@ export function ChapterMapScreen() {
           <h1 className={styles.title}>{chapter.title.en}</h1>
           {chapter.review.content === 'draft' && <StatusBadge label="Draft content" />}
           {services.mode === 'fixture' && <p className="helper-note">Sample chapter content. Progress comes from your saved preview checks, including any explicitly loaded preview setup.</p>}
-          <p className="helper-note">Curated chapter content. This chapter is not extracted from your uploaded files.</p>
+          <p className={styles.intro}>Follow the concepts, check your understanding, then take the idea into the lab.</p>
         </div>
         <div className={styles.summary}>
-          <MasteryRing values={progress.rings} size={96} label="This chapter" showLegend>
-            {passed}/{chapter.concepts.length}
-          </MasteryRing>
           <div className={styles.summaryText}>
-            <p>
-              <strong>
-                {passed} of {chapter.concepts.length}
-              </strong>{' '}
-              concept checks passed
-            </p>
-            {next && <LinkButton to={`/concepts/${next.id}`}>Continue: {next.title.en}</LinkButton>}
+            <p className={styles.checkCount}><strong>{passed}<span> / {chapter.concepts.length}</span></strong><span>concept checks passed</span></p>
+            <progress className={styles.checkProgress} value={passed} max={chapter.concepts.length} aria-label="Concept checks passed" />
+            {next && <><p className={styles.nextLabel}>UP NEXT <strong>{next.title.en}</strong></p><LinkButton to={`/concepts/${next.id}`} aria-label={`Continue: ${next.title.en}`}>Continue learning</LinkButton></>}
+            <details className={styles.evidence}><summary>View all four learning areas</summary><MasteryRing values={progress.rings} size={72} label="This chapter" showLegend>{passed}/{chapter.concepts.length}</MasteryRing></details>
           </div>
         </div>
       </header>
 
       <div className={styles.body}>
+
+      <div className={styles.contents}>
+      {sections.map((section) => {
+        const concepts = chapter.concepts
+          .filter((c) => c.broadConceptId === section.id)
+          .sort((a, b) => a.order - b.order)
+        return (
+          <section key={section.id} className={styles.section} aria-labelledby={`section-${section.id}`}>
+            <h2 id={`section-${section.id}`} className={styles.sectionTitle}>
+              {section.title.en}
+            </h2>
+            <ol className={wide ? styles.tiles : styles.rows}>
+              {concepts.map((c) => {
+                const p = status.get(c.id)
+                const percent = p?.theoryCheck.attemptPercent
+                return (
+                  <li key={c.id}>
+                    <MapNode
+                      layout={wide ? 'tile' : 'row'}
+                      to={`/concepts/${c.id}`}
+                      order={c.order}
+                      title={c.title.en}
+                      titleOr={titleOr(c.title)}
+                      status={p?.status ?? 'not_started'}
+                      rings={{ concept: percent === undefined ? null : { done: p?.status === 'passed' ? 1 : 0, total: 1 } }}
+                      checkPercent={percent}
+                      prerequisiteCount={c.prerequisiteIds.filter(id => status.get(id)?.status !== 'passed').length}
+                      prerequisiteNote={c.prerequisiteIds.some(id => status.get(id)?.status !== 'passed') ? `Prerequisite checks pending: ${c.prerequisiteIds.filter(id => status.get(id)?.status !== 'passed').map(id => chapter.concepts.find(row => row.id === id)?.title.en ?? id).join(', ')}` : undefined}
+                      next={c.id === nextId}
+                      requiredForLab={c.requiredForLab}
+                    />
+                  </li>
+                )
+              })}
+            </ol>
+          </section>
+        )
+      })}
+
+      <section className={styles.test} aria-labelledby="test-title">
+        <h2 id="test-title">Chapter test</h2>
+        <p>Ten questions across the chapter; pass with 8 of 10. It doesn't affect the lab.</p>
+        {passed === chapter.concepts.length ? <LinkButton to={`/assessments/${chapter.chapterAssessmentId}/new`} variant="secondary">
+          Take the chapter test
+        </LinkButton> : <><p>Pass all ten concept checks at 60% or above to unlock this test.</p><button className="button button-secondary" disabled>Chapter test locked</button></>}
+      </section>
+      </div>
       {progress.labReadiness && (
         <section className={styles.lab} aria-labelledby="lab-title">
           <h2 id="lab-title" className={styles.labTitle}>
@@ -141,51 +173,6 @@ export function ChapterMapScreen() {
         </section>
       )}
 
-      <div className={styles.contents}>
-      {sections.map((section) => {
-        const concepts = chapter.concepts
-          .filter((c) => c.broadConceptId === section.id)
-          .sort((a, b) => a.order - b.order)
-        return (
-          <section key={section.id} className={styles.section} aria-labelledby={`section-${section.id}`}>
-            <h2 id={`section-${section.id}`} className={styles.sectionTitle}>
-              {section.title.en}
-            </h2>
-            <ol className={wide ? styles.tiles : styles.rows}>
-              {concepts.map((c) => {
-                const p = status.get(c.id)
-                const percent = p?.theoryCheck.attemptPercent
-                return (
-                  <li key={c.id}>
-                    <MapNode
-                      layout={wide ? 'tile' : 'row'}
-                      to={`/concepts/${c.id}`}
-                      order={c.order}
-                      title={c.title.en}
-                      titleOr={titleOr(c.title)}
-                      status={p?.status ?? 'not_started'}
-                      rings={{ concept: percent === undefined ? null : { done: p?.status === 'passed' ? 1 : 0, total: 1 } }}
-                      checkPercent={percent}
-                      prerequisiteNote={c.prerequisiteIds.some(id => status.get(id)?.status !== 'passed') ? `Prerequisite checks pending: ${c.prerequisiteIds.filter(id => status.get(id)?.status !== 'passed').map(id => chapter.concepts.find(row => row.id === id)?.title.en ?? id).join(', ')}` : undefined}
-                      next={c.id === nextId}
-                      requiredForLab={c.requiredForLab}
-                    />
-                  </li>
-                )
-              })}
-            </ol>
-          </section>
-        )
-      })}
-
-      <section className={styles.test} aria-labelledby="test-title">
-        <h2 id="test-title">Chapter test</h2>
-        <p>Ten questions across the chapter; pass with 8 of 10. It doesn't affect the lab.</p>
-        {passed === chapter.concepts.length ? <LinkButton to={`/assessments/${chapter.chapterAssessmentId}/new`} variant="secondary">
-          Take the chapter test
-        </LinkButton> : <><p>Pass all ten concept checks at 60% or above to unlock this test.</p><button className="button button-secondary" disabled>Chapter test locked</button></>}
-      </section>
-      </div>
       </div>
     </div>
   )

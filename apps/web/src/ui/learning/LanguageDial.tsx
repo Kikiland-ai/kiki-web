@@ -22,6 +22,7 @@ export type LanguageDialProps = {
   /** Kiki's suggested notch: a dashed ghost knob plus a chip the student can accept. */
   suggested?: DialLevel | null
   onAcceptSuggestion?: (value: DialLevel) => void
+  compact?: boolean
   className?: string
 }
 
@@ -39,7 +40,7 @@ const fraction = (v: number) => (v - MIN) / (MAX - MIN)
  * anywhere on the track to jump to the nearest notch, or drag the knob.
  * Vertical swipes on the track still scroll the page.
  */
-export function LanguageDial({ value, onChange, suggested, onAcceptSuggestion, className }: LanguageDialProps) {
+export function LanguageDial({ value, onChange, suggested, onAcceptSuggestion, compact = false, className }: LanguageDialProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const knobRef = useRef<HTMLDivElement>(null)
   const press = useRef<{ id: number; x: number; dragging: boolean } | null>(null)
@@ -112,7 +113,7 @@ export function LanguageDial({ value, onChange, suggested, onAcceptSuggestion, c
   const at = (v: number) => ({ '--learning-at': fraction(v) }) as CSSProperties
 
   return (
-    <div className={[styles.dial, className].filter(Boolean).join(' ')}>
+    <div className={[styles.dial, compact && styles.compact, className].filter(Boolean).join(' ')}>
       <div className={styles.ends} aria-hidden="true">
         <span lang="or" className={styles.odia}>
           ଓଡ଼ିଆ
