@@ -1,0 +1,163 @@
+.dial {
+  --learning-knob: 36px;
+  display: grid;
+  gap: var(--learning-space-2);
+  width: 100%;
+  max-width: 420px;
+}
+
+.ends {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.odia {
+  font: var(--learning-text-label-odia);
+}
+
+/* The whole 48px-tall track is the touch target */
+.track {
+  position: relative;
+  height: var(--learning-tap-target);
+  cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position along the rail: half a track height in from each end */
+.rail,
+.notch,
+.ghost,
+.knob {
+  position: absolute;
+}
+
+.rail {
+  left: calc(var(--learning-tap-target) / 2);
+  right: calc(var(--learning-tap-target) / 2);
+  top: calc(50% - 2px);
+  height: 4px;
+  border-radius: 4px;
+  background: var(--learning-line);
+}
+
+.notch,
+.ghost,
+.knob {
+  left: calc(var(--learning-tap-target) / 2 + (100% - var(--learning-tap-target)) * var(--learning-at));
+}
+
+.notch {
+  top: calc(50% - 7px);
+  width: 2px;
+  height: 14px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: var(--learning-pencil);
+}
+
+.ghost,
+.knob {
+  top: calc(50% - var(--learning-knob) / 2);
+  width: var(--learning-knob);
+  height: var(--learning-knob);
+  margin-left: calc(var(--learning-knob) / -2);
+  border-radius: 50%;
+}
+
+.ghost {
+  /* Neutral, not blue: blue marks the practical dimension */
+  border: 2px dashed var(--learning-pencil);
+  background: var(--learning-paper-sunken);
+  pointer-events: none;
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.knob {
+  background: var(--learning-paper-raised);
+  border: 2px solid var(--learning-ink);
+  box-shadow: var(--learning-key-edge-neutral);
+  cursor: grab;
+  transition: left var(--learning-motion-move);
+}
+
+/* The needle turns from Odia (left) to English (right) */
+.knob::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  width: 3px;
+  height: 11px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--learning-ink);
+  transform-origin: 50% 13px;
+  transform: rotate(var(--learning-angle));
+  transition: transform var(--learning-motion-move);
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--learning-space-2);
+  min-height: var(--learning-tap-target);
+  font: var(--learning-text-label);
+  color: var(--learning-pencil);
+}
+
+.caption b {
+  color: var(--learning-ink);
+}
+
+.suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--learning-space-1);
+  min-height: var(--learning-tap-target);
+  max-width: 100%;
+  padding: var(--learning-space-1) var(--learning-space-3);
+  border: 1px dashed var(--learning-ink);
+  border-radius: var(--learning-radius-pill);
+  background: var(--learning-paper-sunken);
+  color: var(--learning-ink);
+  font: var(--learning-text-label);
+  text-align: left;
+  cursor: pointer;
+}
+
+.suggestion svg {
+  flex: none;
+}
+
+@keyframes breathe {
+  50% {
+    transform: scale(0.86);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost {
+    animation: none;
+  }
+
+  .knob,
+  .knob::after {
+    transition: none;
+  }
+}
+
+.dial { padding: 14px 16px 8px; border: 1.5px solid var(--learning-ink); border-radius: var(--learning-radius-card); background: var(--learning-paper); }
+.rail { background: var(--learning-ink); height: 2px; }
+.knob { background: var(--learning-yellow); box-shadow: 2px 2px 0 var(--learning-ink); }
+
+/* The lesson header keeps the same full track target in a shorter control panel. */
+.compact { gap:4px; padding:0; border:0; background:transparent; }
+.compact .caption { min-height:24px; font-size:12px; }
+.compact .ends { font-size:12px; }

@@ -1,0 +1,3818 @@
+{
+  "meta": {
+    "fixture": true,
+    "label": "Fixture data: draft Analog Modulation content and a synthetic learner. Not live results.",
+    "generatedBy": "scripts/build-fixtures.mjs",
+    "sources": {
+      "ledgers/electronics/analog-modulation.json": "efbd9786f1c3ca1ebaac49a729355baa856042d576b275eb8c1e6828c47e8416",
+      "cases/analog-modulation-odia.json": "994a730773354e03896d8c6489a12699d85f54a2ee2fd0ef2ee255cc00a74187"
+    },
+    "notes": [
+      "No Odia for chapter title \"Analog Modulation\"; English used in both.",
+      "No Odia for broad concept BC-AM-1; English used in both.",
+      "No Odia for broad concept BC-AM-2; English used in both.",
+      "No Odia for broad concept BC-AM-3; English used in both.",
+      "No Odia for broad concept BC-AM-4; English used in both.",
+      "No Odia for key idea C-AM-01; English used in both.",
+      "No Odia for key idea C-AM-02; English used in both.",
+      "No Odia for key idea C-AM-03; English used in both.",
+      "No Odia for key idea C-AM-04; English used in both.",
+      "No Odia for key idea C-AM-05; English used in both.",
+      "No Odia for key idea C-AM-06; English used in both.",
+      "No Odia for key idea C-AM-07; English used in both.",
+      "No Odia for key idea C-AM-08; English used in both.",
+      "No Odia for key idea C-AM-09; English used in both.",
+      "No Odia for key idea C-AM-10; English used in both."
+    ]
+  },
+  "chapter": {
+    "planId": "LP-ANALOG-MODULATION",
+    "courseId": "CRS-AC-ECE",
+    "title": {
+      "en": "Analog Modulation",
+      "or": "Analog Modulation"
+    },
+    "broadConcepts": [
+      {
+        "id": "BC-AM-1",
+        "title": {
+          "en": "Signal foundations",
+          "or": "Signal foundations"
+        },
+        "order": 1
+      },
+      {
+        "id": "BC-AM-2",
+        "title": {
+          "en": "Amplitude modulation families",
+          "or": "Amplitude modulation families"
+        },
+        "order": 2
+      },
+      {
+        "id": "BC-AM-3",
+        "title": {
+          "en": "Detection and receiver diagnosis",
+          "or": "Detection and receiver diagnosis"
+        },
+        "order": 3
+      },
+      {
+        "id": "BC-AM-4",
+        "title": {
+          "en": "Angle modulation",
+          "or": "Angle modulation"
+        },
+        "order": 4
+      }
+    ],
+    "concepts": [
+      {
+        "id": "C-AM-01",
+        "order": 1,
+        "broadConceptId": "BC-AM-1",
+        "title": {
+          "en": "Amplitude, frequency and phase",
+          "or": "Amplitude, Frequency ଓ Phase"
+        },
+        "canDo": "Read amplitude, frequency and phase from a sinusoidal signal and convert Hz to rad/s.",
+        "prerequisiteIds": [],
+        "requiredForLab": true,
+        "estMinutes": 10,
+        "assessmentId": "AS-AM-01"
+      },
+      {
+        "id": "C-AM-02",
+        "order": 2,
+        "broadConceptId": "BC-AM-1",
+        "title": {
+          "en": "Message, carrier and the purpose of modulation",
+          "or": "Message, Carrier ଓ Modulation ର ଉଦ୍ଦେଶ୍ୟ"
+        },
+        "canDo": "Distinguish the message from the carrier and describe which carrier property each modulation family changes.",
+        "prerequisiteIds": [
+          "C-AM-01"
+        ],
+        "requiredForLab": true,
+        "estMinutes": 10,
+        "assessmentId": "AS-AM-02"
+      },
+      {
+        "id": "C-AM-03",
+        "order": 3,
+        "broadConceptId": "BC-AM-2",
+        "title": {
+          "en": "Conventional AM, envelope and modulation index",
+          "or": "Conventional AM, Envelope ଓ Modulation index"
+        },
+        "canDo": "Interpret the conventional AM envelope and calculate modulation index for a single-tone message.",
+        "prerequisiteIds": [
+          "C-AM-02"
+        ],
+        "requiredForLab": true,
+        "estMinutes": 12,
+        "assessmentId": "AS-AM-03"
+      },
+      {
+        "id": "C-AM-04",
+        "order": 4,
+        "broadConceptId": "BC-AM-2",
+        "title": {
+          "en": "DSB-SC generation and sidebands",
+          "or": "DSB-SC Generation ଓ Sidebands"
+        },
+        "canDo": "Build the DSB-SC product signal and locate the sidebands for a zero-mean single-tone message.",
+        "prerequisiteIds": [
+          "C-AM-03"
+        ],
+        "requiredForLab": true,
+        "estMinutes": 14,
+        "assessmentId": "AS-AM-04"
+      },
+      {
+        "id": "C-AM-05",
+        "order": 5,
+        "broadConceptId": "BC-AM-2",
+        "title": {
+          "en": "SSB and VSB compared with DSB-SC",
+          "or": "DSB-SC ସହିତ SSB ଓ VSB ତୁଳନା"
+        },
+        "canDo": "Compare DSB-SC, SSB and VSB bandwidth and identify what spectrum each transmits.",
+        "prerequisiteIds": [
+          "C-AM-04"
+        ],
+        "requiredForLab": false,
+        "estMinutes": 11,
+        "assessmentId": "AS-AM-05"
+      },
+      {
+        "id": "C-AM-06",
+        "order": 6,
+        "broadConceptId": "BC-AM-3",
+        "title": {
+          "en": "Coherent demodulation and recovery gain",
+          "or": "Coherent demodulation ଓ Recovery gain"
+        },
+        "canDo": "Explain product detection and the gain needed to recover the message under a matched unit-amplitude receiver carrier.",
+        "prerequisiteIds": [
+          "C-AM-04"
+        ],
+        "requiredForLab": true,
+        "estMinutes": 14,
+        "assessmentId": "AS-AM-06"
+      },
+      {
+        "id": "C-AM-07",
+        "order": 7,
+        "broadConceptId": "BC-AM-3",
+        "title": {
+          "en": "Lowpass filtering and waveform comparison",
+          "or": "Lowpass filtering ଓ Waveform ତୁଳନା"
+        },
+        "canDo": "Choose a lowpass stage that retains the message and compare outputs with appropriate allowance for filter response.",
+        "prerequisiteIds": [
+          "C-AM-06"
+        ],
+        "requiredForLab": true,
+        "estMinutes": 12,
+        "assessmentId": "AS-AM-07"
+      },
+      {
+        "id": "C-AM-08",
+        "order": 8,
+        "broadConceptId": "BC-AM-3",
+        "title": {
+          "en": "Carrier mismatch and debugging",
+          "or": "Carrier mismatch ଓ Debugging"
+        },
+        "canDo": "Predict coherent-receiver phase/frequency error effects and correct the responsible model parameter.",
+        "prerequisiteIds": [
+          "C-AM-07"
+        ],
+        "requiredForLab": true,
+        "estMinutes": 12,
+        "assessmentId": "AS-AM-08"
+      },
+      {
+        "id": "C-AM-09",
+        "order": 9,
+        "broadConceptId": "BC-AM-4",
+        "title": {
+          "en": "Frequency modulation and deviation",
+          "or": "Frequency modulation ଓ Deviation"
+        },
+        "canDo": "Identify FM behaviour and estimate single-tone bandwidth using Carson’s rule.",
+        "prerequisiteIds": [
+          "C-AM-02"
+        ],
+        "requiredForLab": false,
+        "estMinutes": 12,
+        "assessmentId": "AS-AM-09"
+      },
+      {
+        "id": "C-AM-10",
+        "order": 10,
+        "broadConceptId": "BC-AM-4",
+        "title": {
+          "en": "Phase modulation and FM–PM distinction",
+          "or": "Phase modulation ଓ FM–PM ତଫାତ"
+        },
+        "canDo": "Distinguish PM from FM and explain the link between phase change and instantaneous frequency.",
+        "prerequisiteIds": [
+          "C-AM-09"
+        ],
+        "requiredForLab": false,
+        "estMinutes": 11,
+        "assessmentId": "AS-AM-10"
+      }
+    ],
+    "chapterAssessmentId": "AS-AM-CHAPTER",
+    "practicalId": "PR-AM-DSB",
+    "review": {
+      "content": "draft",
+      "odia": "draft"
+    }
+  },
+  "lessons": {
+    "C-AM-01": {
+      "conceptId": "C-AM-01",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Amplitude, frequency and phase",
+        "or": "Amplitude, Frequency ଓ Phase"
+      },
+      "keyIdea": {
+        "en": "A sinusoid is x(t)=A sin(2*pi*f*t+phi): A is amplitude, f is frequency in Hz and phi is phase in radians.",
+        "or": "A sinusoid is x(t)=A sin(2*pi*f*t+phi): A is amplitude, f is frequency in Hz and phi is phase in radians."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-01-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "A sinusoid is x(t)=A sin(2*pi*f*t+phi): A is amplitude, f is frequency in Hz and phi is phase in radians.",
+            "or": "ଏକ sinusoid ହେଉଛି x(t)=A sin(2*pi*f*t+phi)। A ହେଉଛି Amplitude, f ହେଉଛି Hz ରେ Frequency ଏବଂ phi ହେଉଛି radian ରେ Phase।"
+          },
+          "termIds": [
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-01-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Amplitude, frequency and phase",
+            "or": "Amplitude, Frequency ଓ Phase"
+          },
+          "body": {
+            "en": "A sinusoidal signal repeats smoothly over time. Amplitude measures its peak size, frequency counts cycles per second, and phase describes its position within a cycle relative to a reference. For x(t)=A sin(2*pi*f*t+phi), time is in seconds, f is in Hz and phi is in radians. The period is T=1/f. A 100 Hz signal therefore repeats every 0.01 s. Some software fields require angular frequency rather than Hz: enter omega=2*pi*f rad/s. Changing amplitude does not itself change frequency. Always read the axis units before comparing waveforms.",
+            "or": "Sinusoidal signal ସମୟ ସହିତ ପୁଣିପୁଣି ସମାନ ଭାବରେ ବଦଳେ। Amplitude ଏହାର ସର୍ବାଧିକ ଆକାର, Frequency ଏକ ସେକେଣ୍ଡରେ କେତେ cycle ହୁଏ, ଏବଂ Phase ଏକ reference ସହିତ cycle ର ସ୍ଥିତି ଦର୍ଶାଏ। Period T=1/f। 100 Hz signal ର Period 0.01 s। Simulink ର time-based Sine Wave block ରେ Frequency ପାଇଁ 2*pi*f rad/s ଦେବାକୁ ପଡ଼େ। Amplitude ବଦଳିଲେ Frequency ଆପେଆପେ ବଦଳେ ନାହିଁ। Waveform ତୁଳନା ପୂର୍ବରୁ axis ର unit ଦେଖନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-01-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Set a 100 Hz message source using Frequency = 2*pi*100 rad/s; inspect one cycle lasting 10 ms.",
+            "or": "100 Hz message source ପାଇଁ Frequency = 2*pi*100 rad/s ଦିଅନ୍ତୁ। Scope ରେ ଏକ cycle ର ସମୟ 10 ms କି ନାହିଁ ଦେଖନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-01-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Peak size: amplitude. Cycles per second: frequency. Relative timing: phase. Convert Hz using 2*pi*f.",
+            "or": "ସର୍ବାଧିକ ଆକାର: Amplitude। ପ୍ରତି ସେକେଣ୍ଡ cycle: Frequency। Reference ସହିତ ସ୍ଥିତି: Phase। Hz ରୁ rad/s ପାଇଁ 2*pi*f।"
+          },
+          "termIds": [
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Amplitude, frequency and phase in a model",
+          "or": "Amplitude, Frequency ଓ Phase — Model ରେ"
+        },
+        "scenario": {
+          "en": "Set a 100 Hz message source using Frequency = 2*pi*100 rad/s; inspect one cycle lasting 10 ms.",
+          "or": "100 Hz message source ପାଇଁ Frequency = 2*pi*100 rad/s ଦିଅନ୍ତୁ। Scope ରେ ଏକ cycle ର ସମୟ 10 ms କି ନାହିଁ ଦେଖନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Peak size: amplitude. Cycles per second: frequency. Relative timing: phase. Convert Hz using 2*pi*f.",
+          "or": "ସର୍ବାଧିକ ଆକାର: Amplitude। ପ୍ରତି ସେକେଣ୍ଡ cycle: Frequency। Reference ସହିତ ସ୍ଥିତି: Phase। Hz ରୁ rad/s ପାଇଁ 2*pi*f।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-01"
+    },
+    "C-AM-02": {
+      "conceptId": "C-AM-02",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Message, carrier and the purpose of modulation",
+        "or": "Message, Carrier ଓ Modulation ର ଉଦ୍ଦେଶ୍ୟ"
+      },
+      "keyIdea": {
+        "en": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver.",
+        "or": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-02-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver.",
+            "or": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବାକୁ Modulation କୁହାଯାଏ। Receiver ରେ message ଫେରାଇବାକୁ Demodulation କୁହାଯାଏ।"
+          },
+          "termIds": [
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-02-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Message, carrier and the purpose of modulation",
+            "or": "Message, Carrier ଓ Modulation ର ଉଦ୍ଦେଶ୍ୟ"
+          },
+          "body": {
+            "en": "The message signal contains the information we want to convey. The carrier is a reference oscillation used to place that information into a suitable transmission frequency range. Modulation changes a property of the carrier according to the message. Amplitude modulation changes its amplitude, while angle modulation changes frequency or phase. Demodulation is the corresponding recovery process at the receiver. In our teaching model, the message is a 100 Hz sinusoid and the carrier is 2000 Hz. These are chosen laboratory values, not a claim about radio broadcast frequencies. A carrier alone does not contain the selected message.",
+            "or": "Message signal ରେ ଆମେ ପଠାଇବାକୁ ଚାହୁଁଥିବା ତଥ୍ୟ ଥାଏ। Carrier ଏକ reference oscillation, ଯାହା message କୁ ଉପଯୁକ୍ତ transmission frequency ନିକଟକୁ ନେବାରେ ସାହାଯ୍ୟ କରେ। Modulation ରେ message ଅନୁସାରେ Carrier ର Amplitude, Frequency କିମ୍ବା Phase ବଦଳେ। Receiver ରେ ତଥ୍ୟ ଫେରାଇବା ପ୍ରକ୍ରିୟା ହେଉଛି Demodulation। ଏହି lab ରେ message 100 Hz ଏବଂ carrier 2000 Hz ରଖିବା। ଏଗୁଡ଼ିକ ଶିକ୍ଷା ପାଇଁ ବାଛିଥିବା ମୂଲ୍ୟ। କେବଳ Carrier ରେ ନିର୍ଦ୍ଦିଷ୍ଟ message ଥାଏ ନାହିଁ।"
+          },
+          "termIds": [
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-02-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Label the two sources Message and Carrier before connecting them; identify which waveform carries information.",
+            "or": "ଦୁଇଟି source କୁ Message ଓ Carrier ନାମ ଦିଅନ୍ତୁ। କେଉଁ waveform ରେ ତଥ୍ୟ ଅଛି ଚିହ୍ନଟ କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-02-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Message is information; carrier is a reference; modulation prepares transmission; demodulation recovers information.",
+            "or": "Message ରେ ତଥ୍ୟ ଥାଏ; Carrier reference ଅଟେ; Modulation transmission ପାଇଁ ପ୍ରସ୍ତୁତ କରେ; Demodulation ତଥ୍ୟ ଫେରାଏ।"
+          },
+          "termIds": [
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Message, carrier and the purpose of modulation in a model",
+          "or": "Message, Carrier ଓ Modulation ର ଉଦ୍ଦେଶ୍ୟ — Model ରେ"
+        },
+        "scenario": {
+          "en": "Label the two sources Message and Carrier before connecting them; identify which waveform carries information.",
+          "or": "ଦୁଇଟି source କୁ Message ଓ Carrier ନାମ ଦିଅନ୍ତୁ। କେଉଁ waveform ରେ ତଥ୍ୟ ଅଛି ଚିହ୍ନଟ କରନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Message is information; carrier is a reference; modulation prepares transmission; demodulation recovers information.",
+          "or": "Message ରେ ତଥ୍ୟ ଥାଏ; Carrier reference ଅଟେ; Modulation transmission ପାଇଁ ପ୍ରସ୍ତୁତ କରେ; Demodulation ତଥ୍ୟ ଫେରାଏ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-02"
+    },
+    "C-AM-03": {
+      "conceptId": "C-AM-03",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Conventional AM, envelope and modulation index",
+        "or": "Conventional AM, Envelope ଓ Modulation index"
+      },
+      "keyIdea": {
+        "en": "For a single tone, conventional AM is s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t).",
+        "or": "For a single tone, conventional AM is s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t)."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-03-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "For a single tone, conventional AM is s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t).",
+            "or": "ଏକ single-tone message ପାଇଁ Conventional AM ହେଉଛି s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t)।"
+          },
+          "termIds": [
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-03-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Conventional AM, envelope and modulation index",
+            "or": "Conventional AM, Envelope ଓ Modulation index"
+          },
+          "body": {
+            "en": "Conventional AM retains a carrier component and varies the surrounding envelope with the message. For a normalised single-tone message, s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t), where mu is the modulation index. An envelope detector can follow the message when the envelope stays non-negative and its time constant is suitable. With 0<=mu<=1, the envelope does not cross zero; mu>1 causes overmodulation and distorts simple envelope recovery. If the envelope extrema are Emax and Emin, mu=(Emax-Emin)/(Emax+Emin). This envelope rule applies to conventional AM; it must not be applied blindly to DSB-SC.",
+            "or": "Conventional AM ରେ Carrier component ରହେ ଏବଂ Envelope message ଅନୁସାରେ ବଦଳେ। Normalised single-tone message ପାଇଁ mu ହେଉଛି Modulation index। 0<=mu<=1 ହେଲେ Envelope ଶୂନ୍ୟକୁ ଅତିକ୍ରମ କରେ ନାହିଁ। mu>1 ହେଲେ Overmodulation ହୁଏ ଏବଂ ସରଳ Envelope detector ରେ message ବିକୃତ ହୋଇପାରେ। Envelope ର ସର୍ବାଧିକ ଓ ସର୍ବନିମ୍ନ ମୂଲ୍ୟରୁ mu=(Emax-Emin)/(Emax+Emin) ମିଳେ। ଏହି Envelope ନିୟମ Conventional AM ପାଇଁ; DSB-SC ରେ ସିଧାସଳଖ ଲାଗୁ କରିବା ଠିକ ନୁହେଁ।"
+          },
+          "termIds": [
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-03-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Use an envelope comparison to distinguish conventional AM from our suppressed-carrier lab waveform.",
+            "or": "Envelope ତୁଳନା କରି Conventional AM ଓ lab ର suppressed-carrier waveform ମଧ୍ୟରେ ତଫାତ ବୁଝନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-03-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Conventional AM includes carrier plus sidebands. For ordinary envelope recovery, keep mu at or below one.",
+            "or": "Conventional AM ରେ Carrier ଓ Sidebands ରହେ। ସରଳ Envelope recovery ପାଇଁ mu କୁ 1 କିମ୍ବା ତାଠାରୁ କମ ରଖନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-03-1",
+          "term": "amplitude modulation",
+          "definition": "Representing a message through changes in carrier amplitude.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier amplitude ବଦଳାଇବା।",
+          "example": {
+            "en": "Conventional amplitude modulation retains a carrier component.",
+            "or": "Conventional Amplitude modulation ରେ Carrier component ରହେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-2",
+          "term": "envelope",
+          "definition": "A curve following the local peaks of a waveform.",
+          "pronunciationOr": "ଏନ୍ଭେଲୋପ୍",
+          "glossOr": "Waveform ର Peak ଗୁଡ଼ିକୁ ଅନୁସରୁଥିବା ବାହାର ରେଖା।",
+          "example": {
+            "en": "An envelope detector follows the local peaks of conventional AM.",
+            "or": "Envelope detector Conventional AM ର local Peak ଅନୁସରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-3",
+          "term": "modulation index",
+          "definition": "A dimensionless measure of modulation depth; its definition depends on the modulation method.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍ ଇଣ୍ଡେକ୍ସ",
+          "glossOr": "Modulation ର ପରିମାଣ ଦର୍ଶାଉଥିବା ଅନୁପାତ।",
+          "example": {
+            "en": "An envelope from 2 V to 6 V has modulation index 0.5.",
+            "or": "2 V ରୁ 6 V Envelope ପାଇଁ Modulation index 0.5।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Conventional AM, envelope and modulation index in a model",
+          "or": "Conventional AM, Envelope ଓ Modulation index — Model ରେ"
+        },
+        "scenario": {
+          "en": "Use an envelope comparison to distinguish conventional AM from our suppressed-carrier lab waveform.",
+          "or": "Envelope ତୁଳନା କରି Conventional AM ଓ lab ର suppressed-carrier waveform ମଧ୍ୟରେ ତଫାତ ବୁଝନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Conventional AM includes carrier plus sidebands. For ordinary envelope recovery, keep mu at or below one.",
+          "or": "Conventional AM ରେ Carrier ଓ Sidebands ରହେ। ସରଳ Envelope recovery ପାଇଁ mu କୁ 1 କିମ୍ବା ତାଠାରୁ କମ ରଖନ୍ତୁ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-03"
+    },
+    "C-AM-04": {
+      "conceptId": "C-AM-04",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "DSB-SC generation and sidebands",
+        "or": "DSB-SC Generation ଓ Sidebands"
+      },
+      "keyIdea": {
+        "en": "DSB-SC is s(t)=Ac*m(t)*cos(2*pi*fc*t); a zero-mean single-tone message produces sidebands at fc-fm and fc+fm.",
+        "or": "DSB-SC is s(t)=Ac*m(t)*cos(2*pi*fc*t); a zero-mean single-tone message produces sidebands at fc-fm and fc+fm."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-04-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "DSB-SC is s(t)=Ac*m(t)*cos(2*pi*fc*t); a zero-mean single-tone message produces sidebands at fc-fm and fc+fm.",
+            "or": "DSB-SC ହେଉଛି s(t)=Ac*m(t)*cos(2*pi*fc*t)। Zero-mean single-tone message ପାଇଁ Sidebands fc-fm ଓ fc+fm ରେ ହୁଏ।"
+          },
+          "termIds": [
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-04-concept",
+          "kind": "concept",
+          "title": {
+            "en": "DSB-SC generation and sidebands",
+            "or": "DSB-SC Generation ଓ Sidebands"
+          },
+          "body": {
+            "en": "DSB-SC is double-sideband suppressed-carrier amplitude modulation. Multiply a zero-mean message by a carrier to produce s(t)=Ac*m(t)*cos(2*pi*fc*t). For a sinusoidal message at fm, the product contains components at fc-fm and fc+fm: the lower and upper sidebands. Unlike conventional AM, no carrier offset is deliberately added. With a zero-mean message, there is no separate spectral carrier line at fc in the ideal model. A message DC offset can reintroduce that line. For fm=100 Hz and fc=2000 Hz, the sidebands are 1900 and 2100 Hz. Suppressed carrier does not mean that the transmitted signal is zero.",
+            "or": "DSB-SC ର ପୂର୍ଣ୍ଣ ନାମ Double-sideband suppressed-carrier amplitude modulation। Zero-mean Message କୁ Carrier ସହିତ ଗୁଣ କଲେ s(t)=Ac*m(t)*cos(2*pi*fc*t) ମିଳେ। Single-tone message ପାଇଁ Lower sideband fc-fm ଏବଂ Upper sideband fc+fm ରେ ହୁଏ। Conventional AM ପରି Carrier offset ଯୋଡ଼ାଯାଏ ନାହିଁ। Ideal zero-mean model ରେ fc ରେ ଅଲଗା Carrier line ନଥାଏ। Message ର DC offset ଥିଲେ ସେହି line ଫେରିପାରେ। fm=100 Hz ଓ fc=2000 Hz ପାଇଁ Sidebands 1900 Hz ଓ 2100 Hz। Suppressed carrier ର ଅର୍ଥ output ଶୂନ୍ୟ ନୁହେଁ।"
+          },
+          "termIds": [
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-04-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Connect Message and Carrier to a Product block; predict 1900 Hz and 2100 Hz sidebands for the chosen sources.",
+            "or": "Message ଓ Carrier କୁ Product block ସହିତ ଯୋଡ଼ନ୍ତୁ। ବାଛିଥିବା source ପାଇଁ Sidebands 1900 Hz ଓ 2100 Hz ହେବ ବୋଲି ଅନୁମାନ କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-04-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Product modulation; two sidebands; no intentional carrier offset; simple envelope detection is insufficient.",
+            "or": "Product ଦ୍ୱାରା Modulation; ଦୁଇଟି Sideband; ଉଦ୍ଦେଶ୍ୟମୂଳକ Carrier offset ନାହିଁ; ସରଳ Envelope detection ଯଥେଷ୍ଟ ନୁହେଁ।"
+          },
+          "termIds": [
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-04-1",
+          "term": "DSB-SC",
+          "definition": "Double-sideband suppressed-carrier amplitude modulation.",
+          "pronunciationOr": "ଡିଏସ୍ବି-ଏସ୍ସି",
+          "glossOr": "ଦୁଇଟି Sideband ଥାଏ ଏବଂ ଅଲଗା Carrier component ଦମିତ ଥାଏ।",
+          "example": {
+            "en": "Our Product modulator generates DSB-SC.",
+            "or": "ଆମ Product modulator DSB-SC ତିଆରି କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-04-2",
+          "term": "sideband",
+          "definition": "A frequency component or band created around the carrier by modulation.",
+          "pronunciationOr": "ସାଇଡ୍ବ୍ୟାଣ୍ଡ୍",
+          "glossOr": "Modulation ଦ୍ୱାରା Carrier ଚାରିପାଖରେ ଉତ୍ପନ୍ନ Frequency ଅଂଶ।",
+          "example": {
+            "en": "The upper sideband is 2100 Hz for our baseline sources.",
+            "or": "ଆମ Baseline source ପାଇଁ Upper sideband 2100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-04-3",
+          "term": "suppressed carrier",
+          "definition": "Absence of an intentionally retained carrier spectral component in the ideal zero-mean model.",
+          "pronunciationOr": "ସପ୍ରେସ୍ଡ୍ କ୍ୟାରିଅର୍",
+          "glossOr": "ଅଲଗା Carrier spectral component କୁ ରଖାଯାଏ ନାହିଁ।",
+          "example": {
+            "en": "A zero-mean message supports the ideal suppressed carrier condition.",
+            "or": "Zero-mean Message ରେ ideal Suppressed carrier ଅବସ୍ଥା ମିଳେ।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-1",
+          "term": "amplitude modulation",
+          "definition": "Representing a message through changes in carrier amplitude.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier amplitude ବଦଳାଇବା।",
+          "example": {
+            "en": "Conventional amplitude modulation retains a carrier component.",
+            "or": "Conventional Amplitude modulation ରେ Carrier component ରହେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-2",
+          "term": "envelope",
+          "definition": "A curve following the local peaks of a waveform.",
+          "pronunciationOr": "ଏନ୍ଭେଲୋପ୍",
+          "glossOr": "Waveform ର Peak ଗୁଡ଼ିକୁ ଅନୁସରୁଥିବା ବାହାର ରେଖା।",
+          "example": {
+            "en": "An envelope detector follows the local peaks of conventional AM.",
+            "or": "Envelope detector Conventional AM ର local Peak ଅନୁସରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-3",
+          "term": "modulation index",
+          "definition": "A dimensionless measure of modulation depth; its definition depends on the modulation method.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍ ଇଣ୍ଡେକ୍ସ",
+          "glossOr": "Modulation ର ପରିମାଣ ଦର୍ଶାଉଥିବା ଅନୁପାତ।",
+          "example": {
+            "en": "An envelope from 2 V to 6 V has modulation index 0.5.",
+            "or": "2 V ରୁ 6 V Envelope ପାଇଁ Modulation index 0.5।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "DSB-SC generation and sidebands in a model",
+          "or": "DSB-SC Generation ଓ Sidebands — Model ରେ"
+        },
+        "scenario": {
+          "en": "Connect Message and Carrier to a Product block; predict 1900 Hz and 2100 Hz sidebands for the chosen sources.",
+          "or": "Message ଓ Carrier କୁ Product block ସହିତ ଯୋଡ଼ନ୍ତୁ। ବାଛିଥିବା source ପାଇଁ Sidebands 1900 Hz ଓ 2100 Hz ହେବ ବୋଲି ଅନୁମାନ କରନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Product modulation; two sidebands; no intentional carrier offset; simple envelope detection is insufficient.",
+          "or": "Product ଦ୍ୱାରା Modulation; ଦୁଇଟି Sideband; ଉଦ୍ଦେଶ୍ୟମୂଳକ Carrier offset ନାହିଁ; ସରଳ Envelope detection ଯଥେଷ୍ଟ ନୁହେଁ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-04"
+    },
+    "C-AM-05": {
+      "conceptId": "C-AM-05",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "SSB and VSB compared with DSB-SC",
+        "or": "DSB-SC ସହିତ SSB ଓ VSB ତୁଳନା"
+      },
+      "keyIdea": {
+        "en": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other.",
+        "or": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-05-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other.",
+            "or": "SSB ଗୋଟିଏ Sideband ପଠାଏ। VSB ଗୋଟିଏ Sideband ସହିତ ଅନ୍ୟଟିର ଏକ ଛୋଟ ଅଂଶ ପଠାଏ।"
+          },
+          "termIds": [
+            "T-AM-05-1",
+            "T-AM-05-2",
+            "T-AM-05-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-05-concept",
+          "kind": "concept",
+          "title": {
+            "en": "SSB and VSB compared with DSB-SC",
+            "or": "DSB-SC ସହିତ SSB ଓ VSB ତୁଳନା"
+          },
+          "body": {
+            "en": "Amplitude-modulation variants differ in which spectral components they transmit. DSB-SC sends both sidebands, requiring bandwidth 2B for a message whose highest frequency is B. SSB sends only one sideband and ideally requires bandwidth B, making better use of a restricted channel. VSB sends one sideband with a small vestige of the other; its bandwidth lies between ideal SSB and full DSB for a comparable message. The vestige eases practical filtering near the carrier. These are spectrum choices, not separate message types. Our lab uses DSB-SC, so SSB and VSB implementation is outside the lab route, although their comparison belongs in this chapter.",
+            "or": "Amplitude modulation ର ପ୍ରକାରଗୁଡ଼ିକ କେଉଁ Spectral component ପଠାଯାଏ ତାହାରେ ଭିନ୍ନ। Message ର ସର୍ବାଧିକ Frequency B ହେଲେ DSB-SC ପାଇଁ Bandwidth 2B। SSB କେବଳ ଗୋଟିଏ Sideband ପଠାଏ, ତେଣୁ ideal Bandwidth B। VSB ଗୋଟିଏ Sideband ସହିତ ଅନ୍ୟଟିର ଛୋଟ ଅଂଶ ପଠାଏ। ସମାନ Message ପାଇଁ ଏହାର Bandwidth SSB ଓ DSB ମଧ୍ୟରେ ରହେ। ଏହି ଛୋଟ ଅଂଶ Carrier ନିକଟରେ practical filtering କୁ ସହଜ କରେ। ଆମ lab DSB-SC ବ୍ୟବହାର କରେ; SSB/VSB ତୁଳନା chapter ରେ ଥିଲେ ମଧ୍ୟ lab ପୂର୍ବରୁ ଆବଶ୍ୟକ ନୁହେଁ।"
+          },
+          "termIds": [
+            "T-AM-05-1",
+            "T-AM-05-2",
+            "T-AM-05-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-05-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Compare spectrum sketches rather than adding an SSB subsystem to the selected DSB-SC experiment.",
+            "or": "Spectrum ଚିତ୍ର ତୁଳନା କରନ୍ତୁ। ବାଛିଥିବା DSB-SC experiment ରେ SSB subsystem ଯୋଡ଼ିବା ଦରକାର ନାହିଁ।"
+          },
+          "termIds": [
+            "T-AM-05-1",
+            "T-AM-05-2",
+            "T-AM-05-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-05-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "For message bandwidth B: DSB-SC uses 2B; ideal SSB uses B; VSB retains a vestige.",
+            "or": "Message bandwidth B ପାଇଁ DSB-SC: 2B; ideal SSB: B; VSB ରେ ଅନ୍ୟ Sideband ର ଛୋଟ ଅଂଶ ରହେ।"
+          },
+          "termIds": [
+            "T-AM-05-1",
+            "T-AM-05-2",
+            "T-AM-05-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-05-1",
+          "term": "SSB",
+          "definition": "Single-sideband amplitude modulation.",
+          "pronunciationOr": "ଏସ୍ଏସ୍ବି",
+          "glossOr": "କେବଳ ଗୋଟିଏ Sideband ପଠାଇବା।",
+          "example": {
+            "en": "SSB uses one of the two sidebands.",
+            "or": "SSB ଦୁଇଟି Sideband ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-05-2",
+          "term": "VSB",
+          "definition": "Vestigial-sideband amplitude modulation.",
+          "pronunciationOr": "ଭିଏସ୍ବି",
+          "glossOr": "ଗୋଟିଏ Sideband ସହିତ ଅନ୍ୟଟିର ଛୋଟ ଅଂଶ ପଠାଇବା।",
+          "example": {
+            "en": "VSB retains a small part of the other sideband.",
+            "or": "VSB ଅନ୍ୟ Sideband ର ଛୋଟ ଅଂଶ ରଖେ।"
+          }
+        },
+        {
+          "id": "T-AM-05-3",
+          "term": "bandwidth",
+          "definition": "The width of a specified frequency range.",
+          "pronunciationOr": "ବ୍ୟାଣ୍ଡ୍ୱିଡ୍ଥ୍",
+          "glossOr": "Signal କିମ୍ବା Channel ର Frequency ପରିସର।",
+          "example": {
+            "en": "A 4 kHz message needs 8 kHz DSB-SC bandwidth.",
+            "or": "4 kHz Message ପାଇଁ DSB-SC Bandwidth 8 kHz।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-1",
+          "term": "amplitude modulation",
+          "definition": "Representing a message through changes in carrier amplitude.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier amplitude ବଦଳାଇବା।",
+          "example": {
+            "en": "Conventional amplitude modulation retains a carrier component.",
+            "or": "Conventional Amplitude modulation ରେ Carrier component ରହେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-2",
+          "term": "envelope",
+          "definition": "A curve following the local peaks of a waveform.",
+          "pronunciationOr": "ଏନ୍ଭେଲୋପ୍",
+          "glossOr": "Waveform ର Peak ଗୁଡ଼ିକୁ ଅନୁସରୁଥିବା ବାହାର ରେଖା।",
+          "example": {
+            "en": "An envelope detector follows the local peaks of conventional AM.",
+            "or": "Envelope detector Conventional AM ର local Peak ଅନୁସରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-3",
+          "term": "modulation index",
+          "definition": "A dimensionless measure of modulation depth; its definition depends on the modulation method.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍ ଇଣ୍ଡେକ୍ସ",
+          "glossOr": "Modulation ର ପରିମାଣ ଦର୍ଶାଉଥିବା ଅନୁପାତ।",
+          "example": {
+            "en": "An envelope from 2 V to 6 V has modulation index 0.5.",
+            "or": "2 V ରୁ 6 V Envelope ପାଇଁ Modulation index 0.5।"
+          }
+        },
+        {
+          "id": "T-AM-04-1",
+          "term": "DSB-SC",
+          "definition": "Double-sideband suppressed-carrier amplitude modulation.",
+          "pronunciationOr": "ଡିଏସ୍ବି-ଏସ୍ସି",
+          "glossOr": "ଦୁଇଟି Sideband ଥାଏ ଏବଂ ଅଲଗା Carrier component ଦମିତ ଥାଏ।",
+          "example": {
+            "en": "Our Product modulator generates DSB-SC.",
+            "or": "ଆମ Product modulator DSB-SC ତିଆରି କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-04-2",
+          "term": "sideband",
+          "definition": "A frequency component or band created around the carrier by modulation.",
+          "pronunciationOr": "ସାଇଡ୍ବ୍ୟାଣ୍ଡ୍",
+          "glossOr": "Modulation ଦ୍ୱାରା Carrier ଚାରିପାଖରେ ଉତ୍ପନ୍ନ Frequency ଅଂଶ।",
+          "example": {
+            "en": "The upper sideband is 2100 Hz for our baseline sources.",
+            "or": "ଆମ Baseline source ପାଇଁ Upper sideband 2100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-04-3",
+          "term": "suppressed carrier",
+          "definition": "Absence of an intentionally retained carrier spectral component in the ideal zero-mean model.",
+          "pronunciationOr": "ସପ୍ରେସ୍ଡ୍ କ୍ୟାରିଅର୍",
+          "glossOr": "ଅଲଗା Carrier spectral component କୁ ରଖାଯାଏ ନାହିଁ।",
+          "example": {
+            "en": "A zero-mean message supports the ideal suppressed carrier condition.",
+            "or": "Zero-mean Message ରେ ideal Suppressed carrier ଅବସ୍ଥା ମିଳେ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "SSB and VSB compared with DSB-SC in a model",
+          "or": "DSB-SC ସହିତ SSB ଓ VSB ତୁଳନା — Model ରେ"
+        },
+        "scenario": {
+          "en": "Compare spectrum sketches rather than adding an SSB subsystem to the selected DSB-SC experiment.",
+          "or": "Spectrum ଚିତ୍ର ତୁଳନା କରନ୍ତୁ। ବାଛିଥିବା DSB-SC experiment ରେ SSB subsystem ଯୋଡ଼ିବା ଦରକାର ନାହିଁ।"
+        },
+        "takeaway": {
+          "en": "For message bandwidth B: DSB-SC uses 2B; ideal SSB uses B; VSB retains a vestige.",
+          "or": "Message bandwidth B ପାଇଁ DSB-SC: 2B; ideal SSB: B; VSB ରେ ଅନ୍ୟ Sideband ର ଛୋଟ ଅଂଶ ରହେ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-05"
+    },
+    "C-AM-06": {
+      "conceptId": "C-AM-06",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Coherent demodulation and recovery gain",
+        "or": "Coherent demodulation ଓ Recovery gain"
+      },
+      "keyIdea": {
+        "en": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes.",
+        "or": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-06-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes.",
+            "or": "DSB-SC କୁ ସମାନ local Carrier ସହିତ ଗୁଣ କରନ୍ତୁ, Lowpass filter ଦିଅନ୍ତୁ ଏବଂ unit Carrier amplitude ପାଇଁ product factor ସୁଧାରିବାକୁ Gain 2 ବ୍ୟବହାର କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-06-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Coherent demodulation and recovery gain",
+            "or": "Coherent demodulation ଓ Recovery gain"
+          },
+          "body": {
+            "en": "A coherent receiver multiplies the DSB-SC signal by a local oscillator matched to the transmitted carrier in frequency and phase. For unit-amplitude carriers, the product is m(t)*cos^2(2*pi*fc*t). Using cos^2(theta)=[1+cos(2*theta)]/2, this contains m(t)/2 plus a high-frequency term around twice the carrier. Lowpass filtering removes that high-frequency term while retaining the message band. A recovery gain of 2 restores the ideal message amplitude when both carrier amplitudes are one. A practical filter can still alter amplitude and phase slightly. Coherent recovery preserves message sign, whereas a simple envelope detector cannot recover a general signed DSB-SC message correctly.",
+            "or": "Coherent receiver ର local oscillator କୁ transmitted Carrier ସହିତ Frequency ଓ Phase ରେ ମେଳାଇବାକୁ ପଡ଼େ। Unit-amplitude Carrier ପାଇଁ product m(t)*cos^2(2*pi*fc*t)। cos^2(theta)=[1+cos(2*theta)]/2 ରୁ m(t)/2 ଏବଂ ଉଚ୍ଚ Frequency ଅଂଶ ମିଳେ। Lowpass filter message band କୁ ରଖି ଉଚ୍ଚ Frequency ଅଂଶ କମାଏ। Carrier amplitude ଦୁଇଟି 1 ହେଲେ Gain 2 ideal message amplitude ଫେରାଏ। Practical filter କିଛି Amplitude ଓ Phase ପରିବର୍ତ୍ତନ କରିପାରେ। Coherent recovery message ର ଚିହ୍ନ ରଖେ; ସରଳ Envelope detector ସାଧାରଣ signed DSB-SC message ଠିକ ଭାବରେ ଫେରାଇପାରେ ନାହିଁ।"
+          },
+          "termIds": [
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-06-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Add a separate Local carrier and receiver Product block; follow it with the filter and recovery Gain.",
+            "or": "ଅଲଗା Local carrier ଓ receiver Product block ରଖନ୍ତୁ। ତାପରେ Filter ଓ Recovery Gain ଯୋଡ଼ନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-06-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Match frequency and phase; multiply; lowpass-filter; account for the half-amplitude factor.",
+            "or": "Frequency ଓ Phase ମେଳାନ୍ତୁ; ଗୁଣ କରନ୍ତୁ; Lowpass filter ଦିଅନ୍ତୁ; ଅଧା Amplitude factor ସୁଧାରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-06-1",
+          "term": "coherent demodulation",
+          "definition": "Message recovery using a frequency- and phase-aligned local carrier.",
+          "pronunciationOr": "କୋହେରେଣ୍ଟ୍ ଡିମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "ମେଳ ଥିବା local Carrier ସହିତ Message ଫେରାଇବା।",
+          "example": {
+            "en": "Coherent demodulation uses a matched receiver carrier.",
+            "or": "Coherent demodulation ରେ matched Receiver carrier ବ୍ୟବହାର ହୁଏ।"
+          }
+        },
+        {
+          "id": "T-AM-06-2",
+          "term": "local oscillator",
+          "definition": "An oscillator supplying a receiver reference signal.",
+          "pronunciationOr": "ଲୋକାଲ୍ ଅସିଲେଟର୍",
+          "glossOr": "Receiver ଭିତରେ Carrier reference ତିଆରି କରୁଥିବା source।",
+          "example": {
+            "en": "The receiver local oscillator has the same baseline frequency and phase as the carrier.",
+            "or": "Receiver ର Local oscillator ର Baseline Frequency ଓ Phase Carrier ସହିତ ସମାନ।"
+          }
+        },
+        {
+          "id": "T-AM-06-3",
+          "term": "recovery gain",
+          "definition": "A scale factor used to correct recovered signal amplitude.",
+          "pronunciationOr": "ରିକଭରି ଗେନ୍",
+          "glossOr": "Recovery ପରେ Message amplitude ସୁଧାରିବାର ଗୁଣକ।",
+          "example": {
+            "en": "Recovery gain two corrects the half-message factor for unit carriers.",
+            "or": "Unit Carrier ପାଇଁ Recovery gain 2 ଅଧା Message factor ସୁଧାରେ।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-1",
+          "term": "amplitude modulation",
+          "definition": "Representing a message through changes in carrier amplitude.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier amplitude ବଦଳାଇବା।",
+          "example": {
+            "en": "Conventional amplitude modulation retains a carrier component.",
+            "or": "Conventional Amplitude modulation ରେ Carrier component ରହେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-2",
+          "term": "envelope",
+          "definition": "A curve following the local peaks of a waveform.",
+          "pronunciationOr": "ଏନ୍ଭେଲୋପ୍",
+          "glossOr": "Waveform ର Peak ଗୁଡ଼ିକୁ ଅନୁସରୁଥିବା ବାହାର ରେଖା।",
+          "example": {
+            "en": "An envelope detector follows the local peaks of conventional AM.",
+            "or": "Envelope detector Conventional AM ର local Peak ଅନୁସରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-3",
+          "term": "modulation index",
+          "definition": "A dimensionless measure of modulation depth; its definition depends on the modulation method.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍ ଇଣ୍ଡେକ୍ସ",
+          "glossOr": "Modulation ର ପରିମାଣ ଦର୍ଶାଉଥିବା ଅନୁପାତ।",
+          "example": {
+            "en": "An envelope from 2 V to 6 V has modulation index 0.5.",
+            "or": "2 V ରୁ 6 V Envelope ପାଇଁ Modulation index 0.5।"
+          }
+        },
+        {
+          "id": "T-AM-04-1",
+          "term": "DSB-SC",
+          "definition": "Double-sideband suppressed-carrier amplitude modulation.",
+          "pronunciationOr": "ଡିଏସ୍ବି-ଏସ୍ସି",
+          "glossOr": "ଦୁଇଟି Sideband ଥାଏ ଏବଂ ଅଲଗା Carrier component ଦମିତ ଥାଏ।",
+          "example": {
+            "en": "Our Product modulator generates DSB-SC.",
+            "or": "ଆମ Product modulator DSB-SC ତିଆରି କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-04-2",
+          "term": "sideband",
+          "definition": "A frequency component or band created around the carrier by modulation.",
+          "pronunciationOr": "ସାଇଡ୍ବ୍ୟାଣ୍ଡ୍",
+          "glossOr": "Modulation ଦ୍ୱାରା Carrier ଚାରିପାଖରେ ଉତ୍ପନ୍ନ Frequency ଅଂଶ।",
+          "example": {
+            "en": "The upper sideband is 2100 Hz for our baseline sources.",
+            "or": "ଆମ Baseline source ପାଇଁ Upper sideband 2100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-04-3",
+          "term": "suppressed carrier",
+          "definition": "Absence of an intentionally retained carrier spectral component in the ideal zero-mean model.",
+          "pronunciationOr": "ସପ୍ରେସ୍ଡ୍ କ୍ୟାରିଅର୍",
+          "glossOr": "ଅଲଗା Carrier spectral component କୁ ରଖାଯାଏ ନାହିଁ।",
+          "example": {
+            "en": "A zero-mean message supports the ideal suppressed carrier condition.",
+            "or": "Zero-mean Message ରେ ideal Suppressed carrier ଅବସ୍ଥା ମିଳେ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Coherent demodulation and recovery gain in a model",
+          "or": "Coherent demodulation ଓ Recovery gain — Model ରେ"
+        },
+        "scenario": {
+          "en": "Add a separate Local carrier and receiver Product block; follow it with the filter and recovery Gain.",
+          "or": "ଅଲଗା Local carrier ଓ receiver Product block ରଖନ୍ତୁ। ତାପରେ Filter ଓ Recovery Gain ଯୋଡ଼ନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Match frequency and phase; multiply; lowpass-filter; account for the half-amplitude factor.",
+          "or": "Frequency ଓ Phase ମେଳାନ୍ତୁ; ଗୁଣ କରନ୍ତୁ; Lowpass filter ଦିଅନ୍ତୁ; ଅଧା Amplitude factor ସୁଧାରନ୍ତୁ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-06"
+    },
+    "C-AM-07": {
+      "conceptId": "C-AM-07",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Lowpass filtering and waveform comparison",
+        "or": "Lowpass filtering ଓ Waveform ତୁଳନା"
+      },
+      "keyIdea": {
+        "en": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components.",
+        "or": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-07-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components.",
+            "or": "Lowpass filter କମ Frequency ଅଂଶକୁ ରଖେ ଓ ଉଚ୍ଚ Frequency ଅଂଶକୁ କମାଏ।"
+          },
+          "termIds": [
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-07-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Lowpass filtering and waveform comparison",
+            "or": "Lowpass filtering ଓ Waveform ତୁଳନା"
+          },
+          "body": {
+            "en": "A lowpass filter is the separation stage after product detection. Its useful passband must include the message frequencies while its attenuation rejects the components near twice the carrier. Our bounded model uses a 100 Hz message, a 2000 Hz carrier and a second-order Butterworth lowpass with 500 Hz cutoff. In a continuous Transfer Fcn block, H(s)=wc^2/(s^2+sqrt(2)*wc*s+wc^2), where wc=2*pi*500 rad/s. This filter does not remove every unwanted component perfectly. It introduces a startup transient and frequency-dependent phase lag. Compare the recovered signal after startup, checking frequency and amplitude while allowing the predicted phase shift rather than demanding an identical trace.",
+            "or": "Product detection ପରେ Lowpass filter message frequency କୁ ରଖେ ଏବଂ ପ୍ରାୟ ଦୁଇଗୁଣ Carrier frequency ନିକଟର ଅଂଶ କମାଏ। ଆମ model ରେ Message 100 Hz, Carrier 2000 Hz ଓ second-order Butterworth filter ର Cutoff frequency 500 Hz। wc=2*pi*500 rad/s ଏବଂ H(s)=wc^2/(s^2+sqrt(2)*wc*s+wc^2)। ଏହା ସମସ୍ତ unwanted component ସମ୍ପୂର୍ଣ୍ଣ ହଟାଏ ନାହିଁ। ଆରମ୍ଭରେ transient ଏବଂ ପରେ Phase lag ଥାଏ। Startup ପରେ output ତୁଳନା କରନ୍ତୁ। Frequency ଓ Amplitude ଯାଞ୍ଚ କରିବା ସହିତ Filter ର Phase lag କୁ ଧ୍ୟାନରେ ରଖନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-07-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Enter the lowpass coefficients, run the model, and compare steady-state recovered amplitude and frequency.",
+            "or": "Lowpass coefficient ଦିଅନ୍ତୁ, model ଚଲାନ୍ତୁ ଏବଂ steady-state recovered Amplitude ଓ Frequency ତୁଳନା କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-07-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Retain message frequencies; suppress the doubled-carrier image; expect finite attenuation and phase lag.",
+            "or": "Message frequency ରଖନ୍ତୁ; doubled-carrier image କମାନ୍ତୁ; finite attenuation ଓ Phase lag ଆଶା କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-07-1",
+          "term": "lowpass filter",
+          "definition": "A filter that retains lower frequencies and attenuates higher frequencies.",
+          "pronunciationOr": "ଲୋପାସ୍ ଫିଲ୍ଟର୍",
+          "glossOr": "କମ Frequency ରଖି ଉଚ୍ଚ Frequency କମାଉଥିବା Filter।",
+          "example": {
+            "en": "The lowpass filter largely retains our 100 Hz message.",
+            "or": "Lowpass filter ଆମ 100 Hz Message କୁ ପ୍ରାୟ ରଖେ।"
+          }
+        },
+        {
+          "id": "T-AM-07-2",
+          "term": "cutoff frequency",
+          "definition": "A specified frequency marking a filter response boundary; for this Butterworth filter, the minus-3-dB point.",
+          "pronunciationOr": "କଟ୍ଅଫ୍ ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "Filter response ର ନିର୍ଦ୍ଦିଷ୍ଟ transition reference frequency।",
+          "example": {
+            "en": "The baseline cutoff frequency is 500 Hz.",
+            "or": "Baseline Cutoff frequency 500 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-07-3",
+          "term": "phase lag",
+          "definition": "An output phase shift behind its input at a particular frequency.",
+          "pronunciationOr": "ଫେଜ୍ ଲ୍ୟାଗ୍",
+          "glossOr": "Input ସହିତ ତୁଳନାରେ Output phase ପଛରେ ରହିବା।",
+          "example": {
+            "en": "The recovered waveform has a small phase lag from the filter.",
+            "or": "Filter ଯୋଗୁଁ Recovered waveform ରେ ଛୋଟ Phase lag ଥାଏ।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-1",
+          "term": "amplitude modulation",
+          "definition": "Representing a message through changes in carrier amplitude.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier amplitude ବଦଳାଇବା।",
+          "example": {
+            "en": "Conventional amplitude modulation retains a carrier component.",
+            "or": "Conventional Amplitude modulation ରେ Carrier component ରହେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-2",
+          "term": "envelope",
+          "definition": "A curve following the local peaks of a waveform.",
+          "pronunciationOr": "ଏନ୍ଭେଲୋପ୍",
+          "glossOr": "Waveform ର Peak ଗୁଡ଼ିକୁ ଅନୁସରୁଥିବା ବାହାର ରେଖା।",
+          "example": {
+            "en": "An envelope detector follows the local peaks of conventional AM.",
+            "or": "Envelope detector Conventional AM ର local Peak ଅନୁସରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-3",
+          "term": "modulation index",
+          "definition": "A dimensionless measure of modulation depth; its definition depends on the modulation method.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍ ଇଣ୍ଡେକ୍ସ",
+          "glossOr": "Modulation ର ପରିମାଣ ଦର୍ଶାଉଥିବା ଅନୁପାତ।",
+          "example": {
+            "en": "An envelope from 2 V to 6 V has modulation index 0.5.",
+            "or": "2 V ରୁ 6 V Envelope ପାଇଁ Modulation index 0.5।"
+          }
+        },
+        {
+          "id": "T-AM-04-1",
+          "term": "DSB-SC",
+          "definition": "Double-sideband suppressed-carrier amplitude modulation.",
+          "pronunciationOr": "ଡିଏସ୍ବି-ଏସ୍ସି",
+          "glossOr": "ଦୁଇଟି Sideband ଥାଏ ଏବଂ ଅଲଗା Carrier component ଦମିତ ଥାଏ।",
+          "example": {
+            "en": "Our Product modulator generates DSB-SC.",
+            "or": "ଆମ Product modulator DSB-SC ତିଆରି କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-04-2",
+          "term": "sideband",
+          "definition": "A frequency component or band created around the carrier by modulation.",
+          "pronunciationOr": "ସାଇଡ୍ବ୍ୟାଣ୍ଡ୍",
+          "glossOr": "Modulation ଦ୍ୱାରା Carrier ଚାରିପାଖରେ ଉତ୍ପନ୍ନ Frequency ଅଂଶ।",
+          "example": {
+            "en": "The upper sideband is 2100 Hz for our baseline sources.",
+            "or": "ଆମ Baseline source ପାଇଁ Upper sideband 2100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-04-3",
+          "term": "suppressed carrier",
+          "definition": "Absence of an intentionally retained carrier spectral component in the ideal zero-mean model.",
+          "pronunciationOr": "ସପ୍ରେସ୍ଡ୍ କ୍ୟାରିଅର୍",
+          "glossOr": "ଅଲଗା Carrier spectral component କୁ ରଖାଯାଏ ନାହିଁ।",
+          "example": {
+            "en": "A zero-mean message supports the ideal suppressed carrier condition.",
+            "or": "Zero-mean Message ରେ ideal Suppressed carrier ଅବସ୍ଥା ମିଳେ।"
+          }
+        },
+        {
+          "id": "T-AM-06-1",
+          "term": "coherent demodulation",
+          "definition": "Message recovery using a frequency- and phase-aligned local carrier.",
+          "pronunciationOr": "କୋହେରେଣ୍ଟ୍ ଡିମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "ମେଳ ଥିବା local Carrier ସହିତ Message ଫେରାଇବା।",
+          "example": {
+            "en": "Coherent demodulation uses a matched receiver carrier.",
+            "or": "Coherent demodulation ରେ matched Receiver carrier ବ୍ୟବହାର ହୁଏ।"
+          }
+        },
+        {
+          "id": "T-AM-06-2",
+          "term": "local oscillator",
+          "definition": "An oscillator supplying a receiver reference signal.",
+          "pronunciationOr": "ଲୋକାଲ୍ ଅସିଲେଟର୍",
+          "glossOr": "Receiver ଭିତରେ Carrier reference ତିଆରି କରୁଥିବା source।",
+          "example": {
+            "en": "The receiver local oscillator has the same baseline frequency and phase as the carrier.",
+            "or": "Receiver ର Local oscillator ର Baseline Frequency ଓ Phase Carrier ସହିତ ସମାନ।"
+          }
+        },
+        {
+          "id": "T-AM-06-3",
+          "term": "recovery gain",
+          "definition": "A scale factor used to correct recovered signal amplitude.",
+          "pronunciationOr": "ରିକଭରି ଗେନ୍",
+          "glossOr": "Recovery ପରେ Message amplitude ସୁଧାରିବାର ଗୁଣକ।",
+          "example": {
+            "en": "Recovery gain two corrects the half-message factor for unit carriers.",
+            "or": "Unit Carrier ପାଇଁ Recovery gain 2 ଅଧା Message factor ସୁଧାରେ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Lowpass filtering and waveform comparison in a model",
+          "or": "Lowpass filtering ଓ Waveform ତୁଳନା — Model ରେ"
+        },
+        "scenario": {
+          "en": "Enter the lowpass coefficients, run the model, and compare steady-state recovered amplitude and frequency.",
+          "or": "Lowpass coefficient ଦିଅନ୍ତୁ, model ଚଲାନ୍ତୁ ଏବଂ steady-state recovered Amplitude ଓ Frequency ତୁଳନା କରନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Retain message frequencies; suppress the doubled-carrier image; expect finite attenuation and phase lag.",
+          "or": "Message frequency ରଖନ୍ତୁ; doubled-carrier image କମାନ୍ତୁ; finite attenuation ଓ Phase lag ଆଶା କରନ୍ତୁ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-07"
+    },
+    "C-AM-08": {
+      "conceptId": "C-AM-08",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Carrier mismatch and debugging",
+        "or": "Carrier mismatch ଓ Debugging"
+      },
+      "keyIdea": {
+        "en": "With frequency matched and unit carrier amplitudes, ideal gain-corrected recovery is m(t)*cos(phi), where phi is relative phase error.",
+        "or": "With frequency matched and unit carrier amplitudes, ideal gain-corrected recovery is m(t)*cos(phi), where phi is relative phase error."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-08-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "With frequency matched and unit carrier amplitudes, ideal gain-corrected recovery is m(t)*cos(phi), where phi is relative phase error.",
+            "or": "Frequency ମେଳିଥିଲେ ଓ unit Carrier amplitude ପାଇଁ ideal gain-corrected recovery m(t)*cos(phi), ଯେଉଁଠି phi ହେଉଛି relative Phase error।"
+          },
+          "termIds": [
+            "T-AM-08-1",
+            "T-AM-08-2",
+            "T-AM-08-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-08-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Carrier mismatch and debugging",
+            "or": "Carrier mismatch ଓ Debugging"
+          },
+          "body": {
+            "en": "Carrier mismatch is a receiver alignment problem, not automatically a failed transmitter. With equal carrier frequencies, a relative phase error phi scales the ideal recovered message by cos(phi) after gain correction. A 60 degree error leaves half amplitude; a 90 degree error suppresses the ideal message-band component. A finite filter can leave residual high-frequency ripple, so the observed trace need not be perfectly zero. A frequency mismatch adds a time-varying factor and can create a beating or distorted recovered waveform. Inspect the transmitter first, then compare the local oscillator frequency and phase with the carrier before changing unrelated blocks.",
+            "or": "Carrier mismatch receiver ର alignment ସମସ୍ୟା ହୋଇପାରେ; ତେଣୁ transmitter ଖରାପ ବୋଲି ସିଧାସଳଖ ଧରନ୍ତୁ ନାହିଁ। Frequency ସମାନ ହେଲେ relative Phase error phi ଦ୍ୱାରା ideal recovered message ର Amplitude cos(phi) ଗୁଣ ହୁଏ। 60 degree error ରେ ଅଧା Amplitude ରହେ। 90 degree error ରେ ideal message-band ଅଂଶ କମି ଶୂନ୍ୟ ହୁଏ; finite Filter ପାଇଁ କିଛି high-frequency Ripple ରହିପାରେ। Frequency mismatch ରେ recovery ସମୟ ସହିତ ବଦଳିପାରେ। ପ୍ରଥମେ transmitter ଦେଖନ୍ତୁ, ତାପରେ Local oscillator ର Frequency ଓ Phase ମେଳାନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-08-1",
+            "T-AM-08-2",
+            "T-AM-08-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-08-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Change only the receiver phase by 90 degrees, inspect recovery, then restore the baseline and rerun.",
+            "or": "କେବଳ Receiver phase କୁ 90 degree ବଦଳାନ୍ତୁ। Recovery ଦେଖି baseline Phase ଫେରାଇ ପୁଣି ଚଲାନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-08-1",
+            "T-AM-08-2",
+            "T-AM-08-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-08-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "Relative phase matters. Frequency mismatch can create beating. Diagnose one parameter at a time.",
+            "or": "Relative Phase ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। Frequency mismatch ରେ beating ହୋଇପାରେ। ଏକ ସମୟରେ ଗୋଟିଏ Parameter ଯାଞ୍ଚ କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-08-1",
+            "T-AM-08-2",
+            "T-AM-08-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-03-1",
+            "T-AM-03-2",
+            "T-AM-03-3",
+            "T-AM-04-1",
+            "T-AM-04-2",
+            "T-AM-04-3",
+            "T-AM-06-1",
+            "T-AM-06-2",
+            "T-AM-06-3",
+            "T-AM-07-1",
+            "T-AM-07-2",
+            "T-AM-07-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-08-1",
+          "term": "phase error",
+          "definition": "Relative phase mismatch between receiver and transmitter carriers.",
+          "pronunciationOr": "ଫେଜ୍ ଏରର୍",
+          "glossOr": "ଦୁଇ Carrier ମଧ୍ୟରେ ଆବଶ୍ୟକ ମେଳଠାରୁ Phase ତଫାତ।",
+          "example": {
+            "en": "A 90-degree relative phase error suppresses the ideal recovered message.",
+            "or": "90-degree relative Phase error ideal Recovered message କୁ କମାଏ।"
+          }
+        },
+        {
+          "id": "T-AM-08-2",
+          "term": "frequency mismatch",
+          "definition": "A difference between receiver and transmitter carrier frequencies.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି ମିସ୍ମ୍ୟାଚ୍",
+          "glossOr": "Receiver ଓ Transmitter carrier frequency ଅଲଗା ହେବା।",
+          "example": {
+            "en": "A 2010 Hz receiver creates frequency mismatch with a 2000 Hz transmitter.",
+            "or": "2010 Hz Receiver ଓ 2000 Hz Transmitter ମଧ୍ୟରେ Frequency mismatch ହୁଏ।"
+          }
+        },
+        {
+          "id": "T-AM-08-3",
+          "term": "beating",
+          "definition": "A varying signal envelope caused by interaction of nearby frequencies.",
+          "pronunciationOr": "ବିଟିଙ୍ଗ୍",
+          "glossOr": "Frequency ତଫାତ ଯୋଗୁଁ Signal amplitude ର ସମୟଭିତ୍ତିକ ପରିବର୍ତ୍ତନ।",
+          "example": {
+            "en": "That 10 Hz mismatch produces time-varying beating.",
+            "or": "ସେହି 10 Hz Mismatch ସମୟ ସହିତ ବଦଳୁଥିବା Beating ଆଣେ।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-1",
+          "term": "amplitude modulation",
+          "definition": "Representing a message through changes in carrier amplitude.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier amplitude ବଦଳାଇବା।",
+          "example": {
+            "en": "Conventional amplitude modulation retains a carrier component.",
+            "or": "Conventional Amplitude modulation ରେ Carrier component ରହେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-2",
+          "term": "envelope",
+          "definition": "A curve following the local peaks of a waveform.",
+          "pronunciationOr": "ଏନ୍ଭେଲୋପ୍",
+          "glossOr": "Waveform ର Peak ଗୁଡ଼ିକୁ ଅନୁସରୁଥିବା ବାହାର ରେଖା।",
+          "example": {
+            "en": "An envelope detector follows the local peaks of conventional AM.",
+            "or": "Envelope detector Conventional AM ର local Peak ଅନୁସରେ।"
+          }
+        },
+        {
+          "id": "T-AM-03-3",
+          "term": "modulation index",
+          "definition": "A dimensionless measure of modulation depth; its definition depends on the modulation method.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍ ଇଣ୍ଡେକ୍ସ",
+          "glossOr": "Modulation ର ପରିମାଣ ଦର୍ଶାଉଥିବା ଅନୁପାତ।",
+          "example": {
+            "en": "An envelope from 2 V to 6 V has modulation index 0.5.",
+            "or": "2 V ରୁ 6 V Envelope ପାଇଁ Modulation index 0.5।"
+          }
+        },
+        {
+          "id": "T-AM-04-1",
+          "term": "DSB-SC",
+          "definition": "Double-sideband suppressed-carrier amplitude modulation.",
+          "pronunciationOr": "ଡିଏସ୍ବି-ଏସ୍ସି",
+          "glossOr": "ଦୁଇଟି Sideband ଥାଏ ଏବଂ ଅଲଗା Carrier component ଦମିତ ଥାଏ।",
+          "example": {
+            "en": "Our Product modulator generates DSB-SC.",
+            "or": "ଆମ Product modulator DSB-SC ତିଆରି କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-04-2",
+          "term": "sideband",
+          "definition": "A frequency component or band created around the carrier by modulation.",
+          "pronunciationOr": "ସାଇଡ୍ବ୍ୟାଣ୍ଡ୍",
+          "glossOr": "Modulation ଦ୍ୱାରା Carrier ଚାରିପାଖରେ ଉତ୍ପନ୍ନ Frequency ଅଂଶ।",
+          "example": {
+            "en": "The upper sideband is 2100 Hz for our baseline sources.",
+            "or": "ଆମ Baseline source ପାଇଁ Upper sideband 2100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-04-3",
+          "term": "suppressed carrier",
+          "definition": "Absence of an intentionally retained carrier spectral component in the ideal zero-mean model.",
+          "pronunciationOr": "ସପ୍ରେସ୍ଡ୍ କ୍ୟାରିଅର୍",
+          "glossOr": "ଅଲଗା Carrier spectral component କୁ ରଖାଯାଏ ନାହିଁ।",
+          "example": {
+            "en": "A zero-mean message supports the ideal suppressed carrier condition.",
+            "or": "Zero-mean Message ରେ ideal Suppressed carrier ଅବସ୍ଥା ମିଳେ।"
+          }
+        },
+        {
+          "id": "T-AM-06-1",
+          "term": "coherent demodulation",
+          "definition": "Message recovery using a frequency- and phase-aligned local carrier.",
+          "pronunciationOr": "କୋହେରେଣ୍ଟ୍ ଡିମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "ମେଳ ଥିବା local Carrier ସହିତ Message ଫେରାଇବା।",
+          "example": {
+            "en": "Coherent demodulation uses a matched receiver carrier.",
+            "or": "Coherent demodulation ରେ matched Receiver carrier ବ୍ୟବହାର ହୁଏ।"
+          }
+        },
+        {
+          "id": "T-AM-06-2",
+          "term": "local oscillator",
+          "definition": "An oscillator supplying a receiver reference signal.",
+          "pronunciationOr": "ଲୋକାଲ୍ ଅସିଲେଟର୍",
+          "glossOr": "Receiver ଭିତରେ Carrier reference ତିଆରି କରୁଥିବା source।",
+          "example": {
+            "en": "The receiver local oscillator has the same baseline frequency and phase as the carrier.",
+            "or": "Receiver ର Local oscillator ର Baseline Frequency ଓ Phase Carrier ସହିତ ସମାନ।"
+          }
+        },
+        {
+          "id": "T-AM-06-3",
+          "term": "recovery gain",
+          "definition": "A scale factor used to correct recovered signal amplitude.",
+          "pronunciationOr": "ରିକଭରି ଗେନ୍",
+          "glossOr": "Recovery ପରେ Message amplitude ସୁଧାରିବାର ଗୁଣକ।",
+          "example": {
+            "en": "Recovery gain two corrects the half-message factor for unit carriers.",
+            "or": "Unit Carrier ପାଇଁ Recovery gain 2 ଅଧା Message factor ସୁଧାରେ।"
+          }
+        },
+        {
+          "id": "T-AM-07-1",
+          "term": "lowpass filter",
+          "definition": "A filter that retains lower frequencies and attenuates higher frequencies.",
+          "pronunciationOr": "ଲୋପାସ୍ ଫିଲ୍ଟର୍",
+          "glossOr": "କମ Frequency ରଖି ଉଚ୍ଚ Frequency କମାଉଥିବା Filter।",
+          "example": {
+            "en": "The lowpass filter largely retains our 100 Hz message.",
+            "or": "Lowpass filter ଆମ 100 Hz Message କୁ ପ୍ରାୟ ରଖେ।"
+          }
+        },
+        {
+          "id": "T-AM-07-2",
+          "term": "cutoff frequency",
+          "definition": "A specified frequency marking a filter response boundary; for this Butterworth filter, the minus-3-dB point.",
+          "pronunciationOr": "କଟ୍ଅଫ୍ ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "Filter response ର ନିର୍ଦ୍ଦିଷ୍ଟ transition reference frequency।",
+          "example": {
+            "en": "The baseline cutoff frequency is 500 Hz.",
+            "or": "Baseline Cutoff frequency 500 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-07-3",
+          "term": "phase lag",
+          "definition": "An output phase shift behind its input at a particular frequency.",
+          "pronunciationOr": "ଫେଜ୍ ଲ୍ୟାଗ୍",
+          "glossOr": "Input ସହିତ ତୁଳନାରେ Output phase ପଛରେ ରହିବା।",
+          "example": {
+            "en": "The recovered waveform has a small phase lag from the filter.",
+            "or": "Filter ଯୋଗୁଁ Recovered waveform ରେ ଛୋଟ Phase lag ଥାଏ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Carrier mismatch and debugging in a model",
+          "or": "Carrier mismatch ଓ Debugging — Model ରେ"
+        },
+        "scenario": {
+          "en": "Change only the receiver phase by 90 degrees, inspect recovery, then restore the baseline and rerun.",
+          "or": "କେବଳ Receiver phase କୁ 90 degree ବଦଳାନ୍ତୁ। Recovery ଦେଖି baseline Phase ଫେରାଇ ପୁଣି ଚଲାନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "Relative phase matters. Frequency mismatch can create beating. Diagnose one parameter at a time.",
+          "or": "Relative Phase ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। Frequency mismatch ରେ beating ହୋଇପାରେ। ଏକ ସମୟରେ ଗୋଟିଏ Parameter ଯାଞ୍ଚ କରନ୍ତୁ।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-08"
+    },
+    "C-AM-09": {
+      "conceptId": "C-AM-09",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Frequency modulation and deviation",
+        "or": "Frequency modulation ଓ Deviation"
+      },
+      "keyIdea": {
+        "en": "FM varies instantaneous carrier frequency with the message while ideal carrier amplitude remains constant.",
+        "or": "FM varies instantaneous carrier frequency with the message while ideal carrier amplitude remains constant."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-09-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "FM varies instantaneous carrier frequency with the message while ideal carrier amplitude remains constant.",
+            "or": "FM ରେ Message ଅନୁସାରେ instantaneous Carrier frequency ବଦଳେ; ideal Carrier amplitude ସ୍ଥିର ରହେ।"
+          },
+          "termIds": [
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-09-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Frequency modulation and deviation",
+            "or": "Frequency modulation ଓ Deviation"
+          },
+          "body": {
+            "en": "Frequency modulation, or FM, represents the message through changes in instantaneous carrier frequency rather than through carrier amplitude. An ideal FM signal has constant amplitude. Frequency deviation Delta f is the maximum departure from the carrier frequency. For a sinusoidal message of frequency fm, the modulation index is beta=Delta f/fm. FM generally has multiple sidebands, so its bandwidth is not simply the DSB-SC value 2B. Carson’s rule estimates a useful occupied bandwidth as approximately 2*(Delta f+B), where B is the highest message frequency. This is an engineering approximation, not an exact finite spectral boundary. FM is part of the chapter but not required to execute our selected DSB-SC lab.",
+            "or": "Frequency modulation କିମ୍ବା FM ରେ Message ଅନୁସାରେ instantaneous Carrier frequency ବଦଳେ। Ideal FM ର Amplitude ସ୍ଥିର। Carrier frequency ଠାରୁ ସର୍ବାଧିକ ପରିବର୍ତ୍ତନ ହେଉଛି Frequency deviation Delta f। Single-tone message frequency fm ପାଇଁ Modulation index beta=Delta f/fm। FM ରେ ଅନେକ Sideband ଥାଇପାରେ। Carson’s rule ଅନୁସାରେ useful bandwidth ପ୍ରାୟ 2*(Delta f+B), ଯେଉଁଠି B ସର୍ବାଧିକ Message frequency। ଏହା ଏକ approximation, ସମସ୍ତ spectral component ର ନିଖୁତ ସୀମା ନୁହେଁ। FM chapter ରେ ଅଛି, କିନ୍ତୁ DSB-SC lab ପାଇଁ ପୂର୍ବଶର୍ତ୍ତ ନୁହେଁ।"
+          },
+          "termIds": [
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-09-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Compare FM cycle spacing against DSB-SC amplitude changes in a waveform placard.",
+            "or": "Waveform placard ରେ FM ର cycle spacing ଓ DSB-SC ର Amplitude ପରିବର୍ତ୍ତନ ତୁଳନା କରନ୍ତୁ।"
+          },
+          "termIds": [
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-09-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "FM changes instantaneous frequency. beta=Delta f/fm. Carson bandwidth is an approximation.",
+            "or": "FM instantaneous Frequency ବଦଳାଏ। beta=Delta f/fm। Carson bandwidth ଏକ approximation।"
+          },
+          "termIds": [
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-09-1",
+          "term": "frequency modulation",
+          "definition": "Modulation in which instantaneous frequency deviation follows the message.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ instantaneous Carrier frequency ବଦଳାଇବା।",
+          "example": {
+            "en": "Frequency modulation carries information in changing instantaneous frequency.",
+            "or": "Frequency modulation ରେ instantaneous Frequency ପରିବର୍ତ୍ତନରେ ତଥ୍ୟ ଥାଏ।"
+          }
+        },
+        {
+          "id": "T-AM-09-2",
+          "term": "frequency deviation",
+          "definition": "The maximum departure of instantaneous frequency from the carrier frequency.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି ଡିଭିଏସନ୍",
+          "glossOr": "Carrier frequency ଠାରୁ ସର୍ବାଧିକ Frequency ପରିବର୍ତ୍ତନ।",
+          "example": {
+            "en": "A 5 kHz frequency deviation with a 1 kHz tone gives beta five.",
+            "or": "5 kHz Frequency deviation ଓ 1 kHz Tone ପାଇଁ beta 5।"
+          }
+        },
+        {
+          "id": "T-AM-09-3",
+          "term": "Carson’s rule",
+          "definition": "An approximate occupied-bandwidth estimate of 2*(frequency deviation + highest message frequency).",
+          "pronunciationOr": "କାର୍ସନ୍ସ୍ ରୁଲ୍",
+          "glossOr": "Angle modulation bandwidth ପାଇଁ ଏକ engineering approximation।",
+          "example": {
+            "en": "Carson’s rule estimates 12 kHz bandwidth for that example.",
+            "or": "ସେହି ଉଦାହରଣ ପାଇଁ Carson’s rule ପ୍ରାୟ 12 kHz Bandwidth ଦିଏ।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Frequency modulation and deviation in a model",
+          "or": "Frequency modulation ଓ Deviation — Model ରେ"
+        },
+        "scenario": {
+          "en": "Compare FM cycle spacing against DSB-SC amplitude changes in a waveform placard.",
+          "or": "Waveform placard ରେ FM ର cycle spacing ଓ DSB-SC ର Amplitude ପରିବର୍ତ୍ତନ ତୁଳନା କରନ୍ତୁ।"
+        },
+        "takeaway": {
+          "en": "FM changes instantaneous frequency. beta=Delta f/fm. Carson bandwidth is an approximation.",
+          "or": "FM instantaneous Frequency ବଦଳାଏ। beta=Delta f/fm। Carson bandwidth ଏକ approximation।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-09"
+    },
+    "C-AM-10": {
+      "conceptId": "C-AM-10",
+      "planId": "LP-ANALOG-MODULATION",
+      "title": {
+        "en": "Phase modulation and FM–PM distinction",
+        "or": "Phase modulation ଓ FM–PM ତଫାତ"
+      },
+      "keyIdea": {
+        "en": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t)).",
+        "or": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t))."
+      },
+      "placards": [
+        {
+          "id": "CARD-AM-10-definition",
+          "kind": "definition",
+          "title": {
+            "en": "Definition",
+            "or": "ସଂଜ୍ଞା"
+          },
+          "body": {
+            "en": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t)).",
+            "or": "PM ରେ Carrier phase Message ସହିତ ସିଧାସଳଖ ବଦଳେ: s(t)=Ac*cos(2*pi*fc*t+kp*m(t))।"
+          },
+          "termIds": [
+            "T-AM-10-1",
+            "T-AM-10-2",
+            "T-AM-10-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-10-concept",
+          "kind": "concept",
+          "title": {
+            "en": "Phase modulation and FM–PM distinction",
+            "or": "Phase modulation ଓ FM–PM ତଫାତ"
+          },
+          "body": {
+            "en": "Phase modulation, or PM, changes the instantaneous phase of a constant-amplitude carrier directly according to the message. Its form is s(t)=Ac*cos(2*pi*fc*t+kp*m(t)), where kp is phase sensitivity. FM and PM are both angle modulation, but their direct message relationships differ: FM frequency deviation follows the message, while PM phase deviation follows the message. Because instantaneous frequency is the rate of change of phase divided by 2*pi, PM frequency deviation follows the derivative of the message. A constant message produces a fixed phase shift in PM rather than a sustained frequency offset. PM completes our chapter comparison and is not a prerequisite for the selected lab.",
+            "or": "Phase modulation କିମ୍ବା PM ରେ Message ଅନୁସାରେ constant-amplitude Carrier ର instantaneous Phase ସିଧାସଳଖ ବଦଳେ। s(t)=Ac*cos(2*pi*fc*t+kp*m(t)), ଯେଉଁଠି kp ହେଉଛି Phase sensitivity। FM ଓ PM ଦୁଇଟି Angle modulation। FM ର Frequency deviation Message ଅନୁସାରେ, PM ର Phase deviation Message ଅନୁସାରେ ବଦଳେ। Instantaneous Frequency ହେଉଛି Phase ର rate of change କୁ 2*pi ଦ୍ୱାରା ଭାଗ କଲେ ମିଳୁଥିବା ମୂଲ୍ୟ। ତେଣୁ PM ର Frequency deviation Message ର derivative ଅନୁସାରେ ବଦଳେ। Constant message PM ରେ fixed Phase shift ଦିଏ। PM ଏହି lab ର ପୂର୍ବଶର୍ତ୍ତ ନୁହେଁ।"
+          },
+          "termIds": [
+            "T-AM-10-1",
+            "T-AM-10-2",
+            "T-AM-10-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-10-application",
+          "kind": "application",
+          "title": {
+            "en": "Use it in a model",
+            "or": "Model ରେ ପ୍ରୟୋଗ"
+          },
+          "body": {
+            "en": "Use an FM/PM comparison card; retain the DSB-SC lab route without adding angle-modulation tasks.",
+            "or": "FM/PM comparison card ଦେଖନ୍ତୁ। DSB-SC lab route ରେ Angle modulation task ଯୋଡ଼ିବା ଦରକାର ନାହିଁ।"
+          },
+          "termIds": [
+            "T-AM-10-1",
+            "T-AM-10-2",
+            "T-AM-10-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        },
+        {
+          "id": "CARD-AM-10-recap",
+          "kind": "recap",
+          "title": {
+            "en": "Remember",
+            "or": "ମନେ ରଖନ୍ତୁ"
+          },
+          "body": {
+            "en": "PM phase follows the message; FM frequency follows the message; frequency is phase’s rate of change.",
+            "or": "PM ର Phase Message କୁ ଅନୁସରେ; FM ର Frequency Message କୁ ଅନୁସରେ; Frequency ହେଉଛି Phase ର rate of change।"
+          },
+          "termIds": [
+            "T-AM-10-1",
+            "T-AM-10-2",
+            "T-AM-10-3",
+            "T-AM-01-1",
+            "T-AM-01-2",
+            "T-AM-01-3",
+            "T-AM-02-1",
+            "T-AM-02-2",
+            "T-AM-02-3",
+            "T-AM-09-1",
+            "T-AM-09-2",
+            "T-AM-09-3"
+          ],
+          "sources": [
+            {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+              "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: time-based Sine Wave parameters",
+              "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+            },
+            {
+              "origin": "curated",
+              "label": "MathWorks: continuous Transfer Fcn coefficients",
+              "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+            }
+          ]
+        }
+      ],
+      "terms": [
+        {
+          "id": "T-AM-10-1",
+          "term": "phase modulation",
+          "definition": "Modulation in which instantaneous phase deviation follows the message.",
+          "pronunciationOr": "ଫେଜ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ instantaneous Carrier phase ବଦଳାଇବା।",
+          "example": {
+            "en": "Phase modulation maps a constant message to a fixed phase offset.",
+            "or": "Phase modulation ରେ Constant message ରୁ fixed Phase offset ମିଳେ।"
+          }
+        },
+        {
+          "id": "T-AM-10-2",
+          "term": "phase sensitivity",
+          "definition": "The proportionality factor linking message amplitude to phase deviation.",
+          "pronunciationOr": "ଫେଜ୍ ସେନ୍ସିଟିଭିଟି",
+          "glossOr": "Message ପ୍ରତି unit ପାଇଁ Phase ପରିବର୍ତ୍ତନର ଗୁଣକ।",
+          "example": {
+            "en": "Phase sensitivity two maps a unit message to two radians of phase deviation.",
+            "or": "Phase sensitivity 2 ହେଲେ unit Message ପାଇଁ Phase deviation 2 radian।"
+          }
+        },
+        {
+          "id": "T-AM-10-3",
+          "term": "angle modulation",
+          "definition": "Modulation represented through carrier frequency or phase changes.",
+          "pronunciationOr": "ଆଙ୍ଗଲ୍ ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Frequency କିମ୍ବା Phase ବଦଳାଇ ତଥ୍ୟ ପଠାଇବା।",
+          "example": {
+            "en": "FM and PM are both forms of angle modulation.",
+            "or": "FM ଓ PM ଦୁଇଟି Angle modulation ର ପ୍ରକାର।"
+          }
+        },
+        {
+          "id": "T-AM-01-1",
+          "term": "amplitude",
+          "definition": "The peak magnitude of a signal relative to its reference.",
+          "pronunciationOr": "ଆମ୍ପ୍ଲିଟ୍ୟୁଡ୍",
+          "glossOr": "Signal ର ସର୍ବାଧିକ ଆକାର।",
+          "example": {
+            "en": "The message amplitude is one in the baseline model.",
+            "or": "Baseline model ରେ Message amplitude 1।"
+          }
+        },
+        {
+          "id": "T-AM-01-2",
+          "term": "frequency",
+          "definition": "The number of cycles per second, measured in Hz.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି",
+          "glossOr": "ଏକ ସେକେଣ୍ଡରେ ହେଉଥିବା Cycle ସଂଖ୍ୟା।",
+          "example": {
+            "en": "The message frequency is 100 Hz.",
+            "or": "Message frequency 100 Hz।"
+          }
+        },
+        {
+          "id": "T-AM-01-3",
+          "term": "phase",
+          "definition": "The angular position of an oscillation relative to a reference.",
+          "pronunciationOr": "ଫେଜ୍",
+          "glossOr": "Reference ସହିତ Cycle ର ସ୍ଥିତି।",
+          "example": {
+            "en": "Set the carrier phase to pi/2 in the Sine Wave block.",
+            "or": "Sine Wave block ରେ Carrier phase pi/2 ଦିଅନ୍ତୁ।"
+          }
+        },
+        {
+          "id": "T-AM-02-1",
+          "term": "message signal",
+          "definition": "The signal containing the information to convey.",
+          "pronunciationOr": "ମେସେଜ୍ ସିଗ୍ନାଲ୍",
+          "glossOr": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟର Signal।",
+          "example": {
+            "en": "The 100 Hz sinusoid is our message signal.",
+            "or": "100 Hz Sinusoid ଆମ Message signal।"
+          }
+        },
+        {
+          "id": "T-AM-02-2",
+          "term": "carrier",
+          "definition": "An oscillatory reference used for modulation.",
+          "pronunciationOr": "କ୍ୟାରିଅର୍",
+          "glossOr": "Modulation ପାଇଁ ବ୍ୟବହୃତ reference oscillation।",
+          "example": {
+            "en": "The carrier oscillates at 2000 Hz.",
+            "or": "Carrier 2000 Hz ରେ Oscillate କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-02-3",
+          "term": "modulation",
+          "definition": "Changing a carrier property according to a message.",
+          "pronunciationOr": "ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ Carrier ର ଗୁଣ ବଦଳାଇବା।",
+          "example": {
+            "en": "The transmitter performs modulation with a Product block.",
+            "or": "Transmitter Product block ରେ Modulation କରେ।"
+          }
+        },
+        {
+          "id": "T-AM-09-1",
+          "term": "frequency modulation",
+          "definition": "Modulation in which instantaneous frequency deviation follows the message.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି ମଡ୍ୟୁଲେସନ୍",
+          "glossOr": "Message ଅନୁସାରେ instantaneous Carrier frequency ବଦଳାଇବା।",
+          "example": {
+            "en": "Frequency modulation carries information in changing instantaneous frequency.",
+            "or": "Frequency modulation ରେ instantaneous Frequency ପରିବର୍ତ୍ତନରେ ତଥ୍ୟ ଥାଏ।"
+          }
+        },
+        {
+          "id": "T-AM-09-2",
+          "term": "frequency deviation",
+          "definition": "The maximum departure of instantaneous frequency from the carrier frequency.",
+          "pronunciationOr": "ଫ୍ରିକ୍ୱେନ୍ସି ଡିଭିଏସନ୍",
+          "glossOr": "Carrier frequency ଠାରୁ ସର୍ବାଧିକ Frequency ପରିବର୍ତ୍ତନ।",
+          "example": {
+            "en": "A 5 kHz frequency deviation with a 1 kHz tone gives beta five.",
+            "or": "5 kHz Frequency deviation ଓ 1 kHz Tone ପାଇଁ beta 5।"
+          }
+        },
+        {
+          "id": "T-AM-09-3",
+          "term": "Carson’s rule",
+          "definition": "An approximate occupied-bandwidth estimate of 2*(frequency deviation + highest message frequency).",
+          "pronunciationOr": "କାର୍ସନ୍ସ୍ ରୁଲ୍",
+          "glossOr": "Angle modulation bandwidth ପାଇଁ ଏକ engineering approximation।",
+          "example": {
+            "en": "Carson’s rule estimates 12 kHz bandwidth for that example.",
+            "or": "ସେହି ଉଦାହରଣ ପାଇଁ Carson’s rule ପ୍ରାୟ 12 kHz Bandwidth ଦିଏ।"
+          }
+        }
+      ],
+      "example": {
+        "title": {
+          "en": "Phase modulation and FM–PM distinction in a model",
+          "or": "Phase modulation ଓ FM–PM ତଫାତ — Model ରେ"
+        },
+        "scenario": {
+          "en": "Use an FM/PM comparison card; retain the DSB-SC lab route without adding angle-modulation tasks.",
+          "or": "FM/PM comparison card ଦେଖନ୍ତୁ। DSB-SC lab route ରେ Angle modulation task ଯୋଡ଼ିବା ଦରକାର ନାହିଁ।"
+        },
+        "takeaway": {
+          "en": "PM phase follows the message; FM frequency follows the message; frequency is phase’s rate of change.",
+          "or": "PM ର Phase Message କୁ ଅନୁସରେ; FM ର Frequency Message କୁ ଅନୁସରେ; Frequency ହେଉଛି Phase ର rate of change।"
+        }
+      },
+      "media": {
+        "status": "none"
+      },
+      "assessmentId": "AS-AM-10"
+    }
+  }
+}

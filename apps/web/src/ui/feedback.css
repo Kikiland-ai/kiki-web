@@ -1,0 +1,66 @@
+/* Shared notebook states: loading, recovery and safe exits use neutral ink. */
+.state-screen {
+  max-width: 760px;
+  min-width: 0;
+  padding: 40px 24px;
+  text-align: left;
+}
+.state-paper {
+  width: 100%;
+  padding: clamp(24px, 4vw, 40px);
+  border: 2px solid var(--ink);
+  border-top-width: 6px;
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  overflow-wrap: anywhere;
+}
+.state-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.state-heading img { flex: none; }
+.state-heading span { font-size: 10px; font-weight: 700; line-height: 1.8; letter-spacing: .1em; }
+.state-screen h1 { margin: 0; max-width: 24ch; font-size: clamp(26px, 3vw, 36px); line-height: 1.3; letter-spacing: -.04em; }
+.state-description { margin-top: 16px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.state-description p { margin: 0; }
+.state-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.state-actions > * { max-width: 100%; }
+.state-screen-embedded { min-height: 0; padding: 0; margin: 0; align-items: stretch; }
+.loading-notice {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 96px;
+  padding: 20px;
+  border: 1.5px dashed var(--ink);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+}
+.loading-notice img { flex: none; }
+.loading-notice p { margin: 0; min-width: 0; overflow-wrap: anywhere; font-size: 15px; line-height: 1.8; }
+.alert { align-items: flex-start; }
+.alert > div { min-width: 0; overflow-wrap: anywhere; }
+.alert .button { margin-top: 8px; }
+.leave-dialog {
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+}
+.leave-dialog h2 { padding-bottom: 20px; border-bottom: 1px solid var(--rule); line-height: 1.4; }
+.leave-dialog::backdrop { background: #1119; }
+html { scroll-padding-block: 24px 100px; }
+@media (max-width: 599px) {
+  .state-screen { padding: 28px 16px; }
+  .state-screen-embedded { padding: 0; }
+  .state-paper { padding: 24px 20px; }
+  .state-actions, .state-actions > .form-actions { width: 100%; flex-direction: column; align-items: stretch; }
+  .leave-dialog .form-actions { flex-direction: column; align-items: stretch; }
+  .leave-dialog .form-actions .button { width: 100%; flex: auto; }
+}

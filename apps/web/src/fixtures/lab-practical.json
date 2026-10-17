@@ -1,0 +1,259 @@
+{
+  "practicalId": "PR-AM-DSB",
+  "planId": "LP-ANALOG-MODULATION",
+  "contentVersion": "am-51187527300cba2fa3cca868",
+  "title": "DSB-SC Modulation & coherent demodulation",
+  "aim": "Construct a DSB-SC transmitter and coherent receiver, compare signals, and diagnose a controlled carrier mismatch.",
+  "softwareName": "MATLAB/Simulink Online",
+  "softwareUrl": "https://matlab.mathworks.com/",
+  "predictionPrompt": "Predict the original, DSB-SC and recovered waveforms before running; predict how a relative 90-degree receiver phase fault changes recovery.",
+  "observationPrompts": [
+    {
+      "en": "Record baseline message and carrier frequencies and compare recovered amplitude after startup.",
+      "or": "Baseline Message ଓ Carrier frequency ଲେଖନ୍ତୁ ଏବଂ Startup ପରେ Recovered amplitude ତୁଳନା କରନ୍ତୁ।"
+    },
+    {
+      "en": "Record the relative receiver phase, recovery change, and why the correction works.",
+      "or": "Relative Receiver phase, Recovery ପରିବର୍ତ୍ତନ ଓ Correction କାହିଁକି କାମ କରେ ଲେଖନ୍ତୁ।"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "CP-DSB-01",
+      "stepNumber": 1,
+      "targetLabel": "Model canvas",
+      "instruction": {
+        "en": "Confirm the selected model workspace",
+        "or": "ବାଛିଥିବା Model workspace ନିଶ୍ଚିତ କରନ୍ତୁ"
+      },
+      "why": {
+        "en": "Pointer targets must belong to this experiment.",
+        "or": "Pointer target ଏହି experiment ର ହେବା ଦରକାର।"
+      },
+      "expected": "Confirm the selected experiment and saved model reference before pointing.",
+      "evidenceKind": "workspace",
+      "prerequisiteCheckpointIds": []
+    },
+    {
+      "id": "CP-DSB-02",
+      "stepNumber": 2,
+      "targetLabel": "Sine Wave blocks",
+      "instruction": {
+        "en": "Place the Message and Carrier sources",
+        "or": "Message ଓ Carrier source ରଖନ୍ତୁ"
+      },
+      "why": {
+        "en": "Separate sources make the information and reference visible.",
+        "or": "ଅଲଗା Source ତଥ୍ୟ ଓ Reference କୁ ସ୍ପଷ୍ଟ କରେ।"
+      },
+      "expected": "Message and Carrier Sine Wave blocks are present.",
+      "evidenceKind": "model_structure",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-01"
+      ]
+    },
+    {
+      "id": "CP-DSB-03",
+      "stepNumber": 3,
+      "targetLabel": "Source block parameters",
+      "instruction": {
+        "en": "Set source frequencies, amplitudes and phases",
+        "or": "Source ର Frequency, Amplitude ଓ Phase ଦିଅନ୍ତୁ"
+      },
+      "why": {
+        "en": "The time-based source uses rad/s; pi/2 makes its sine output a cosine.",
+        "or": "Time-based source rad/s ବ୍ୟବହାର କରେ; pi/2 Phase ଦେଲେ Sine output Cosine ହୁଏ।"
+      },
+      "expected": "Message: amplitude 1, 2*pi*100 rad/s, phase 0; Carrier: amplitude 1, 2*pi*2000 rad/s, phase pi/2; both bias 0.",
+      "evidenceKind": "parameters",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-02"
+      ]
+    },
+    {
+      "id": "CP-DSB-04",
+      "stepNumber": 4,
+      "targetLabel": "Modulator Product",
+      "instruction": {
+        "en": "Connect the transmitter Product",
+        "or": "Transmitter Product ଯୋଡ଼ନ୍ତୁ"
+      },
+      "why": {
+        "en": "Multiplication forms the DSB-SC signal.",
+        "or": "ଗୁଣ କଲେ DSB-SC Signal ତିଆରି ହୁଏ।"
+      },
+      "expected": "Message and Carrier connect to distinct Product inputs; no DC carrier offset is added.",
+      "evidenceKind": "model_structure",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-03"
+      ]
+    },
+    {
+      "id": "CP-DSB-05",
+      "stepNumber": 5,
+      "targetLabel": "Receiver Product and Local carrier",
+      "instruction": {
+        "en": "Build the local carrier and receiver Product",
+        "or": "Local carrier ଓ Receiver Product ତିଆରି କରନ୍ତୁ"
+      },
+      "why": {
+        "en": "Matching the local carrier permits coherent recovery.",
+        "or": "Local Carrier ମେଳିଲେ Coherent recovery ସମ୍ଭବ।"
+      },
+      "expected": "Local carrier matches amplitude 1, 2*pi*2000 rad/s and phase pi/2; modulated signal and local carrier enter receiver Product.",
+      "evidenceKind": "parameters",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-04"
+      ]
+    },
+    {
+      "id": "CP-DSB-06",
+      "stepNumber": 6,
+      "targetLabel": "Lowpass Transfer Fcn and Recovery Gain",
+      "instruction": {
+        "en": "Add the lowpass stage and Gain 2",
+        "or": "Lowpass stage ଓ Gain 2 ଯୋଡ଼ନ୍ତୁ"
+      },
+      "why": {
+        "en": "The filter suppresses doubled-carrier products; the gain restores the product scale.",
+        "or": "Filter doubled-carrier Product କମାଏ; Gain Product scale ସୁଧାରେ।"
+      },
+      "expected": "Transfer Fcn coefficients match the specified second-order 500 Hz Butterworth filter; following Gain is 2.",
+      "evidenceKind": "parameters",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-05"
+      ]
+    },
+    {
+      "id": "CP-DSB-07",
+      "stepNumber": 7,
+      "targetLabel": "Input, Modulated and Recovery scopes",
+      "instruction": {
+        "en": "Connect and label the observation scopes",
+        "or": "Observation Scope ଯୋଡ଼ି ନାମ ଦିଅନ୍ତୁ"
+      },
+      "why": {
+        "en": "Side-by-side traces allow meaningful comparisons without changing the model.",
+        "or": "ପାଖାପାଖି Trace ରୁ Model ନବଦଳାଇ ତୁଳନା କରିହେବ।"
+      },
+      "expected": "Scopes show sources, modulated output, and original versus recovered message on separate input ports.",
+      "evidenceKind": "model_structure",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-06"
+      ]
+    },
+    {
+      "id": "CP-DSB-08",
+      "stepNumber": 8,
+      "targetLabel": "Model settings and Stop time",
+      "instruction": {
+        "en": "Set simulation duration and maximum step",
+        "or": "Simulation duration ଓ Maximum step ଦିଅନ୍ତୁ"
+      },
+      "why": {
+        "en": "A bounded step resolves the fast carrier and the short run keeps the lab responsive.",
+        "or": "ଛୋଟ Step ରୁ ଦ୍ରୁତ Carrier ସ୍ପଷ୍ଟ ହୁଏ; ଛୋଟ Run lab କୁ ସହଜ ରଖେ।"
+      },
+      "expected": "StopTime 0.1 s, variable-step ode45, MaxStep 1e-5 s.",
+      "evidenceKind": "parameters",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-07"
+      ]
+    },
+    {
+      "id": "CP-DSB-09",
+      "stepNumber": 9,
+      "targetLabel": "Run control",
+      "instruction": {
+        "en": "Run the baseline model",
+        "or": "Baseline model ଚଲାନ୍ତୁ"
+      },
+      "why": {
+        "en": "A completed run is needed before interpreting its output.",
+        "or": "Output ବୁଝିବା ପୂର୍ବରୁ Run ସଫଳ ହେବା ଦରକାର।"
+      },
+      "expected": "The selected model completes a run without an error; evidence records the current parameter version.",
+      "evidenceKind": "run_result",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-08"
+      ]
+    },
+    {
+      "id": "CP-DSB-10",
+      "stepNumber": 10,
+      "targetLabel": "Recovery Scope",
+      "instruction": {
+        "en": "Inspect and record steady-state recovery",
+        "or": "Steady-state recovery ଦେଖି ଲେଖନ୍ତୁ"
+      },
+      "why": {
+        "en": "A finite filter can delay the trace; exact pixel equality is not the criterion.",
+        "or": "Finite Filter Trace କୁ ପଛକୁ ନେଇପାରେ; ନିଖୁତ Pixel equality ମାନଦଣ୍ଡ ନୁହେଁ।"
+      },
+      "expected": "After startup, recovered message is near 100 Hz and unit amplitude, with predicted filter phase lag and small residual ripple.",
+      "evidenceKind": "waveform",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-09"
+      ]
+    },
+    {
+      "id": "CP-DSB-11",
+      "stepNumber": 11,
+      "targetLabel": "Local carrier Phase parameter",
+      "instruction": {
+        "en": "Try the 90-degree receiver phase fault",
+        "or": "90-degree Receiver phase fault ପରୀକ୍ଷା କରନ୍ତୁ"
+      },
+      "why": {
+        "en": "Only the receiver changes, isolating the effect of relative phase.",
+        "or": "କେବଳ Receiver ବଦଳିବାରୁ relative Phase ର ପ୍ରଭାବ ଅଲଗା ଭାବରେ ବୁଝିହେବ।"
+      },
+      "expected": "Student sets Local carrier Phase to pi, reruns, and observes suppression of the message component with possible high-frequency residual.",
+      "evidenceKind": "waveform",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-10"
+      ]
+    },
+    {
+      "id": "CP-DSB-12",
+      "stepNumber": 12,
+      "targetLabel": "Local carrier, Run, Save and Kiki observations",
+      "instruction": {
+        "en": "Restore, rerun, save and explain",
+        "or": "ପୂର୍ବ Setting ଫେରାଇ, ପୁଣି ଚଲାଇ, Save କରି ବୁଝାନ୍ତୁ"
+      },
+      "why": {
+        "en": "Restoration and explanation demonstrate an understood correction rather than a guessed change.",
+        "or": "Setting ଫେରାଇବା ଓ ବୁଝାଇବାରୁ Correction ବୁଝିଛନ୍ତି କି ନାହିଁ ଜଣାପଡ଼େ।"
+      },
+      "expected": "Local carrier Phase returns to pi/2; verified rerun restores recovery; model saved externally; student explains carrier alignment.",
+      "evidenceKind": "explanation",
+      "prerequisiteCheckpointIds": [
+        "CP-DSB-11"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "origin": "curated",
+      "label": "MathWorks: analog passband modulation; reference for the modulation families",
+      "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+    },
+    {
+      "origin": "curated",
+      "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+      "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+    },
+    {
+      "origin": "curated",
+      "label": "MathWorks: time-based Sine Wave parameters",
+      "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+    },
+    {
+      "origin": "curated",
+      "label": "MathWorks: continuous Transfer Fcn coefficients",
+      "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+    }
+  ],
+  "reviewStatus": "draft"
+}

@@ -1,0 +1,60 @@
+.screen { min-width:0; }
+.screen :global(.page-title h1) { font-size:clamp(28px,3vw,40px); }
+.screen :global(.card) { padding:24px; border-top:5px solid var(--lab); }
+.notice { padding:16px 20px; border:1.5px solid var(--ink); border-left:6px solid var(--lab); border-radius:var(--radius); background:var(--lab-tint); color:var(--ink); }
+.notice p { margin:6px 0 0; font-size:14px; line-height:1.6; }
+.landing { display:grid; gap:24px; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); align-items:start; }
+.landing h2 { line-height:1.3; }
+.layout { display:grid; gap:24px; align-items:start; grid-template-columns:minmax(0,1fr) 300px; }
+.sidebar,.main { display:grid; gap:24px; min-width:0; }
+.sidebar h2 { font-size:21px; line-height:1.4; }
+.sidebar p { font-size:14px; line-height:1.7; }
+.sidebar :global(.button) { width:100%; white-space:normal; text-align:center; }
+.sidebar details { margin-top:20px; }
+.sidebar details.readiness { margin:0; }
+.readiness summary { font-weight:700; cursor:pointer; line-height:1.6; }
+.readiness section { margin-top:20px; }
+.required { padding-left:0; list-style:none; display:grid; gap:12px; }
+.required li { display:grid; gap:4px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+.required a { justify-content:flex-start; white-space:normal; text-align:left; padding:0; line-height:1.5; }
+.required li span { color:var(--muted); font-size:13px; }
+.saveBar { position:sticky; top:16px; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 18px; border:2px solid var(--ink); background:var(--paper); box-shadow:3px 3px 0 var(--ink); }
+.saveBar p { margin:3px 0 0; font-size:14px; }
+.saveBar :global(.eyebrow) { font-size:10px; }
+.form { display:grid; gap:12px; }
+.form label { font-weight:600; }
+.form p { margin:0; }
+.form .form { margin-top:12px; padding-top:20px; border-top:1px solid var(--rule); }
+.form textarea,.form input,.sidebar input { width:100%; min-width:0; box-sizing:border-box; padding:12px; border:1.5px solid var(--ink); border-radius:var(--radius); font:inherit; background:white; color:var(--ink); }
+.form textarea { resize:vertical; background:repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px),var(--paper); line-height:32px; }
+.form > :global(.button) { justify-self:start; margin-top:8px; }
+.steps { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; padding-block:16px; margin-bottom:20px; border-block:1px solid var(--rule); }
+.steps button { min-width:0; min-height:48px; padding:10px 4px; border-radius:4px; box-shadow:none; }
+.steps button[aria-current='step'] { color:var(--ink); background:var(--lab); border-width:2px; }
+.textPreview { white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; }
+.main h2 { font-size:24px; line-height:1.4; }
+.main h3 { font-size:22px; line-height:1.7; }
+.main [lang='or'] { line-height:1.95; }
+.main p { overflow-wrap:anywhere; }
+.main :global(.form-actions) { padding-top:20px; border-top:1px solid var(--rule); }
+.sidebar label { display:block; margin-bottom:8px; }
+.sidebar input { margin-bottom:12px; font-size:14px; }
+/* Leave reading room in a short landscape or zoomed viewport. */
+@media(max-height:600px) { .saveBar { position:static; } }
+@media(min-width:1440px) { .steps { grid-template-columns:repeat(12,minmax(0,1fr)); } }
+@media(max-width:1100px) {
+  .layout,.landing { grid-template-columns:minmax(0,1fr); }
+  .sidebar { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:599px) {
+  .screen :global(.card) { padding:20px; }
+  .notice { padding:14px 16px; }
+  .sidebar { grid-template-columns:minmax(0,1fr); }
+  .saveBar { top:12px; padding:10px 12px; gap:8px; }
+  .saveBar :global(.button) { font-size:13px; padding:10px 12px; }
+  .main h2 { font-size:21px; }
+  .main h3 { font-size:20px; }
+  .steps { grid-template-columns:repeat(auto-fit,minmax(44px,1fr)); }
+  .main :global(.form-actions) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .main :global(.form-actions .button) { padding:10px 8px; white-space:normal; text-align:center; font-size:13px; }
+}

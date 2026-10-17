@@ -1,0 +1,117 @@
+/*
+ * A floating panel, rounded on every corner and inset from the screen edges.
+ * Phone (< 600px): along the bottom, just above the edge.
+ */
+.sheet {
+  --learning-sheet-inset: var(--learning-space-2);
+  /* No padding: a click on the dialog box itself always means the backdrop */
+  padding: 0;
+  border: 2px solid var(--learning-ink);
+  margin: auto var(--learning-sheet-inset) max(var(--learning-sheet-inset), env(safe-area-inset-bottom));
+  width: calc(100% - 2 * var(--learning-sheet-inset));
+  max-width: calc(100% - 2 * var(--learning-sheet-inset));
+  max-height: min(85dvh, 100% - var(--learning-space-6));
+  background: var(--learning-paper-raised);
+  color: var(--learning-ink);
+  border-radius: var(--learning-radius-sheet);
+  box-shadow: var(--learning-lift);
+  overflow: hidden;
+}
+
+.sheet[open] {
+  display: flex;
+  animation: rise var(--learning-motion-sheet);
+}
+
+.sheet::backdrop {
+  background: var(--learning-scrim);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--learning-space-2);
+  padding: var(--learning-space-4) var(--learning-space-2) var(--learning-space-2) var(--learning-gutter);
+  border-bottom: 5px solid var(--learning-red);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  /* Centre one line of text against the 48px close button */
+  padding-top: var(--learning-space-2);
+  overflow-wrap: anywhere;
+}
+
+.close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--learning-tap-target);
+  height: var(--learning-tap-target);
+  margin-top: calc(-1 * var(--learning-space-1));
+  padding: 0;
+  border: 0;
+  border-radius: var(--learning-radius-pill);
+  background: transparent;
+  color: var(--learning-ink);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--learning-paper-sunken);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--learning-space-4) var(--learning-gutter) var(--learning-space-6);
+  overflow-wrap: anywhere;
+}
+
+/* 600px and up: a side panel on the right, inset from the top, right and bottom */
+@media (min-width: 600px) {
+  .sheet {
+    --learning-sheet-inset: var(--learning-space-4);
+    margin: max(var(--learning-sheet-inset), env(safe-area-inset-top)) var(--learning-sheet-inset)
+      max(var(--learning-sheet-inset), env(safe-area-inset-bottom)) auto;
+    width: min(var(--learning-sheet-width), 100% - 2 * var(--learning-sheet-inset));
+    max-width: none;
+    height: auto;
+    max-height: none;
+  }
+
+  .sheet[open] {
+    animation-name: slide-in;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(32px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet[open] {
+    animation: none;
+  }
+}

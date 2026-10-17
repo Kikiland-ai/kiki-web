@@ -1,0 +1,43 @@
+/* Inline in running text: red marks technical words, the text itself stays ink */
+.chip {
+  position: relative;
+  display: inline;
+  padding: 1px var(--learning-space-1);
+  margin: 0 1px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--learning-ink);
+  font: inherit;
+  font-family: var(--learning-font-ui);
+  font-weight: 500;
+  text-align: inherit;
+  text-decoration: underline dotted var(--learning-red-ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  cursor: pointer;
+  transition: background-color var(--learning-motion-press);
+}
+
+/*
+ * Taller hit area than the text: inline terms can't be 48px without
+ * breaking the line spacing (WCAG 2.5.8 inline exception), so reach as far
+ * as the line allows.
+ */
+.chip::after {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
+}
+
+.chip:hover,
+.chip:active {
+  background: var(--learning-red-tint);
+}
+
+.meaning {
+  font-family: var(--learning-font-odia);
+  font-weight: 400;
+}

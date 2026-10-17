@@ -1,7 +1,0 @@
-.banner {
-  font: var(--text-label);
-  color: var(--yellow-ink);
-  background: var(--yellow-tint);
-  padding: var(--space-1) var(--gutter);
-  text-align: center;
-}

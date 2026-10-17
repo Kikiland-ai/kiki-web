@@ -1,0 +1,418 @@
+{
+  "experience": {
+    "schema": "media-experience/v1",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-e0f086007cc9f2062af093f3",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "placardId": "CARD-AM-08-definition",
+        "lang": "or"
+      },
+      {
+        "placardId": "CARD-AM-08-definition",
+        "lang": "en"
+      },
+      {
+        "placardId": "CARD-AM-08-concept",
+        "lang": "or"
+      },
+      {
+        "placardId": "CARD-AM-08-concept",
+        "lang": "en"
+      },
+      {
+        "placardId": "CARD-AM-08-application",
+        "lang": "or"
+      },
+      {
+        "placardId": "CARD-AM-08-application",
+        "lang": "en"
+      },
+      {
+        "placardId": "CARD-AM-08-recap",
+        "lang": "or"
+      },
+      {
+        "placardId": "CARD-AM-08-recap",
+        "lang": "en"
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-08-phase-recovery",
+        "renderer": "coherent-phase-recovery/v1",
+        "placardIds": [
+          "CARD-AM-08-concept",
+          "CARD-AM-08-application"
+        ]
+      }
+    ]
+  },
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-08",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-e0f086007cc9f2062af093f3",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "renditionId": "CARD-AM-08-definition.or",
+        "placardId": "CARD-AM-08-definition",
+        "lang": "or",
+        "assetId": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+        "mimeType": "audio/wav",
+        "bytes": 674274,
+        "durationSeconds": 13.92,
+        "sourceTextSha256": "e8a9d7c10ad435d5697862ec06af44a0bbfb5e6996addc757a3881fe39848ca1",
+        "speechScriptSha256": "e9fc3001fa871b188e035b2a31d025660d6adf7081d6feeb747f929bec57132d",
+        "audioSha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-definition.en",
+        "placardId": "CARD-AM-08-definition",
+        "lang": "en",
+        "assetId": "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3",
+        "mimeType": "audio/wav",
+        "bytes": 770274,
+        "durationSeconds": 15.92,
+        "sourceTextSha256": "7ba45a5b6afc0ae50b7ef786dc48191ae88bc4db6c92dab378c90c2f161cda14",
+        "speechScriptSha256": "62076c1b072b1bee6881d5ab4d5058ef637c1188020d8ff04b58717afe756f17",
+        "audioSha256": "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-concept.or",
+        "placardId": "CARD-AM-08-concept",
+        "lang": "or",
+        "assetId": "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30",
+        "mimeType": "audio/wav",
+        "bytes": 2256354,
+        "durationSeconds": 46.88,
+        "sourceTextSha256": "3fa9b17d6b2e4c204aa15d2852b213302c6878acd56beb7c49dba715939c72cf",
+        "speechScriptSha256": "3a2bef540647439912b8bf5c303c323d4ba6e84163dd6e0b01edca603de86c73",
+        "audioSha256": "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-concept.en",
+        "placardId": "CARD-AM-08-concept",
+        "lang": "en",
+        "assetId": "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7",
+        "mimeType": "audio/wav",
+        "bytes": 2649954,
+        "durationSeconds": 55.08,
+        "sourceTextSha256": "e7eb3101ac99b43d1173dfe7bc378a8650d6d905fd9ee3abd14195dcc9bfd001",
+        "speechScriptSha256": "97d692815ba01d991b1102d6beac8ec06b5dd8b2c85e1eb8dab36b7d006d0605",
+        "audioSha256": "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-application.or",
+        "placardId": "CARD-AM-08-application",
+        "lang": "or",
+        "assetId": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+        "mimeType": "audio/wav",
+        "bytes": 503394,
+        "durationSeconds": 10.36,
+        "sourceTextSha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+        "speechScriptSha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+        "audioSha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-application.en",
+        "placardId": "CARD-AM-08-application",
+        "lang": "en",
+        "assetId": "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b",
+        "mimeType": "audio/wav",
+        "bytes": 457314,
+        "durationSeconds": 9.4,
+        "sourceTextSha256": "d37e1de3cbdc204d7b6bde76aaf04b58c83874695e60d3e21dbb50fd3db4363a",
+        "speechScriptSha256": "d37e1de3cbdc204d7b6bde76aaf04b58c83874695e60d3e21dbb50fd3db4363a",
+        "audioSha256": "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-recap.or",
+        "placardId": "CARD-AM-08-recap",
+        "lang": "or",
+        "assetId": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+        "mimeType": "audio/wav",
+        "bytes": 537954,
+        "durationSeconds": 11.08,
+        "sourceTextSha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+        "speechScriptSha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+        "audioSha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-08-recap.en",
+        "placardId": "CARD-AM-08-recap",
+        "lang": "en",
+        "assetId": "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47",
+        "mimeType": "audio/wav",
+        "bytes": 489954,
+        "durationSeconds": 10.08,
+        "sourceTextSha256": "26d8c34a1ea909c89ea4f6d66e0751e9a453637209e0087f0b01514ab4322203",
+        "speechScriptSha256": "26d8c34a1ea909c89ea4f6d66e0751e9a453637209e0087f0b01514ab4322203",
+        "audioSha256": "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API, Interactions REST v1beta",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py (GeminiSpeechGenerator)",
+          "generatedAt": "2026-10-16T17:37:08+00:00"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-08-phase-recovery",
+        "renderer": "coherent-phase-recovery/v1",
+        "placardIds": [
+          "CARD-AM-08-concept",
+          "CARD-AM-08-application"
+        ],
+        "prompt": "Change relative phase error; this is an ideal message-band prediction, not a simulator result.",
+        "controls": [
+          {
+            "name": "phi",
+            "label": "Relative phase error",
+            "unit": "degree",
+            "min": 0.0,
+            "max": 180.0,
+            "step": 15.0,
+            "default": 60.0
+          }
+        ],
+        "outputs": [
+          {
+            "name": "fraction",
+            "label": "Signed recovery fraction",
+            "unit": "dimensionless"
+          }
+        ],
+        "comparisonDegrees": [
+          0.0,
+          60.0,
+          90.0
+        ],
+        "residual": "not_modelled",
+        "claim": "ideal_teaching_model",
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-08#explanation.modalities.interactive",
+            "sha256": "b64be7f1d5cab0db253bc8c5c365f8e9c6576b46189c2cbb5df5971c58a89f53"
+          },
+          {
+            "path": "sourceConcepts/C-AM-08#explanation.modalities.textImage.visual",
+            "sha256": "fdddb491c8eaf08d8f742af2c72a36f233c6ea89b738f74d1082d62ea8f200ce"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "phi": 0.0
+            },
+            "output": "fraction",
+            "expected": 1.0,
+            "tolerance": 1e-06
+          },
+          {
+            "inputs": {
+              "phi": 60.0
+            },
+            "output": "fraction",
+            "expected": 0.5,
+            "tolerance": 1e-06
+          },
+          {
+            "inputs": {
+              "phi": 90.0
+            },
+            "output": "fraction",
+            "expected": 0.0,
+            "tolerance": 1e-06
+          },
+          {
+            "inputs": {
+              "phi": 180.0
+            },
+            "output": "fraction",
+            "expected": -1.0,
+            "tolerance": 1e-06
+          }
+        ],
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "files": {
+    "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390": "CARD-AM-08-definition.or.wav",
+    "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3": "CARD-AM-08-definition.en.wav",
+    "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30": "CARD-AM-08-concept.or.wav",
+    "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7": "CARD-AM-08-concept.en.wav",
+    "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d": "CARD-AM-08-application.or.wav",
+    "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b": "CARD-AM-08-application.en.wav",
+    "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12": "CARD-AM-08-recap.or.wav",
+    "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47": "CARD-AM-08-recap.en.wav"
+  }
+}

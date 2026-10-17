@@ -1,0 +1,41 @@
+.screen { display:grid; gap:32px; min-width:0; }
+.header { display:grid; grid-template-columns:minmax(0,1fr) minmax(240px,.8fr); align-items:start; gap:28px; border-bottom:2px solid var(--learning-ink); padding-bottom:28px; }
+.titleRow { min-width:0; }
+.title { margin:14px 0 18px; font:var(--learning-text-display-l); letter-spacing:-.05em; overflow-wrap:anywhere; }
+.eyebrow { display:block; font:var(--learning-text-label); font-size:10px; letter-spacing:.12em; font-weight:700; }
+.intro { font:var(--learning-text-body); color:var(--learning-pencil); max-width:44ch; margin:18px 0 0; }
+.summary { border:1.5px solid var(--learning-ink); border-top:5px solid var(--learning-green); border-radius:var(--learning-radius-card); background:var(--learning-paper-sunken); padding:22px; min-width:0; }
+.summaryText { display:grid; justify-items:start; gap:16px; min-width:0; }
+.summaryText p { margin:0; }
+.checkCount { display:grid; gap:4px; font:var(--learning-text-label); }
+.checkCount > strong { font-size:36px; line-height:1.1; letter-spacing:-.05em; }
+.checkCount > strong > span { font-size:22px; color:var(--learning-pencil); letter-spacing:-.03em; }
+.checkProgress { width:100%; height:8px; border:1px solid var(--learning-ink); border-radius:0; background:var(--learning-paper); accent-color:var(--learning-green); }
+.checkProgress::-webkit-progress-bar { background:var(--learning-paper); }
+.checkProgress::-webkit-progress-value { background:var(--learning-green); }
+.checkProgress::-moz-progress-bar { background:var(--learning-green); }
+.nextLabel { display:grid; gap:6px; font:var(--learning-text-label); font-size:10px; letter-spacing:.08em; }
+.nextLabel strong { font:var(--learning-text-term); font-weight:600; letter-spacing:0; overflow-wrap:anywhere; }
+.evidence { width:100%; border-top:1px solid var(--rule); padding-top:6px; }
+.evidence summary { min-height:48px; display:flex; align-items:center; gap:8px; font:var(--learning-text-label); cursor:pointer; font-weight:600; }
+.evidence summary::after { content:'+'; margin-left:auto; font-size:20px; }
+.evidence[open] summary::after { content:'−'; }
+.body { display:grid; grid-template-columns:minmax(0,1fr) 248px; gap:28px; align-items:start; }
+.contents { display:grid; gap:32px; min-width:0; container-type:inline-size; }
+.section { display:grid; gap:16px; min-width:0; }
+.sectionTitle { margin:0; font:var(--learning-text-term); font-size:12px; color:var(--learning-ink); font-weight:700; border-bottom:1px solid var(--learning-ink); padding-bottom:12px; text-transform:uppercase; letter-spacing:.08em; line-height:1.6; }
+.tiles,.rows { display:grid; grid-template-columns:minmax(0,1fr); gap:14px; margin:0; padding:0; list-style:none; }
+.tiles > li,.rows > li { min-width:0; }
+@container (min-width:640px) { .tiles { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; } .tiles > li { display:flex; } }
+.lab { display:grid; justify-items:start; gap:16px; border:1.5px solid var(--learning-ink); border-top:6px solid var(--learning-blue); border-radius:var(--learning-radius-card); background:var(--learning-blue-tint); padding:24px 20px; }
+.lab p { margin:0; font:var(--learning-text-label); line-height:1.7; }
+.labTitle { display:flex; gap:8px; align-items:center; margin:0; font-size:23px; letter-spacing:-.04em; color:var(--learning-ink); }
+.lab summary { cursor:pointer; min-height:48px; display:list-item; padding-block:12px; font:var(--learning-text-label); line-height:1.7; }
+.missing { margin:0; padding-left:20px; font:var(--learning-text-label); }
+.missing a { display:inline-flex; align-items:center; min-height:48px; color:var(--learning-ink); }
+.test { display:grid; justify-items:start; gap:16px; border:1.5px solid var(--learning-ink); border-top:5px solid var(--learning-green); border-radius:var(--learning-radius-card); padding:24px; }
+.test h2,.test p { margin:0; }
+.test p { font:var(--learning-text-body); }
+@media (max-width:1199px) { .body { grid-template-columns:minmax(0,1fr); } }
+@media (max-width:767px) { .header { grid-template-columns:minmax(0,1fr); gap:24px; } .summaryText { grid-template-columns:minmax(0,1fr); } .summary { padding:20px; } .title { font-size:36px; } }
+@media (max-width:599px) { .screen { gap:28px; } .title { font-size:32px; } .intro { font-size:14px; } .header { padding-bottom:24px; } .test { padding:22px 18px; } }

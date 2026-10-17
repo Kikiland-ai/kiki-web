@@ -1,0 +1,30 @@
+.cover.cover { display:grid; grid-template-columns:minmax(0,1fr) 200px; gap:0; padding:0; border:2px solid var(--ink); box-shadow:var(--shadow); overflow:hidden; }
+.copy { padding:32px; min-width:0; }
+.copy :global(.eyebrow) { margin-bottom:12px; font-size:10px; }
+.copy h2 { font-size:clamp(28px,3.2vw,42px); line-height:1.14; max-width:23ch; margin:20px 0 14px; letter-spacing:-.045em; }
+.copy p { max-width:52ch; font-size:14px; line-height:1.75; margin-bottom:24px; }
+.copy small { display:block; margin-top:16px; }
+.copy :global(.form-actions) { align-items:center; gap:12px 20px; }
+.chapter { display:block; font-size:12px; line-height:1.6; color:var(--muted); }
+.index { padding:26px 22px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; border-left:2px solid var(--ink); background:repeating-linear-gradient(0deg,transparent 0 27px,#1111 27px 28px),var(--concept-tint); }
+.pageNumber { font-size:76px; font-weight:700; line-height:1; letter-spacing:-.07em; }
+.indexLabel { font-size:10px; letter-spacing:.1em; font-weight:700; margin:10px 0 24px; }
+.index strong { font-size:12px; margin:14px 0; }
+.index > span:last-child { font-size:12px; color:var(--muted); line-height:1.6; }
+.pages { display:flex; gap:4px; width:100%; }
+.pages i { flex:1; max-width:12px; height:22px; border:1px solid var(--ink); background:var(--paper); }
+.pages .passed { background:var(--concept); }
+.pages .current { outline:2px solid var(--ink); outline-offset:2px; }
+@media (max-width:1000px) { .cover.cover { grid-template-columns:minmax(0,1fr) 170px; } .copy { padding:26px; } .index { padding:22px 18px; } }
+@media (max-width:767px) {
+  .cover.cover { grid-template-columns:minmax(0,1fr); }
+  .copy { padding:26px 24px; }
+  .index { border-left:0; border-top:1.5px solid var(--ink); display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:6px 22px; padding:18px 24px; }
+  .pageNumber { font-size:52px; grid-row:1/4; }
+  .indexLabel { margin:0; }
+  .index strong { margin:0; }
+  .index > span:last-child { display:none; }
+  .pages { max-width:190px; }
+  .pages i { height:16px; }
+}
+@media (max-width:599px) { .copy { padding:24px 20px; } .copy h2 { font-size:28px; } .copy :global(.form-actions) { align-items:stretch; } .copy :global(.button-primary) { flex-basis:100%; } .index { padding-inline:20px; } }

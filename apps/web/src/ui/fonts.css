@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(fonts/NotoSansOriya-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(fonts/NotoSansOriya-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(fonts/NotoSansOriya-SemiBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(fonts/NotoSansOriya-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/SpaceGrotesk-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/SpaceGrotesk-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/SpaceGrotesk-SemiBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/SpaceGrotesk-Bold.ttf) format('truetype');
+}

@@ -1,0 +1,17 @@
+.loading {
+  display: flex;
+  align-items: center;
+  gap: var(--learning-space-3);
+  min-height: 96px;
+  padding: var(--learning-space-4);
+  border: 1.5px dashed var(--learning-ink);
+  border-radius: var(--learning-radius-card);
+  background: var(--learning-paper-sunken);
+  color: var(--learning-pencil);
+}
+
+.message {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

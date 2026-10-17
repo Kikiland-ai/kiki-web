@@ -1,0 +1,63 @@
+{
+  "note": "The only place subject-specific rules live. A ledger embeds a copy of its profile so it validates on its own. Add a subject by adding a profile; no code changes.",
+  "defaultCheckMix": [
+    { "dimension": "concept", "anyOfTypes": ["mcq", "multi_select", "numerical", "diagram", "derivation", "order_steps", "label_diagram", "predict"], "when": "always" },
+    { "dimension": "words", "anyOfTypes": ["term_match", "fill_blank"], "when": "always" },
+    { "dimension": "english", "anyOfTypes": ["short_english", "spoken", "long_written"], "when": "always" },
+    { "dimension": "lab", "anyOfTypes": ["predict", "mcq", "numerical", "order_steps", "label_diagram"], "when": "has_practical" }
+  ],
+  "profiles": [
+    {
+      "id": "electronics",
+      "label": "Electronics",
+      "practice": { "applies": true, "label": "Lab", "kinds": ["simulation", "physical_lab", "software_tool"] },
+      "visualKinds": ["circuit", "waveform", "graph", "block", "physical"],
+      "interactiveKinds": ["parameter_sweep", "step_through", "label_parts", "compare_toggle", "simulation"],
+      "unitsMatter": true,
+      "faultTypeLabels": { "Flipped": "Component reversed", "Wrong tool setting": "Wrong oscilloscope or meter setting" }
+    },
+    {
+      "id": "electrical",
+      "label": "Electrical",
+      "practice": { "applies": true, "label": "Lab", "kinds": ["simulation", "physical_lab", "software_tool"] },
+      "visualKinds": ["circuit", "phasor", "waveform", "graph", "block", "physical"],
+      "interactiveKinds": ["parameter_sweep", "step_through", "label_parts", "compare_toggle", "simulation"],
+      "unitsMatter": true,
+      "faultTypeLabels": { "Flipped": "Polarity reversed", "Wrong connection": "Wrong wiring" }
+    },
+    {
+      "id": "chemical",
+      "label": "Chemical Engineering",
+      "practice": { "applies": true, "label": "Lab", "kinds": ["physical_lab", "simulation", "calculation_task"] },
+      "visualKinds": ["process_flow", "block", "graph", "table", "equation", "structure"],
+      "interactiveKinds": ["parameter_sweep", "step_through", "sort_steps", "label_parts"],
+      "unitsMatter": true,
+      "faultTypeLabels": { "Wrong connection": "Wrong stream or line-up", "Wrong tool setting": "Wrong instrument setting", "Wrong measurement": "Sampled or read at the wrong time" }
+    },
+    {
+      "id": "mathematics",
+      "label": "Engineering Mathematics",
+      "practice": { "applies": false, "label": "Practical", "kinds": [] },
+      "visualKinds": ["graph", "equation", "table", "flowchart"],
+      "interactiveKinds": ["parameter_sweep", "step_through", "sort_steps"],
+      "unitsMatter": false
+    },
+    {
+      "id": "analog-communication",
+      "label": "Analog Communication",
+      "practice": { "applies": true, "label": "Lab", "kinds": ["simulation", "software_tool", "physical_lab"] },
+      "visualKinds": ["waveform", "graph", "block", "table", "equation"],
+      "interactiveKinds": ["parameter_sweep", "step_through", "compare_toggle", "simulation"],
+      "unitsMatter": true,
+      "faultTypeLabels": { "Wrong tool setting": "Wrong source, solver or scope setting", "Wrong value": "Incorrect frequency, phase or filter value", "Wrong connection": "Incorrect signal path" }
+    },
+    {
+      "id": "generic",
+      "label": "Any subject",
+      "practice": { "applies": true, "label": "Practical", "kinds": ["simulation", "physical_lab", "software_tool", "drawing", "coding", "field", "calculation_task"] },
+      "visualKinds": ["block", "flowchart", "graph", "table", "equation", "photo", "annotated_notes"],
+      "interactiveKinds": ["parameter_sweep", "step_through", "label_parts", "sort_steps", "compare_toggle"],
+      "unitsMatter": false
+    }
+  ]
+}

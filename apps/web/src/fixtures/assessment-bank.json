@@ -1,0 +1,1702 @@
+{
+  "version": "analog-modulation-preview/v1",
+  "sets": [
+    {
+      "assessmentId": "AS-AM-01",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-01-1",
+          "conceptId": "C-AM-01",
+          "prompt": {
+            "en": "Which property measures the peak size of a sinusoid?",
+            "or": "Sinusoid ର ସର୍ବାଧିକ ଆକାର କେଉଁ ଗୁଣ ଦର୍ଶାଏ?"
+          },
+          "options": {
+            "en": [
+              "Phase",
+              "Period",
+              "Amplitude",
+              "Frequency"
+            ],
+            "or": [
+              "Reference ସ୍ଥିତି: Phase",
+              "Cycle ସମୟ: Period",
+              "ଆକାର: Amplitude",
+              "Cycle ହାର: Frequency"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Amplitude measures peak size.",
+            "or": "Amplitude ସର୍ବାଧିକ ଆକାର ଦର୍ଶାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-01-2",
+          "conceptId": "C-AM-01",
+          "prompt": {
+            "en": "What is the period of a 100 Hz signal?",
+            "or": "100 Hz signal ର Period କେତେ?"
+          },
+          "options": {
+            "en": [
+              "0.1 s",
+              "0.01 s",
+              "100 s",
+              "1 s"
+            ],
+            "or": [
+              "0.1 s",
+              "0.01 s",
+              "100 s",
+              "1 s"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "T=1/f=1/100=0.01 s.",
+            "or": "T=1/f=1/100=0.01 s।"
+          }
+        },
+        {
+          "questionId": "Q-AM-01-3",
+          "conceptId": "C-AM-01",
+          "prompt": {
+            "en": "Which value generates 100 Hz in a time-based Sine Wave Frequency (rad/sec) field?",
+            "or": "Time-based Sine Wave ର Frequency (rad/sec) ରେ 100 Hz ପାଇଁ କେଉଁ ମୂଲ୍ୟ ଦେବେ?"
+          },
+          "options": {
+            "en": [
+              "2*pi*100",
+              "100",
+              "100/(2*pi)",
+              "2*pi/100"
+            ],
+            "or": [
+              "2*pi*100",
+              "100",
+              "100/(2*pi)",
+              "2*pi/100"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Convert Hz to angular frequency using 2*pi*f.",
+            "or": "Hz ରୁ angular frequency ପାଇଁ 2*pi*f ବ୍ୟବହାର କରନ୍ତୁ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-01-4",
+          "conceptId": "C-AM-01",
+          "prompt": {
+            "en": "Which phase shift equals a quarter cycle?",
+            "or": "ଏକ quarter cycle କେତେ Phase shift ସହିତ ସମାନ?"
+          },
+          "options": {
+            "en": [
+              "pi rad",
+              "2*pi rad",
+              "0 rad",
+              "pi/2 rad"
+            ],
+            "or": [
+              "pi rad",
+              "2*pi rad",
+              "0 rad",
+              "pi/2 rad"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "A full cycle is 2*pi rad, so a quarter is pi/2.",
+            "or": "ପୂରା Cycle 2*pi rad; ଏକ quarter ହେଉଛି pi/2।"
+          }
+        },
+        {
+          "questionId": "Q-AM-01-5",
+          "conceptId": "C-AM-01",
+          "prompt": {
+            "en": "If amplitude doubles while frequency stays fixed, what happens to period?",
+            "or": "Frequency ସ୍ଥିର ଥିବାବେଳେ Amplitude ଦୁଇଗୁଣ ହେଲେ Period କଣ ହେବ?"
+          },
+          "options": {
+            "en": [
+              "It halves",
+              "It becomes zero",
+              "It stays unchanged",
+              "It doubles"
+            ],
+            "or": [
+              "ଏହା ଅଧା ହୁଏ",
+              "ଏହା ଶୂନ୍ୟ ହୁଏ",
+              "ଏହା ସମାନ ରହେ",
+              "ଏହା ଦୁଇଗୁଣ ହୁଏ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Period depends on frequency, not amplitude.",
+            "or": "Period Frequency ଉପରେ ନିର୍ଭର କରେ, Amplitude ଉପରେ ନୁହେଁ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-02",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-02-1",
+          "conceptId": "C-AM-02",
+          "prompt": {
+            "en": "Which signal contains the information to convey?",
+            "or": "ପଠାଇବାକୁ ଥିବା ତଥ୍ୟ କେଉଁ Signal ରେ ଥାଏ?"
+          },
+          "options": {
+            "en": [
+              "Scope grid",
+              "Message signal",
+              "Unmodulated carrier alone",
+              "Solver setting"
+            ],
+            "or": [
+              "Scope grid ରେ",
+              "Message ରେ",
+              "କେବଳ unmodulated Carrier ରେ",
+              "Solver setting ରେ"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "The message contains information; the carrier is a reference.",
+            "or": "Message ରେ ତଥ୍ୟ ଥାଏ; Carrier reference ଅଟେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-02-2",
+          "conceptId": "C-AM-02",
+          "prompt": {
+            "en": "What is the carrier’s role in the selected model?",
+            "or": "ବାଛିଥିବା model ରେ Carrier ର କାମ କଣ?"
+          },
+          "options": {
+            "en": [
+              "Provide the modulation reference",
+              "Replace every message with zero",
+              "Measure quiz marks",
+              "Remove every sideband"
+            ],
+            "or": [
+              "Modulation ପାଇଁ reference ଦେବା",
+              "Message କୁ ଶୂନ୍ୟ କରିଦେବା",
+              "Quiz mark ମାପିବା",
+              "ସମସ୍ତ Sideband ହଟାଇବା"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "The carrier is combined with the message through modulation.",
+            "or": "Modulation ଦ୍ୱାରା Carrier ଓ Message ମିଶାଯାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-02-3",
+          "conceptId": "C-AM-02",
+          "prompt": {
+            "en": "Which pair matches our message and carrier frequencies?",
+            "or": "ଆମ Message ଓ Carrier frequency ପାଇଁ କେଉଁ ଯୋଡ଼ି ଠିକ?"
+          },
+          "options": {
+            "en": [
+              "2000 Hz message; 100 Hz carrier",
+              "0 Hz message; 0 Hz carrier",
+              "100 Hz message; 100 Hz carrier",
+              "100 Hz message; 2000 Hz carrier"
+            ],
+            "or": [
+              "Message 2000 Hz; Carrier 100 Hz",
+              "Message 0 Hz; Carrier 0 Hz",
+              "Message 100 Hz; Carrier 100 Hz",
+              "Message 100 Hz; Carrier 2000 Hz"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "The chosen carrier is much higher in frequency than the message.",
+            "or": "ବାଛିଥିବା Carrier frequency Message ଠାରୁ ବହୁତ ଅଧିକ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-02-4",
+          "conceptId": "C-AM-02",
+          "prompt": {
+            "en": "Which carrier property is directly varied in amplitude modulation?",
+            "or": "Amplitude modulation ରେ Carrier ର କେଉଁ ଗୁଣ ସିଧାସଳଖ ବଦଳେ?"
+          },
+          "options": {
+            "en": [
+              "Solver name",
+              "Simulation filename",
+              "Amplitude",
+              "Wire colour"
+            ],
+            "or": [
+              "Solver ର ନାମ",
+              "Simulation file ର ନାମ",
+              "ଆକାର: Amplitude",
+              "Wire ର ରଙ୍ଗ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Amplitude modulation varies carrier amplitude according to the message.",
+            "or": "Amplitude modulation ରେ Message ଅନୁସାରେ Carrier amplitude ବଦଳେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-02-5",
+          "conceptId": "C-AM-02",
+          "prompt": {
+            "en": "Where is demodulation performed in a communication chain?",
+            "or": "Communication chain ରେ Demodulation କେଉଁଠି ହୁଏ?"
+          },
+          "options": {
+            "en": [
+              "Before a message exists",
+              "At the receiver",
+              "Only in the message source",
+              "Only in a quiz"
+            ],
+            "or": [
+              "Message ତିଆରି ପୂର୍ବରୁ",
+              "Receiver ରେ",
+              "କେବଳ Message source ରେ",
+              "କେବଳ Quiz ରେ"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "The receiver recovers information by demodulation.",
+            "or": "Receiver Demodulation ଦ୍ୱାରା ତଥ୍ୟ ଫେରାଏ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-03",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-03-1",
+          "conceptId": "C-AM-03",
+          "prompt": {
+            "en": "An AM envelope has Emax=6 V and Emin=2 V. What is mu?",
+            "or": "AM Envelope ର Emax=6 V ଓ Emin=2 V ହେଲେ mu କେତେ?"
+          },
+          "options": {
+            "en": [
+              "0.5",
+              "2",
+              "0.25",
+              "1.5"
+            ],
+            "or": [
+              "0.5",
+              "2",
+              "0.25",
+              "1.5"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "mu=(6-2)/(6+2)=0.5.",
+            "or": "mu=(6-2)/(6+2)=0.5।"
+          }
+        },
+        {
+          "questionId": "Q-AM-03-2",
+          "conceptId": "C-AM-03",
+          "prompt": {
+            "en": "Which index is overmodulated for conventional single-tone AM?",
+            "or": "Conventional single-tone AM ରେ କେଉଁ Index Overmodulation ଦର୍ଶାଏ?"
+          },
+          "options": {
+            "en": [
+              "0.2",
+              "0.5",
+              "0.8",
+              "1.2"
+            ],
+            "or": [
+              "0.2",
+              "0.5",
+              "0.8",
+              "1.2"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "mu>1 causes envelope zero crossings.",
+            "or": "mu>1 ହେଲେ Envelope ଶୂନ୍ୟ ଅତିକ୍ରମ କରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-03-3",
+          "conceptId": "C-AM-03",
+          "prompt": {
+            "en": "Which component is deliberately retained in conventional AM?",
+            "or": "Conventional AM ରେ କେଉଁ Component ଉଦ୍ଦେଶ୍ୟମୂଳକ ଭାବରେ ରଖାଯାଏ?"
+          },
+          "options": {
+            "en": [
+              "No transmitted signal",
+              "Only the recovered message",
+              "Carrier component",
+              "Only a DC output"
+            ],
+            "or": [
+              "କୌଣସି transmitted Signal ନୁହେଁ",
+              "କେବଳ recovered Message",
+              "Carrier ଅଂଶ",
+              "କେବଳ DC output"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Conventional AM includes carrier and sidebands.",
+            "or": "Conventional AM ରେ Carrier ଓ Sidebands ରହେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-03-4",
+          "conceptId": "C-AM-03",
+          "prompt": {
+            "en": "For ordinary envelope recovery, which single-tone AM range avoids overmodulation?",
+            "or": "ସରଳ Envelope recovery ପାଇଁ କେଉଁ AM range Overmodulation ଏଡ଼ାଏ?"
+          },
+          "options": {
+            "en": [
+              "mu>=2",
+              "0<=mu<=1",
+              "mu>1",
+              "mu=3"
+            ],
+            "or": [
+              "mu>=2",
+              "0<=mu<=1",
+              "mu>1",
+              "mu=3"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "In this range, the conventional AM envelope stays non-negative.",
+            "or": "ଏହି range ରେ Conventional AM Envelope non-negative ରହେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-03-5",
+          "conceptId": "C-AM-03",
+          "prompt": {
+            "en": "Why not use a simple envelope detector for a general signed DSB-SC message?",
+            "or": "ସାଧାରଣ signed DSB-SC Message ପାଇଁ ସରଳ Envelope detector କାହିଁକି ଯଥେଷ୍ଟ ନୁହେଁ?"
+          },
+          "options": {
+            "en": [
+              "It loses the message sign",
+              "It always doubles carrier frequency",
+              "It creates a quiz",
+              "It changes the model filename"
+            ],
+            "or": [
+              "ଏହା Message ର ଚିହ୍ନ ହରାଏ",
+              "ଏହା ସବୁବେଳେ Carrier frequency ଦୁଇଗୁଣ କରେ",
+              "ଏହା Quiz ତିଆରି କରେ",
+              "ଏହା Model file ନାମ ବଦଳାଏ"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Envelope magnitude alone cannot preserve positive and negative message values.",
+            "or": "କେବଳ Envelope magnitude ରୁ Message ର positive ଓ negative ମୂଲ୍ୟ ରଖିହେବ ନାହିଁ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-04",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-04-1",
+          "conceptId": "C-AM-04",
+          "prompt": {
+            "en": "Which block operation creates the selected DSB-SC signal?",
+            "or": "ବାଛିଥିବା DSB-SC Signal କେଉଁ operation ଦ୍ୱାରା ତିଆରି ହୁଏ?"
+          },
+          "options": {
+            "en": [
+              "Only add the sources",
+              "Delete the message",
+              "Divide time by zero",
+              "Multiply message and carrier"
+            ],
+            "or": [
+              "କେବଳ Source ଯୋଡ଼ିବା",
+              "Message ହଟାଇବା",
+              "Time କୁ ଶୂନ୍ୟ ଦ୍ୱାରା ଭାଗ କରିବା",
+              "Message ଓ Carrier କୁ ଗୁଣ କରିବା"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "A Product block implements s(t)=m(t)*carrier(t).",
+            "or": "Product block s(t)=m(t)*carrier(t) ତିଆରି କରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-04-2",
+          "conceptId": "C-AM-04",
+          "prompt": {
+            "en": "For fm=100 Hz and fc=2000 Hz, where are the sidebands?",
+            "or": "fm=100 Hz ଓ fc=2000 Hz ପାଇଁ Sidebands କେଉଁଠି?"
+          },
+          "options": {
+            "en": [
+              "2000 and 4000 Hz",
+              "0 and 100 Hz",
+              "1900 and 2100 Hz",
+              "100 and 2000 Hz"
+            ],
+            "or": [
+              "2000 ଓ 4000 Hz",
+              "0 ଓ 100 Hz",
+              "1900 ଓ 2100 Hz",
+              "100 ଓ 2000 Hz"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "The sidebands are fc-fm and fc+fm.",
+            "or": "Sidebands ହେଉଛି fc-fm ଓ fc+fm।"
+          }
+        },
+        {
+          "questionId": "Q-AM-04-3",
+          "conceptId": "C-AM-04",
+          "prompt": {
+            "en": "For an ideal zero-mean message, what is suppressed in DSB-SC?",
+            "or": "Ideal zero-mean Message ପାଇଁ DSB-SC ରେ କଣ Suppressed ହୁଏ?"
+          },
+          "options": {
+            "en": [
+              "Every output sample",
+              "The separate carrier line",
+              "Both sidebands",
+              "All message information"
+            ],
+            "or": [
+              "ପ୍ରତ୍ୟେକ Output sample",
+              "ଅଲଗା Carrier line",
+              "ଦୁଇଟି Sideband",
+              "ସମସ୍ତ Message ତଥ୍ୟ"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "The sidebands remain; the separate carrier component is absent.",
+            "or": "Sidebands ରହେ; ଅଲଗା Carrier component ନଥାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-04-4",
+          "conceptId": "C-AM-04",
+          "prompt": {
+            "en": "What can reintroduce a carrier spectral line in product modulation?",
+            "or": "Product modulation ରେ କଣ Carrier spectral line ଫେରାଇପାରେ?"
+          },
+          "options": {
+            "en": [
+              "A message DC offset",
+              "A zero-mean message alone",
+              "Renaming the Scope",
+              "Changing the UI colour"
+            ],
+            "or": [
+              "Message ର DC offset",
+              "କେବଳ zero-mean Message",
+              "Scope ର ନାମ ବଦଳାଇବା",
+              "UI ର ରଙ୍ଗ ବଦଳାଇବା"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "A DC message component multiplies the carrier into a carrier line.",
+            "or": "DC message component Carrier ସହିତ ଗୁଣ ହୋଇ Carrier line ତିଆରି କରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-04-5",
+          "conceptId": "C-AM-04",
+          "prompt": {
+            "en": "If message bandwidth is 3 kHz, what is ideal DSB-SC bandwidth?",
+            "or": "Message bandwidth 3 kHz ହେଲେ ideal DSB-SC bandwidth କେତେ?"
+          },
+          "options": {
+            "en": [
+              "3 kHz",
+              "1.5 kHz",
+              "9 kHz",
+              "6 kHz"
+            ],
+            "or": [
+              "3 kHz",
+              "1.5 kHz",
+              "9 kHz",
+              "6 kHz"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "Both sidebands require 2B=6 kHz.",
+            "or": "ଦୁଇଟି Sideband ପାଇଁ 2B=6 kHz ଦରକାର।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-05",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-05-1",
+          "conceptId": "C-AM-05",
+          "prompt": {
+            "en": "Which variant ideally uses one message bandwidth B?",
+            "or": "କେଉଁ ପ୍ରକାରର ideal Bandwidth B?"
+          },
+          "options": {
+            "en": [
+              "Conventional DSB AM",
+              "Two independent DSB channels",
+              "SSB",
+              "DSB-SC"
+            ],
+            "or": [
+              "Conventional DSB AM",
+              "ଦୁଇଟି ଅଲଗା DSB channel",
+              "SSB",
+              "DSB-SC"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "SSB transmits only one sideband.",
+            "or": "SSB କେବଳ ଗୋଟିଏ Sideband ପଠାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-05-2",
+          "conceptId": "C-AM-05",
+          "prompt": {
+            "en": "What does VSB retain?",
+            "or": "VSB କଣ ରଖେ?"
+          },
+          "options": {
+            "en": [
+              "Two unrelated messages",
+              "One sideband plus a vestige of the other",
+              "Exactly no sidebands",
+              "Only an unmodulated carrier"
+            ],
+            "or": [
+              "ଦୁଇଟି ଅସମ୍ପର୍କିତ Message",
+              "ଗୋଟିଏ Sideband ଓ ଅନ୍ୟଟିର ଛୋଟ ଅଂଶ",
+              "କୌଣସି Sideband ନୁହେଁ",
+              "କେବଳ unmodulated Carrier"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "VSB is vestigial-sideband modulation.",
+            "or": "VSB ହେଉଛି Vestigial-sideband modulation।"
+          }
+        },
+        {
+          "questionId": "Q-AM-05-3",
+          "conceptId": "C-AM-05",
+          "prompt": {
+            "en": "For B=4 kHz, what is ideal SSB bandwidth?",
+            "or": "B=4 kHz ପାଇଁ ideal SSB bandwidth କେତେ?"
+          },
+          "options": {
+            "en": [
+              "4 kHz",
+              "8 kHz",
+              "2 kHz",
+              "16 kHz"
+            ],
+            "or": [
+              "4 kHz",
+              "8 kHz",
+              "2 kHz",
+              "16 kHz"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Ideal SSB bandwidth equals B.",
+            "or": "Ideal SSB bandwidth B ସହିତ ସମାନ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-05-4",
+          "conceptId": "C-AM-05",
+          "prompt": {
+            "en": "Which statement about SSB is correct?",
+            "or": "SSB ବିଷୟରେ କେଉଁ ଉକ୍ତି ଠିକ?"
+          },
+          "options": {
+            "en": [
+              "It must always transmit both sidebands",
+              "Its message is always zero",
+              "It is a solver setting",
+              "It can transmit either upper or lower sideband"
+            ],
+            "or": [
+              "ଏହା ସବୁବେଳେ ଦୁଇଟି Sideband ପଠାଏ",
+              "ଏହାର Message ସବୁବେଳେ ଶୂନ୍ୟ",
+              "ଏହା Solver setting ଅଟେ",
+              "ଏହା Upper କିମ୍ବା Lower sideband ପଠାଇପାରେ"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "SSB chooses one sideband, not necessarily always the upper.",
+            "or": "SSB ଗୋଟିଏ Sideband ବାଛେ; ସବୁବେଳେ Upper ହେବା ଦରକାର ନାହିଁ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-05-5",
+          "conceptId": "C-AM-05",
+          "prompt": {
+            "en": "Why retain a vestige in VSB?",
+            "or": "VSB ରେ ଛୋଟ Vestige କାହିଁକି ରଖାଯାଏ?"
+          },
+          "options": {
+            "en": [
+              "To require zero bandwidth",
+              "To remove the receiver",
+              "To ease practical filtering near the carrier",
+              "To erase the entire message"
+            ],
+            "or": [
+              "Bandwidth ଶୂନ୍ୟ କରିବାକୁ",
+              "Receiver ହଟାଇବାକୁ",
+              "Carrier ନିକଟର practical filtering ସହଜ କରିବାକୁ",
+              "ସମସ୍ତ Message ହଟାଇବାକୁ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "The vestige relaxes sharp filtering requirements near the carrier.",
+            "or": "Vestige Carrier ନିକଟର sharp filtering ଆବଶ୍ୟକତା କମାଏ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-06",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-06-1",
+          "conceptId": "C-AM-06",
+          "prompt": {
+            "en": "What should the receiver local carrier match?",
+            "or": "Receiver ର Local carrier କଣ ସହିତ ମେଳିବା ଉଚିତ?"
+          },
+          "options": {
+            "en": [
+              "The quiz score",
+              "Transmitter carrier frequency and phase",
+              "Only the model title",
+              "Only the message amplitude"
+            ],
+            "or": [
+              "Quiz score",
+              "Transmitter Carrier ର Frequency ଓ Phase",
+              "କେବଳ Model title",
+              "କେବଳ Message amplitude"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "Coherent demodulation needs carrier alignment.",
+            "or": "Coherent demodulation ପାଇଁ Carrier alignment ଦରକାର।"
+          }
+        },
+        {
+          "questionId": "Q-AM-06-2",
+          "conceptId": "C-AM-06",
+          "prompt": {
+            "en": "What is the ideal message component before recovery gain for unit carriers?",
+            "or": "Unit Carrier ପାଇଁ Recovery gain ପୂର୍ବରୁ ideal Message component କଣ?"
+          },
+          "options": {
+            "en": [
+              "m(t)/2",
+              "2*m(t)",
+              "m(t)^2",
+              "0 for every aligned signal"
+            ],
+            "or": [
+              "m(t)/2",
+              "2*m(t)",
+              "m(t)^2",
+              "ସମସ୍ତ aligned Signal ପାଇଁ 0"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Multiplying by the matched carrier leaves a half-message term.",
+            "or": "Matched Carrier ସହିତ ଗୁଣ କଲେ ଅଧା Message term ରହେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-06-3",
+          "conceptId": "C-AM-06",
+          "prompt": {
+            "en": "Which gain restores ideal message amplitude for unit-amplitude carriers?",
+            "or": "Unit-amplitude Carrier ପାଇଁ ideal Message amplitude କେଉଁ Gain ଫେରାଏ?"
+          },
+          "options": {
+            "en": [
+              "0.5",
+              "0",
+              "10",
+              "2"
+            ],
+            "or": [
+              "0.5",
+              "0",
+              "10",
+              "2"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "Gain 2 compensates for the factor 1/2.",
+            "or": "Gain 2, 1/2 factor ସୁଧାରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-06-4",
+          "conceptId": "C-AM-06",
+          "prompt": {
+            "en": "Why add a lowpass stage after the receiver Product?",
+            "or": "Receiver Product ପରେ Lowpass stage କାହିଁକି ଯୋଡ଼ିବେ?"
+          },
+          "options": {
+            "en": [
+              "To raise every frequency to infinity",
+              "To remove all output",
+              "To attenuate the high-frequency product while retaining message",
+              "To create the message filename"
+            ],
+            "or": [
+              "ସମସ୍ତ Frequency ଅସୀମ କରିବାକୁ",
+              "ସମସ୍ତ Output ହଟାଇବାକୁ",
+              "Message ରଖି high-frequency Product କମାଇବାକୁ",
+              "Message file ନାମ ତିଆରି ପାଇଁ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Product detection creates the wanted message band and an unwanted high-frequency image.",
+            "or": "Product detection ରେ ଆବଶ୍ୟକ Message band ଓ ଅନାବଶ୍ୟକ high-frequency Image ତିଆରି ହୁଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-06-5",
+          "conceptId": "C-AM-06",
+          "prompt": {
+            "en": "Which ordering is a coherent receiver?",
+            "or": "କେଉଁ କ୍ରମଟି Coherent receiver ପାଇଁ ଠିକ?"
+          },
+          "options": {
+            "en": [
+              "Only inspect carrier colour",
+              "Multiply by local carrier, filter, correct gain",
+              "Delete message, rename Scope, stop",
+              "Add two unconnected sources"
+            ],
+            "or": [
+              "କେବଳ Carrier ର ରଙ୍ଗ ଦେଖିବା",
+              "Local Carrier ସହିତ ଗୁଣ, Filter, Gain ସୁଧାର",
+              "Message ହଟାଇବା, Scope ନାମ ବଦଳାଇବା, ବନ୍ଦ",
+              "ଦୁଇଟି unconnected Source ଯୋଡ଼ିବା"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "A coherent receiver uses product detection and message-band filtering.",
+            "or": "Coherent receiver Product detection ଓ Message-band filtering ବ୍ୟବହାର କରେ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-07",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-07-1",
+          "conceptId": "C-AM-07",
+          "prompt": {
+            "en": "Which cutoff is the specified baseline for our 100 Hz message?",
+            "or": "ଆମ 100 Hz Message ପାଇଁ ବାଛିଥିବା baseline Cutoff କେତେ?"
+          },
+          "options": {
+            "en": [
+              "500 Hz",
+              "1 Hz",
+              "0 Hz",
+              "100000 Hz"
+            ],
+            "or": [
+              "500 Hz",
+              "1 Hz",
+              "0 Hz",
+              "100000 Hz"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "The bounded teaching model uses a 500 Hz lowpass cutoff.",
+            "or": "ଏହି teaching model 500 Hz Lowpass cutoff ବ୍ୟବହାର କରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-07-2",
+          "conceptId": "C-AM-07",
+          "prompt": {
+            "en": "Where are unwanted products for fm=100 Hz and fc=2000 Hz after coherent multiplication?",
+            "or": "fm=100 Hz ଓ fc=2000 Hz ପାଇଁ Coherent multiplication ପରେ unwanted Product କେଉଁଠି?"
+          },
+          "options": {
+            "en": [
+              "Only 100 Hz",
+              "Only 500 Hz",
+              "0 and 1 Hz",
+              "3900 and 4100 Hz"
+            ],
+            "or": [
+              "କେବଳ 100 Hz",
+              "କେବଳ 500 Hz",
+              "0 ଓ 1 Hz",
+              "3900 ଓ 4100 Hz"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "The image lies at 2*fc-fm and 2*fc+fm.",
+            "or": "Image 2*fc-fm ଓ 2*fc+fm ରେ ଥାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-07-3",
+          "conceptId": "C-AM-07",
+          "prompt": {
+            "en": "What can a real lowpass filter introduce?",
+            "or": "ଏକ real Lowpass filter କଣ ପରିବର୍ତ୍ତନ ଆଣିପାରେ?"
+          },
+          "options": {
+            "en": [
+              "Guaranteed perfect trace equality",
+              "No transient under any condition",
+              "Phase lag and some attenuation",
+              "A new uploaded syllabus"
+            ],
+            "or": [
+              "ନିଶ୍ଚିତ perfect Trace equality",
+              "କୌଣସି ଅବସ୍ଥାରେ Transient ନୁହେଁ",
+              "Phase lag ଓ କିଛି Attenuation",
+              "ନୂଆ uploaded Syllabus"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Finite filters change magnitude and phase and can have startup transients.",
+            "or": "Finite Filter Magnitude ଓ Phase ବଦଳାଏ ଏବଂ Startup transient ଥାଇପାରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-07-4",
+          "conceptId": "C-AM-07",
+          "prompt": {
+            "en": "When should you compare steady-state recovered waveforms?",
+            "or": "Steady-state recovered Waveform କେବେ ତୁଳନା କରିବେ?"
+          },
+          "options": {
+            "en": [
+              "Without opening a Scope",
+              "After startup transient settles",
+              "Only before running",
+              "At the first sample only"
+            ],
+            "or": [
+              "Scope ନଖୋଲି",
+              "Startup transient କମିଯିବା ପରେ",
+              "କେବଳ Run ପୂର୍ବରୁ",
+              "କେବଳ ପ୍ରଥମ Sample ରେ"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "Startup response can temporarily differ from steady state.",
+            "or": "Startup response ସାମୟିକ ଭାବରେ Steady state ଠାରୁ ଭିନ୍ନ ହୋଇପାରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-07-5",
+          "conceptId": "C-AM-07",
+          "prompt": {
+            "en": "What is wc for a 500 Hz cutoff?",
+            "or": "500 Hz Cutoff ପାଇଁ wc କେତେ?"
+          },
+          "options": {
+            "en": [
+              "2*pi*500 rad/s",
+              "500 rad/s",
+              "500/(2*pi) rad/s",
+              "2*pi/500 rad/s"
+            ],
+            "or": [
+              "2*pi*500 rad/s",
+              "500 rad/s",
+              "500/(2*pi) rad/s",
+              "2*pi/500 rad/s"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Use wc=2*pi*fc in the continuous filter coefficients.",
+            "or": "Continuous Filter coefficient ରେ wc=2*pi*fc ବ୍ୟବହାର କରନ୍ତୁ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-08",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-08-1",
+          "conceptId": "C-AM-08",
+          "prompt": {
+            "en": "What ideal amplitude fraction remains for a 60 degree phase error?",
+            "or": "60 degree Phase error ପାଇଁ ideal Amplitude fraction କେତେ ରହେ?"
+          },
+          "options": {
+            "en": [
+              "1",
+              "2",
+              "0.866",
+              "0.5"
+            ],
+            "or": [
+              "1",
+              "2",
+              "0.866",
+              "0.5"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "cos(60 degrees)=0.5.",
+            "or": "cos(60 degree)=0.5।"
+          }
+        },
+        {
+          "questionId": "Q-AM-08-2",
+          "conceptId": "C-AM-08",
+          "prompt": {
+            "en": "What happens to the ideal message component at 90 degree phase error?",
+            "or": "90 degree Phase error ରେ ideal Message component କଣ ହୁଏ?"
+          },
+          "options": {
+            "en": [
+              "It remains unchanged",
+              "It changes into a carrier source",
+              "It vanishes",
+              "It doubles"
+            ],
+            "or": [
+              "ଏହା ସମାନ ରହେ",
+              "ଏହା Carrier source ହୁଏ",
+              "ଏହା ଶୂନ୍ୟ ହୁଏ",
+              "ଏହା ଦୁଇଗୁଣ ହୁଏ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "cos(90 degrees)=0 for ideal aligned-frequency recovery.",
+            "or": "Ideal matched-frequency recovery ରେ cos(90 degree)=0।"
+          }
+        },
+        {
+          "questionId": "Q-AM-08-3",
+          "conceptId": "C-AM-08",
+          "prompt": {
+            "en": "A working transmitter has poor recovery. Which setting should you inspect first?",
+            "or": "Transmitter ଠିକ ଚାଲୁଥିଲେ ମଧ୍ୟ Recovery ଖରାପ। ପ୍ରଥମେ କେଉଁ Setting ଦେଖିବେ?"
+          },
+          "options": {
+            "en": [
+              "Quiz length",
+              "Receiver carrier frequency and phase",
+              "App logo spelling",
+              "Only the Scope colour"
+            ],
+            "or": [
+              "Quiz ଲମ୍ବ",
+              "Receiver Carrier ର Frequency ଓ Phase",
+              "App logo ର ଅକ୍ଷର",
+              "କେବଳ Scope ର ରଙ୍ଗ"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "Compare receiver carrier alignment before changing unrelated components.",
+            "or": "ଅସମ୍ପର୍କିତ Component ବଦଳାଇବା ପୂର୍ବରୁ Receiver carrier alignment ତୁଳନା କରନ୍ତୁ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-08-4",
+          "conceptId": "C-AM-08",
+          "prompt": {
+            "en": "Why can a 90 degree fault still show some high-frequency ripple?",
+            "or": "90 degree Fault ରେ ମଧ୍ୟ କିଛି high-frequency Ripple କାହିଁକି ଦେଖାଯାଇପାରେ?"
+          },
+          "options": {
+            "en": [
+              "The finite filter does not reject the image perfectly",
+              "The message always doubles",
+              "The quiz created a new signal",
+              "There is no receiver"
+            ],
+            "or": [
+              "Finite Filter Image କୁ ସମ୍ପୂର୍ଣ୍ଣ ହଟାଏ ନାହିଁ",
+              "Message ସବୁବେଳେ ଦୁଇଗୁଣ ହୁଏ",
+              "Quiz ନୂଆ Signal ତିଆରି କଲା",
+              "Receiver ନାହିଁ"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Ideal message suppression and finite high-frequency residual are distinct.",
+            "or": "Ideal Message suppression ଓ finite high-frequency Residual ଅଲଗା ବିଷୟ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-08-5",
+          "conceptId": "C-AM-08",
+          "prompt": {
+            "en": "What can a small receiver frequency mismatch cause?",
+            "or": "ଛୋଟ Receiver frequency mismatch କଣ କରିପାରେ?"
+          },
+          "options": {
+            "en": [
+              "Guaranteed perfect recovery",
+              "Only a filename change",
+              "Zero simulation time always",
+              "Time-varying beating in recovery"
+            ],
+            "or": [
+              "ନିଶ୍ଚିତ perfect Recovery",
+              "କେବଳ File ନାମ ପରିବର୍ତ୍ତନ",
+              "ସବୁବେଳେ Simulation time ଶୂନ୍ୟ",
+              "Recovery ରେ ସମୟ ସହିତ ବଦଳୁଥିବା Beating"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "Frequency error creates a time-varying relative phase.",
+            "or": "Frequency error ସମୟ ସହିତ relative Phase ବଦଳାଏ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-09",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-09-1",
+          "conceptId": "C-AM-09",
+          "prompt": {
+            "en": "Which property directly follows the message in FM?",
+            "or": "FM ରେ Message ଅନୁସାରେ କେଉଁ ଗୁଣ ସିଧାସଳଖ ବଦଳେ?"
+          },
+          "options": {
+            "en": [
+              "Model filename",
+              "Quiz threshold",
+              "Instantaneous frequency deviation",
+              "Only carrier amplitude"
+            ],
+            "or": [
+              "Model file ନାମ",
+              "Quiz threshold",
+              "Instantaneous Frequency deviation",
+              "କେବଳ Carrier amplitude"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "FM frequency deviation follows the message.",
+            "or": "FM ର Frequency deviation Message ଅନୁସାରେ ବଦଳେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-09-2",
+          "conceptId": "C-AM-09",
+          "prompt": {
+            "en": "For Delta f=5 kHz and fm=1 kHz, what is FM beta?",
+            "or": "Delta f=5 kHz ଓ fm=1 kHz ପାଇଁ FM beta କେତେ?"
+          },
+          "options": {
+            "en": [
+              "10",
+              "5",
+              "0.2",
+              "6"
+            ],
+            "or": [
+              "10",
+              "5",
+              "0.2",
+              "6"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "beta=Delta f/fm=5.",
+            "or": "beta=Delta f/fm=5।"
+          }
+        },
+        {
+          "questionId": "Q-AM-09-3",
+          "conceptId": "C-AM-09",
+          "prompt": {
+            "en": "With Delta f=5 kHz and B=1 kHz, what is Carson bandwidth?",
+            "or": "Delta f=5 kHz ଓ B=1 kHz ପାଇଁ Carson bandwidth କେତେ?"
+          },
+          "options": {
+            "en": [
+              "12 kHz",
+              "2 kHz",
+              "5 kHz",
+              "20 kHz"
+            ],
+            "or": [
+              "12 kHz",
+              "2 kHz",
+              "5 kHz",
+              "20 kHz"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Approximate bandwidth=2*(5+1)=12 kHz.",
+            "or": "Approximate Bandwidth=2*(5+1)=12 kHz।"
+          }
+        },
+        {
+          "questionId": "Q-AM-09-4",
+          "conceptId": "C-AM-09",
+          "prompt": {
+            "en": "What happens to ideal FM carrier amplitude?",
+            "or": "Ideal FM ର Carrier amplitude କଣ ହୁଏ?"
+          },
+          "options": {
+            "en": [
+              "It follows message amplitude",
+              "It is always zero",
+              "It grows without bound",
+              "It stays constant"
+            ],
+            "or": [
+              "ଏହା Message amplitude କୁ ଅନୁସରେ",
+              "ଏହା ସବୁବେଳେ ଶୂନ୍ୟ",
+              "ଏହା ସୀମାହୀନ ଭାବରେ ବଢ଼େ",
+              "ଏହା ସ୍ଥିର ରହେ"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "Ideal FM carries information in angle rather than amplitude.",
+            "or": "Ideal FM ରେ ତଥ୍ୟ Amplitude ପରିବର୍ତ୍ତେ Angle ରେ ଥାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-09-5",
+          "conceptId": "C-AM-09",
+          "prompt": {
+            "en": "How should Carson’s rule be interpreted?",
+            "or": "Carson’s rule କୁ କିପରି ବୁଝିବା ଉଚିତ?"
+          },
+          "options": {
+            "en": [
+              "As the DSB-SC formula only",
+              "As a phase unit",
+              "As an occupied-bandwidth approximation",
+              "As an exact last spectral line"
+            ],
+            "or": [
+              "କେବଳ DSB-SC formula ଭାବରେ",
+              "Phase unit ଭାବରେ",
+              "Occupied Bandwidth ର approximation ଭାବରେ",
+              "ନିଖୁତ ଶେଷ Spectral line ଭାବରେ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "FM can have further sidebands beyond this useful estimate.",
+            "or": "ଏହି useful estimate ବାହାରେ ମଧ୍ୟ FM Sideband ଥାଇପାରେ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-10",
+      "scope": "concept",
+      "passPercent": 60,
+      "questions": [
+        {
+          "questionId": "Q-AM-10-1",
+          "conceptId": "C-AM-10",
+          "prompt": {
+            "en": "Which property directly follows the message in PM?",
+            "or": "PM ରେ Message ଅନୁସାରେ କେଉଁ ଗୁଣ ସିଧାସଳଖ ବଦଳେ?"
+          },
+          "options": {
+            "en": [
+              "Filename length",
+              "Phase deviation",
+              "Only amplitude",
+              "Only simulation time"
+            ],
+            "or": [
+              "File ନାମର ଲମ୍ବ",
+              "Phase deviation",
+              "କେବଳ Amplitude",
+              "କେବଳ Simulation time"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "PM phase deviation is proportional to the message.",
+            "or": "PM Phase deviation Message ସହିତ proportional।"
+          }
+        },
+        {
+          "questionId": "Q-AM-10-2",
+          "conceptId": "C-AM-10",
+          "prompt": {
+            "en": "Which expression represents PM?",
+            "or": "କେଉଁ Expression PM ଦର୍ଶାଏ?"
+          },
+          "options": {
+            "en": [
+              "Ac*cos(2*pi*fc*t+kp*m(t))",
+              "Ac*(1+m(t))*cos(2*pi*fc*t)",
+              "m(t)*cos(2*pi*fc*t)",
+              "m(t)/2"
+            ],
+            "or": [
+              "Ac*cos(2*pi*fc*t+kp*m(t))",
+              "Ac*(1+m(t))*cos(2*pi*fc*t)",
+              "m(t)*cos(2*pi*fc*t)",
+              "m(t)/2"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "The message is inside the carrier phase term in PM.",
+            "or": "PM ରେ Message Carrier ର Phase term ଭିତରେ ଥାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-10-3",
+          "conceptId": "C-AM-10",
+          "prompt": {
+            "en": "After a constant message settles, what does PM produce?",
+            "or": "Constant Message ସ୍ଥିର ହେବା ପରେ PM କଣ ଦିଏ?"
+          },
+          "options": {
+            "en": [
+              "A sustained frequency offset from that constant phase alone",
+              "A mandatory zero carrier",
+              "Two amplitude levels only",
+              "A fixed phase offset"
+            ],
+            "or": [
+              "ସେହି constant Phase ପାଇଁ sustained Frequency offset",
+              "ନିଶ୍ଚିତ ଶୂନ୍ୟ Carrier",
+              "କେବଳ ଦୁଇଟି Amplitude level",
+              "ଏକ fixed Phase offset"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "The derivative of a constant phase offset is zero.",
+            "or": "Constant Phase offset ର derivative ଶୂନ୍ୟ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-10-4",
+          "conceptId": "C-AM-10",
+          "prompt": {
+            "en": "PM instantaneous frequency deviation follows which message quantity?",
+            "or": "PM instantaneous Frequency deviation କେଉଁ Message quantity କୁ ଅନୁସରେ?"
+          },
+          "options": {
+            "en": [
+              "Only its DC value",
+              "Its quiz score",
+              "Its time derivative",
+              "Only its filename"
+            ],
+            "or": [
+              "କେବଳ ଏହାର DC value",
+              "ଏହାର Quiz score",
+              "ଏହାର Time derivative",
+              "କେବଳ ଏହାର File ନାମ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Frequency is phase’s rate of change divided by 2*pi.",
+            "or": "Frequency ହେଉଛି Phase ର rate of change କୁ 2*pi ଦ୍ୱାରା ଭାଗ କଲେ ମିଳୁଥିବା ମୂଲ୍ୟ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-10-5",
+          "conceptId": "C-AM-10",
+          "prompt": {
+            "en": "Which pair belongs to angle modulation?",
+            "or": "କେଉଁ ଯୋଡ଼ି Angle modulation ର ଅଂଶ?"
+          },
+          "options": {
+            "en": [
+              "MCQ and viva",
+              "FM and PM",
+              "Only conventional AM and DSB-SC",
+              "Only SSB and VSB"
+            ],
+            "or": [
+              "MCQ ଓ Viva",
+              "FM ଓ PM",
+              "କେବଳ Conventional AM ଓ DSB-SC",
+              "କେବଳ SSB ଓ VSB"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "FM and PM alter the angle of the carrier.",
+            "or": "FM ଓ PM Carrier ର Angle ବଦଳାଏ।"
+          }
+        }
+      ]
+    },
+    {
+      "assessmentId": "AS-AM-CHAPTER",
+      "scope": "chapter",
+      "passPercent": 80,
+      "questions": [
+        {
+          "questionId": "Q-AM-01-6",
+          "conceptId": "C-AM-01",
+          "prompt": {
+            "en": "A 200 Hz message source needs which angular frequency?",
+            "or": "200 Hz Message source ପାଇଁ angular frequency କେତେ?"
+          },
+          "options": {
+            "en": [
+              "200/pi rad/s",
+              "400*pi rad/s",
+              "200 rad/s",
+              "100*pi rad/s"
+            ],
+            "or": [
+              "200/pi rad/s",
+              "400*pi rad/s",
+              "200 rad/s",
+              "100*pi rad/s"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "2*pi*200=400*pi rad/s.",
+            "or": "2*pi*200=400*pi rad/s।"
+          }
+        },
+        {
+          "questionId": "Q-AM-02-6",
+          "conceptId": "C-AM-02",
+          "prompt": {
+            "en": "Why modulate a low-frequency message onto a carrier?",
+            "or": "କମ Frequency Message କୁ Carrier ଉପରେ Modulate କାହିଁକି କରାଯାଏ?"
+          },
+          "options": {
+            "en": [
+              "To place it in a suitable transmission frequency range",
+              "To erase its information",
+              "To make every receiver unnecessary",
+              "To change only the display language"
+            ],
+            "or": [
+              "ଉପଯୁକ୍ତ transmission frequency ପରିସରକୁ ନେବା ପାଇଁ",
+              "ଏହାର ତଥ୍ୟ ହଟାଇବା ପାଇଁ",
+              "Receiver ର ଆବଶ୍ୟକତା ହଟାଇବା ପାଇଁ",
+              "କେବଳ display language ବଦଳାଇବା ପାଇଁ"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Modulation adapts the message to the transmission channel.",
+            "or": "Modulation Message କୁ transmission channel ପାଇଁ ଉପଯୁକ୍ତ କରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-03-6",
+          "conceptId": "C-AM-03",
+          "prompt": {
+            "en": "With Emax=9 V and Emin=3 V, what modulation percentage is present?",
+            "or": "Emax=9 V ଓ Emin=3 V ହେଲେ Modulation percentage କେତେ?"
+          },
+          "options": {
+            "en": [
+              "25%",
+              "75%",
+              "150%",
+              "50%"
+            ],
+            "or": [
+              "25%",
+              "75%",
+              "150%",
+              "50%"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "mu=(9-3)/(9+3)=0.5=50%.",
+            "or": "mu=(9-3)/(9+3)=0.5=50%।"
+          }
+        },
+        {
+          "questionId": "Q-AM-04-6",
+          "conceptId": "C-AM-04",
+          "prompt": {
+            "en": "A 250 Hz message modulates a 3000 Hz carrier. Which pair is correct?",
+            "or": "250 Hz Message ଏକ 3000 Hz Carrier କୁ Modulate କଲେ କେଉଁ ଯୋଡ଼ି ଠିକ?"
+          },
+          "options": {
+            "en": [
+              "3000 and 6000 Hz",
+              "0 and 250 Hz",
+              "2750 and 3250 Hz",
+              "250 and 3000 Hz"
+            ],
+            "or": [
+              "3000 ଓ 6000 Hz",
+              "0 ଓ 250 Hz",
+              "2750 ଓ 3250 Hz",
+              "250 ଓ 3000 Hz"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "Use fc-fm=2750 and fc+fm=3250 Hz.",
+            "or": "fc-fm=2750 ଓ fc+fm=3250 Hz ବ୍ୟବହାର କରନ୍ତୁ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-05-6",
+          "conceptId": "C-AM-05",
+          "prompt": {
+            "en": "For a 5 kHz message, compare ideal SSB and DSB-SC bandwidths.",
+            "or": "5 kHz Message ପାଇଁ ideal SSB ଓ DSB-SC Bandwidth ତୁଳନା କରନ୍ତୁ।"
+          },
+          "options": {
+            "en": [
+              "SSB 10 kHz; DSB-SC 5 kHz",
+              "SSB 5 kHz; DSB-SC 10 kHz",
+              "Both 5 kHz",
+              "Both 10 kHz"
+            ],
+            "or": [
+              "SSB 10 kHz; DSB-SC 5 kHz",
+              "SSB 5 kHz; DSB-SC 10 kHz",
+              "ଦୁଇଟି 5 kHz",
+              "ଦୁଇଟି 10 kHz"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "SSB uses B; DSB-SC uses 2B.",
+            "or": "SSB ପାଇଁ B; DSB-SC ପାଇଁ 2B।"
+          }
+        },
+        {
+          "questionId": "Q-AM-06-6",
+          "conceptId": "C-AM-06",
+          "prompt": {
+            "en": "After ideal filtering, a matched receiver outputs 0.4 times the message before gain. What gain restores amplitude?",
+            "or": "Ideal filtering ପରେ Gain ପୂର୍ବରୁ matched Receiver output Message ର 0.4 ଗୁଣ। କେଉଁ Gain Amplitude ଫେରାଏ?"
+          },
+          "options": {
+            "en": [
+              "2.5",
+              "2",
+              "0.4",
+              "0.2"
+            ],
+            "or": [
+              "2.5",
+              "2",
+              "0.4",
+              "0.2"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "The required correction is 1/0.4=2.5; gain 2 applies only to the unit-carrier baseline.",
+            "or": "ଆବଶ୍ୟକ correction 1/0.4=2.5। Gain 2 କେବଳ unit-carrier baseline ପାଇଁ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-07-6",
+          "conceptId": "C-AM-07",
+          "prompt": {
+            "en": "If the cutoff is reduced below the 100 Hz message frequency, what is likely?",
+            "or": "Cutoff କୁ 100 Hz Message frequency ଠାରୁ କମ କଲେ କଣ ହୋଇପାରେ?"
+          },
+          "options": {
+            "en": [
+              "The receiver always becomes ideal",
+              "The message frequency becomes zero automatically",
+              "The filter stops existing",
+              "The wanted message is attenuated"
+            ],
+            "or": [
+              "Receiver ସବୁବେଳେ Ideal ହୁଏ",
+              "Message frequency ଆପେଆପେ ଶୂନ୍ୟ ହୁଏ",
+              "Filter ରହେ ନାହିଁ",
+              "ଆବଶ୍ୟକ Message କମିଯାଏ"
+            ]
+          },
+          "correctIndex": 3,
+          "explanation": {
+            "en": "A low cutoff can reject part of the wanted message band.",
+            "or": "କମ Cutoff ଆବଶ୍ୟକ Message band ର ଅଂଶ କମାଇପାରେ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-08-6",
+          "conceptId": "C-AM-08",
+          "prompt": {
+            "en": "What is the ideal recovered polarity with a 180 degree relative phase error?",
+            "or": "180 degree relative Phase error ରେ ideal Recovered polarity କଣ?"
+          },
+          "options": {
+            "en": [
+              "Always zero",
+              "Always doubled",
+              "Inverted",
+              "Unchanged"
+            ],
+            "or": [
+              "ସବୁବେଳେ ଶୂନ୍ୟ",
+              "ସବୁବେଳେ ଦୁଇଗୁଣ",
+              "ଚିହ୍ନ ଓଲଟିଯାଏ",
+              "ସମାନ ରହେ"
+            ]
+          },
+          "correctIndex": 2,
+          "explanation": {
+            "en": "cos(180 degrees)=-1, so the message is inverted.",
+            "or": "cos(180 degree)=-1, ତେଣୁ Message ର ଚିହ୍ନ ଓଲଟିଯାଏ।"
+          }
+        },
+        {
+          "questionId": "Q-AM-09-6",
+          "conceptId": "C-AM-09",
+          "prompt": {
+            "en": "For Delta f=3 kHz and B=2 kHz, estimate occupied FM bandwidth.",
+            "or": "Delta f=3 kHz ଓ B=2 kHz ପାଇଁ occupied FM bandwidth ଅନୁମାନ କରନ୍ତୁ।"
+          },
+          "options": {
+            "en": [
+              "1 kHz",
+              "10 kHz",
+              "4 kHz",
+              "6 kHz"
+            ],
+            "or": [
+              "1 kHz",
+              "10 kHz",
+              "4 kHz",
+              "6 kHz"
+            ]
+          },
+          "correctIndex": 1,
+          "explanation": {
+            "en": "Carson’s rule gives 2*(3+2)=10 kHz.",
+            "or": "Carson’s rule ଅନୁସାରେ 2*(3+2)=10 kHz।"
+          }
+        },
+        {
+          "questionId": "Q-AM-10-6",
+          "conceptId": "C-AM-10",
+          "prompt": {
+            "en": "Which statement correctly contrasts FM and PM?",
+            "or": "କେଉଁ ଉକ୍ତି FM ଓ PM ର ଠିକ ତଫାତ ଦର୍ଶାଏ?"
+          },
+          "options": {
+            "en": [
+              "FM frequency follows message; PM phase follows message",
+              "Both directly vary only amplitude",
+              "PM requires no carrier",
+              "FM is always DSB-SC"
+            ],
+            "or": [
+              "FM ର Frequency ଓ PM ର Phase Message କୁ ଅନୁସରେ",
+              "ଦୁଇଟି କେବଳ Amplitude ବଦଳାଏ",
+              "PM ପାଇଁ Carrier ଦରକାର ନାହିଁ",
+              "FM ସବୁବେଳେ DSB-SC"
+            ]
+          },
+          "correctIndex": 0,
+          "explanation": {
+            "en": "Their direct message-to-carrier dependencies differ.",
+            "or": "Message ଓ Carrier ମଧ୍ୟରେ ସିଧାସଳଖ ନିର୍ଭରତା ଭିନ୍ନ।"
+          }
+        }
+      ]
+    }
+  ]
+}

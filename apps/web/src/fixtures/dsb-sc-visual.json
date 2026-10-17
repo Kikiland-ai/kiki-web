@@ -1,0 +1,36 @@
+{
+  "kind": "dsb_sc",
+  "schema": "dsb-sc-visual/v1",
+  "messageFrequencyHz": 100.0,
+  "carrierFrequencyHz": 2000.0,
+  "messageRangeHz": {
+    "min": 10.0,
+    "max": 200.0,
+    "step": 10.0
+  },
+  "sidebandTermId": "T-AM-04-2",
+  "carrierTermId": "T-AM-02-2",
+  "signalTermId": "T-AM-04-1",
+  "sources": [
+    {
+      "origin": "curated",
+      "label": "MathWorks: analog passband modulation; reference for the modulation families",
+      "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+    },
+    {
+      "origin": "curated",
+      "label": "MathWorks: DSB-SC coherent receiver and matching carrier parameters",
+      "url": "https://www.mathworks.com/help/comm/ref/dsbscamdemodulatorpassband.html"
+    },
+    {
+      "origin": "curated",
+      "label": "MathWorks: time-based Sine Wave parameters",
+      "url": "https://www.mathworks.com/help/simulink/slref/sinewave.html"
+    },
+    {
+      "origin": "curated",
+      "label": "MathWorks: continuous Transfer Fcn coefficients",
+      "url": "https://www.mathworks.com/help/simulink/slref/transferfcn.html"
+    }
+  ]
+}

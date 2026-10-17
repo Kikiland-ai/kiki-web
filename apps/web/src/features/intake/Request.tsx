@@ -1,0 +1,41 @@
+import { useEffect, useRef, useState } from 'react';
+import { Navigate, useParams } from 'react-router';
+import { useSession } from '../../app/Session';
+import { assertOwner, MATERIAL_LABELS, type IntakeRequest, type Outline } from '../../contracts/intake';
+import { readableError } from '../../services/types';
+import { useMaterials } from './Materials';
+import { ActionLink, Alert, Button, Card, Icon, LoadingNotice, PageTitle } from '../../ui/kit';
+import { IntakeStatus } from '../../ui/IntakeStatus';
+
+export function MaterialRequest() {
+  const { requestId = '' } = useParams(); const { profile, services } = useSession(); const { requests, upsert } = useMaterials();
+  const [loading, setLoading] = useState(true), [error, setError] = useState(''), [busy, setBusy] = useState(false);
+  const request = requests.find(r => r.id === requestId), actionKey = useRef(crypto.randomUUID());
+  useEffect(() => {
+    const controller = new AbortController(); setLoading(true); setError('');
+    services.intake.get(requestId, controller.signal).then(r => { if (controller.signal.aborted || !profile) return; assertOwner(r, profile.id); upsert(r); }).catch(e => { if (!controller.signal.aborted) setError(readableError(e)); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
+  }, [requestId, profile, services, upsert]);
+  const action = async (operation: () => Promise<IntakeRequest>) => {
+    setBusy(true); setError('');
+    try { const next = await operation(); if (profile) assertOwner(next, profile.id); upsert(next); actionKey.current = crypto.randomUUID(); }
+    catch (e) { setError(readableError(e)); } finally { setBusy(false); }
+  };
+  if (loading && !request) return <LoadingNotice>Opening your material…</LoadingNotice>;
+  if (!request) return <div className="page-stack"><PageTitle title="This material couldn’t open." />{error && <Alert>{error}</Alert>}<ActionLink to="/library">Back to Library</ActionLink></div>;
+  if (request.status === 'text_saved') return <Navigate to="/library" replace />;
+  return <div className="page-stack"><PageTitle eyebrow={`ANALOG COMMUNICATION · ${MATERIAL_LABELS[request.kind].toUpperCase()}`} title={request.topic}>Your material is saved in Library.</PageTitle><div className="intake-stage-header"><IntakeStatus status={request.status} /><span className="helper-note">{services.mode === 'fixture' ? 'Saved in this browser' : 'Saved request'} · {request.sources.length} document{request.sources.length > 1 ? 's' : ''}</span><ActionLink to="/library" variant="text">Library<Icon name="folder_open" /></ActionLink></div>{error && <Alert>{error}</Alert>}
+    {services.mode === 'fixture' && <div className="quiet-note"><Icon name="info" /><span>Sample processing controls below are for reviewing the UI. The outline is a curated Analog Modulation example, not information extracted from your files.</span></div>}
+    {request.status === 'stored' && <Card><h2>Your files are saved.</h2><p>Your originals are stored privately and are available in Library when you sign in again. Reading the material and preparing lessons are not available yet.</p><ActionLink to="/library" variant="secondary">Open Library<Icon name="folder_open" /></ActionLink></Card>}
+    {request.status === 'reading' && <Card><h2>Your files are saved.</h2><p>{services.mode === 'fixture' ? 'Try the review stage or a recoverable failure using the sample controls. Nothing advances automatically.' : 'Kiki is reading the uploaded material. You can leave this page and check Library later.'}</p>{services.intake.preview && <div className="form-actions"><Button disabled={busy} onClick={() => action(() => services.intake.preview!(request.id, 'needs_review'))}>Preview sample outline<Icon name="arrow_forward" /></Button><Button variant="secondary" disabled={busy} onClick={() => action(() => services.intake.preview!(request.id, 'failed'))}>Preview reading failure</Button></div>}</Card>}
+    {request.status === 'needs_review' && request.outline && <OutlineReview key={`${request.id}-${request.updatedAt}`} request={request} busy={busy} onConfirm={outline => action(() => services.intake.confirm(request.id, outline, actionKey.current))} />}
+    {request.status === 'generating' && <Card><h2>Your outline is confirmed.</h2><p>{services.mode === 'fixture' ? 'No lessons are being generated in this preview. You can inspect the sample ready state below.' : 'Lessons are being prepared. Your confirmed outline and original files are saved.'}</p>{services.intake.preview && <Button disabled={busy} onClick={() => action(() => services.intake.preview!(request.id, 'ready'))}>Preview ready state<Icon name="arrow_forward" /></Button>}</Card>}
+    {request.status === 'ready' && <Card><span className="dimension-label"><i className="concept-dot" />{services.mode === 'fixture' ? 'SAMPLE READY STATE' : 'LESSON MATERIAL READY'}</span><h2>{request.outline?.title}</h2><p>{services.mode === 'fixture' ? 'Your sample outline and originals are saved. The sample chapter link opens curated lessons, not lessons generated from your file.' : 'Open the chapter to see the available lesson material.'}</p>{request.lessonPlanId && <ActionLink to={`/chapters/${request.lessonPlanId}`}>Open chapter<Icon name="arrow_forward" /></ActionLink>}</Card>}
+    {request.status === 'failed' && <Card><h2>Let’s give this material another try.</h2><p>{request.failure?.message}</p><div className="form-actions">{request.failure?.canRetry && <Button disabled={busy} onClick={() => action(() => services.intake.retry(request.id, actionKey.current))}>Retry reading<Icon name="refresh" /></Button>}<ActionLink variant="secondary" to={`/subjects/${request.courseId}/material`}>Add a clearer file</ActionLink></div></Card>}
+    <Card><h2>Saved sources</h2><ul className="source-list">{request.sources.map(source => <li key={source.id}><Icon name={source.mime === 'application/pdf' ? 'picture_as_pdf' : source.textSummary ? 'description' : 'image'} /><div><strong>{source.title}</strong><small>{(source.size / 1024).toFixed(1)} KB</small></div></li>)}</ul>{request.note && <p className="material-note">Your note: {request.note}</p>}</Card></div>;
+}
+function OutlineReview({ request, busy, onConfirm }: { request: IntakeRequest; busy: boolean; onConfirm(outline: Outline): Promise<void> }) {
+  const [outline, setOutline] = useState(request.outline!);
+  const count = outline.concepts.filter(c => c.included).length;
+  return <Card className="outline-review"><span className="eyebrow">REVIEW BEFORE CREATING LESSONS</span><h2>Does this outline match your topic?</h2>{outline.provisional && <p className="provisional-note"><Icon name="info" />Provisional outline · confirm it against your syllabus.</p>}<form onSubmit={e => { e.preventDefault(); void onConfirm(outline); }}><label htmlFor="outline-title">Chapter title</label><input id="outline-title" value={outline.title} maxLength={180} required disabled={busy} onChange={e => setOutline(o => ({ ...o, title: e.target.value }))} /><fieldset><legend>Concepts to include · {count} selected</legend>{outline.concepts.map((concept,i) => <div className="outline-concept" key={concept.id}><input type="checkbox" id={`include-${concept.id}`} checked={concept.included} disabled={busy} onChange={e => setOutline(o => ({ ...o, concepts: o.concepts.map((c,n) => n === i ? { ...c, included: e.target.checked } : c) }))} /><label className="sr-only" htmlFor={`include-${concept.id}`}>Include {concept.title}</label><label className="sr-only" htmlFor={`title-${concept.id}`}>Title for {concept.id}</label><input id={`title-${concept.id}`} value={concept.title} required maxLength={180} disabled={busy} onChange={e => setOutline(o => ({ ...o, concepts: o.concepts.map((c,n) => n === i ? { ...c, title: e.target.value } : c) }))} /></div>)}</fieldset>{outline.exclusions.map(item => <p className="helper-note" key={item}>{item}</p>)}<p className="helper-note">Review changes are saved when you confirm. Originals remain available below.</p><Button type="submit" disabled={busy || !count || !outline.title.trim() || outline.concepts.some(c => !c.title.trim())}>{busy ? 'Saving outline…' : 'Confirm outline and prepare lessons'}<Icon name="arrow_forward" /></Button></form></Card>;
+}
