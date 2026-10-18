@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { AuthService } from '../contracts/services';
-import { CaptureSessionSchema, ExecutionEnvelopeSchema, FrameReceiptSchema, type FrameMetadata, type FrameChannel, type LabExecutionApi } from '../contracts/lab-execution';
+import { CaptureSessionSchema, ExecutionEnvelopeSchema, FrameReceiptSchema, FrameSkippedSchema, type FrameMetadata, type FrameChannel, type LabExecutionApi } from '../contracts/lab-execution';
 import { ServiceError } from './types';
 
 export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetcher: typeof fetch = fetch, Socket: typeof WebSocket = WebSocket): LabExecutionApi {
@@ -35,7 +35,7 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
       const socket = new Socket(url.toString());
       let ended = false, settled = false;
       let control: { status: string; resolve(): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
-      let pending: { metadata: FrameMetadata; resolve(value: z.infer<typeof FrameReceiptSchema>): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
+      let pending: { metadata: FrameMetadata; resolve(value: z.infer<typeof FrameReceiptSchema> | null): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
       let resolveReady!: () => void, rejectReady!: (error: Error) => void;
       const ready = new Promise<void>((resolve, reject) => { resolveReady = resolve; rejectReady = reject; });
       ready.catch(() => undefined);
@@ -65,6 +65,10 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
             if (receipt.frame_id !== `${sid}:${pending.metadata.capture_epoch}:${pending.metadata.sequence}`
               || (['width', 'height', 'byte_count', 'view_revision'] as const).some(key => receipt[key] !== pending!.metadata[key])) throw new Error('Foreign frame acknowledgement.');
             clearTimeout(pending.timer); pending.resolve(receipt); pending = null;
+          }
+          if (message.type === 'skipped' && pending) {
+            FrameSkippedSchema.parse(message);
+            clearTimeout(pending.timer); pending.resolve(null); pending = null;
           }
         } catch { fail(); }
       });

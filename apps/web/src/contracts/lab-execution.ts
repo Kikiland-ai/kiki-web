@@ -81,6 +81,8 @@ export const FrameReceiptSchema = z.object({
   byte_count: Integer, view_revision: Integer,
 }).passthrough();
 export type FrameReceipt = z.infer<typeof FrameReceiptSchema>;
+/** Python declines a frame sent inside its admission spacing; it carries no retry hint. */
+export const FrameSkippedSchema = z.object({ type: z.literal('skipped'), reason: z.string().max(80) });
 export interface FrameMetadata {
   type: 'frame'; capture_epoch: 1; view_revision: number; sequence: number;
   captured_elapsed_ms: number; width: number; height: number; source_width: number; source_height: number;
@@ -88,7 +90,8 @@ export interface FrameMetadata {
 }
 export interface FrameChannel {
   ready: Promise<void>;
-  sendFrame(metadata: FrameMetadata, image: Blob): Promise<FrameReceipt>;
+  /** Resolves null when the receiver skipped the frame; the session stays connected. */
+  sendFrame(metadata: FrameMetadata, image: Blob): Promise<FrameReceipt | null>;
   command(type: 'capture_started' | 'pause' | 'resume' | 'stop' | 'heartbeat'): Promise<void>;
   close(): void;
 }

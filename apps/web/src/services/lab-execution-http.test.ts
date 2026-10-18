@@ -39,3 +39,24 @@ it('WebSocket URL contains only a one-time ticket and verifies frame acknowledge
   Socket.last.packet({ type: 'ack', observation: { ...observation, observation: { latest_frame: { ...receipt.frame, frame_id: 'foreign:1:2', byte_count: 3 } } } });
   await expect(foreign).rejects.toThrow('disconnected'); expect(onDisconnect).toHaveBeenCalledTimes(1);
 });
+it('a sampling-limit skip settles that frame without disconnecting the share', async () => {
+  vi.useFakeTimers();
+  try {
+    const api = createLabExecutionApi('http://localhost:8002', auth, async () => Response.json({ ticket: 'one-use-capability', expiresInSeconds: 60 }), socketClass);
+    const onDisconnect = vi.fn(); const channel = await api.channel(prep, 'screen', onDisconnect);
+    const observation = { schema: 'screen-receiver/v1', session_id: 'screen' };
+    Socket.last.packet({ type: 'connected', observation }); await channel.ready;
+    const metadata: FrameMetadata = { type: 'frame', capture_epoch: 1, view_revision: 1, sequence: 1, captured_elapsed_ms: 0, width: 96, height: 54, source_width: 96, source_height: 54, byte_count: 3, mime_type: 'image/jpeg' };
+    const skipped = channel.sendFrame(metadata, new Blob(['jpg'])); await Promise.resolve();
+    Socket.last.packet({ type: 'skipped', reason: 'sampling_limit' });
+    await expect(skipped).resolves.toBeNull();
+    // The cleared acknowledgement timer can no longer end the share.
+    vi.advanceTimersByTime(15000); expect(onDisconnect).not.toHaveBeenCalled();
+    const next = channel.sendFrame({ ...metadata, sequence: 2 }, new Blob(['jpg'])); await Promise.resolve();
+    Socket.last.packet({ type: 'ack', observation: { ...observation, observation: { latest_frame: { ...receipt.frame, frame_id: 'screen:1:2', byte_count: 3 } } } });
+    await expect(next).resolves.toMatchObject({ frame_id: 'screen:1:2' }); expect(onDisconnect).not.toHaveBeenCalled();
+    const malformed = channel.sendFrame({ ...metadata, sequence: 3 }, new Blob(['jpg'])); await Promise.resolve();
+    Socket.last.packet({ type: 'skipped' });
+    await expect(malformed).rejects.toThrow('disconnected'); expect(onDisconnect).toHaveBeenCalledTimes(1);
+  } finally { vi.useRealTimers(); }
+});

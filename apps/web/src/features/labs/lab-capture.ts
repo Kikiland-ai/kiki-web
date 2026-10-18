@@ -171,7 +171,8 @@ export class LabCaptureController {
       if (blob.size > 1_000_000) throw new ServiceError('The shared frame is too large. Reduce the MATLAB tab size and share again.');
       const frame = await this.channel.sendFrame({ type: 'frame', capture_epoch: 1, view_revision: this.state.workspace.view_revision, sequence: ++this.sequence, captured_elapsed_ms: Math.max(0, Math.round(performance.now() - this.started)),
         width: canvas.width, height: canvas.height, source_width: width, source_height: height, byte_count: blob.size, mime_type: 'image/jpeg' }, blob);
-      if (this.current(generation)) void this.check(frame, generation);
+      // A skipped frame was not admitted, so there is nothing to check; the next tick resends.
+      if (frame && this.current(generation)) void this.check(frame, generation);
     } catch (error) { if (this.current(generation)) this.stop(readableError(error)); }
     finally { if (this.current(generation)) this.timer = window.setTimeout(() => { void this.tick(generation); }, 2000); }
   }
