@@ -1,3 +1,17 @@
+## Lab integration small fixes — 18 October 2026
+
+Branch `fix/lab-integration-small` from main `b984c64`; not pushed or merged.
+
+- The frame channel treats kiki-backend's `{"type":"skipped","reason":"sampling_limit"}` reply as a non-error: that frame is not checked, the share stays connected and the next two-second tick sends again. The apps/api relay already forwarded it unchanged.
+- `playwright.lab.config.ts` uses the Windows venv interpreter on `win32`.
+- API receipts and test artifacts are written as UTF-8, so pytest passes on Windows without `PYTHONUTF8`.
+- A still-`creating` lab reservation repeats its create with the saved key and body (needs kiki-backend's idempotent lab creation first).
+- `.github/workflows/ci.yml` runs web lint/typecheck/Vitest/build and API ruff/pytest.
+
+Checks: 182 frontend tests / 37 files in a clean export of the branch (in this nested worktree one file, `src/fixtures/assessments.test.ts`, fails to load because the enclosing checkout's root `package.json` sets `"type": "module"`; that also happens on unchanged main), ESLint, TypeScript and build pass; 119 API tests and Ruff pass. Playwright suites were not run.
+
+Not changed: Lab home still shows "Practise with screen guidance" whenever the build is connected, even when the API has lab execution disabled. The web app has no unambiguous signal for that today: `monitoring.status` is `pending_integration` both when execution is disabled and before a first share, and `GET …/execution` returns the same 503 for "disabled" and "upstream down" (and needs a preparation). A fix needs a small API capability field (for example on the lab preparation or practical response) or a web build flag that must be kept in step with the API setting. Exact next: review and push this branch, then decide on the Lab home capability signal.
+
 ## Status — 18 October 2026, after merge
 
 **Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).
