@@ -1,3 +1,145 @@
+## Requested PR integration — 18 October 2026
+
+User authorized merging #9, #10 and #11. #9 merged as `feed380c17862ccc77a0133ffc8971f598ae5728`; #11 retargeted to main and merged as `99ea53105fe0b2f02ab3b6dc5f0a74bb0d049f9a`, both with successful API/web CI. This branch merges resulting main into #10's exact head `a81ba705cea918b0ade1d16789e7a78ba7875fc0`. Only documentation conflicts required manual resolution; both profile and lab histories/walkthroughs are preserved. OpenAPI merged automatically and will be checked against the application. Combined checks PASS: 213 frontend tests / 39 files, 124 API tests, lint/typecheck/build, Ruff check/format, exact OpenAPI and Python→React receipts; 21 sample journey/preferences/lab-input browser cases at the required responsive widths. These are local/double/sample checks, not signed-in or MATLAB acceptance. Backend PR #7 remains open; runtime acceptance remains separate. No deployment, cloud or learner changes. Last completed: combined validation and documentation conflict resolution in an isolated worktree. Exact next: publish this merge to #10 and merge after API/web CI.
+
+---
+
+## Continuation PR #11 opened — 18 October 2026 (India time)
+
+[PR #11: Add lab evidence controls and reliable execution recovery](https://github.com/Kikiland-ai/kiki-web/pull/11) is open for review, from `continuation/connected-learning-2026-10-18` into `fix/lab-integration-small`. It is stacked on open PR #9; merge #9 first, then retarget this PR to `main`. Implementation source commit: `0e6205a0815aacf9ae36472cb72159dc7a7d0424`. Author and committer verified as `akshitanitr <95952896+akshitanitr@users.noreply.github.com>`; authenticated GitHub login/push permission verified before publication. The separate PR #10 was not changed.
+
+Fresh publication checks PASS: 208 frontend tests / 38 files, web lint/typecheck/build; 123 API tests and Ruff check/format; Python-to-React receipts; 5 Playwright synthetic form tests at 320/390/768/1280px; candidate credential/local-artifact scan and staged whitespace checks. Lockfiles unchanged. These remain local/synthetic checks, not new signed-in learning or real MATLAB acceptance. Original trial services, learner data and source worktrees remain intact. No merge, deployment, media/catalog publication or paid capture was performed.
+
+Last completed: source commit/push and PR creation; this record links the published result. Exact next: review PR #11 and its dependency on #9; Aditya continues the remaining integration/media work. [Detailed continuation evidence and limits](../../docs/plans/connected-learning-continuation.md).
+
+---
+
+## PR publication authorized — 18 October 2026 (India time)
+
+User requested a PR for this verified continuation slice while Aditya works on the remaining integration. Authenticated GitHub identity is `akshitanitr` with repository push permission; author/committer will use the repository-required `akshitanitr <95952896+akshitanitr@users.noreply.github.com>`.
+
+Fresh origin/API check: PR #9 remains open at `44d2a0847a16b09fcdbfc865dcc5007f2d33a189` on `fix/lab-integration-small`; main remains `b984c64bcff981d38c15edd3b6f2a7199feb4435`. This continuation PR targets `fix/lab-integration-small` to expose only its own diff and depends on #9. The separate multilingual-profile PR #10 is untouched. Commit/push/PR publication is authorized; no merge/deployment, cloud or learner changes are part of this step.
+
+Fresh pre-publication validation: 208 frontend tests, lint/typecheck/build, 123 API tests and Ruff check/format PASS. Staged candidate scan excludes credentials, local configuration, dependency symlinks, build output and generated test receipts; lockfiles are unchanged. Last completed: scoped diff, identity, base and validation review. Exact next: commit/push this branch and open the stacked PR with explicit local-vs-live validation limits. [Current continuation plan](../../docs/plans/connected-learning-continuation.md).
+
+---
+
+## Verified local continuation slice — 18 October 2026 (India time)
+
+Isolated branch/worktree `continuation/connected-learning-2026-10-18` / `kiki-web-continuation-2026-10-18`; exact base/HEAD remains `44d2a0847a16b09fcdbfc865dcc5007f2d33a189`. Original detached trial checkouts, private config, running services and dirty records are preserved. [Current plan and actual evidence](../../docs/plans/connected-learning-continuation.md), [coverage audit](../../docs/evidence/concept-coverage-2026-10-18.md), [backend/operator request draft — not sent](../../docs/plans/backend-requests-2026-10-18.md).
+
+Implemented: source-bound lab input requirements endpoint/Python/Zod contract from canonical backend definition/policy; student response/selected review UI with current committed revision, own-written text, optional confidence, scoped drafts, double-submit prevention, explicit condition intent and 409/422/503 recovery; bounded pending-create recovery with explicit `recoverPending` server guard (no new reservation on recovery); bridge request-ID/remount and overlapping-hello fixes with stale ownership/binding rejection. Three new regressions fail on original bridge and pass with fix. No canonical extension code/build change; historical paid-trial cause is not claimed fully proved.
+
+Actual checks: **208 web tests / 38 files**, lint/typecheck/production build PASS; **123 API tests**, Ruff check/format PASS; OpenAPI regenerated; actual Python→React requirements/learning/media/assessment/etc. receipts PASS; **5 Playwright synthetic input tests** PASS including keyboard and 320/390/768/1280px, 320/1280 screenshots visually checked; **4 canonical offline backend policy tests** PASS with fake findings/zero provider calls and no listening backend. HTTP dropped-response regression commits upstream, loses the HTTP response, exposes pending state, and replays the same execution/key/body. The separate backend atomic commit crash window remains open.
+
+Media: 80 exact source-language comparisons PASS; all 22 recovered backend WAV paths are LFS pointers; eight separate web C-AM-08 clips verify and native dry-run preserves `cm-e0f086007cc9f2062af093f3`. A scoped workspace WAV scan (108 paths) found three recovered hashes already present in that web package; no source assets overwritten. Private bucket setting checked as boolean: unconfigured. Missing renderer/contracts, six whole-concept narration mismatches and absent real bytes remain explicit. No new renderer/audio scope implementation in this slice. Corrected obsolete “remaining nine have no clips” documentation.
+
+Connected settings checker passes using existing real Firebase configuration without copying/printing values. New signed-in learning/audio/artifact/assessment, new extension page/window trial and complete real twelve-checkpoint run are NOT RUN. No learner input/confirmation/grades were submitted, no sign-in/sharing/provider call/service restart, no publisher apply/catalog import/IAM/billing/bucket/deploy or Git publication. Last completed: local first slice and verification. Exact next: remaining trusted renderer/contracts implementation from the ledger; external requests and operator-controlled acceptance follow as described in the plan.
+
+---
+
+## Connected learner continuation — 18 October 2026 (India time)
+
+Active local work is in isolated branch `continuation/connected-learning-2026-10-18`, worktree `kiki-web-continuation-2026-10-18`, base/HEAD `44d2a0847a16b09fcdbfc865dcc5007f2d33a189`. Original detached trial checkout/dirty records are preserved. [Current continuation plan](../../docs/plans/connected-learning-continuation.md), [80-row source/byte ledger](../../docs/evidence/concept-coverage-2026-10-18.json).
+
+Offline inventory: all 40 placards × English/Odia match the immutable app catalog. Recovered backend 22 WAV files are all Git LFS pointers (16 placard / six concept recordings); expected and observed checksums/bytes are recorded. Existing web C-AM-08 has eight separate matching English/Odia clips. Trusted renderer coverage remains C-AM-04/C-AM-08; unsupported recovered scenes, incompatible whole-concept scope and unconfigured private delivery remain separate blockers. Connected API/audio/listening/artifact/cleanup rows are NOT RUN; no acceptance inferred from source bytes.
+
+Actual command: `PYTHONPATH=src .venv/bin/python scripts/audit_concept_coverage.py --backend-root ../../../kiki-backend-mac-trial-2026-10-18 --output ../../docs/evidence/concept-coverage-2026-10-18.json` PASS (offline). No cloud read/write, sign-in, sharing, provider call, service restart, publication or learner change. Last completed: inventory. Exact next: verify bounded explicit pending-create recovery, then lab input/lifecycle gaps.
+
+---
+
+## Continuation handoff prepared — 18 October 2026 (India time)
+
+User requested a new-chat handoff for kiki-web lesson media/artifacts, complete connected learning acceptance, lab review/respond controls, and recovery/extension lifecycle fixes. Created [KIKI-WEB-CONTINUATION-HANDOFF-2026-10-18.md](../../../KIKI-WEB-CONTINUATION-HANDOFF-2026-10-18.md) outside the repo. It records exact selected revisions, preserved dirty state, evidence limits, existing code/contracts, media compatibility/delivery blockers, implementation and regression requirements, backend dependencies and a pasteable new-chat kickoff.
+
+Actual work in this step: source/status and contract reads, documentation creation/link validation only. No application change, service restart, new connected/paid trial or new test pass claimed. Prior limited paid trial remains stopped and signed out. Last completed: continuation document. Exact next: new chat reads handoff and applicable records, rechecks source/status, then audits per-concept/placard connected coverage before implementing gaps on an isolated branch.
+
+---
+
+## Limited paid MATLAB trial completed — 18 October 2026 (India time)
+
+Current selected source unchanged: detached web/API `44d2a0847a16b09fcdbfc865dcc5007f2d33a189`; backend canonical smoke/DEV extension `f2dca8b806e4002411b5704e19f0f40681093298`. [Current endpoint report](../../../MAC-ENDPOINT-INTEGRATION-2026-10-18.md) and [sanitized paid-trial receipt](../../../.mac-trial-tools/paid-browser-trial-results.json) supersede earlier pending statuses below.
+
+Actual completed: corrected Windows launcher receipt transferred by operator; Mac tunnel canonical 9/9 PASS/zero models and targeted cleanup; 23 direct upstream protocol checks, 41 protected HTTP missing-identity guards/two WS guards, and 46 corrected authenticated API/control records passed. Approved existing ADC/Firestore access and real Google sign-in verified. Final loopback 5174/8000/8100 HTTP checks all 200; PIDs React 35110/API 35074 one worker/SSH 38186. Redacted env revalidation passed, ignored mode 600, no emulator/Gemini on Mac.
+
+Operator explicitly authorized paid analysis and initiated actual same-MATLAB-Chrome-tab sharing. First attempt exposed `stale_stream_or_generation` bridge rejection and stale floating guidance; ineffective first observer's zero counts are NOT evidence of zero requests. Normal Stop sharing -> Check Kiki extension recovered displayed generation 5/revision 14; no app fix. Root cause unproven.
+
+Second trial: matching capture_started/sharing ack and valid frame receipts; pre-control snapshot retained 39 sends/39 matching acks in capped 300-row buffer. 28 SSE stream observations include duplicates, 24 complete committed observations; NOT unique requests/model calls. All observed responses 200 text/event-stream; completed observations 5-8 chunks over 2261-6571 ms, contiguous sequence/stable per-stream identity. Every commit passed non-provisional, advancing/agreed revision, admission-frame/context and queue/guidance equality checks. Two discarded and two AbortError observations also recorded, not unique failure totals. Rendered floating Now/Next matched page by normalized-text hashes. Exact paid provider usage/cost unmeasured; checkpoint progression not independently assessed.
+
+Page and floating pause/resume passed with WS sharing/paused acknowledgements. Stop -> Disconnected/WS close 1005. Final execution GET 200: active execution, capture ended, analysis invalidated, revision 57, no attached screen. Reload reopened saved preparation disconnected/no auto-sharing (extension check needed again). Sign out -> /auth/Google sign-in, MATLAB sharing indicator absent and no floating guidance controls. Diagnostic prototypes/listener restored/removed before reload; owned preparation/execution/notes retained. API/React/tunnel and installed DEV extension left in place.
+
+Known source defects remain: missing React checkpoint review/respond controls, separate backend lab/idempotency commits, GET-only pending-reservation reload recovery. New stale-controller failure recovered normally but remains a reliability finding. No twelve-checkpoint pass, valid student review/respond, second real API owner, real stale analyzed-image acceptance or provider usage audit claimed. No app implementation, commit/push/merge/deploy, IAM/billing/catalog/bucket changes, learner reset or Mac lab backend.
+
+Last completed: paid pipeline and both-surface controls, stop/reopen/sign-out, final loopback/env checks. Exact next: operator obtains reviewed compatible web revision adding required review/respond controls and fixing pending recovery before full checkpoint acceptance; keep capture stopped. Windows transport currently passes; its atomicity finding remains open.
+
+---
+
+## Authenticated integration checks — 18 October 2026 (India time)
+
+Current source unchanged: detached web 44d2a0847a16b09fcdbfc865dcc5007f2d33a189 and backend smoke/extension f2dca8b806e4002411b5704e19f0f40681093298. [Current endpoint evidence](../../../MAC-ENDPOINT-INTEGRATION-2026-10-18.md).
+
+Operator handled Chrome warning. Initial probe on /labs passed reads but stopped at route guard; displayed 401 was an intentional no-auth test. Resumed existing preparation. Correct complete runs passed 18 account/content/preparation and 28 API execution/control records, zero pixels/model calls. DTOs validate, same-profile/bootstrap preserved, same preparation replay/unchanged save/reload preserved notes and revision; mismatch 409. Execution create/read/replay linked same backend, screen/ticket 200, API WS connected, ticket reuse rejected, capture_started acknowledged before attach, HTTP/WS pause/resume, stale revision 409 and stop/ended cleanup passed. Events status guards and image-unavailable 410 passed; invalid review/respond 422. Do not infer valid review/student inputs, second-user API ownership, stale analyzed images or real SSE from these checks.
+
+Canonical 9/9 and 23 direct upstream checks remain separate prior evidence; negative 41 HTTP/2 WS guards remain. No notes/grades reset, fabricated student confirmations, app-source fixes, publication/cloud changes or Mac lab backend. Test screen ended and socket closed; owned execution/preparation retained for actual trial.
+
+Metadata-only observer installed in current page; no screenshots, credentials/tickets or analyzer prose retained. Paid trial already authorized and Windows health reports configured/valid analyzer. Last completed: authenticated endpoint/control verification. Exact next: operator initiates Share from this preparation, choosing the same bound MATLAB tab; verify actual frame acknowledgement and incremental committed SSE, then pause promptly. Limited pipeline readiness is not 12-checkpoint completion; all three known source defects remain.
+
+---
+
+## Endpoint integration ownership — 18 October 2026 (India time)
+
+Source remains detached web `44d2a0847a16b09fcdbfc865dcc5007f2d33a189` / backend script+extension `f2dca8b806e4002411b5704e19f0f40681093298`. Existing active-record edits preserved. [Endpoint ledger/report](../../../MAC-ENDPOINT-INTEGRATION-2026-10-18.md).
+
+Operator supplied the actual Windows runtime receipt: full HEAD f2dca8b806e4002411b5704e19f0f40681093298, exact local origin, PR #7 ancestry true, proxy required true, running, startup smoke 9/9/zero model calls. This is transferred receipt evidence, not Git provenance inferred from health. Operator reports previous synthetic orphan backed up/removed.
+
+Mac initially had no 8100 listener (connection refused errno 61). Operator restored reverse SSH; new loopback listener PID 38186. Canonical Mac smoke now PASS 9/9, zero model calls: same lab ID and replay header true, isolation, screen WS; lab deleted 200 and test screen stopped 200. Gemini health reports configured and valid (no key inspected). Paid trial explicitly authorized; operator must still initiate actual sharing after gates.
+
+Derived 42 HTTP endpoints plus the ticketed WS route from live OpenAPI/source. All 41 protected HTTP operations reject missing identity with 401; ticketless WS rejects allowed/foreign origin with 403. These negative checks do not prove successful authenticated paths. Local ignored probe uses normal Firebase driver/DTOs and preserves notes; module syntax/serving pass. Chrome anti-paste security warning blocked execution; agent did not bypass it and requested operator takeover. Positive account/content/preparation and execution protocol tests are pending that handoff, no screenshots/model calls sent.
+
+Known missing React review/respond controls, backend lab/receipt crash window and GET-only reload recovery still present. No implementation fix, commit, push, merge, deploy, IAM/billing, learner reset or Mac lab backend.
+
+Further actual checks: 23 direct synthetic upstream protocol operations/assertions PASS, zero frames/model calls, including capture_started→fresh state→attach, pause/resume over HTTP and WS, revision conflict, event/image/review/response guards and stop. Screen stop/delete lab cleanup 200. This is upstream evidence only; it does not prove authenticated Mac API or actual browser capture/SSE. Detailed receipts linked in current endpoint report.
+
+Last completed: corrected cross-tunnel canonical smoke and full HTTP/WS negative guards. Exact next: operator reviews/runs accountAndPreparation in current Kiki console; then execute remaining positive endpoint tests and record cleanup before operator-initiated capture.
+
+---
+
+## Mac two-machine trial setup — 18 October 2026 (India time)
+
+Local setup only on detached web PR #9 `44d2a0847a16b09fcdbfc865dcc5007f2d33a189`; main remains deployment base `b984c64bcff981d38c15edd3b6f2a7199feb4435`. Existing active checkouts/env/uncommitted work preserved. [Full local report](../../../MAC-INTEGRATION-TRIAL-2026-10-18.md).
+
+Actual: isolated Node 24.22.0 / Python 3.12.15; `npm ci`, `uv sync --frozen`, `check:connected` and TypeScript pass; both locks unchanged. Ignored mode-600 env configured for builder-cup-a8479 / (default), connected React :5174 → API :8000 → local :8100 reverse forward, exact CORS and operator-supplied shared secret. No Gemini/emulator settings copied. Existing approved impersonated ADC refresh and exact-project Firestore catalog read pass; Firebase project-config HTTP 200 authorizes both loopback hosts. Operator Google sign-in and signed-in Home observed, including reload. No learner reset/catalog/media/IAM/billing/deployment/Git publication.
+
+API one worker PID 35074 on 127.0.0.1:8000, React PID 35110 on 127.0.0.1:5174. Health HTTP 200; protected unauthenticated profile/execution/ticket/events HTTP 401; ticketless API WebSocket HTTP 403; LAN CORS rejected. Canonical DEV extension built from isolated backend PR #7 `f2dca8b806e4002411b5704e19f0f40681093298`, generated manifest includes both :5174 readers; operator-approved load in AKSHITA Chrome profile succeeded (ID hhbokpkiahahiojlifneehiijebfinga). No local lab backend started.
+
+Windows operator confirmed running; full remote commit not supplied. Reverse-forward health HTTP 200 and backend screen WebSocket connected, but canonical smoke FAILED 8/9 at same-key replay, zero model calls. First smoke lab deleted; possible second synthetic smoke_check lab requires Windows inspection. Do not treat listener, health or smoke WS as real capture/attach/frame/SSE evidence.
+
+Known source blockers persist: no React execution review/respond controls (CP01 and later CP10/11/12 inputs); backend lab/receipt are separate commits; reload/Retry only GET a creating reservation and cannot invoke API replay POST. No fix implemented. Capture and paid analyzer trial held.
+
+Additional live setup check: signed-in Home reload, Lab landing and Resume existing saved preparation succeeded. The preparation detected the loaded DEV extension and showed Ready to share; Share stayed disabled until MATLAB binding. MATLAB Online opened at its login screen for the operator. No enrollment, notes or learner evidence edited.
+
+Continuation — MATLAB binding verified, 18 October: operator confirmed sign-in and intended model opening. The agent observed the signed-in MATLAB Online workspace. Canonical extension popup reports Kiki shown on this tab and connected to tracker; saved preparation independently reports Kiki bound to MATLAB, and Share is enabled. No Share gesture/capture/frame/analyzer call was initiated. Windows replay result/full commit and explicit paid-trial enablement with Windows-only credential remain required before capture.
+
+Latest continuation health check: Mac API :8000 and React :5174 HTTP 200; reverse-forward GET http://127.0.0.1:8100/health timed out after five seconds while sshd-session PID 33923 still listened on 127.0.0.1:8100. Earlier HTTP/WS successes remain historical evidence only. Windows must check its backend/forward before the next smoke. No SSH process killed.
+
+Last completed: reversible local configuration, access/auth checks, extension build/load and failed upstream smoke documented. Exact next: Windows Codex reports running full commit, restarts the existing compatible PR #7 backend with the same secret/proxy guard, checks possible extra smoke lab and confirms local smoke 9/9; then Mac retests. Real MATLAB/operator capture still requires explicit paid-trial enablement and Windows-only analyzer credential. See full report for evidence limits and process commands.
+
+---
+
+## Lab integration small fixes — 18 October 2026
+
+Branch `fix/lab-integration-small` from main `b984c64`; not pushed or merged.
+
+- The frame channel treats kiki-backend's `{"type":"skipped","reason":"sampling_limit"}` reply as a non-error: that frame is not checked, the share stays connected and the next two-second tick sends again. The apps/api relay already forwarded it unchanged.
+- `playwright.lab.config.ts` uses the Windows venv interpreter on `win32`.
+- API receipts and test artifacts are written as UTF-8, so pytest passes on Windows without `PYTHONUTF8`.
+- A still-`creating` lab reservation repeats its create with the saved key and body (needs kiki-backend's idempotent lab creation first).
+- `.github/workflows/ci.yml` runs web lint/typecheck/Vitest/build and API ruff/pytest.
+
+Checks: 182 frontend tests / 37 files in a clean export of the branch (in this nested worktree one file, `src/fixtures/assessments.test.ts`, fails to load because the enclosing checkout's root `package.json` sets `"type": "module"`; that also happens on unchanged main), ESLint, TypeScript and build pass; 119 API tests and Ruff pass. Playwright suites were not run.
+
+Not changed: Lab home still shows "Practise with screen guidance" whenever the build is connected, even when the API has lab execution disabled. The web app has no unambiguous signal for that today: `monitoring.status` is `pending_integration` both when execution is disabled and before a first share, and `GET …/execution` returns the same 503 for "disabled" and "upstream down" (and needs a preparation). A fix needs a small API capability field (for example on the lab preparation or practical response) or a web build flag that must be kept in step with the API setting. Exact next: review and push this branch, then decide on the Lab home capability signal.
+
 ## Published preference UI — 18 October 2026
 
 Source `dd94b9f` is committed and pushed as `akshitanitr` on `redesign/aditya-multilingual-profile`. [PR #10](https://github.com/Kikiland-ai/kiki-web/pull/10), **Make learner setup flexible across languages and study fields**, is open into `main`, ready for review. It contains the generic preference UI and welcome/profile-error follow-up; merged #7/#8 are retained and pending #9 stays separate. The checkpoint below records final verification and acceptance limits. Last completed: commit, push and PR creation. Exact next: review PR #10 and retry the genuine Google/profile round trip on connected5194; no merge or deployment performed.
@@ -46,7 +188,7 @@ Actual final checks:
 
 The real backend run exposed and fixed capture-start-before-attach ordering, pause/resume revisions, nullable unlimited session duration and Python state differences. The client also refuses foreign acknowledgements/decisions, ignores late old-capture events, cannot reactivate after Stop during pause, and keeps provider-wait metadata separate from the last committed action.
 
-Remaining boundaries: real MATLAB Online + real analyzer acceptance is pending; automated controlled-target tests do not prove vision quality. Production B1/B2 remain deferred by the user. The current upstream ignores `Idempotency-Key`: ambiguous creation is held for explicit reconciliation instead of creating a duplicate. Tickets are worker-local, so local setup uses one worker. Release-extension5174 allowlist remains a backend-owner deliverable; the local dev artifact includes it. No actual Google/Firestore write, real screen capture, Gemini request or physical-device test was performed in this step.
+Remaining boundaries: real MATLAB Online + real analyzer acceptance is pending; automated controlled-target tests do not prove vision quality. Production B1/B2 remain deferred by the user. A still-`creating` reservation now repeats its create with the saved key and body; this needs kiki-backend's idempotent lab creation deployed first (see the implementation handoff). Tickets are worker-local, so local setup uses one worker. Release-extension5174 allowlist remains a backend-owner deliverable; the local dev artifact includes it. No actual Google/Firestore write, real screen capture, Gemini request or physical-device test was performed in this step.
 
 Last completed: code, regression/extension acceptance and local setup handoff. Exact next: configure the approved real local backend/analyzer and run the student-controlled MATLAB trial, then review the published implementation branch before deciding how to integrate it. PR #6 and main are not changed by this publication. Ports5174/8002/8100/8871 were test servers and are stopped; the older user previews are untouched. [Implementation/setup/recovery limits](LAB_SCREEN_SHARE_IMPLEMENTATION.md), [checked plan](LAB_SCREEN_SHARE_PLAN.md), [updated preparation boundary](LAB_PREPARATION_CONTRACT.md).
 

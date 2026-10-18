@@ -60,7 +60,11 @@ async def main():
             ],
         }
         path = root / "apps/web/src/features/labs/__fixtures__/python-execution.json"
-        path.write_text(json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n")
+        path.write_text(
+            json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
         print(f"Synthetic Python receipt: {path.stat().st_size} bytes")
     finally:
         await test.asyncTearDown()

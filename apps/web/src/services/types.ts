@@ -3,7 +3,7 @@ import { ConnectionConfigError } from './connection-config';
 export type { Identity, AuthService, AuthDriver, LearnerApi, Services, SignOutCleanup } from '../contracts/services';
 
 export class ServiceError extends Error {
-  constructor(message: string, public status?: number) { super(message); this.name = 'ServiceError'; }
+  constructor(message: string, public status?: number, public code?: string) { super(message); this.name = 'ServiceError'; }
 }
 export function readableError(error: unknown): string {
   if (error instanceof ServiceError || error instanceof ConnectionConfigError) return error.message;

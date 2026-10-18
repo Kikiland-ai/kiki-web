@@ -24,13 +24,31 @@ const Candidate = z.object({
   action_findings: z.array(Finding).optional(), uncertainties: z.array(Text).optional(),
   source_frame: SourceFrame, admitted_context: ExecutionContextSchema, completed_at: z.string().optional(),
 }).passthrough();
-const Step = z.object({ checkpoint_id: Checkpoint, current_visit_id: Id.nullish() }).passthrough();
+const CriterionId = z.string().regex(/^CP-DSB-(0[1-9]|1[0-2]):[a-z_]+$/);
+export const ResponseKindSchema = z.enum(['prediction', 'observation', 'explanation', 'question', 'note']);
+export type ResponseKind = z.infer<typeof ResponseKindSchema>;
+const Step = z.object({ checkpoint_id: Checkpoint, current_visit_id: Id.nullish(),
+  criteria: z.array(z.object({ criterion_id: CriterionId, state: z.string().max(80), completion_basis: z.string().max(100).optional() }).passthrough()).max(12).optional(),
+}).passthrough();
+export const ExecutionRequirementsSchema = z.object({
+  schema: z.literal('lab-input-requirements/v1'), preparationId: z.string(), backendLabId: Id,
+  definitionSha256: z.string().regex(/^[a-f0-9]{64}$/), policySchema: z.literal('screen-guided-policy/v2'),
+  checkpoints: z.array(z.object({ id: Checkpoint, condition: z.enum(['baseline', 'phase_fault', 'restored_baseline']), responsePrompt: z.string().max(2000).nullable(),
+    criteria: z.array(z.object({ id: CriterionId, description: z.string().min(1).max(2000), responseKinds: z.array(ResponseKindSchema).max(5) })).min(1).max(12),
+  })).length(12),
+}).superRefine((value, ctx) => {
+  if (new Set(value.checkpoints.map(cp => cp.id)).size !== 12 || value.checkpoints.some(cp => new Set(cp.criteria.map(c => c.id)).size !== cp.criteria.length || cp.criteria.some(c => !c.id.startsWith(cp.id + ':'))))
+    ctx.addIssue({ code: 'custom', message: 'Invalid lab criterion identities.' });
+});
+export type ExecutionRequirements = z.infer<typeof ExecutionRequirementsSchema>;
 
 /** Python field names stay authoritative. Compatibility normalization happens here only. */
 export const LabExecutionStateSchema = z.object({
   schema: z.literal('lab-python/v1'), lab_session_id: Id, experiment_id: z.literal('PR-AM-DSB'),
   revision: z.number().int().positive(), status: z.enum(['active', 'paused', 'completed']),
   projection: z.literal('committed-decision/v1').optional(), current_visit_id: Id.nullish(),
+  definition: z.object({ definition_sha256: z.string().regex(/^[a-f0-9]{64}$/) }).passthrough().optional(),
+  responses: z.array(z.object({ id: Id, kind: ResponseKindSchema, text: z.string().max(2000), checkpoint_id: Checkpoint, visit_id: Id, interpretation: z.string().max(100).optional() }).passthrough()).max(100).optional(),
   workspace: z.object({
     id: Id, capture_session_id: Id.nullable(), capture_epoch: Integer,
     view_revision: Integer, parameter_revision: Integer, condition: z.string().max(80),
@@ -81,6 +99,8 @@ export const FrameReceiptSchema = z.object({
   byte_count: Integer, view_revision: Integer,
 }).passthrough();
 export type FrameReceipt = z.infer<typeof FrameReceiptSchema>;
+/** Python declines a frame sent inside its admission spacing; it carries no retry hint. */
+export const FrameSkippedSchema = z.object({ type: z.literal('skipped'), reason: z.string().max(80) });
 export interface FrameMetadata {
   type: 'frame'; capture_epoch: 1; view_revision: number; sequence: number;
   captured_elapsed_ms: number; width: number; height: number; source_width: number; source_height: number;
@@ -88,7 +108,8 @@ export interface FrameMetadata {
 }
 export interface FrameChannel {
   ready: Promise<void>;
-  sendFrame(metadata: FrameMetadata, image: Blob): Promise<FrameReceipt>;
+  /** Resolves null when the receiver skipped the frame; the session stays connected. */
+  sendFrame(metadata: FrameMetadata, image: Blob): Promise<FrameReceipt | null>;
   command(type: 'capture_started' | 'pause' | 'resume' | 'stop' | 'heartbeat'): Promise<void>;
   close(): void;
 }
@@ -96,7 +117,9 @@ export type ContextCommand = { revision: number; action: 'pause' | 'resume' | 'v
 export interface LabExecutionApi {
   readonly targetOrigins?: readonly string[];
   start(prepId: string, signal?: AbortSignal): Promise<LabExecutionState>;
+  recover(prepId: string, signal?: AbortSignal): Promise<LabExecutionState>;
   get(prepId: string, signal?: AbortSignal): Promise<LabExecutionState>;
+  requirements(prepId: string, signal?: AbortSignal): Promise<ExecutionRequirements>;
   screen(prepId: string, signal?: AbortSignal): Promise<z.infer<typeof CaptureSessionSchema>>;
   channel(prepId: string, sid: string, onDisconnect: () => void, signal?: AbortSignal): Promise<FrameChannel>;
   attach(prepId: string, revision: number, sid: string, signal?: AbortSignal): Promise<LabExecutionState>;

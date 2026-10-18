@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { AuthService } from '../contracts/services';
-import { CaptureSessionSchema, ExecutionEnvelopeSchema, FrameReceiptSchema, type FrameMetadata, type FrameChannel, type LabExecutionApi } from '../contracts/lab-execution';
+import { CaptureSessionSchema, ExecutionEnvelopeSchema, ExecutionRequirementsSchema, FrameReceiptSchema, FrameSkippedSchema, type FrameMetadata, type FrameChannel, type LabExecutionApi } from '../contracts/lab-execution';
 import { ServiceError } from './types';
 
 export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetcher: typeof fetch = fetch, Socket: typeof WebSocket = WebSocket): LabExecutionApi {
@@ -12,7 +12,13 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
       body: body === undefined ? undefined : JSON.stringify(body), credentials: 'omit', redirect: 'error',
       signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(45000)]) : AbortSignal.timeout(15000),
     });
-    if (!response.ok) throw new ServiceError(response.status === 409 ? 'The lab changed. Refresh before trying again.' : response.status === 401 ? 'Sign in again to reconnect your lab.' : response.status === 404 ? 'This lab connection was not found for your account.' : 'Lab tracking is unavailable; your progress is kept.', response.status);
+    if (!response.ok) {
+      // Only this server-authored code permits explicit same-reservation recovery.
+      // A disabled feature, legacy reservation or upstream outage grants no such permission.
+      const error = z.object({ code: z.literal('lab_creation_pending') }).safeParse(await response.json().catch(() => null));
+      const code = response.status === 503 && error.success ? error.data.code : undefined;
+      throw new ServiceError(code ? 'Your saved lab creation is pending. Retry to recover the same lab.' : response.status === 409 ? 'The lab or checked image changed. Your draft is kept; check the current step before retrying.' : response.status === 422 ? 'Check your selected criteria and required response for this visit. Your draft is kept.' : response.status === 401 ? 'Sign in again to reconnect your lab.' : response.status === 404 ? 'This lab connection was not found for your account.' : 'Lab tracking is unavailable; your progress is kept. Your draft is kept too.', response.status, code);
+    }
     return response;
   }
   async function state(id: string, suffix = '', body?: unknown, signal?: AbortSignal) {
@@ -23,6 +29,12 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
   }
   return {
     start: (id, s) => state(id, '', {}, s), get: (id, s) => state(id, '', undefined, s),
+    recover: (id, s) => state(id, '', { recoverPending: true }, s),
+    requirements: async (id, s) => {
+      const parsed = ExecutionRequirementsSchema.safeParse(await (await request(id, '/requirements', 'GET', undefined, s)).json());
+      if (!parsed.success || parsed.data.preparationId !== id) throw new ServiceError('The lab input instructions are unsupported.');
+      return parsed.data;
+    },
     screen: async (id, s) => CaptureSessionSchema.parse(await (await request(id, '/screen-sessions', 'POST', {}, s)).json()),
     attach: (id, revision, capture_session_id, s) => state(id, '/attach', { revision, capture_session_id }, s),
     context: (id, command, s) => state(id, '/context', command, s),
@@ -35,7 +47,7 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
       const socket = new Socket(url.toString());
       let ended = false, settled = false;
       let control: { status: string; resolve(): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
-      let pending: { metadata: FrameMetadata; resolve(value: z.infer<typeof FrameReceiptSchema>): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
+      let pending: { metadata: FrameMetadata; resolve(value: z.infer<typeof FrameReceiptSchema> | null): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
       let resolveReady!: () => void, rejectReady!: (error: Error) => void;
       const ready = new Promise<void>((resolve, reject) => { resolveReady = resolve; rejectReady = reject; });
       ready.catch(() => undefined);
@@ -65,6 +77,10 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
             if (receipt.frame_id !== `${sid}:${pending.metadata.capture_epoch}:${pending.metadata.sequence}`
               || (['width', 'height', 'byte_count', 'view_revision'] as const).some(key => receipt[key] !== pending!.metadata[key])) throw new Error('Foreign frame acknowledgement.');
             clearTimeout(pending.timer); pending.resolve(receipt); pending = null;
+          }
+          if (message.type === 'skipped' && pending) {
+            FrameSkippedSchema.parse(message);
+            clearTimeout(pending.timer); pending.resolve(null); pending = null;
           }
         } catch { fail(); }
       });

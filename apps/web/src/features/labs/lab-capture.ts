@@ -1,6 +1,6 @@
 /** Capture lifecycle for one owned preparation. Pixels are masked before JPEG encoding. */
 import type { AuthService } from '../../contracts/services';
-import type { FrameChannel, FrameReceipt, LabExecutionApi, LabExecutionState } from '../../contracts/lab-execution';
+import type { ExecutionRequirements, FrameChannel, FrameReceipt, LabExecutionApi, LabExecutionState, ResponseKind } from '../../contracts/lab-execution';
 import { readableError, ServiceError } from '../../services/types';
 import { startAnalysisStream } from './analysis-stream';
 import { createFloatingPublisher, type CaptureTrack, type FloatingPublisher } from './floating-bridge';
@@ -11,6 +11,8 @@ export interface LabCaptureView {
   phase: ConnectionPhase; reason: string; state: LabExecutionState | null;
   extension: { present: boolean; bound: boolean; superseded: boolean }; preview: string | null;
   reading: boolean; retryAfterMs: number; snapshot: ReturnType<typeof projectSnapshot> | null;
+  recovering: boolean; canRecover: boolean;
+  inputBusy: boolean; requirements: ExecutionRequirements | null; requirementsError: string;
 }
 export class LabCaptureController {
   private phase: ConnectionPhase = 'loading';
@@ -30,6 +32,12 @@ export class LabCaptureController {
   private size = '';
   private generation = 0;
   private commandBusy = false;
+  private loadBusy = false;
+  private canRecover = false;
+  private inputBusy = false;
+  private requirements: ExecutionRequirements | null = null;
+  private requirementsError = '';
+  private requirementsBusy = false;
   private disposed = false;
   private lifetime = new AbortController();
   private checkAbort: AbortController | null = null;
@@ -65,29 +73,93 @@ export class LabCaptureController {
   subscribe(listener: (view: LabCaptureView) => void) { this.listeners.add(listener); listener(this.view()); return () => { this.listeners.delete(listener); }; }
   view(): LabCaptureView {
     const retryAfterMs = Math.max(0, this.retryAt - Date.now());
-    return { phase: this.phase, reason: this.reason, state: this.state, extension: this.publisher.status(), preview: this.preview, reading: this.reading, retryAfterMs,
+    return { phase: this.phase, reason: this.reason, state: this.state, extension: this.publisher.status(), preview: this.preview, reading: this.reading, retryAfterMs, recovering: this.loadBusy, canRecover: this.canRecover, inputBusy: this.inputBusy, requirements: this.requirements, requirementsError: this.requirementsError,
       snapshot: this.state ? projectSnapshot(this.projectionState()!, { accepted: this.accepted, ageMs: observationAge(this.accepted), reading: this.reading, retryAfterMs, blockedReason: this.publisher.blockedReason() }) : null };
   }
   private emit() { if (!this.disposed) { const view = this.view(); this.listeners.forEach(listener => listener(view)); this.publisher.changed(); } }
   private adopt(state: LabExecutionState) {
     if (this.disposed || this.lifetime.signal.aborted || (this.state && (state.lab_session_id !== this.state.lab_session_id || state.revision < this.state.revision))) return;
-    this.state = state; this.accepted = acceptedFrom(state, this.accepted); this.preview = null;
+    // Compact committed decisions omit immutable definition metadata and response history.
+    // Retain the last full GET fields for this same lab until the next authoritative GET.
+    this.state = { ...state, definition: state.definition ?? this.state?.definition, responses: state.responses ?? this.state?.responses };
+    this.accepted = acceptedFrom(this.state, this.accepted); this.preview = null;
+    if (!this.requirements && !this.requirementsBusy && !this.requirementsError) void this.loadRequirements();
     if (state.status === 'completed') { this.stop('This guided lab is complete.', 'completed'); }
     this.emit();
   }
-  async load() {
+  async load(recover = false) {
+    if (this.loadBusy || this.disposed || this.lifetime.signal.aborted || this.stream) return;
+    this.loadBusy = true; this.canRecover = false; this.emit();
     try {
-      const state = await this.api.get(this.prepId, this.lifetime.signal); this.adopt(state);
+      let state: LabExecutionState;
+      try { state = await this.api.get(this.prepId, this.lifetime.signal); }
+      catch (error) {
+        if (!recover || !(error instanceof ServiceError) || error.status !== 503 || error.code !== 'lab_creation_pending' || this.disposed || this.lifetime.signal.aborted) throw error;
+        // One explicit Retry, one replay POST. Key/body stay exclusively on the server.
+        // Recovery never invokes the screen picker or creates a capture session.
+        state = await this.api.recover(this.prepId, this.lifetime.signal);
+      }
+      if (this.disposed || this.lifetime.signal.aborted) return;
+      this.adopt(state);
       if (state.status === 'completed') return;
       this.phase = 'disconnected'; this.reason = 'Your saved lab is ready. Share your MATLAB tab again to reconnect.';
     } catch (error) {
       if (this.lifetime.signal.aborted || this.disposed) return;
       this.phase = error instanceof ServiceError && error.status === 404 ? 'ready' : 'unavailable';
+      this.canRecover = error instanceof ServiceError && error.status === 503 && error.code === 'lab_creation_pending';
       this.reason = this.phase === 'ready' ? 'Show Kiki on MATLAB, then choose that Chrome tab to start.' : readableError(error);
-    }
-    this.emit();
+    } finally { this.loadBusy = false; this.emit(); }
   }
   recheckExtension() { this.publisher.recheck(); }
+  async loadRequirements() {
+    if (this.disposed || this.lifetime.signal.aborted || this.requirementsBusy) return;
+    this.requirementsBusy = true; this.requirementsError = '';
+    try {
+      const value = await this.api.requirements(this.prepId, this.lifetime.signal);
+      if (this.disposed || this.lifetime.signal.aborted) return;
+      if (value.backendLabId !== this.state?.lab_session_id || value.definitionSha256 !== this.state.definition?.definition_sha256) throw new ServiceError('Lab instructions changed. Reopen the lab before recording input.');
+      this.requirements = value;
+    } catch (error) { if (!this.disposed && !this.lifetime.signal.aborted) this.requirementsError = readableError(error); }
+    finally { this.requirementsBusy = false; this.emit(); }
+  }
+  async submitInput(scope: string, input: { kind: ResponseKind; text: string; self_confidence?: number } | { criterion_ids: string[]; review_note: string }) {
+    if (!this.state || this.disposed || this.lifetime.signal.aborted || this.commandBusy || this.inputBusy || this.state.status === 'completed') throw new ServiceError('Wait for the current lab action before submitting.');
+    if (scope !== JSON.stringify(currentScope(this.state))) throw new ServiceError('The lab context changed. Your draft is kept for its original step.', 409);
+    const current = this.requirements?.checkpoints.find(cp => cp.id === this.state!.queue.current_checkpoint_id);
+    if (!current || this.requirements?.definitionSha256 !== this.state.definition?.definition_sha256) throw new ServiceError('Load the current lab input instructions before submitting.');
+    const review = 'criterion_ids' in input;
+    if (review && (input.criterion_ids.length < 1 || input.criterion_ids.length > 12 || new Set(input.criterion_ids).size !== input.criterion_ids.length || input.criterion_ids.some(id => !current.criteria.some(c => c.id === id)) || input.review_note.trim().length < 8 || input.review_note.trim().length > 1000)) throw new ServiceError('Select current criteria and describe your reviewed evidence in 8–1000 characters.', 422);
+    if (!review && (!input.text.trim() || input.text.trim().length > 2000 || (input.self_confidence !== undefined && (!Number.isInteger(input.self_confidence) || input.self_confidence < 1 || input.self_confidence > 5)))) throw new ServiceError('Write your response in 1–2000 characters and use confidence 1–5 if supplied.', 422);
+    if (review && (this.phase !== 'active' || this.view().snapshot?.screen_context.status !== 'fresh' || this.state.runtime.analysis_status !== 'available' || !this.state.runtime.candidate || this.state.workspace.condition !== current.condition)) throw new ServiceError('Resume sharing and obtain a fresh checked screen in this step’s expected condition before confirming.', 409);
+    await this.mutateInput(scope, (revision, signal) => review ? this.api.review(this.prepId, { ...input, revision }, signal) : this.api.respond(this.prepId, { ...input, text: input.text.trim(), revision }, signal));
+  }
+  async declareCondition(scope: string) {
+    const checkpoint = this.requirements?.checkpoints.find(cp => cp.id === this.state?.queue.current_checkpoint_id);
+    if (!checkpoint || this.requirements?.definitionSha256 !== this.state?.definition?.definition_sha256) throw new ServiceError('Load the current lab instructions first.');
+    await this.mutateInput(scope, (revision, signal) => this.api.context(this.prepId, { revision, action: 'condition', condition: checkpoint.condition }, signal));
+  }
+  private async mutateInput(scope: string, perform: (revision: number, signal: AbortSignal) => Promise<LabExecutionState>) {
+    if (!this.state || this.disposed || this.lifetime.signal.aborted || this.commandBusy || this.inputBusy || this.state.status === 'completed') throw new ServiceError('Wait for the current lab action before submitting.');
+    if (scope !== JSON.stringify(currentScope(this.state))) throw new ServiceError('The lab context changed. Your draft is kept for its original step.', 409);
+    this.inputBusy = true; this.commandBusy = true; this.cancelCheck(); this.emit();
+    const controller = new AbortController(); this.commandAbort = controller;
+    const signal = AbortSignal.any([controller.signal, this.lifetime.signal]);
+    try {
+      const revision = this.state.revision;
+      const result = await perform(revision, signal);
+      if (signal.aborted || this.disposed) throw new ServiceError('The lab input was interrupted. Reopen the saved lab to check whether it was received.');
+      this.adopt(result);
+    } catch (error) {
+      if (!signal.aborted && error instanceof ServiceError && error.status === 409) {
+        try { this.adopt(await this.api.get(this.prepId, signal)); } catch { /* keep draft and last committed state */ }
+      }
+      throw error;
+    } finally {
+      this.inputBusy = false;
+      if (this.commandAbort === controller) { this.commandAbort = null; this.commandBusy = false; }
+      this.emit();
+    }
+  }
   async share() {
     if (this.disposed || this.lifetime.signal.aborted || this.stream || this.phase === 'connecting') return;
     if (!this.publisher.status().bound || !window.isSecureContext || !navigator.mediaDevices?.getDisplayMedia) {
@@ -171,7 +243,8 @@ export class LabCaptureController {
       if (blob.size > 1_000_000) throw new ServiceError('The shared frame is too large. Reduce the MATLAB tab size and share again.');
       const frame = await this.channel.sendFrame({ type: 'frame', capture_epoch: 1, view_revision: this.state.workspace.view_revision, sequence: ++this.sequence, captured_elapsed_ms: Math.max(0, Math.round(performance.now() - this.started)),
         width: canvas.width, height: canvas.height, source_width: width, source_height: height, byte_count: blob.size, mime_type: 'image/jpeg' }, blob);
-      if (this.current(generation)) void this.check(frame, generation);
+      // A skipped frame was not admitted, so there is nothing to check; the next tick resends.
+      if (frame && this.current(generation)) void this.check(frame, generation);
     } catch (error) { if (this.current(generation)) this.stop(readableError(error)); }
     finally { if (this.current(generation)) this.timer = window.setTimeout(() => { void this.tick(generation); }, 2000); }
   }
