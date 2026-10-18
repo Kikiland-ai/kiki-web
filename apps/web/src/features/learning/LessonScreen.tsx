@@ -207,7 +207,7 @@ export function LessonScreen() {
           {status === 'revisit' && <StatusBadge label="Revisit" tone="not_yet" />}
           {concept?.requiredForLab && <StatusBadge label="For the lab" dimension="lab" />}
         </div>
-        <aside className={styles.support} aria-label="Language support"><span className={styles.supportLabel}>YOUR LANGUAGE SUPPORT</span><LanguageDial compact value={dial} onChange={setDial} /></aside>
+        <aside className={styles.support} aria-label="Language support"><span className={styles.supportLabel}>YOUR LANGUAGE SUPPORT</span>{profile?.supportLanguage === 'en' ? <p>English explanations and technical terms.</p> : <LanguageDial compact value={dial} onChange={setDial} />}</aside>
         {preference.saving && <p role="status">Saving your language preference…</p>}
         {preference.error && <div role="alert">Language preference not saved: {preference.error} <Button variant="text" onClick={preference.retry}>Retry language preference</Button></div>}
       </header>
@@ -350,7 +350,7 @@ export function LessonScreen() {
         <h2 id="words-title" className={styles.wordsTitle}>
           Words in this lesson
         </h2>
-        <p className={styles.wordsHint}>Tap a word for its Odia meaning, how to say it and an example.</p>
+        <p className={styles.wordsHint}>Tap a word for its meaning, how to say it and an example.</p>
         <ul className={styles.wordList}>
           {newTerms.map((t) => (
             <li key={t.id}>

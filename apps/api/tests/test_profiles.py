@@ -269,6 +269,7 @@ def test_exact_cors_and_profile_openapi(harness):
     assert "HTTPBearer" in schema["components"]["securitySchemes"]
     assert set(schema["components"]["schemas"]["Preferences"]["properties"]) == {
         "supportLanguage",
+        "studyField",
         "dialLevel",
         "onboarding",
     }
@@ -299,3 +300,35 @@ def test_cloud_configuration_rejects_emulator_or_wildcard_cors(monkeypatch):
     monkeypatch.delenv("FIREBASE_AUTH_EMULATOR_HOST")
     with pytest.raises(ValidationError):
         Settings(_env_file=None, firebase_project_id="test-project", cors_origins=["*"])
+
+
+def test_language_and_field_preferences_are_generic_and_preserve_existing_records(harness):
+    client, store, _ = harness
+    bootstrap(client)
+    store.docs["learners/a"]["futureLearningEvidence"] = {"keep": True}
+    body = preferences(3, True)
+    body.update(supportLanguage="hi", studyField="CSE")
+    body["onboarding"]["fluencySelfRatings"]["support"]["language"] = "hi"
+    response = client.patch("/learners/me/profile", headers=headers(), json=body)
+    assert response.status_code == 200
+    assert response.json()["profile"]["supportLanguage"] == "hi"
+    assert response.json()["profile"]["studyField"] == "CSE"
+    assert store.docs["learners/a"]["futureLearningEvidence"] == {"keep": True}
+    # An older client saving the support dial must not clear the new field.
+    body.pop("studyField")
+    body["dialLevel"] = 4
+    assert (
+        client.patch("/learners/me/profile", headers=headers(), json=body).json()["profile"][
+            "studyField"
+        ]
+        == "CSE"
+    )
+    # A language/field outside the demo catalog is still a valid account preference.
+    body.update(supportLanguage="My regional language", studyField="Environmental Studies")
+    body["onboarding"]["fluencySelfRatings"]["support"]["language"] = "My regional language"
+    assert client.patch("/learners/me/profile", headers=headers(), json=body).status_code == 200
+    fetched = client.get("/learners/me/profile", headers=headers()).json()["profile"]
+    assert fetched["studyField"] == "Environmental Studies"
+    assert fetched["courseIds"] == []
+    body["supportLanguage"] = " "
+    assert client.patch("/learners/me/profile", headers=headers(), json=body).status_code == 422

@@ -1,0 +1,68 @@
+import { test, expect } from '@playwright/test';
+test('generic setup saves language and field; Aditya’s ECE example follows explicit preferences', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('h1')).toContainText('your language');
+  await expect(page.getByText(/One learner\. One example\.|Meet Aditya, an ECE student/)).toHaveCount(0);
+  await page.getByRole('link', { name: 'Get started', exact: true }).click();
+  await page.getByRole('button', { name: 'Open sample student' }).click();
+  await expect(page.getByLabel('Learning language', { exact: true })).toHaveValue('Odia');
+  await expect(page.getByLabel('Field of study / branch', { exact: true })).toHaveValue('Electronics and Communication Engineering (ECE)');
+  await page.getByLabel('Learning language', { exact: true }).fill('Hindi');
+  await page.getByLabel('Field of study / branch', { exact: true }).fill('Computer Science and Engineering (CSE)');
+  await page.getByRole('button', { name: 'Save and continue' }).click();
+  await expect(page.getByRole('slider', { name: /^Hindi confidence/ })).toBeVisible();
+  await page.getByRole('button', { name: 'Save and continue' }).click();
+  await expect(page.getByText('Hindi explanation + English terms', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Save and continue' }).click();
+  await expect(page.getByText('Computer Science and Engineering (CSE)', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
+  await expect(page.getByText(/Lessons for this combination are not available/)).toBeVisible();
+  await page.reload();
+  await expect(page.getByText('Hindi · Language support 2/5', { exact: true })).toBeVisible();
+  await page.goto('/concepts/C-AM-04');
+  await expect(page.getByRole('heading', { name: 'Your subject, your learning path.' })).toBeVisible();
+  await page.getByRole('link', { name: 'Profile', exact: true }).click();
+  await expect(page.getByLabel('Learning language', { exact: true })).toHaveValue('Hindi');
+  await page.getByLabel('Learning language', { exact: true }).fill('Odia');
+  await page.getByLabel('Field of study / branch', { exact: true }).fill('Electronics and Communication Engineering (ECE)');
+  await page.getByRole('button', { name: 'Save preferences' }).click();
+  await expect(page.getByText('Preferences saved', { exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
+  await page.getByRole('link', { name: 'Add your subject', exact: true }).click();
+  await page.getByLabel('Semester', { exact: true }).selectOption('5');
+  await page.getByRole('button', { name: 'Add subject', exact: true }).click();
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(page.getByRole('link', { name: 'Continue learning', exact: true })).toBeVisible();
+  await expect(page.locator('.language-tag')).toHaveText('Odia + English terms');
+  await page.getByRole('link', { name: 'Profile', exact: true }).click();
+  for (const width of [320, 390, 768, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  }
+  await page.getByLabel('Field of study / branch', { exact: true }).fill('Medicine and Health Sciences');
+  await page.getByRole('button', { name: 'Save preferences' }).click();
+  await expect(page.getByText('Preferences saved', { exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Medicine and Health Sciences' })).toBeVisible();
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('kiki:fixture:profile:v1')!));
+  expect(saved.courseIds).toEqual(['CRS-AC-ECE']); expect(saved.displayName).toBe('Aditya');
+  await page.getByRole('link', { name: 'Profile', exact: true }).click();
+  await page.getByLabel('Learning language', { exact: true }).fill('English');
+  await page.getByLabel('Field of study / branch', { exact: true }).fill('Electronics and Communication Engineering (ECE)');
+  await page.getByRole('button', { name: 'Save preferences' }).click();
+  await expect(page.getByText('Preferences saved', { exact: true })).toBeVisible();
+  await page.goto('/concepts/C-AM-04');
+  await expect(page.getByText('English explanations and technical terms.', { exact: true })).toBeVisible();
+  await expect(page.locator('.language-tag')).toHaveText('English explanations');
+});
+test('legacy sample keeps its enrollment and identity while its display name becomes Aditya', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => {
+    sessionStorage.setItem('kiki:fixture:session:v1', 'fixture-bikash');
+    localStorage.setItem('kiki:fixture:profile:v1', JSON.stringify({ schema: 'profile/v1', id: 'fixture-bikash', displayName: 'Bikash', supportLanguage: 'or', dialLevel: 2, courseIds: ['CRS-AC-ECE'], onboarding: { step: 3, completedAt: '2026-10-18T00:00:00Z', fluencySelfRatings: { support: { language: 'or', outOf10: 9 }, englishOutOf10: 3, assessedBy: 'self' }, easyLanguageAnswer: 'regional' } }));
+  });
+  await page.goto('/home'); await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Continue learning', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('kiki:fixture:profile:v1')!).id)).toBe('fixture-bikash');
+});

@@ -62,7 +62,7 @@ class Verifier:
     def verify(self, token):
         if self.revoked or token != "isolated-lab-test-token":
             raise BoundaryError(401, "Test sign-in required")
-        return Identity(uid="fixture-bikash", display_name="Bikash")
+        return Identity(uid="fixture-bikash", display_name="Aditya")
 
 
 verifier = Verifier()

@@ -30,6 +30,8 @@ After approved credential setup, run:
 
 This uses SDK credentials normally to read a nonexistent connection-probe path; it makes no writes and prints no credentials or learner data. A passed probe proves Firestore access only. Real Firebase-token verification and a browser round trip remain separate checks.
 
+When launching a worktree with configuration loaded from another checkout, resolve relative `CLOUDSDK_CONFIG` and `GOOGLE_APPLICATION_CREDENTIALS` paths against that configuration file's directory before starting the API. Loading environment values does not change the process working directory. A wrong credential path can leave `/health` healthy while profile bootstrap returns503 with `DefaultCredentialsError`. Run the connection probe with the same working directory and environment as the API before sharing a connected preview.
+
 Firestore must have a Standard Native `(default)` database. The prepared console proposal is Mumbai (`asia-south1`), with production-mode client rules denying all direct reads/writes and no paid backups/billing upgrade. The user approved that location and private setup, and database creation is complete. No billing upgrade or backup was enabled. The Admin SDK uses IAM and Python checks, so it does not need permissive client rules. No rules are loosened by this API.
 
 Cloud mode refuses Firebase emulator variables. Emulator mode requires `KIKI_ENVIRONMENT=emulator`, project `demo-kiki-local` and both localhost Auth/Firestore SDK hosts. There is no production fixture or skip-auth mode. Tests inject doubles only inside pytest.

@@ -9,7 +9,7 @@ import { createFixtureMedia } from './media';
 
 const SESSION = 'kiki:fixture:session:v1';
 const PROFILE = 'kiki:fixture:profile:v1';
-const identity: Identity = { uid: 'fixture-bikash', displayName: 'Bikash' };
+const identity: Identity = { uid: 'fixture-bikash', displayName: 'Aditya' };
 export function createFixtureServices(): Services {
   const listeners = new Set<(user: Identity | null) => void>();
   const current = () => sessionStorage.getItem(SESSION) === identity.uid ? identity : null;
@@ -17,10 +17,10 @@ export function createFixtureServices(): Services {
     if (!current()) throw new ServiceError('Open the sample student to continue.', 401);
     const raw = localStorage.getItem(PROFILE);
     if (raw) {
-      try { const p = ProfileSchema.parse(JSON.parse(raw)); if (p.id === identity.uid) return p; } catch { /* Keep corrupt data untouched; surface a recoverable failure. */ }
+      try { const p = ProfileSchema.parse(JSON.parse(raw)); if (p.id === identity.uid) return { ...p, displayName: identity.displayName, studyField: p.studyField ?? 'ECE' }; } catch { /* Keep corrupt data untouched; surface a recoverable failure. */ }
       throw new ServiceError('The sample profile could not be read. Clear this preview’s site data to start again.');
     }
-    return { schema: 'profile/v1', id: identity.uid, displayName: identity.displayName, supportLanguage: 'or', dialLevel: 2, courseIds: [], onboarding: { step: 0, completedAt: null, fluencySelfRatings: null, easyLanguageAnswer: null } };
+    return { schema: 'profile/v1', id: identity.uid, displayName: identity.displayName, supportLanguage: 'or', studyField: 'ECE', dialLevel: 2, courseIds: [], onboarding: { step: 0, completedAt: null, fluencySelfRatings: null, easyLanguageAnswer: null } };
   }
   function save(profile: Profile) {
     const valid = ProfileSchema.parse(profile);

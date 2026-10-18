@@ -18,6 +18,14 @@ Isolated implementation branch `continuation/connected-learning-2026-10-18`; ori
 
 Review requires an active fresh checked screen in the expected condition; the server also checks image/context/visit and required student responses. If tracker condition differs, Declare intended condition records the learner's intent after their MATLAB action; it neither changes nor verifies MATLAB settings. After a context change, old drafts stay attached to their old context and Use current step opens a separate draft. Errors preserve text and require an explicit retry. Lost creation recovery uses Recover saved lab and never starts sharing. [Actual tests, remaining live gates and exact next action](../plans/connected-learning-continuation.md).
 
+> **Welcome/sign-in update,18 October:** public welcome no longer includes the “One learner. One example. Meet Aditya…” paragraph. Connected review uses http://127.0.0.1:5194/auth;5195 is sample-only. Corrected the API preview's local credential path and verified read-only Firestore access. Profile-loading errors use relevant copy rather than failed-save wording. The user should retry the signed-in profile; no real learner record was modified during checks. [Current status](../../apps/web/active.md).
+
+## Language- and field-flexible UI review — 18 October 2026
+
+Open **http://127.0.0.1:5195/** for Aditya's sample. A private window shows the full welcome/setup flow without clearing previous records. The welcome page explains Kiki across regional languages and fields; Aditya is one ECE/Odia example. **Open sample student** → confirm/edit language and field → confidence/support → confirm → Home. Aditya's Odia/ECE path then offers the existing subject, chapter, checks and lab preparation.
+
+In **Profile**, edit language and field independently; custom choices are accepted. Hindi/CSE or another combination retains your preferences and saved enrollment while showing that prepared lessons for that combination are not available in this demo. Returning to Odia/ECE restores that course view. English selects the English teaching view. Existing sessions retain progress and show the renamed demo learner. Connected5194 uses the signed-in Google name. These changes remain local; [scope and verification](../../apps/web/MULTILINGUAL_PROFILE_UI.md).
+
 ## Local screen-guidance walkthrough — 18 October 2026
 
 The PR #6 implementation is on `feature/lab-screen-share-implementation`; the user authorized source commit and push. No PR update, merge or deployment is included. Run the approved local setup in [the handoff](../../apps/web/LAB_SCREEN_SHARE_IMPLEMENTATION.md) before using5174; the isolated acceptance test servers are stopped after their run.

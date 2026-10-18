@@ -11,7 +11,7 @@ beforeEach(() => Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', 
 afterEach(() => { cleanup(); Reflect.deleteProperty(HTMLElement.prototype, 'scrollIntoView'); });
 it('keeps a failed step editable, then focuses the next heading only after a confirmed save', async () => {
   const update = vi.fn().mockRejectedValueOnce(new Error('Save failed')).mockResolvedValue(undefined);
-  const profile: Profile = { schema: 'profile/v1', id: 'setup-student', displayName: 'Student', supportLanguage: 'or', dialLevel: 2, courseIds: [], onboarding: { step: 0, completedAt: null, fluencySelfRatings: null, easyLanguageAnswer: null } };
+  const profile: Profile = { schema: 'profile/v1', id: 'setup-student', displayName: 'Student', supportLanguage: 'or', studyField: 'ECE', dialLevel: 2, courseIds: [], onboarding: { step: 0, completedAt: null, fluencySelfRatings: null, easyLanguageAnswer: null } };
   vi.mocked(useSession).mockReturnValue({ profile, update, logout: vi.fn(), services: { mode: 'fixture' } } as unknown as ReturnType<typeof useSession>);
   render(<MemoryRouter><Onboarding /></MemoryRouter>);
   fireEvent.click(screen.getByRole('button', { name: 'Save and continue' }));

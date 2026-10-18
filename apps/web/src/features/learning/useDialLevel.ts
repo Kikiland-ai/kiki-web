@@ -27,5 +27,5 @@ export function useDialLevel() {
       }
     });
   }
-  return { dial, setDial, saving, error, retry: () => setDial(dial) };
+  return { dial: profile?.supportLanguage === 'en' ? 5 as DialLevel : dial, setDial, saving, error, retry: () => setDial(dial) };
 }
