@@ -65,7 +65,9 @@ def test_text_save_list_read_and_original_unavailable_without_storage(material_h
     assert client.get(f"/source-docs/{source['id']}/content", headers=headers()).status_code == 409
     artifact = Path("test-artifacts/document-text-contract.json")
     artifact.parent.mkdir(exist_ok=True)
-    artifact.write_text(json.dumps({"receipt": response.json(), "list": listed, "text": result}))
+    artifact.write_text(
+        json.dumps({"receipt": response.json(), "list": listed, "text": result}), encoding="utf-8"
+    )
 
 
 def test_text_idempotency_changed_payload_and_owner_isolation(material_harness):

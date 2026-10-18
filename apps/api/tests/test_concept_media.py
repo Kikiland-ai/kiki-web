@@ -304,4 +304,6 @@ def test_media_contract_receipts_for_react(harness, package):
     }
     folder = ROOT / "apps/api/test-artifacts"
     folder.mkdir(exist_ok=True)
-    (folder / "media-contract.json").write_text(json.dumps(data, ensure_ascii=False))
+    (folder / "media-contract.json").write_text(
+        json.dumps(data, ensure_ascii=False), encoding="utf-8"
+    )
