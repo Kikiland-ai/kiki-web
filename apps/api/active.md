@@ -1,3 +1,9 @@
+## Requested PR integration — 18 October 2026
+
+User authorized merging #9, #10 and #11. #9 merged as `feed380c17862ccc77a0133ffc8971f598ae5728`; #11 retargeted to main and merged as `99ea53105fe0b2f02ab3b6dc5f0a74bb0d049f9a`, both with successful API/web CI. This branch merges resulting main into #10's exact head `a81ba705cea918b0ade1d16789e7a78ba7875fc0`. Only documentation conflicts required manual resolution; both profile and lab histories/walkthroughs are preserved. OpenAPI merged automatically and will be checked against the application. Combined checks PASS: 213 frontend tests / 39 files, 124 API tests, lint/typecheck/build, Ruff check/format, exact OpenAPI and Python→React receipts; 21 sample journey/preferences/lab-input browser cases at the required responsive widths. These are local/double/sample checks, not signed-in or MATLAB acceptance. Backend PR #7 remains open; runtime acceptance remains separate. No deployment, cloud or learner changes. Last completed: combined validation and documentation conflict resolution in an isolated worktree. Exact next: publish this merge to #10 and merge after API/web CI.
+
+---
+
 ## Continuation PR #11 opened — 18 October 2026 (India time)
 
 [PR #11: Add lab evidence controls and reliable execution recovery](https://github.com/Kikiland-ai/kiki-web/pull/11) is open for review, from `continuation/connected-learning-2026-10-18` into `fix/lab-integration-small`. It is stacked on open PR #9; merge #9 first, then retarget this PR to `main`. Implementation source commit: `0e6205a0815aacf9ae36472cb72159dc7a7d0424`. Author and committer verified as `akshitanitr <95952896+akshitanitr@users.noreply.github.com>`; authenticated GitHub login/push permission verified before publication. The separate PR #10 was not changed.
@@ -119,6 +125,24 @@ Latest continuation health check: Mac API :8000 and React :5174 HTTP 200; revers
 Last completed: reversible local configuration, access/auth checks, extension build/load and failed upstream smoke documented. Exact next: Windows Codex reports running full commit, restarts the existing compatible PR #7 backend with the same secret/proxy guard, checks possible extra smoke lab and confirms local smoke 9/9; then Mac retests. Real MATLAB/operator capture still requires explicit paid-trial enablement and Windows-only analyzer credential. See full report for evidence limits and process commands.
 
 ---
+
+## Published preference contract — 18 October 2026
+
+The additive preference contract, preservation regression and local-preview setup guidance are pushed in source `dd94b9f` on `redesign/aditya-multilingual-profile`; [PR #10](https://github.com/Kikiland-ai/kiki-web/pull/10) targets `main`.119 API checks and contract verification pass as recorded below. Next: PR review and user Google/profile retry. No merge, learner migration or deployment.
+
+## PR publication checkpoint — 18 October 2026
+
+User authorized a new PR for the generic account-preference UI. Branch `redesign/aditya-multilingual-profile` now includes latest `main` (`b984c64`, merged #7/#8); pending #9 remains separate.119 API tests, Ruff/format, exact OpenAPI consistency, Python→React receipts,185 frontend tests/build/lint and16 journey/preference browser cases pass. The additive metadata preserves existing records and older-client saves; teaching/media contracts remain Odia/English. Local preview credential-path recovery is documented but its credential files/process configuration are excluded from Git. Genuine signed-in browser/profile retry remains a separate acceptance check. Preparing commit/push/new PR only; no merge, cloud change or learner migration. Earlier local-only statements below are historical.
+
+## Local preview credential-path recovery — 18 October 2026
+
+The reported Google-success/profile-failure was bootstrap503 with `DefaultCredentialsError`: the preview loaded the original checkout's relative `CLOUDSDK_CONFIG` while running from this worktree. Restarted API8001 with that existing approved path resolved against the env file's directory; no credential-file copy, new authentication, IAM, billing or learner write. SDK connection probe reads only the deliberately nonexistent probe document and passes; the restarted API returns401 for an invalid bearer rather than503. README records worktree launch-path handling and health-versus-readiness checks. Genuine signed-in profile retry remains for the user at connected5194. Frontend welcome cleanup and contextual profile-load error copy pass11 focused tests, lint and TypeScript. No commit/push/deployment.
+
+## Generic learning preferences — local UI revision, 18 October 2026
+
+`redesign/aditya-multilingual-profile` adds bounded language preferences beyond `or`/`en` and optional `studyField` metadata, with matching Zod/OpenAPI. Existing profile fields/enrollment are retained. Older update payloads do not clear the new field; learning/media DTOs remain the existing bilingual authored package. New profiles default to unconfirmed English; Aditya's fixture explicitly starts Odia/ECE. No actual translation pipeline/curriculum expansion or Google identity rename is claimed.
+
+**119 API tests** and Ruff/format pass, including generic/custom preference persistence, preservation of unknown learner evidence and older-client field retention. Frontend183 tests, code/build/contracts and16 relevant browser cases pass. API8001 restarted from this worktree using approved config only in its process; public OpenAPI confirms the new field. No live Google/Firestore profile mutation, IAM/billing/Storage change, model call or deployment. Source remains local/uncommitted; next is user UI review. [Current frontend status](../web/active.md), [contract/UX handoff](../web/MULTILINGUAL_PROFILE_UI.md).
 
 ## Status — 18 October 2026, after merge
 

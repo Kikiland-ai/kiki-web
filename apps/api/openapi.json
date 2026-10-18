@@ -4082,11 +4082,22 @@
         "properties": {
           "supportLanguage": {
             "type": "string",
-            "enum": [
-              "or",
-              "en"
-            ],
+            "maxLength": 80,
+            "minLength": 1,
             "title": "Supportlanguage"
+          },
+          "studyField": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Studyfield"
           },
           "dialLevel": {
             "type": "integer",
@@ -4261,11 +4272,22 @@
         "properties": {
           "supportLanguage": {
             "type": "string",
-            "enum": [
-              "or",
-              "en"
-            ],
+            "maxLength": 80,
+            "minLength": 1,
             "title": "Supportlanguage"
+          },
+          "studyField": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Studyfield"
           },
           "dialLevel": {
             "type": "integer",
@@ -5415,10 +5437,8 @@
         "properties": {
           "language": {
             "type": "string",
-            "enum": [
-              "or",
-              "en"
-            ],
+            "maxLength": 80,
+            "minLength": 1,
             "title": "Language"
           },
           "outOf10": {
