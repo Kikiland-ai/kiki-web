@@ -15,9 +15,10 @@ if TYPE_CHECKING:
 
 
 class BoundaryError(Exception):
-    def __init__(self, status: int, message: str):
+    def __init__(self, status: int, message: str, *, code: str | None = None):
         self.status = status
         self.message = message
+        self.code = code
         super().__init__(message)
 
 

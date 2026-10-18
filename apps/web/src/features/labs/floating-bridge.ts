@@ -6,26 +6,37 @@ export type CaptureTrack = MediaStreamTrack & { getCaptureHandle?: () => { handl
 export type SampleSafety = { mode: 'block'; reason: string } | { mode: 'redact'; boxes: Rect[] };
 type Binding = { handle: string; target_origin: string };
 const CHANNEL = 'kiki-floating-guidance';
+// Responses are broadcast to this document. IDs must survive controller remounts:
+// an old hello reply must not resolve a new controller's first hello.
+let nextBridgeId = 0;
+let currentPublisher: symbol | null = null;
 export function createFloatingPublisher({ onCommand, onChange = () => {}, targetOrigins = ['https://matlab.mathworks.com'] }: { onCommand(command: 'pause' | 'resume'): Promise<void>; onChange?(): void; targetOrigins?: readonly string[] }) {
+  const ownership = Symbol(); currentPublisher = ownership;
   const streamId = crypto.randomUUID();
   let present = false, generation: number | null = null, binding: Binding | null = null, superseded = false, disposed = false;
-  let sequence = 0, bridgeSeq = 0, lastKey: string | null = null, lastSentAt = 0, source: () => ProjectionInput | null = () => null;
+  let sequence = 0, lastKey: string | null = null, lastSentAt = 0, source: () => ProjectionInput | null = () => null;
+  let helloPending = false;
+  let ownershipEpoch = 0, bindingEpoch = 0;
   let reports: { at: number; rects: Rect[] }[] = [], viewport: { w: number; h: number } | null = null, moving = false;
   let safety: SampleSafety = { mode: 'block', reason: 'Show Kiki on your MATLAB tab before sharing.' };
   const waiting = new Map<number, { resolve(value: Record<string, unknown>): void; timer: number }>();
   const post = (message: Record<string, unknown>) => new Promise<Record<string, unknown>>(resolve => {
     if (disposed) { resolve({ ok: false }); return; }
-    const bridge_id = ++bridgeSeq;
+    const bridge_id = ++nextBridgeId;
     const timer = window.setTimeout(() => { waiting.delete(bridge_id); resolve({ ok: false, error: 'bridge_timeout' }); }, 5000);
     waiting.set(bridge_id, { resolve, timer });
     window.postMessage({ channel: CHANNEL, direction: 'page', bridge_id, ...message }, location.origin);
   });
   async function hello() {
+    if (disposed || helloPending) return;
+    helloPending = true;
+    const epoch = ownershipEpoch, targetEpoch = bindingEpoch;
     const result = await post({ type: 'reader_hello', stream_id: streamId, lab_session_id: source()?.state.lab_session_id ?? null });
-    if (disposed || !result.ok || !Number.isSafeInteger(result.generation)) return;
+    helloPending = false;
+    if (disposed || epoch !== ownershipEpoch || !result.ok || !Number.isSafeInteger(result.generation)) return;
     present = true; generation = result.generation as number; superseded = false;
     const candidate = result.binding as Binding | null;
-    binding = candidate && targetOrigins.includes(candidate.target_origin) ? candidate : null;
+    if (targetEpoch === bindingEpoch) binding = candidate && targetOrigins.includes(candidate.target_origin) ? candidate : null;
     reports = []; viewport = null; lastKey = null; onChange(); void flush(true);
   }
   async function flush(force = false) {
@@ -36,7 +47,16 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     if (!force && key === lastKey && now - lastSentAt < 5000) return;
     const message = { schema: FG_SCHEMA, type: 'replace_snapshot', stream_id: streamId, generation, sequence: ++sequence, issued_at: new Date().toISOString(), body };
     if (JSON.stringify(message).length > FG_LIMITS.message_chars) return;
-    lastKey = key; lastSentAt = now; await post({ type: 'reader_snapshot', message });
+    lastKey = key; lastSentAt = now;
+    const result = await post({ type: 'reader_snapshot', message });
+    if (disposed || generation !== message.generation) return;
+    if (!result.ok) {
+      lastKey = null;
+      if (['stale_stream_or_generation', 'not_current_controller'].includes(String(result.error))) {
+        // Fail closed; explicit re-check may reclaim control. Never relax stale rejection.
+        superseded = true; generation = null; binding = null; reports = []; viewport = null; onChange();
+      }
+    }
   }
   async function command(message: Record<string, unknown>) {
     if (!['pause', 'resume'].includes(String(message.command))) return;
@@ -51,10 +71,11 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     if (m.type === 'response') { const item = waiting.get(m.bridge_id); if (item) { clearTimeout(item.timer); waiting.delete(m.bridge_id); item.resolve(m.result ?? {}); } return; }
     if (m.type === 'extension_present') { if (!present) void hello(); return; }
     if (m.type === 'fg_target_bound') {
+      ++bindingEpoch;
       binding = typeof m.handle === 'string' && m.handle.length <= 256 && targetOrigins.includes(m.target_origin) ? { handle: m.handle, target_origin: m.target_origin } : null;
       reports = []; viewport = null; onChange(); void flush(true);
-    } else if (m.type === 'fg_target_closed') { binding = null; reports = []; viewport = null; onChange(); }
-    else if (m.type === 'fg_superseded') { superseded = true; generation = null; binding = null; onChange(); }
+    } else if (m.type === 'fg_target_closed') { ++bindingEpoch; binding = null; reports = []; viewport = null; onChange(); }
+    else if (m.type === 'fg_superseded') { ++ownershipEpoch; superseded = true; generation = null; binding = null; onChange(); }
     else if (m.type === 'fg_snapshot_request') void flush(true);
     else if (m.type === 'fg_command') void command(m);
     else if (m.type === 'fg_rects') {
@@ -98,7 +119,12 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     blockedReason: () => safety.mode === 'block' ? safety.reason : null,
     dispose() {
       if (disposed) return;
-      if (present && generation !== null) window.postMessage({ channel: CHANNEL, direction: 'page', bridge_id: 0, type: 'reader_bye' }, location.origin);
+      // A pending hello can already have registered upstream even before its reply.
+      // The canonical bye is tab-scoped, so an older instance must not close a replacement.
+      if (currentPublisher === ownership) {
+        if ((present && generation !== null) || helloPending) window.postMessage({ channel: CHANNEL, direction: 'page', bridge_id: 0, type: 'reader_bye' }, location.origin);
+        currentPublisher = null;
+      }
       disposed = true; clearInterval(heartbeat); window.removeEventListener('message', receive);
       for (const item of waiting.values()) { clearTimeout(item.timer); item.resolve({ ok: false }); } waiting.clear();
     },

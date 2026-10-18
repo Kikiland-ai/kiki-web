@@ -1,0 +1,34 @@
+{
+  "schema": "screen-guided-policy/v2",
+  "conditions": {
+    "CP-DSB-01": "baseline",
+    "CP-DSB-02": "baseline",
+    "CP-DSB-03": "baseline",
+    "CP-DSB-04": "baseline",
+    "CP-DSB-05": "baseline",
+    "CP-DSB-06": "baseline",
+    "CP-DSB-07": "baseline",
+    "CP-DSB-08": "baseline",
+    "CP-DSB-09": "baseline",
+    "CP-DSB-10": "baseline",
+    "CP-DSB-11": "phase_fault",
+    "CP-DSB-12": "restored_baseline"
+  },
+  "responses": {
+    "CP-DSB-10:observation_record": [
+      "observation"
+    ],
+    "CP-DSB-11:phase_fault_observation": [
+      "prediction",
+      "observation"
+    ],
+    "CP-DSB-12:explanation": [
+      "explanation"
+    ]
+  },
+  "response_copy": {
+    "CP-DSB-10": "What do you notice when you compare the original and recovered signals?",
+    "CP-DSB-11": "What changed after you shifted the local carrier phase?",
+    "CP-DSB-12": "Why does carrier alignment matter for recovery?"
+  }
+}

@@ -16,8 +16,10 @@ from .lab_execution_models import (
     ContextExecution,
     CreateExecution,
     ExecutionEnvelope,
+    ExecutionRequirements,
     ResponseExecution,
     ReviewExecution,
+    StartExecution,
     StreamTicket,
     StreamTicketRequest,
 )
@@ -84,12 +86,16 @@ def register_lab_execution_routes(app, identity, backend, call, settings):
         return await anyio.to_thread.run_sync(lambda: call(lambda: service(uid, prep_id)))
 
     @app.post(ROOT, response_model=ExecutionEnvelope)
-    async def create(prep_id: str, _body: CreateExecution, user: user_dep):
-        return await (await owned(user.uid, prep_id)).start(user.uid, prep_id)
+    async def create(prep_id: str, body: StartExecution, user: user_dep):
+        return await (await owned(user.uid, prep_id)).start(user.uid, prep_id, body.recoverPending)
 
     @app.get(ROOT, response_model=ExecutionEnvelope)
     async def read(prep_id: str, user: user_dep):
         return await (await owned(user.uid, prep_id)).read(user.uid, prep_id)
+
+    @app.get(ROOT + "/requirements", response_model=ExecutionRequirements)
+    async def requirements(prep_id: str, user: user_dep):
+        return await (await owned(user.uid, prep_id)).requirements(user.uid, prep_id)
 
     @app.post(ROOT + "/screen-sessions")
     async def screen(prep_id: str, _body: CreateExecution, user: user_dep):

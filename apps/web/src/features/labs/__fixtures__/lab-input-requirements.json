@@ -1,0 +1,250 @@
+{
+  "schema": "lab-input-requirements/v1",
+  "preparationId": "prep-test",
+  "backendLabId": "8c5d57c4-bb20-491e-9b42-366b8140be59",
+  "definitionSha256": "5ca32d343a4fb4e849c42ac8cb14702650ead4e2e2617a950fa038472f2f1543",
+  "policySchema": "screen-guided-policy/v2",
+  "checkpoints": [
+    {
+      "id": "CP-DSB-01",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-01:workspace",
+          "description": "Correct Simulink model/workspace is explicitly confirmed.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-01:project_ref",
+          "description": "Blank model is named/saved and its external reference is recorded.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-02",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-02:message",
+          "description": "Message Sine Wave is present.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-02:carrier",
+          "description": "Carrier Sine Wave is present.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-03",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-03:message_parameters",
+          "description": "Inspect all B-MESSAGE parameters in the authored block specification.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-03:carrier_parameters",
+          "description": "Inspect all B-CARRIER parameters in the authored block specification.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-04",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-04:modulator",
+          "description": "B-MOD is a two-input multiplication Product.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-04:transmitter_connections",
+          "description": "Message and Carrier connect to separate Product inputs; no added carrier-offset path.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-05",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-05:local_parameters",
+          "description": "Inspect B-LOCAL parameters for the baseline condition.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-05:receiver_structure",
+          "description": "Local carrier and modulated signal connect to separate B-DET inputs.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-06",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-06:filter_parameters",
+          "description": "Inspect both B-LPF coefficient arrays against the authored 500 Hz filter.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-06:gain_parameters",
+          "description": "B-GAIN is 2.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-06:receiver_chain",
+          "description": "B-DET -> B-LPF -> B-GAIN is connected.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-07",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-07:scope_ports",
+          "description": "Inputs and Recovery comparison have two input ports; Modulated has one.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-07:scope_connections",
+          "description": "All five authored scope signal connections are present and identified.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-08",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-08:stop_time",
+          "description": "Stop time is 0.1 s.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-08:solver",
+          "description": "Solver is variable-step ode45.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-08:max_step",
+          "description": "Maximum step is 1e-5 s.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-09",
+      "condition": "baseline",
+      "responsePrompt": null,
+      "criteria": [
+        {
+          "id": "CP-DSB-09:baseline_run",
+          "description": "Positive completion evidence for a baseline run; bind workspace and parameter revision; no unresolved run error.",
+          "responseKinds": []
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-10",
+      "condition": "baseline",
+      "responsePrompt": "What do you notice when you compare the original and recovered signals?",
+      "criteria": [
+        {
+          "id": "CP-DSB-10:recovery_reading",
+          "description": "Readable steady-state axes/measurements support approximately 100 Hz, near-unit amplitude, and allowed filter lag/ripple.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-10:observation_record",
+          "description": "Student records the baseline comparison and interpretation.",
+          "responseKinds": [
+            "observation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-11",
+      "condition": "phase_fault",
+      "responsePrompt": "What changed after you shifted the local carrier phase?",
+      "criteria": [
+        {
+          "id": "CP-DSB-11:phase_fault_parameters",
+          "description": "For the intentional phase_fault condition only, Local carrier Phase is pi; transmitter Phase remains pi/2.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-11:phase_fault_run",
+          "description": "A completed run is tied to that fault parameter revision.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-11:phase_fault_result",
+          "description": "Compare fault and baseline evidence; reduced message-band recovery may coexist with residual ripple.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-11:phase_fault_observation",
+          "description": "Capture the student prediction/observation, distinct from model inference.",
+          "responseKinds": [
+            "prediction",
+            "observation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-12",
+      "condition": "restored_baseline",
+      "responsePrompt": "Why does carrier alignment matter for recovery?",
+      "criteria": [
+        {
+          "id": "CP-DSB-12:restored_parameters",
+          "description": "Local carrier Phase is pi/2 in restored_baseline condition.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-12:restored_run",
+          "description": "A new completed run is tied to the restored parameter revision.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-12:restored_recovery",
+          "description": "New output evidence supports restored message recovery.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-12:saved_model",
+          "description": "Student saves the restored external model; record save confirmation/ref separately.",
+          "responseKinds": []
+        },
+        {
+          "id": "CP-DSB-12:explanation",
+          "description": "Student supplies a carrier-alignment explanation; preserve response and separate reviewer judgement.",
+          "responseKinds": [
+            "explanation"
+          ]
+        }
+      ]
+    }
+  ]
+}

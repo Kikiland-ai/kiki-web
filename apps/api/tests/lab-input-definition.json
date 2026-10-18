@@ -1,0 +1,886 @@
+{
+  "schema": "lab-experiment-definition/v1",
+  "status": "proposed_prototype_definition",
+  "id": "DEMO-PR-AM-DSB-v1",
+  "source": {
+    "repository": "Kikiland-ai/Design-Thinking",
+    "commit": "2a6c843448d81062f89596b941516f8b7817ec79",
+    "case_id": "CASE-AC-AM-ODIA",
+    "practical_id": "PR-AM-DSB",
+    "files": [
+      {
+        "path": "data-model/ledgers/electronics/analog-modulation.json",
+        "git_blob_sha": "7e54eabba9aee6108bf0f3d3b742fb8e6da1c797",
+        "schema": "lesson-ledger/v2"
+      },
+      {
+        "path": "data-model/cases/analog-modulation-odia.json",
+        "git_blob_sha": "78b47d2e7cd4f84b7f7f586f4af5dcfa6631acee",
+        "schema": "learning-case/v1"
+      }
+    ]
+  },
+  "title": "DSB-SC Modulation & coherent demodulation",
+  "software": {
+    "name": "MATLAB/Simulink Online",
+    "url": "https://matlab.mathworks.com/",
+    "separateSignIn": true,
+    "products": [
+      "MATLAB",
+      "Simulink"
+    ]
+  },
+  "content_review": {
+    "status": "draft",
+    "notes": "Original curated teaching draft. Structural/numerical checks do not imply instructor approval, Gemini review, native Odia review or a live Simulink run."
+  },
+  "odia_review": {
+    "status": "draft",
+    "nativeSpeakerReviewed": false
+  },
+  "source_execution_verified": false,
+  "estimated_minutes": 40,
+  "readiness": {
+    "required_concept_ids": [
+      "C-AM-01",
+      "C-AM-02",
+      "C-AM-03",
+      "C-AM-04",
+      "C-AM-06",
+      "C-AM-07",
+      "C-AM-08"
+    ],
+    "concept_pass_percent": 60,
+    "chapter_test_required": false,
+    "synthetic_seeds_imported": false
+  },
+  "model": {
+    "blocks": [
+      {
+        "id": "B-MESSAGE",
+        "library": "simulink/Sources/Sine Wave",
+        "label": "Message",
+        "parameters": {
+          "SineType": "Time based",
+          "TimeSource": "Use simulation time",
+          "Amplitude": "1",
+          "Bias": "0",
+          "Frequency": "2*pi*100",
+          "Phase": "0",
+          "SampleTime": "0"
+        }
+      },
+      {
+        "id": "B-CARRIER",
+        "library": "simulink/Sources/Sine Wave",
+        "label": "Carrier",
+        "parameters": {
+          "SineType": "Time based",
+          "TimeSource": "Use simulation time",
+          "Amplitude": "1",
+          "Bias": "0",
+          "Frequency": "2*pi*2000",
+          "Phase": "pi/2",
+          "SampleTime": "0"
+        }
+      },
+      {
+        "id": "B-LOCAL",
+        "library": "simulink/Sources/Sine Wave",
+        "label": "Local carrier",
+        "parameters": {
+          "SineType": "Time based",
+          "TimeSource": "Use simulation time",
+          "Amplitude": "1",
+          "Bias": "0",
+          "Frequency": "2*pi*2000",
+          "Phase": "pi/2",
+          "SampleTime": "0"
+        }
+      },
+      {
+        "id": "B-MOD",
+        "library": "simulink/Math Operations/Product",
+        "label": "Modulator",
+        "parameters": {
+          "Inputs": "**"
+        }
+      },
+      {
+        "id": "B-DET",
+        "library": "simulink/Math Operations/Product",
+        "label": "Receiver product",
+        "parameters": {
+          "Inputs": "**"
+        }
+      },
+      {
+        "id": "B-LPF",
+        "library": "simulink/Continuous/Transfer Fcn",
+        "label": "Lowpass",
+        "parameters": {
+          "Numerator": "[9869604.40109]",
+          "Denominator": "[1 4442.88293816 9869604.40109]"
+        }
+      },
+      {
+        "id": "B-GAIN",
+        "library": "simulink/Math Operations/Gain",
+        "label": "Recovery gain",
+        "parameters": {
+          "Gain": "2"
+        }
+      },
+      {
+        "id": "B-SCOPE-IN",
+        "library": "simulink/Sinks/Scope",
+        "label": "Inputs",
+        "parameters": {
+          "NumInputPorts": "2"
+        }
+      },
+      {
+        "id": "B-SCOPE-MOD",
+        "library": "simulink/Sinks/Scope",
+        "label": "Modulated",
+        "parameters": {
+          "NumInputPorts": "1"
+        }
+      },
+      {
+        "id": "B-SCOPE-OUT",
+        "library": "simulink/Sinks/Scope",
+        "label": "Recovery comparison",
+        "parameters": {
+          "NumInputPorts": "2"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromBlockId": "B-MESSAGE",
+        "fromPort": 1,
+        "toBlockId": "B-MOD",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-CARRIER",
+        "fromPort": 1,
+        "toBlockId": "B-MOD",
+        "toPort": 2
+      },
+      {
+        "fromBlockId": "B-MOD",
+        "fromPort": 1,
+        "toBlockId": "B-DET",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-LOCAL",
+        "fromPort": 1,
+        "toBlockId": "B-DET",
+        "toPort": 2
+      },
+      {
+        "fromBlockId": "B-DET",
+        "fromPort": 1,
+        "toBlockId": "B-LPF",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-LPF",
+        "fromPort": 1,
+        "toBlockId": "B-GAIN",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-MESSAGE",
+        "fromPort": 1,
+        "toBlockId": "B-SCOPE-IN",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-CARRIER",
+        "fromPort": 1,
+        "toBlockId": "B-SCOPE-IN",
+        "toPort": 2
+      },
+      {
+        "fromBlockId": "B-MOD",
+        "fromPort": 1,
+        "toBlockId": "B-SCOPE-MOD",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-MESSAGE",
+        "fromPort": 1,
+        "toBlockId": "B-SCOPE-OUT",
+        "toPort": 1
+      },
+      {
+        "fromBlockId": "B-GAIN",
+        "fromPort": 1,
+        "toBlockId": "B-SCOPE-OUT",
+        "toPort": 2
+      }
+    ],
+    "baseline": {
+      "messageFrequencyHz": 100,
+      "carrierFrequencyHz": 2000,
+      "carrierPhaseRad": 1.5707963267948966,
+      "receiverPhaseRad": 1.5707963267948966,
+      "lowpassCutoffHz": 500,
+      "recoveryGain": 2,
+      "stopTimeSec": 0.1,
+      "solver": "ode45",
+      "maxStepSec": 1e-05,
+      "lowpass": {
+        "numerator": [
+          9869604.401089357
+        ],
+        "denominator": [
+          1,
+          4442.882938158366,
+          9869604.401089357
+        ]
+      },
+      "expectations": {
+        "idealSidebandsHz": [
+          1900,
+          2100
+        ],
+        "steadyStateMessageAmplitude": 0.9992009587217893,
+        "filterPhaseLagDegrees": 16.416440373585463,
+        "phaseFaultOffsetDegrees": 90
+      }
+    },
+    "faults": [
+      {
+        "faultCardId": "F-AM-PHASE",
+        "blockId": "B-LOCAL",
+        "parameter": "Phase",
+        "baselineValue": "pi/2",
+        "faultValue": "pi",
+        "expectedChange": "90-degree relative mismatch suppresses ideal 100 Hz recovery; finite-filter image remains."
+      },
+      {
+        "faultCardId": "F-AM-FREQ",
+        "blockId": "B-LOCAL",
+        "parameter": "Frequency",
+        "baselineValue": "2*pi*2000",
+        "faultValue": "2*pi*2010",
+        "expectedChange": "10 Hz relative frequency difference causes time-varying recovery."
+      },
+      {
+        "faultCardId": "F-AM-LPF",
+        "blockId": "B-LPF",
+        "parameter": "Numerator and Denominator",
+        "baselineValue": "500 Hz second-order Butterworth coefficients",
+        "faultValue": "50 Hz second-order Butterworth coefficients",
+        "expectedChange": "100 Hz wanted message is strongly attenuated; change both coefficient arrays consistently."
+      }
+    ],
+    "demo_fault_id": "F-AM-PHASE",
+    "conditions": [
+      "baseline",
+      "phase_fault",
+      "restored_baseline"
+    ]
+  },
+  "checkpoints": [
+    {
+      "id": "CP-DSB-01",
+      "order": 1,
+      "instruction": {
+        "en": "Confirm the selected model workspace",
+        "or": "ବାଛିଥିବା Model workspace ନିଶ୍ଚିତ କରନ୍ତୁ"
+      },
+      "why": {
+        "en": "Pointer targets must belong to this experiment.",
+        "or": "Pointer target ଏହି experiment ର ହେବା ଦରକାର।"
+      },
+      "expected": "Confirm the selected experiment and saved model reference before pointing.",
+      "source_evidence_kind": "workspace",
+      "depends_on": [],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Model canvas"
+      },
+      "concept_ids": [
+        "C-AM-01",
+        "C-AM-02"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-01:workspace",
+          "description": "Correct Simulink model/workspace is explicitly confirmed.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-01:project_ref",
+          "description": "Blank model is named/saved and its external reference is recorded.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-02",
+      "order": 2,
+      "instruction": {
+        "en": "Place the Message and Carrier sources",
+        "or": "Message ଓ Carrier source ରଖନ୍ତୁ"
+      },
+      "why": {
+        "en": "Separate sources make the information and reference visible.",
+        "or": "ଅଲଗା Source ତଥ୍ୟ ଓ Reference କୁ ସ୍ପଷ୍ଟ କରେ।"
+      },
+      "expected": "Message and Carrier Sine Wave blocks are present.",
+      "source_evidence_kind": "model_structure",
+      "depends_on": [
+        "CP-DSB-01"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Sine Wave blocks"
+      },
+      "concept_ids": [
+        "C-AM-02"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-02:message",
+          "description": "Message Sine Wave is present.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-02:carrier",
+          "description": "Carrier Sine Wave is present.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-03",
+      "order": 3,
+      "instruction": {
+        "en": "Set source frequencies, amplitudes and phases",
+        "or": "Source ର Frequency, Amplitude ଓ Phase ଦିଅନ୍ତୁ"
+      },
+      "why": {
+        "en": "The time-based source uses rad/s; pi/2 makes its sine output a cosine.",
+        "or": "Time-based source rad/s ବ୍ୟବହାର କରେ; pi/2 Phase ଦେଲେ Sine output Cosine ହୁଏ।"
+      },
+      "expected": "Message: amplitude 1, 2*pi*100 rad/s, phase 0; Carrier: amplitude 1, 2*pi*2000 rad/s, phase pi/2; both bias 0.",
+      "source_evidence_kind": "parameters",
+      "depends_on": [
+        "CP-DSB-02"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Source block parameters"
+      },
+      "concept_ids": [
+        "C-AM-01",
+        "C-AM-02"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-03:message_parameters",
+          "description": "Inspect all B-MESSAGE parameters in the authored block specification.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-03:carrier_parameters",
+          "description": "Inspect all B-CARRIER parameters in the authored block specification.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-04",
+      "order": 4,
+      "instruction": {
+        "en": "Connect the transmitter Product",
+        "or": "Transmitter Product ଯୋଡ଼ନ୍ତୁ"
+      },
+      "why": {
+        "en": "Multiplication forms the DSB-SC signal.",
+        "or": "ଗୁଣ କଲେ DSB-SC Signal ତିଆରି ହୁଏ।"
+      },
+      "expected": "Message and Carrier connect to distinct Product inputs; no DC carrier offset is added.",
+      "source_evidence_kind": "model_structure",
+      "depends_on": [
+        "CP-DSB-03"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Modulator Product"
+      },
+      "concept_ids": [
+        "C-AM-03",
+        "C-AM-04"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-04:modulator",
+          "description": "B-MOD is a two-input multiplication Product.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-04:transmitter_connections",
+          "description": "Message and Carrier connect to separate Product inputs; no added carrier-offset path.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-05",
+      "order": 5,
+      "instruction": {
+        "en": "Build the local carrier and receiver Product",
+        "or": "Local carrier ଓ Receiver Product ତିଆରି କରନ୍ତୁ"
+      },
+      "why": {
+        "en": "Matching the local carrier permits coherent recovery.",
+        "or": "Local Carrier ମେଳିଲେ Coherent recovery ସମ୍ଭବ।"
+      },
+      "expected": "Local carrier matches amplitude 1, 2*pi*2000 rad/s and phase pi/2; modulated signal and local carrier enter receiver Product.",
+      "source_evidence_kind": "parameters",
+      "depends_on": [
+        "CP-DSB-04"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Receiver Product and Local carrier"
+      },
+      "concept_ids": [
+        "C-AM-06"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-05:local_parameters",
+          "description": "Inspect B-LOCAL parameters for the baseline condition.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-05:receiver_structure",
+          "description": "Local carrier and modulated signal connect to separate B-DET inputs.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-06",
+      "order": 6,
+      "instruction": {
+        "en": "Add the lowpass stage and Gain 2",
+        "or": "Lowpass stage ଓ Gain 2 ଯୋଡ଼ନ୍ତୁ"
+      },
+      "why": {
+        "en": "The filter suppresses doubled-carrier products; the gain restores the product scale.",
+        "or": "Filter doubled-carrier Product କମାଏ; Gain Product scale ସୁଧାରେ।"
+      },
+      "expected": "Transfer Fcn coefficients match the specified second-order 500 Hz Butterworth filter; following Gain is 2.",
+      "source_evidence_kind": "parameters",
+      "depends_on": [
+        "CP-DSB-05"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Lowpass Transfer Fcn and Recovery Gain"
+      },
+      "concept_ids": [
+        "C-AM-06",
+        "C-AM-07"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-06:filter_parameters",
+          "description": "Inspect both B-LPF coefficient arrays against the authored 500 Hz filter.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-06:gain_parameters",
+          "description": "B-GAIN is 2.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-06:receiver_chain",
+          "description": "B-DET -> B-LPF -> B-GAIN is connected.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-07",
+      "order": 7,
+      "instruction": {
+        "en": "Connect and label the observation scopes",
+        "or": "Observation Scope ଯୋଡ଼ି ନାମ ଦିଅନ୍ତୁ"
+      },
+      "why": {
+        "en": "Side-by-side traces allow meaningful comparisons without changing the model.",
+        "or": "ପାଖାପାଖି Trace ରୁ Model ନବଦଳାଇ ତୁଳନା କରିହେବ।"
+      },
+      "expected": "Scopes show sources, modulated output, and original versus recovered message on separate input ports.",
+      "source_evidence_kind": "model_structure",
+      "depends_on": [
+        "CP-DSB-06"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Input, Modulated and Recovery scopes"
+      },
+      "concept_ids": [
+        "C-AM-01",
+        "C-AM-07"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-07:scope_ports",
+          "description": "Inputs and Recovery comparison have two input ports; Modulated has one.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-07:scope_connections",
+          "description": "All five authored scope signal connections are present and identified.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-08",
+      "order": 8,
+      "instruction": {
+        "en": "Set simulation duration and maximum step",
+        "or": "Simulation duration ଓ Maximum step ଦିଅନ୍ତୁ"
+      },
+      "why": {
+        "en": "A bounded step resolves the fast carrier and the short run keeps the lab responsive.",
+        "or": "ଛୋଟ Step ରୁ ଦ୍ରୁତ Carrier ସ୍ପଷ୍ଟ ହୁଏ; ଛୋଟ Run lab କୁ ସହଜ ରଖେ।"
+      },
+      "expected": "StopTime 0.1 s, variable-step ode45, MaxStep 1e-5 s.",
+      "source_evidence_kind": "parameters",
+      "depends_on": [
+        "CP-DSB-07"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Model settings and Stop time"
+      },
+      "concept_ids": [
+        "C-AM-01"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-08:stop_time",
+          "description": "Stop time is 0.1 s.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-08:solver",
+          "description": "Solver is variable-step ode45.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-08:max_step",
+          "description": "Maximum step is 1e-5 s.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-09",
+      "order": 9,
+      "instruction": {
+        "en": "Run the baseline model",
+        "or": "Baseline model ଚଲାନ୍ତୁ"
+      },
+      "why": {
+        "en": "A completed run is needed before interpreting its output.",
+        "or": "Output ବୁଝିବା ପୂର୍ବରୁ Run ସଫଳ ହେବା ଦରକାର।"
+      },
+      "expected": "The selected model completes a run without an error; evidence records the current parameter version.",
+      "source_evidence_kind": "run_result",
+      "depends_on": [
+        "CP-DSB-08"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Run control"
+      },
+      "concept_ids": [
+        "C-AM-04",
+        "C-AM-06",
+        "C-AM-07"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-09:baseline_run",
+          "description": "Positive completion evidence for a baseline run; bind workspace and parameter revision; no unresolved run error.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-10",
+      "order": 10,
+      "instruction": {
+        "en": "Inspect and record steady-state recovery",
+        "or": "Steady-state recovery ଦେଖି ଲେଖନ୍ତୁ"
+      },
+      "why": {
+        "en": "A finite filter can delay the trace; exact pixel equality is not the criterion.",
+        "or": "Finite Filter Trace କୁ ପଛକୁ ନେଇପାରେ; ନିଖୁତ Pixel equality ମାନଦଣ୍ଡ ନୁହେଁ।"
+      },
+      "expected": "After startup, recovered message is near 100 Hz and unit amplitude, with predicted filter phase lag and small residual ripple.",
+      "source_evidence_kind": "waveform",
+      "depends_on": [
+        "CP-DSB-09"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Recovery Scope"
+      },
+      "concept_ids": [
+        "C-AM-06",
+        "C-AM-07"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-10:recovery_reading",
+          "description": "Readable steady-state axes/measurements support approximately 100 Hz, near-unit amplitude, and allowed filter lag/ripple.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-10:observation_record",
+          "description": "Student records the baseline comparison and interpretation.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-11",
+      "order": 11,
+      "instruction": {
+        "en": "Try the 90-degree receiver phase fault",
+        "or": "90-degree Receiver phase fault ପରୀକ୍ଷା କରନ୍ତୁ"
+      },
+      "why": {
+        "en": "Only the receiver changes, isolating the effect of relative phase.",
+        "or": "କେବଳ Receiver ବଦଳିବାରୁ relative Phase ର ପ୍ରଭାବ ଅଲଗା ଭାବରେ ବୁଝିହେବ।"
+      },
+      "expected": "Student sets Local carrier Phase to pi, reruns, and observes suppression of the message component with possible high-frequency residual.",
+      "source_evidence_kind": "waveform",
+      "depends_on": [
+        "CP-DSB-10"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Local carrier Phase parameter"
+      },
+      "concept_ids": [
+        "C-AM-06",
+        "C-AM-08"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-11:phase_fault_parameters",
+          "description": "For the intentional phase_fault condition only, Local carrier Phase is pi; transmitter Phase remains pi/2.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-11:phase_fault_run",
+          "description": "A completed run is tied to that fault parameter revision.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-11:phase_fault_result",
+          "description": "Compare fault and baseline evidence; reduced message-band recovery may coexist with residual ripple.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-11:phase_fault_observation",
+          "description": "Capture the student prediction/observation, distinct from model inference.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "CP-DSB-12",
+      "order": 12,
+      "instruction": {
+        "en": "Restore, rerun, save and explain",
+        "or": "ପୂର୍ବ Setting ଫେରାଇ, ପୁଣି ଚଲାଇ, Save କରି ବୁଝାନ୍ତୁ"
+      },
+      "why": {
+        "en": "Restoration and explanation demonstrate an understood correction rather than a guessed change.",
+        "or": "Setting ଫେରାଇବା ଓ ବୁଝାଇବାରୁ Correction ବୁଝିଛନ୍ତି କି ନାହିଁ ଜଣାପଡ଼େ।"
+      },
+      "expected": "Local carrier Phase returns to pi/2; verified rerun restores recovery; model saved externally; student explains carrier alignment.",
+      "source_evidence_kind": "explanation",
+      "depends_on": [
+        "CP-DSB-11"
+      ],
+      "semantic_target": {
+        "strategy": "semantic",
+        "surface": "simulink",
+        "label": "Local carrier, Run, Save and Kiki observations"
+      },
+      "concept_ids": [
+        "C-AM-06",
+        "C-AM-07",
+        "C-AM-08"
+      ],
+      "concept_mapping_basis": "authored_prototype_mapping",
+      "completion_criteria": [
+        {
+          "id": "CP-DSB-12:restored_parameters",
+          "description": "Local carrier Phase is pi/2 in restored_baseline condition.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-12:restored_run",
+          "description": "A new completed run is tied to the restored parameter revision.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-12:restored_recovery",
+          "description": "New output evidence supports restored message recovery.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-12:saved_model",
+          "description": "Student saves the restored external model; record save confirmation/ref separately.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        },
+        {
+          "id": "CP-DSB-12:explanation",
+          "description": "Student supplies a carrier-alignment explanation; preserve response and separate reviewer judgement.",
+          "basis": "authored_decomposition_of_source_checkpoint"
+        }
+      ]
+    }
+  ],
+  "viva": [
+    {
+      "id": "V-AM-1",
+      "prompt": {
+        "en": "Why are there two sidebands?",
+        "or": "ଦୁଇଟି Sideband କାହିଁକି ହୁଏ?"
+      },
+      "answer": {
+        "en": "Multiplication shifts a sinusoidal message to fc-fm and fc+fm.",
+        "or": "ଗୁଣ କଲେ Sinusoidal message fc-fm ଓ fc+fm କୁ ଯାଏ।"
+      },
+      "conceptIds": [
+        "C-AM-04"
+      ]
+    },
+    {
+      "id": "V-AM-2",
+      "prompt": {
+        "en": "Why keep the message bias at zero?",
+        "or": "Message bias କୁ ଶୂନ୍ୟ କାହିଁକି ରଖିବେ?"
+      },
+      "answer": {
+        "en": "A DC offset would add a separate carrier spectral component.",
+        "or": "DC offset ଅଲଗା Carrier spectral component ଯୋଡ଼ିପାରେ।"
+      },
+      "conceptIds": [
+        "C-AM-04"
+      ]
+    },
+    {
+      "id": "V-AM-3",
+      "prompt": {
+        "en": "Why use a local carrier in the receiver?",
+        "or": "Receiver ରେ Local carrier କାହିଁକି ବ୍ୟବହାର କରିବେ?"
+      },
+      "answer": {
+        "en": "Its matched product shifts the wanted message back to baseband.",
+        "or": "Matched Product ଆବଶ୍ୟକ Message କୁ Baseband କୁ ଫେରାଏ।"
+      },
+      "conceptIds": [
+        "C-AM-06"
+      ]
+    },
+    {
+      "id": "V-AM-4",
+      "prompt": {
+        "en": "Why is the baseline recovery gain two?",
+        "or": "Baseline recovery Gain 2 କାହିଁକି?"
+      },
+      "answer": {
+        "en": "For unit carriers, the retained ideal message component is m(t)/2.",
+        "or": "Unit Carrier ପାଇଁ ରହିଥିବା ideal Message component m(t)/2।"
+      },
+      "conceptIds": [
+        "C-AM-06"
+      ]
+    },
+    {
+      "id": "V-AM-5",
+      "prompt": {
+        "en": "Why are the original and recovered traces shifted?",
+        "or": "Original ଓ Recovered trace ମଧ୍ୟରେ Shift କାହିଁକି?"
+      },
+      "answer": {
+        "en": "The continuous lowpass filter introduces frequency-dependent phase lag.",
+        "or": "Continuous Lowpass filter Frequency ଅନୁସାରେ Phase lag ଆଣେ।"
+      },
+      "conceptIds": [
+        "C-AM-07"
+      ]
+    },
+    {
+      "id": "V-AM-6",
+      "prompt": {
+        "en": "Why does a 90-degree relative phase error suppress recovery?",
+        "or": "90-degree relative Phase error Recovery କାହିଁକି କମାଏ?"
+      },
+      "answer": {
+        "en": "The ideal message-band factor is cos(phi), which is zero at 90 degrees; residual images can remain.",
+        "or": "Ideal Message-band factor cos(phi), ଯାହା 90 degree ରେ ଶୂନ୍ୟ; Residual image ରହିପାରେ।"
+      },
+      "conceptIds": [
+        "C-AM-08"
+      ]
+    }
+  ],
+  "pointer": {
+    "name": "Hey Clickky 2.0",
+    "activationRequires": [
+      "experiment_selected",
+      "required_concepts_passed",
+      "software_opened",
+      "workspace_confirmed",
+      "connection_active"
+    ],
+    "performsStudentActions": false,
+    "integrationStatus": "unverified",
+    "targetResolution": "resolve_against_current_workspace"
+  }
+}

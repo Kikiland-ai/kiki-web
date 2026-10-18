@@ -4,9 +4,12 @@ import type { AuthService } from '../../contracts/services';
 import type { LabExecutionApi } from '../../contracts/lab-execution';
 import { LabExecutionStateSchema } from '../../contracts/lab-execution';
 import receipt from './__fixtures__/python-execution.json';
+import requirements from './__fixtures__/lab-input-requirements.json';
 const mocks = vi.hoisted(() => ({ safety: { mode: 'redact', boxes: [] } as { mode: 'block' | 'redact'; boxes?: unknown[]; reason?: string }, dispose: vi.fn(), apply: vi.fn() }));
 vi.mock('./floating-bridge', () => ({ createFloatingPublisher: () => ({ source: vi.fn(), changed: vi.fn(), recheck: vi.fn(), matchesTarget: () => true, blockedReason: () => null, status: () => ({ present: true, bound: true, superseded: false }), sampleSafety: () => mocks.safety, apply: mocks.apply, dispose: mocks.dispose }) }));
 import { LabCaptureController } from './lab-capture';
+import { ServiceError } from '../../services/types';
+import { currentScope } from './floating-guidance';
 let cleanup: () => unknown, connection: LabCaptureController;
 const track = () => Object.assign(new EventTarget(), { stop: vi.fn(), getSettings: () => ({ displaySurface: 'browser' }), getCaptureHandle: () => ({ handle: 'bound', origin: 'https://matlab.mathworks.com' }) });
 function setup() {
@@ -15,7 +18,7 @@ function setup() {
   const media = vi.fn(async () => stream);
   Object.defineProperty(navigator, 'mediaDevices', { configurable: true, value: { getDisplayMedia: media } });
   const channel = { ready: Promise.resolve(), close: vi.fn(), command: vi.fn(async () => {}), sendFrame: vi.fn(async () => receipt.frame) };
-  const api = { get: vi.fn(async () => state), start: vi.fn(async () => state), attach: vi.fn(async () => state), screen: vi.fn(async () => ({ session_id: 'screen' })), channel: vi.fn(async () => channel), check: vi.fn(async () => { throw new Error('Controlled provider wait'); }), context: vi.fn(async () => state) };
+  const api = { get: vi.fn(async () => state), start: vi.fn(async () => state), recover: vi.fn(async () => state), requirements: vi.fn(async () => requirements), review: vi.fn(async () => ({ ...state, revision: state.revision + 1 })), respond: vi.fn(async () => ({ ...state, revision: state.revision + 1 })), attach: vi.fn(async () => state), screen: vi.fn(async () => ({ session_id: 'screen' })), channel: vi.fn(async () => channel), check: vi.fn(async () => { throw new Error('Controlled provider wait'); }), context: vi.fn(async () => state) };
   const auth = { registerSignOutCleanup: (fn: () => unknown) => { cleanup = fn; return () => {}; } } as AuthService;
   connection = new LabCaptureController('prep-test', api as unknown as LabExecutionApi, auth);
   return { state, video, stream, media, channel, api };
@@ -100,4 +103,87 @@ it('Stop during an in-flight pause cannot reactivate the panel or capture later'
 it('completed saved runs show completion without opening a picker', async () => {
   const { api, state, media } = setup(); api.get.mockResolvedValue({ ...state, status: 'completed' });
   await connection.load(); expect(connection.view().phase).toBe('completed'); expect(media).not.toHaveBeenCalled();
+});
+it('reload exposes pending creation; only explicit recovery replays once without capture', async () => {
+  const { api, state, media } = setup();
+  api.get.mockRejectedValue(new ServiceError('Pending', 503, 'lab_creation_pending'));
+  await connection.load();
+  expect(connection.view().canRecover).toBe(true); expect(api.recover).not.toHaveBeenCalled();
+  let resolve!: (s: typeof state) => void;
+  api.recover.mockReturnValue(new Promise(r => resolve = r));
+  const retry = connection.load(true); await Promise.resolve();
+  await connection.load(true); expect(api.recover).toHaveBeenCalledTimes(1);
+  resolve(state); await retry;
+  expect(connection.view().state?.lab_session_id).toBe(state.lab_session_id);
+  expect(connection.view().phase).toBe('disconnected'); expect(media).not.toHaveBeenCalled(); expect(api.screen).not.toHaveBeenCalled();
+});
+it.each([undefined, 'disabled', 'upstream_unavailable'])('does not create for ambiguous/disabled/unavailable 503 (%s)', async code => {
+  const { api } = setup(); api.get.mockRejectedValue(new ServiceError('Unavailable', 503, code));
+  await connection.load(true); expect(api.recover).not.toHaveBeenCalled(); expect(connection.view().canRecover).toBe(false);
+});
+it('a failed recovery is bounded and a later explicit retry can reach the same saved lab', async () => {
+  const { api } = setup(); api.get.mockRejectedValue(new ServiceError('Pending', 503, 'lab_creation_pending'));
+  api.recover.mockRejectedValueOnce(new ServiceError('Outage', 503));
+  await connection.load(true); expect(api.recover).toHaveBeenCalledTimes(1); expect(connection.view().phase).toBe('unavailable');
+  await connection.load(true); expect(api.recover).toHaveBeenCalledTimes(2); expect(connection.view().phase).toBe('disconnected');
+});
+it('navigation during the pending read never posts and a late recovery result cannot update state', async () => {
+  const { api, state } = setup();
+  let reject!: (reason: unknown) => void;
+  api.get.mockReturnValue(new Promise((_, r) => reject = r));
+  const reading = connection.load(true); connection.dispose(); reject(new ServiceError('Pending', 503, 'lab_creation_pending')); await reading;
+  expect(api.recover).not.toHaveBeenCalled(); expect(connection.view().state).toBeNull();
+  const next = setup(); next.api.get.mockRejectedValue(new ServiceError('Pending', 503, 'lab_creation_pending'));
+  let resolve!: (s: typeof state) => void; next.api.recover.mockReturnValue(new Promise(r => resolve = r));
+  const replaying = connection.load(true); await Promise.resolve(); connection.dispose(); resolve(state); await replaying;
+  expect(connection.view().state).toBeNull();
+});
+it('records student input with the committed revision and adopts the returned state without capture', async () => {
+  const { api, state, media } = setup(); await connection.load(); await Promise.resolve();
+  const scope = JSON.stringify(currentScope(state));
+  await connection.submitInput(scope, { kind: 'observation', text: 'I compared the displayed traces.', self_confidence: 3 });
+  expect(api.respond).toHaveBeenCalledWith('prep-test', { revision: state.revision, kind: 'observation', text: 'I compared the displayed traces.', self_confidence: 3 }, expect.any(AbortSignal));
+  expect(connection.view().state?.revision).toBe(state.revision + 1); expect(media).not.toHaveBeenCalled();
+});
+it('rejects blank input, stale context and confirmation without a current checked image', async () => {
+  const { api, state } = setup(); await connection.load(); await Promise.resolve();
+  const scope = JSON.stringify(currentScope(state));
+  await expect(connection.submitInput(scope, { kind: 'note', text: '  ' })).rejects.toMatchObject({ status: 422 });
+  await expect(connection.submitInput('old-context', { kind: 'note', text: 'A draft' })).rejects.toMatchObject({ status: 409 });
+  await expect(connection.submitInput(scope, { criterion_ids: ['CP-DSB-01:workspace'], review_note: 'I reviewed this workspace.' })).rejects.toMatchObject({ status: 409 });
+  expect(api.respond).not.toHaveBeenCalled(); expect(api.review).not.toHaveBeenCalled();
+});
+it('prevents duplicate student submissions, refreshes after a conflict and never silently retries', async () => {
+  const { api, state } = setup(); await connection.load(); await Promise.resolve();
+  let reject!: (reason: unknown) => void;
+  api.respond.mockReturnValue(new Promise((_, r) => reject = r));
+  const scope = JSON.stringify(currentScope(state));
+  const pending = connection.submitInput(scope, { kind: 'note', text: 'My own draft' });
+  await expect(connection.submitInput(scope, { kind: 'note', text: 'My own draft' })).rejects.toThrow('Wait');
+  api.get.mockResolvedValue({ ...state, revision: state.revision + 2 });
+  reject(new ServiceError('Changed', 409)); await expect(pending).rejects.toMatchObject({ status: 409 });
+  expect(api.respond).toHaveBeenCalledTimes(1); expect(connection.view().state?.revision).toBe(state.revision + 2); expect(connection.view().inputBusy).toBe(false);
+});
+it('confirms selected criteria only with a current committed candidate while sharing', async () => {
+  const { api, state } = setup();
+  const committed = receipt.events.find(e => e.type === 'guidance_committed')!.state!;
+  const checked = LabExecutionStateSchema.parse({ ...state, ...committed, definition: state.definition });
+  api.get.mockResolvedValue(checked); api.attach.mockResolvedValue(checked);
+  api.review.mockResolvedValue({ ...checked, revision: checked.revision + 1 });
+  vi.spyOn(HTMLVideoElement.prototype, 'videoWidth', 'get').mockReturnValue(0);
+  await connection.load(); await Promise.resolve(); await connection.share();
+  await connection.submitInput(JSON.stringify(currentScope(checked)), { criterion_ids: ['CP-DSB-01:project_ref'], review_note: 'I checked my saved model reference.' });
+  expect(api.review).toHaveBeenCalledWith('prep-test', { revision: checked.revision, criterion_ids: ['CP-DSB-01:project_ref'], review_note: 'I checked my saved model reference.' }, expect.any(AbortSignal));
+  expect(connection.view().state?.revision).toBe(checked.revision + 1);
+});
+it('declares only the current server-defined condition on an explicit action and rejects an old draft scope', async () => {
+  const { api, state } = setup();
+  const fault = { ...state, queue: { ...state.queue, current_checkpoint_id: 'CP-DSB-11' } };
+  api.get.mockResolvedValue(fault); await connection.load(); await Promise.resolve();
+  expect(api.context).not.toHaveBeenCalled();
+  await expect(connection.declareCondition('old-step')).rejects.toMatchObject({ status: 409 });
+  api.context.mockResolvedValue({ ...fault, revision: fault.revision + 1, workspace: { ...fault.workspace, condition: 'phase_fault' } });
+  await connection.declareCondition(JSON.stringify(currentScope(fault)));
+  expect(api.context).toHaveBeenCalledWith('prep-test', { revision: fault.revision, action: 'condition', condition: 'phase_fault' }, expect.any(AbortSignal));
+  expect(connection.view().state?.workspace.condition).toBe('phase_fault');
 });

@@ -1477,7 +1477,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateExecution"
+                "$ref": "#/components/schemas/StartExecution"
               }
             }
           }
@@ -1531,6 +1531,50 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExecutionEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lab-preparations/{prep_id}/execution/requirements": {
+      "get": {
+        "summary": "Requirements",
+        "operationId": "requirements_lab_preparations__prep_id__execution_requirements_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prep_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Prep Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionRequirements"
                 }
               }
             }
@@ -2434,6 +2478,53 @@
         ],
         "title": "Checkpoint"
       },
+      "CheckpointRequirement": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CP-DSB-(0[1-9]|1[0-2])$",
+            "title": "Id"
+          },
+          "criteria": {
+            "items": {
+              "$ref": "#/components/schemas/CriterionRequirement"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Criteria"
+          },
+          "condition": {
+            "type": "string",
+            "enum": [
+              "baseline",
+              "phase_fault",
+              "restored_baseline"
+            ],
+            "title": "Condition"
+          },
+          "responsePrompt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responseprompt"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "criteria",
+          "condition"
+        ],
+        "title": "CheckpointRequirement"
+      },
       "Choice": {
         "properties": {
           "questionId": {
@@ -2611,6 +2702,43 @@
         "type": "object",
         "title": "CreateExecution"
       },
+      "CriterionRequirement": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CP-DSB-(0[1-9]|1[0-2]):[a-z_]+$",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "responseKinds": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "prediction",
+                "observation",
+                "explanation",
+                "question",
+                "note"
+              ]
+            },
+            "type": "array",
+            "title": "Responsekinds"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "responseKinds"
+        ],
+        "title": "CriterionRequirement"
+      },
       "Draft": {
         "properties": {
           "responses": {
@@ -2778,6 +2906,53 @@
           "state"
         ],
         "title": "ExecutionEnvelope"
+      },
+      "ExecutionRequirements": {
+        "properties": {
+          "schema": {
+            "type": "string",
+            "const": "lab-input-requirements/v1",
+            "title": "Schema",
+            "default": "lab-input-requirements/v1"
+          },
+          "preparationId": {
+            "type": "string",
+            "title": "Preparationid"
+          },
+          "backendLabId": {
+            "type": "string",
+            "title": "Backendlabid"
+          },
+          "definitionSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Definitionsha256"
+          },
+          "policySchema": {
+            "type": "string",
+            "const": "screen-guided-policy/v2",
+            "title": "Policyschema"
+          },
+          "checkpoints": {
+            "items": {
+              "$ref": "#/components/schemas/CheckpointRequirement"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 12,
+            "title": "Checkpoints"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "preparationId",
+          "backendLabId",
+          "definitionSha256",
+          "policySchema",
+          "checkpoints"
+        ],
+        "title": "ExecutionRequirements"
       },
       "Feedback": {
         "properties": {
@@ -5040,6 +5215,18 @@
           "assessmentId"
         ],
         "title": "Start"
+      },
+      "StartExecution": {
+        "properties": {
+          "recoverPending": {
+            "type": "boolean",
+            "title": "Recoverpending",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "StartExecution"
       },
       "StartPreparation": {
         "properties": {

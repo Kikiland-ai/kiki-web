@@ -23,6 +23,18 @@ it('sends bearer only to apps/api, rejects unsupported/foreign state and preserv
   fetcher.mockResolvedValueOnce(new Response('', { status: 409 })); await expect(api.get(prep)).rejects.toMatchObject({ status: 409 });
   fetcher.mockResolvedValueOnce(new Response('', { status: 503 })); await expect(api.get(prep)).rejects.toThrow('progress is kept');
 });
+it('exposes only a valid 503 pending-creation code, never arbitrary error text or codes', async () => {
+  const fetcher = vi.fn<typeof fetch>();
+  const api = createLabExecutionApi('http://localhost:8002', auth, fetcher, socketClass);
+  fetcher.mockResolvedValueOnce(Response.json({ code: 'lab_creation_pending', detail: 'untrusted detail' }, { status: 503 }));
+  await expect(api.get(prep)).rejects.toMatchObject({ code: 'lab_creation_pending', status: 503 });
+  fetcher.mockResolvedValueOnce(Response.json(envelope)); await api.recover(prep);
+  expect(JSON.parse(fetcher.mock.calls.at(-1)![1]!.body as string)).toEqual({ recoverPending: true });
+  for (const [status, body] of [[503, { code: 'disabled' }], [409, { code: 'lab_creation_pending' }], [503, null]] as const) {
+    fetcher.mockResolvedValueOnce(Response.json(body, { status }));
+    await expect(api.get(prep)).rejects.toMatchObject({ code: undefined, status });
+  }
+});
 it('WebSocket URL contains only a one-time ticket and verifies frame acknowledgement identity', async () => {
   const api = createLabExecutionApi('http://localhost:8002', auth, async () => Response.json({ ticket: 'one-use-capability', expiresInSeconds: 60 }), socketClass);
   const onDisconnect = vi.fn(); const channel = await api.channel(prep, 'screen', onDisconnect);

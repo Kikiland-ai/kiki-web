@@ -26,5 +26,16 @@
 .observation strong,.observation p { font-size:13px; }
 .preview { margin-top:20px; padding:16px; border:1.5px dashed var(--ink); background:var(--surface); }
 .preview p { margin:8px 0; overflow-wrap:anywhere; }
+.studentInput { margin-top:24px; padding-top:20px; border-top:2px solid var(--ink); overflow-wrap:anywhere; }
+.studentInput p { font-size:14px; line-height:1.8; }
+.studentInput form { margin-block:20px; }
+.studentInput fieldset { min-width:0; padding:16px; border:1px solid var(--rule); }
+.studentInput legend { padding-inline:8px; font-weight:600; }
+.studentInput label { display:grid; gap:8px; margin-block:16px; font-size:14px; line-height:1.7; }
+.studentInput textarea,.studentInput select { width:100%; max-width:100%; min-height:44px; padding:10px; border:1px solid var(--ink); border-radius:4px; background:var(--paper); color:var(--ink); font:inherit; }
+.studentInput textarea { resize:vertical; }
+.studentInput .criterion { display:flex; align-items:flex-start; gap:12px; padding-block:8px; }
+.criterion input { width:24px; height:24px; flex-shrink:0; margin:4px; }
+.criterion small { display:block; color:var(--muted); }
 @media(max-width:1000px) { .guidance { grid-template-columns:minmax(0,1fr); } }
 @media(max-width:599px) { .panel { padding:20px 16px; } .setup { padding-left:24px; } .setup li { padding-left:4px; } .setup :global(.button),.actions :global(.button) { width:100%; padding-inline:12px; } .actions { align-items:stretch; } .guidance h3 { font-size:21px; } }

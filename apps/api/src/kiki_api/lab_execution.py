@@ -1,5 +1,6 @@
 """Owned preparation → one reserved upstream execution. No frames or evidence are saved here."""
 
+import hashlib
 import json
 import re
 import time
@@ -9,7 +10,7 @@ import anyio
 from firebase_admin import firestore
 
 from .backend import BoundaryError
-from .lab_execution_models import ExecutionEnvelope, ExecutionLink
+from .lab_execution_models import ExecutionEnvelope, ExecutionLink, ExecutionRequirements
 from .lab_upstream import UNAVAILABLE
 from .learning import now
 from .learning_catalog import dump
@@ -49,6 +50,12 @@ class LabExecutions:
         if not saved.exists:
             raise BoundaryError(404, "Start screen sharing from this lab preparation first.")
         value = ExecutionLink.model_validate(saved.to_dict())
+        if value.status == "creating" and value.modelName and value.operationKey:
+            raise BoundaryError(
+                503,
+                "Your saved lab creation is pending. Retry to recover the same lab.",
+                code="lab_creation_pending",
+            )
         if value.status != "linked" or not value.backendLabId:
             raise BoundaryError(503, UNAVAILABLE)
         if not SAFE_ID.fullmatch(value.backendLabId):
@@ -82,8 +89,21 @@ class LabExecutions:
 
         return apply(self.client.transaction(max_attempts=3))
 
-    async def start(self, uid, prep_id):
-        winner, link, _ = await anyio.to_thread.run_sync(self.reserve, uid, prep_id)
+    def existing_reservation(self, uid, prep_id):
+        self.access(uid, prep_id)
+        saved = self.ref(uid, prep_id).get(timeout=5)
+        if not saved.exists:
+            raise BoundaryError(
+                404, "The saved creation is no longer available. Reopen this preparation."
+            )
+        return ExecutionLink.model_validate(saved.to_dict())
+
+    async def start(self, uid, prep_id, recover_pending=False):
+        if recover_pending:
+            winner = False
+            link = await anyio.to_thread.run_sync(self.existing_reservation, uid, prep_id)
+        else:
+            winner, link, _ = await anyio.to_thread.run_sync(self.reserve, uid, prep_id)
         if winner or (link.status == "creating" and link.modelName):
             # A creating reservation may have lost its first response. The same key and
             # body replay that lab instead of creating another; this requires kiki-backend
@@ -137,6 +157,56 @@ class LabExecutions:
         self.validate_state(state, link.backendLabId)
         await self.remember(uid, prep_id, state)
         return self.envelope(prep_id, link.backendLabId, state)
+
+    async def requirements(self, uid, prep_id):
+        """Project current server-authored policy; no duplicated checkpoint rules in React."""
+        envelope = await self.read(uid, prep_id)
+        definition = await self.call("GET", "/lab-definition", uid)
+        policy = await self.call("GET", "/lab-guidance-policy", uid)
+        digest = hashlib.sha256(
+            json.dumps(
+                definition, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+            ).encode()
+        ).hexdigest()
+        if digest != envelope.state.get("definition", {}).get("definition_sha256"):
+            raise BoundaryError(
+                503, "Lab instructions changed. Reopen this lab before recording input."
+            )
+        try:
+            value = ExecutionRequirements(
+                preparationId=prep_id,
+                backendLabId=envelope.backendLabId,
+                definitionSha256=digest,
+                policySchema=policy["schema"],
+                checkpoints=[
+                    {
+                        "id": cp["id"],
+                        "criteria": [
+                            {
+                                "id": criterion["id"],
+                                "description": criterion["description"],
+                                "responseKinds": policy["responses"].get(criterion["id"], []),
+                            }
+                            for criterion in cp["completion_criteria"]
+                        ],
+                        "condition": policy["conditions"][cp["id"]],
+                        "responsePrompt": policy["response_copy"].get(cp["id"]),
+                    }
+                    for cp in definition["checkpoints"]
+                ],
+            )
+            ids = [cp.id for cp in value.checkpoints]
+            if len(set(ids)) != 12 or any(
+                len({c.id for c in cp.criteria}) != len(cp.criteria)
+                or any(not c.id.startswith(cp.id + ":") for c in cp.criteria)
+                for cp in value.checkpoints
+            ):
+                raise ValueError("Invalid criterion identity")
+            return value
+        except (KeyError, TypeError, ValueError):
+            raise BoundaryError(
+                503, "The lab input instructions are unavailable. Retry shortly."
+            ) from None
 
     async def remember(self, uid, prep_id, state):
         # Only cache connection status, never inferred checkpoint evidence or pixels.

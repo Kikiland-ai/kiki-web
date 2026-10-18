@@ -65,7 +65,10 @@ def create_app(settings: Settings, factory: Callable[[], Services] | None = None
     @application.exception_handler(BoundaryError)
     async def boundary_error(_request: Request, exc: BoundaryError):
         headers = {"WWW-Authenticate": "Bearer"} if exc.status == 401 else None
-        return JSONResponse({"detail": exc.message}, status_code=exc.status, headers=headers)
+        body = {"detail": exc.message}
+        if exc.code:
+            body["code"] = exc.code
+        return JSONResponse(body, status_code=exc.status, headers=headers)
 
     @application.exception_handler(RequestValidationError)
     async def bad_input(_request: Request, _exc: RequestValidationError):
