@@ -1,3 +1,7 @@
+## Published preference UI — 18 October 2026
+
+Source `dd94b9f` is committed and pushed as `akshitanitr` on `redesign/aditya-multilingual-profile`. [PR #10](https://github.com/Kikiland-ai/kiki-web/pull/10), **Make learner setup flexible across languages and study fields**, is open into `main`, ready for review. It contains the generic preference UI and welcome/profile-error follow-up; merged #7/#8 are retained and pending #9 stays separate. The checkpoint below records final verification and acceptance limits. Last completed: commit, push and PR creation. Exact next: review PR #10 and retry the genuine Google/profile round trip on connected5194; no merge or deployment performed.
+
 ## PR publication checkpoint — 18 October 2026
 
 User authorized preparing a PR for the complete language/field preference revision and welcome/sign-in follow-up. `redesign/aditya-multilingual-profile` is now based directly on latest `main` (`b984c64`), retaining merged PR #7 and #8 handoffs. Pending lab-fix PR #9 is separate. Earlier local-only publication statements below are historical.

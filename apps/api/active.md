@@ -1,3 +1,7 @@
+## Published preference contract — 18 October 2026
+
+The additive preference contract, preservation regression and local-preview setup guidance are pushed in source `dd94b9f` on `redesign/aditya-multilingual-profile`; [PR #10](https://github.com/Kikiland-ai/kiki-web/pull/10) targets `main`.119 API checks and contract verification pass as recorded below. Next: PR review and user Google/profile retry. No merge, learner migration or deployment.
+
 ## PR publication checkpoint — 18 October 2026
 
 User authorized a new PR for the generic account-preference UI. Branch `redesign/aditya-multilingual-profile` now includes latest `main` (`b984c64`, merged #7/#8); pending #9 remains separate.119 API tests, Ruff/format, exact OpenAPI consistency, Python→React receipts,185 frontend tests/build/lint and16 journey/preference browser cases pass. The additive metadata preserves existing records and older-client saves; teaching/media contracts remain Odia/English. Local preview credential-path recovery is documented but its credential files/process configuration are excluded from Git. Genuine signed-in browser/profile retry remains a separate acceptance check. Preparing commit/push/new PR only; no merge, cloud change or learner migration. Earlier local-only statements below are historical.
