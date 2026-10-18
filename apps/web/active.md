@@ -1,3 +1,13 @@
+## Continuation PR #11 opened — 18 October 2026 (India time)
+
+[PR #11: Add lab evidence controls and reliable execution recovery](https://github.com/Kikiland-ai/kiki-web/pull/11) is open for review, from `continuation/connected-learning-2026-10-18` into `fix/lab-integration-small`. It is stacked on open PR #9; merge #9 first, then retarget this PR to `main`. Implementation source commit: `0e6205a0815aacf9ae36472cb72159dc7a7d0424`. Author and committer verified as `akshitanitr <95952896+akshitanitr@users.noreply.github.com>`; authenticated GitHub login/push permission verified before publication. The separate PR #10 was not changed.
+
+Fresh publication checks PASS: 208 frontend tests / 38 files, web lint/typecheck/build; 123 API tests and Ruff check/format; Python-to-React receipts; 5 Playwright synthetic form tests at 320/390/768/1280px; candidate credential/local-artifact scan and staged whitespace checks. Lockfiles unchanged. These remain local/synthetic checks, not new signed-in learning or real MATLAB acceptance. Original trial services, learner data and source worktrees remain intact. No merge, deployment, media/catalog publication or paid capture was performed.
+
+Last completed: source commit/push and PR creation; this record links the published result. Exact next: review PR #11 and its dependency on #9; Aditya continues the remaining integration/media work. [Detailed continuation evidence and limits](../../docs/plans/connected-learning-continuation.md).
+
+---
+
 ## PR publication authorized — 18 October 2026 (India time)
 
 User requested a PR for this verified continuation slice while Aditya works on the remaining integration. Authenticated GitHub identity is `akshitanitr` with repository push permission; author/committer will use the repository-required `akshitanitr <95952896+akshitanitr@users.noreply.github.com>`.

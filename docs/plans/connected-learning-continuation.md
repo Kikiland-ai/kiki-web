@@ -4,13 +4,13 @@ Status: Active
 
 Last updated: 18 October 2026, India time
 
-Current phase: first local implementation slice verified; media expansion and live acceptance remain
+Current phase: first implementation slice published in PR #11; media expansion and live acceptance remain
 
 ## Objective and success
 Finish the existing connected learner and lab journey. Success requires the 40-placard coverage ledger, actual signed-in learning/audio/artifact/assessment continuation evidence, legitimate review/respond controls, bounded same-reservation recovery, and extension lifecycle regressions. Local tests and historical live checks are separate evidence.
 
 ## Context and scope
-Implementation worktree: `kiki-web-continuation-2026-10-18`, branch `continuation/connected-learning-2026-10-18`, exact base/HEAD `44d2a0847a16b09fcdbfc865dcc5007f2d33a189`. Read-only backend source: `f2dca8b806e4002411b5704e19f0f40681093298`. Fetched origin for PR preparation on 18 October: main remains `b984c64bcff981d38c15edd3b6f2a7199feb4435`; PR #9 is open with head `44d2a0847a16b09fcdbfc865dcc5007f2d33a189` on `fix/lab-integration-small`. This PR is stacked on that branch so its diff includes only the continuation slice. User has now authorized commit, push and creation of this PR; merge/deployment remain separate. Original detached trial checkouts and dirty active records remain intact. Existing installed dependencies are reused by ignored symlinks; no environment configuration copied.
+Implementation worktree: `kiki-web-continuation-2026-10-18`, branch `continuation/connected-learning-2026-10-18`, exact implementation base `44d2a0847a16b09fcdbfc865dcc5007f2d33a189`. Read-only backend source: `f2dca8b806e4002411b5704e19f0f40681093298`. Fetched origin for PR preparation on 18 October: main remains `b984c64bcff981d38c15edd3b6f2a7199feb4435`; PR #9 is open with head `44d2a0847a16b09fcdbfc865dcc5007f2d33a189` on `fix/lab-integration-small`. This PR is stacked on that branch so its diff includes only the continuation slice. User has now authorized commit, push and creation of this PR; merge/deployment remain separate. Original detached trial checkouts and dirty active records remain intact. Existing installed dependencies are reused by ignored symlinks; no environment configuration copied.
 
 In scope: handoff workstreams A–D, preserving auth/services, source provenance and learner data. User authorized commit/push/PR publication on 18 October after local validation. No merge, deployment, IAM/billing/bucket creation, publisher apply, catalog import, learner reset, Mac lab backend, paid generation/capture or unrelated external messages. Operator controls sign-in and sharing. Akshita/Arpan ownership is preserved.
 
@@ -56,7 +56,7 @@ Use the selected PR #9 source as compatible local base, without switching an exi
 Initial backend `.venv` lacked pytest/httpx; no packages were installed. The successful four backend policy tests used the existing web API Python interpreter with `PYTHONPATH=.:tests` in the canonical backend checkout. FastAPI tests emit the existing Starlette/httpx deprecation warning. No recorded test count is borrowed from the previous live trial.
 
 ## Now / Next / Later
-Now: publish the user-requested PR for this verified slice, stacked on PR #9; use the source/byte ledger as the media implementation checklist. Aditya is handling the remaining work in parallel, per the user.
+Now: [PR #11](https://github.com/Kikiland-ai/kiki-web/pull/11) is open for review, stacked on PR #9; use the source/byte ledger as the media implementation checklist. Aditya is handling the remaining work in parallel, per the user.
 Next local work: implement remaining trusted recovered scenes with matching Python/Zod source bindings and meaningful scientific model regressions. The present slice adds no new renderer and does not claim Workstream A complete.
 Next external work: [specific draft requests](backend-requests-2026-10-18.md) for existing audio bytes/audio scope, approved private delivery and atomic backend receipts. Requests are prepared, not sent.
 Later: operator-controlled connected walkthrough, private media publication and complete twelve-checkpoint acceptance. Never substitute samples for those gates.
@@ -70,9 +70,13 @@ Later: operator-controlled connected walkthrough, private media publication and 
 
 ## Cold-pickup handoff
 Last completed: first local implementation slice and actual checks above.
-Current working state: this isolated branch is being published as a stacked PR over #9; original trial services/configuration and dirty worktrees are preserved. The exact published source commit is available from the PR head; the implementation base remains the revision recorded above.
+Current working state: [PR #11](https://github.com/Kikiland-ai/kiki-web/pull/11) is open, stacked on #9; original trial services/configuration and dirty worktrees are preserved. The exact published source commit is available from the PR head; the implementation base remains the revision recorded above.
 Exact next: remaining trusted media renderer/contracts work from the ledger; after external prerequisites, run operator-controlled connected acceptance against the new source.
 Do not repeat: historical trial acceptance or model calls; no new live acceptance has happened.
 
 
 Final production scan: known synthetic UI/test markers absent; zero WAV files in production output. Locks unchanged; Git diff whitespace check passes. Original trial web still has only its two prior active-record edits; canonical backend still has only its prior active-plan edit. The test Vite server on 5186 exits with Playwright; original connected services were not restarted. The workspace continuation handoff links to this current plan.
+
+## Publication result — 18 October 2026
+
+[PR #11](https://github.com/Kikiland-ai/kiki-web/pull/11) is open (not draft), targeting `fix/lab-integration-small` so only this continuation diff is reviewed. Implementation source commit `0e6205a0815aacf9ae36472cb72159dc7a7d0424` was pushed with the required akshitanitr author/committer identity. This documentation follow-up records publication. All source checks were rerun before the first push: 208 frontend tests, 123 API tests, 5 synthetic browser tests, lint/types/build, Ruff and Python-to-React contracts passed. GitHub CI is separate from these local results. Merge/deployment remain separate user instructions; after #9 merges, retarget this PR to `main`.
