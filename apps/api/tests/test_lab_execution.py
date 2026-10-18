@@ -51,6 +51,9 @@ class FakeUpstream:
         self.calls = []
         self.states = {}
         self.fail_create = False
+        self.lose_create_response = False
+        self.created = {}
+        self.lock = threading.Lock()
         self.stream_gate = None
 
     async def request(self, method, path, uid, body=None, operation_key=None):
@@ -59,15 +62,23 @@ class FakeUpstream:
             await asyncio.sleep(0.02)
             if self.fail_create:
                 raise BoundaryError(503, "Lab tracking is unavailable; your progress is kept.")
-            lab_id = str(uuid4())
-            value = {
-                "lab_session_id": lab_id,
-                "experiment_id": "PR-AM-DSB",
-                "revision": 1,
-                "status": "active",
-                "runtime": {"capture_status": "disconnected"},
-            }
-            self.states[lab_id] = value
+            # Mirrors kiki-backend's durable Idempotency-Key replay for lab creation.
+            with self.lock:
+                replay = self.created.get((uid, operation_key))
+                if replay and replay[0] != body:
+                    raise BoundaryError(409, "The lab changed. Refresh before trying again.")
+                if not replay:
+                    replay = self.created[(uid, operation_key)] = (deepcopy(body), str(uuid4()))
+                    self.states[replay[1]] = {
+                        "lab_session_id": replay[1],
+                        "experiment_id": "PR-AM-DSB",
+                        "revision": 1,
+                        "status": "active",
+                        "runtime": {"capture_status": "disconnected"},
+                    }
+            if self.lose_create_response:
+                raise BoundaryError(503, "Lab tracking is unavailable; your progress is kept.")
+            value = self.states[replay[1]]
         elif path == "/screen-sessions":
             value = {
                 "session_id": str(uuid4()),
@@ -194,23 +205,50 @@ def test_one_transactional_link_under_concurrent_creates(execution):
         responses = list(
             pool.map(lambda _: client.post(path, headers=headers(), json={}), range(5))
         )
-    assert all(r.status_code in {200, 503} for r in responses)
+    # Racing starts share one reservation; any repeated POST replays its key and body.
+    assert all(r.status_code == 200 for r in responses)
     value = client.post(path, headers=headers(), json={}).json()
+    assert {r.json()["backendLabId"] for r in responses} == {value["backendLabId"]}
     creates = [c for c in upstream.calls if c[1] == "/lab-sessions"]
-    assert len(creates) == 1 and creates[0][4]
+    assert creates[0][4] and len({(c[2], c[4], json.dumps(c[3])) for c in creates}) == 1
     assert creates[0][2] == "a" and creates[0][3]["progression_mode"] == "screen_guided"
+    assert list(upstream.states) == [value["backendLabId"]]
     records = [v for k, v in store.docs.items() if "/labExecutions/" in k]
     assert len(records) == 1 and records[0]["backendLabId"] == value["backendLabId"]
     assert not records[0].get("frames") and "token" not in records[0]
 
 
-def test_ambiguous_create_failure_never_creates_another_upstream_lab(execution):
-    client, _, _, upstream, _, path = execution
-    upstream.fail_create = True
+def test_lost_create_response_is_replayed_with_the_saved_key_and_body(execution):
+    client, _, _, upstream, store, path = execution
+    upstream.lose_create_response = True
     assert client.post(path, headers=headers(), json={}).status_code == 503
-    upstream.fail_create = False
+    assert len(upstream.states) == 1
+    # A later edit to the preparation must not change the replayed create body.
+    store.docs[f"learners/a/labPreparations/{path.split('/')[2]}"]["projectRef"] = "Edited.slx"
+    upstream.lose_create_response = False
+    value = linked(execution)
+    creates = [c for c in upstream.calls if c[1] == "/lab-sessions"]
+    assert len(creates) == 2 and creates[0][4] and creates[0][3:] == creates[1][3:]
+    assert creates[1][3]["model_name"] == "dsb_sc"
+    assert list(upstream.states) == [value["backendLabId"]]
+    record = next(v for k, v in store.docs.items() if "/labExecutions/" in k)
+    assert record["status"] == "linked" and record["backendLabId"] == value["backendLabId"]
+
+
+def test_linked_or_legacy_reservations_read_instead_of_creating(execution):
+    client, _, _, upstream, store, path = execution
+    value = linked(execution)
+    assert linked(execution)["backendLabId"] == value["backendLabId"]
+    creates = [c for c in upstream.calls if c[1] == "/lab-sessions"]
+    assert len(creates) == 1
+    assert upstream.calls[-1][:2] == ("GET", f"/lab-sessions/{value['backendLabId']}")
+    # A reservation saved without its create body cannot be replayed safely.
+    record = next(v for k, v in store.docs.items() if "/labExecutions/" in k)
+    for key in ("backendLabId", "modelName"):
+        record.pop(key)
+    record["status"] = "creating"
     assert client.post(path, headers=headers(), json={}).status_code == 503
-    assert len(upstream.calls) == 1
+    assert len([c for c in upstream.calls if c[1] == "/lab-sessions"]) == 1
 
 
 def test_mutations_are_revisioned_and_screens_bound_to_the_preparation(execution):

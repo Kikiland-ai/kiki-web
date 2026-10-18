@@ -1,3 +1,17 @@
+## Lab integration small fixes — 18 October 2026
+
+Branch `fix/lab-integration-small` from main `b984c64`; not pushed or merged.
+
+- The frame channel treats kiki-backend's `{"type":"skipped","reason":"sampling_limit"}` reply as a non-error: that frame is not checked, the share stays connected and the next two-second tick sends again. The apps/api relay already forwarded it unchanged.
+- `playwright.lab.config.ts` uses the Windows venv interpreter on `win32`.
+- API receipts and test artifacts are written as UTF-8, so pytest passes on Windows without `PYTHONUTF8`.
+- A still-`creating` lab reservation repeats its create with the saved key and body (needs kiki-backend's idempotent lab creation first).
+- `.github/workflows/ci.yml` runs web lint/typecheck/Vitest/build and API ruff/pytest.
+
+Checks: 182 frontend tests / 37 files in a clean export of the branch (in this nested worktree one file, `src/fixtures/assessments.test.ts`, fails to load because the enclosing checkout's root `package.json` sets `"type": "module"`; that also happens on unchanged main), ESLint, TypeScript and build pass; 119 API tests and Ruff pass. Playwright suites were not run.
+
+Not changed: Lab home still shows "Practise with screen guidance" whenever the build is connected, even when the API has lab execution disabled. The web app has no unambiguous signal for that today: `monitoring.status` is `pending_integration` both when execution is disabled and before a first share, and `GET …/execution` returns the same 503 for "disabled" and "upstream down" (and needs a preparation). A fix needs a small API capability field (for example on the lab preparation or practical response) or a web build flag that must be kept in step with the API setting. Exact next: review and push this branch, then decide on the Lab home capability signal.
+
 ## Status — 18 October 2026, after merge
 
 **Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).
@@ -18,7 +32,7 @@ Actual final checks:
 
 The real backend run exposed and fixed capture-start-before-attach ordering, pause/resume revisions, nullable unlimited session duration and Python state differences. The client also refuses foreign acknowledgements/decisions, ignores late old-capture events, cannot reactivate after Stop during pause, and keeps provider-wait metadata separate from the last committed action.
 
-Remaining boundaries: real MATLAB Online + real analyzer acceptance is pending; automated controlled-target tests do not prove vision quality. Production B1/B2 remain deferred by the user. The current upstream ignores `Idempotency-Key`: ambiguous creation is held for explicit reconciliation instead of creating a duplicate. Tickets are worker-local, so local setup uses one worker. Release-extension5174 allowlist remains a backend-owner deliverable; the local dev artifact includes it. No actual Google/Firestore write, real screen capture, Gemini request or physical-device test was performed in this step.
+Remaining boundaries: real MATLAB Online + real analyzer acceptance is pending; automated controlled-target tests do not prove vision quality. Production B1/B2 remain deferred by the user. A still-`creating` reservation now repeats its create with the saved key and body; this needs kiki-backend's idempotent lab creation deployed first (see the implementation handoff). Tickets are worker-local, so local setup uses one worker. Release-extension5174 allowlist remains a backend-owner deliverable; the local dev artifact includes it. No actual Google/Firestore write, real screen capture, Gemini request or physical-device test was performed in this step.
 
 Last completed: code, regression/extension acceptance and local setup handoff. Exact next: configure the approved real local backend/analyzer and run the student-controlled MATLAB trial, then review the published implementation branch before deciding how to integrate it. PR #6 and main are not changed by this publication. Ports5174/8002/8100/8871 were test servers and are stopped; the older user previews are untouched. [Implementation/setup/recovery limits](LAB_SCREEN_SHARE_IMPLEMENTATION.md), [checked plan](LAB_SCREEN_SHARE_PLAN.md), [updated preparation boundary](LAB_PREPARATION_CONTRACT.md).
 

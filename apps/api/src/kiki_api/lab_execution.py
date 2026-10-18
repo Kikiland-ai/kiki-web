@@ -72,7 +72,10 @@ class LabExecutions:
             if saved.exists:
                 return False, ExecutionLink.model_validate(saved.to_dict()), prep
             link = ExecutionLink(
-                contentVersion=prep.contentVersion, createdAt=now(), operationKey=str(uuid4())
+                contentVersion=prep.contentVersion,
+                createdAt=now(),
+                operationKey=str(uuid4()),
+                modelName=prep.projectRef[:160].strip() or "dsb_sc",
             )
             transaction.create(ref, dump(link))
             return True, link, prep
@@ -80,19 +83,23 @@ class LabExecutions:
         return apply(self.client.transaction(max_attempts=3))
 
     async def start(self, uid, prep_id):
-        winner, link, prep = await anyio.to_thread.run_sync(self.reserve, uid, prep_id)
-        if not winner:
-            # Never repeat POST after an ambiguous network failure. The prototype
-            # upstream does not yet implement Idempotency-Key. Keep the reservation
-            # for reconciliation instead of risking a second paid/tracked lab.
-            return await self.read(uid, prep_id)
+        winner, link, _ = await anyio.to_thread.run_sync(self.reserve, uid, prep_id)
+        if winner or (link.status == "creating" and link.modelName):
+            # A creating reservation may have lost its first response. The same key and
+            # body replay that lab instead of creating another; this requires kiki-backend
+            # main with idempotent lab creation (durable Idempotency-Key replay).
+            return await self.create(uid, prep_id, link)
+        # Linked, or reserved before the create body was saved: never repeat that POST.
+        return await self.read(uid, prep_id)
+
+    async def create(self, uid, prep_id, link):
         state = await self.call(
             "POST",
             "/lab-sessions",
             uid,
             {
                 "operator_trial": True,
-                "model_name": prep.projectRef[:160].strip() or "dsb_sc",
+                "model_name": link.modelName,
                 "progression_mode": "screen_guided",
             },
             link.operationKey,
@@ -101,15 +108,14 @@ class LabExecutions:
         if not isinstance(lab_id, str) or not SAFE_ID.fullmatch(lab_id):
             raise BoundaryError(503, UNAVAILABLE)
         self.validate_state(state, lab_id)
-        linked = link.model_copy(
-            update={
-                "backendLabId": lab_id,
-                "status": "linked",
-                "monitoring": monitoring(state),
-                "monitoringAt": time.time(),
-            }
-        )
-        await anyio.to_thread.run_sync(lambda: self.update_link(uid, prep_id, dump(linked)))
+        # Only the link fields: a concurrent replay must not reset recorded screen sessions.
+        changes = {
+            "backendLabId": lab_id,
+            "status": "linked",
+            "monitoring": monitoring(state),
+            "monitoringAt": time.time(),
+        }
+        await anyio.to_thread.run_sync(lambda: self.update_link(uid, prep_id, changes))
         return self.envelope(prep_id, lab_id, state)
 
     @staticmethod

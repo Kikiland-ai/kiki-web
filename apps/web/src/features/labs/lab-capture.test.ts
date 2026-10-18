@@ -55,6 +55,21 @@ it('masks before encoding and sending, then sign-out synchronously stops all res
   cleanup(); expect(video.stop).toHaveBeenCalled(); expect(channel.close).toHaveBeenCalled(); expect(mocks.dispose).toHaveBeenCalled();
   expect(connection.view().snapshot?.runtime.capture_active).toBe(false);
 });
+it('a skipped frame keeps sharing active, skips the check and sends again on the next tick', async () => {
+  const { api, channel, video } = setup();
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(callback => callback(new Blob(['jpg'])));
+  channel.sendFrame.mockResolvedValueOnce(null as unknown as typeof receipt.frame);
+  vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  try {
+    await connection.share(); await vi.waitFor(() => expect(channel.sendFrame).toHaveBeenCalledTimes(1));
+    expect(api.check).not.toHaveBeenCalled(); expect(connection.view().phase).toBe('active'); expect(video.stop).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(2000); await vi.waitFor(() => expect(channel.sendFrame).toHaveBeenCalledTimes(2));
+    const [first, second] = channel.sendFrame.mock.calls as unknown as [{ sequence: number }][];
+    expect(second[0].sequence).toBe(first[0].sequence + 1);
+    await vi.waitFor(() => expect(api.check).toHaveBeenCalledTimes(1)); expect(connection.view().phase).toBe('active');
+  } finally { vi.useRealTimers(); }
+});
 it('missing/moving window positions never encode or send an unsafe frame', async () => {
   const { channel } = setup(); mocks.safety = { mode: 'block', reason: 'Waiting for fresh Kiki window positions.' };
   vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
