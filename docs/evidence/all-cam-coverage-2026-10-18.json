@@ -2255,5 +2255,18 @@
     "physicalAudibility": "NOT RUN",
     "realPrivateDelivery": "BLOCKED",
     "nativeC08Preserved": "PASS"
+  },
+  "publicationValidation": {
+    "pr": "https://github.com/Kikiland-ai/kiki-web/pull/12",
+    "baseMain": "7eb394592f3cf6a56f981363e9ee490c89c0b651",
+    "implementationCommit": "dc7a403cb7a089042bdaf336444e5aaa00ae147a",
+    "testedIntegratedSource": "bd3a8be7f0706915bb36732bd8136b823fd85c44",
+    "frontendTests": 236,
+    "frontendFiles": 40,
+    "apiTests": 145,
+    "browserSerialCases": 13,
+    "status": "PASS",
+    "realConnected": "BLOCKED",
+    "nativeC08Preserved": "PASS"
   }
 }

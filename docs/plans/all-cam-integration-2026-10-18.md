@@ -1,3 +1,13 @@
+## Publication result — 18 October 2026
+
+[All-CAM PR #12](https://github.com/Kikiland-ai/kiki-web/pull/12) is open into main and remains unmerged. User-authorized dependency merges completed: #9 `feed380c17862ccc77a0133ffc8971f598ae5728`, #11 `99ea53105fe0b2f02ab3b6dc5f0a74bb0d049f9a` (retargeted), #10 `7eb394592f3cf6a56f981363e9ee490c89c0b651`, all with API/web CI passing. Source `dc7a403cb7a089042bdaf336444e5aaa00ae147a` integrated with main at tested source `bd3a8be7f0706915bb36732bd8136b823fd85c44`.
+
+Fresh combined checks: 236 frontend/40 files, 145 API, lint/typecheck/build, Ruff/format, exact OpenAPI, all-ten Python→React receipts, 38 cases, native-package/lockfile preservation and production exclusions PASS. Final command adds `tests/preferences.spec.ts` and grep alternatives `generic setup|legacy sample` to the earlier serial all-ten command: 13/13 PASS. #10's combined source separately passed 213 frontend/124 API tests and 21 browser cases before its CI and merge; only documentation conflicts needed manual resolution. No old worktree or service replaced. Git identity verified as akshitanitr; no force push.
+
+Last completed: requested merges and PR creation. Next: API/web CI and review of #12. No merge of #12, deployment/cloud publication or learner changes. Private delivery/content-quality gates below remain. Backend PR #7 remains open. Earlier implementation status/limits below retain history.
+
+---
+
 > **New user authorization:** raise the all-CAM PR and merge #9/#10/#11. Source publication is authorized; all-CAM merge/deployment, media-head/cloud publication and learner changes remain separate. The earlier local-only restrictions below describe the completed implementation phase.
 
 # All-CAM local integration — 18 October 2026
