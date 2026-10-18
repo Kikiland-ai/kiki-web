@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import preview from '../../fixtures/concept-media-C-AM-08.json'
-import { MediaManifestSchema } from '../../contracts/concept-media'
+import { PhaseRecoverySceneSchema, MediaManifestSchema } from '../../contracts/concept-media'
 import { describeFraction, passesBehaviorTests, recoveryFraction, tracePath } from './phase-math'
 
-const scene = MediaManifestSchema.parse(preview.manifest).artifacts[0]
+const scene = PhaseRecoverySceneSchema.parse(MediaManifestSchema.parse(preview.manifest).artifacts[0])
 
 describe('phase-recovery model', () => {
   it('scales ideal recovery by cos(phi), as the lesson states', () => {

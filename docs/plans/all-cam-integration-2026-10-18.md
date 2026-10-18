@@ -1,0 +1,25 @@
+> **New user authorization:** raise the all-CAM PR and merge #9/#10/#11. Source publication is authorized; all-CAM merge/deployment, media-head/cloud publication and learner changes remain separate. The earlier local-only restrictions below describe the completed implementation phase.
+
+# All-CAM local integration — 18 October 2026
+
+User adopted the prompt in Downloads/ALL-CAM-WEB-HANDOFF.md. This supersedes the earlier per-concept-renderer and placard-only-audio plan. Local changes only: no commit/push/merge/deploy, cloud provisioning/publication, paid generation/capture or learner reset.
+
+Base: `fa87fb61c6b0dd27658ffc495bcb8d74a243ce4c` (clean PR #11 head). Worktree `kiki-web-all-cam-2026-10-18`, branch `integration/all-cam-2026-10-18`. Original PR #11 and running trial untouched. Reused installed environments via ignored symlinks.
+
+Archive SHA-256: `13a58628c0bdb383642ac45d949dcf1d563cb99d7b3bb0a93e484298e5dc83a9`. All 77 listed file sizes/checksums passed, with exact archive membership and safe extraction. Unpacked read-only source at workspace `.mac-trial-tools/all-cam-handoff-2026-10-18`. Candidate producer source based on backend `f2dca8b806e4002411b5704e19f0f40681093298`, local/uncommitted; this is not Windows runtime provenance. The bundle supplies real bytes for 26 recordings; the earlier pointer-only source audit remains historical.
+
+Read decision 0013 and all-CAM compatibility handoff. `node verify-model.mjs` PASS: ten concepts, 38 conformance cases, zero provider calls. Shared module copied byte-for-byte into application code; policy, scene and conformance pins retained. No code/formula from a manifest is evaluated. Native C-AM-08 manifest/revision/eight bilingual recordings remain unchanged.
+
+Completed: Python/TypeScript v1 scene/narration unions, exact ordered whole-concept and source/hash/index binding, metadata independent of audio storage, one common typed React wrapper, scope-aware player lifetime, missing-language/delivery notes, C-AM-04 duplicate suppression and unchanged native C-AM-08. One saved-module integration covers all ten kinds; no per-concept implementation loop or alternate generation/delivery pipeline.
+
+Actual verification: **144 API tests**, Ruff check/format; **231 frontend tests / 39 files**, typecheck/lint/production build; all **38** model cases; actual Python→React lesson/manifest receipts for **all ten**; native C-AM-08 publisher default dry-run preserving `cm-e0f086007cc9f2062af093f3`; all PASS. Production excludes candidate recordings/fixture stores/answer keys; native package/lockfiles unchanged. Existing sample-entry UI text remains behind the fixture mode guard, while fixture service imports are development-only.
+
+Browser: broad 65-test sample run passed 62 initially. C-AM-01/02 media clocks stalled under concurrent heavy validation load (root cause not definitively established); the older no-C-AM-01-audio test was obsolete and now verifies missing English narration. Final serial all-ten plus missing-language regression **11/11 PASS**. All ten cover four placards, available/missing languages, all 26 recordings including eight native C-AM-08 clips, pause/seek/speed, scope-preserving manual navigation, language/page-hidden/navigation/sign-out cleanup, controls/reset/keyboard, 320/390/768/1280px fit, assessment feedback and saved step/dial/reload. Earlier verification found and fixed a real controlled seek-state defect; cleanup assertions now await passive blob revocation. No known failing case remains, but no single fresh broad 65/65 run is claimed.
+
+Visual review: 20 synthetic screenshots at 390/1280px plus contact sheets inspected; diagnostics are ignored. Media clocks are not physical speaker, pronunciation or phone acceptance. [Every concept and remaining gates](../evidence/all-cam-coverage-2026-10-18.md), [80-row machine ledger](../evidence/all-cam-coverage-2026-10-18.json), [updated walkthrough](../ux/ui-slice-review.md).
+
+Next: authorized coordinated v1 publication/head activation and approved private storage configuration, then signed-in delivery/journey acceptance against the intended revisions. These are **BLOCKED / NOT RUN**, not part of this local authorization. Scientific/native-Odia/pronunciation/fidelity/quality review remains pending. No cloud call, provider call, sign-in, real learner mutation/reset, screen capture or generation was performed in this integration.
+
+Content limitations remain visible: C-AM-01 saved model has two traces though the brief describes three; C-AM-04 saved model fixes carrier at 2000 Hz despite authored adjustable-carrier description; FM/PM are normalized teaching examples. English audio exists only for C-AM-08. No sentence timing. Scientific, native-Odia, pronunciation and quality reviews remain pending.
+
+Last completed: local all-ten integration, final serial browser run, per-concept evidence, source preservation and current documentation. Exact HEAD remains `fa87fb61c6b0dd27658ffc495bcb8d74a243ce4c`; the working diff (including original archive assets) is uncommitted and unstaged. No push/PR update/merge/deploy/publication.

@@ -1,0 +1,305 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-06",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-689991a261beba2edbf30db8",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "lang": "or",
+        "assetId": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+        "mimeType": "audio/wav",
+        "bytes": 3926754,
+        "durationSeconds": 81.68,
+        "sourceTextSha256": "a3ea101a883b7aa14fb034f5e0f3b4fe6b1cc80740a40e8e9c28444229b25b85",
+        "speechScriptSha256": "fdee7032bd196501b43de52ebd33b9bfa0a07457429a28221d41790c3706cad8",
+        "audioSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        },
+        "scope": "concept",
+        "conceptId": "C-AM-06",
+        "renditionId": "C-AM-06.concept.or",
+        "placardIds": [
+          "CARD-AM-06-definition",
+          "CARD-AM-06-concept",
+          "CARD-AM-06-application",
+          "CARD-AM-06-recap"
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-06-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-06-concept",
+          "CARD-AM-06-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-06",
+          "kind": "receiver",
+          "title": "Coherent demodulation and recovery gain",
+          "controls": [
+            {
+              "name": "stage",
+              "label": "0 input · 1 multiply · 2 ideal lowpass · 3 gain",
+              "min": 0.0,
+              "max": 3.0,
+              "step": 1.0,
+              "default": 0.0,
+              "unit": ""
+            }
+          ],
+          "visualBrief": {
+            "kind": "block",
+            "description": "Received DSB-SC plus local carrier feed Product, then lowpass filter and Gain 2; label desired m(t)/2 before gain and image near 2fc.",
+            "alt": "Coherent demodulation and recovery gain; Match frequency and phase; multiply; lowpass-filter; account for the half-amplitude factor.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes.",
+              "target": "coherent receiver"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Add a separate Local carrier and receiver Product block; follow it with the filter and recovery Gain.",
+              "target": "local oscillator"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Match frequency and phase; multiply; lowpass-filter; account for the half-amplitude factor.",
+              "target": "recovery gain"
+            }
+          ],
+          "sourceInteractive": {
+            "kind": "step_through",
+            "prompt": "Follow the explanation, then check the worked result.",
+            "steps": [
+              {
+                "detail": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes.",
+                "label": "Define"
+              },
+              {
+                "detail": "Product detection leaves m(t)/2 in the message band.",
+                "label": "Apply"
+              },
+              {
+                "detail": "Use gain 2: 2*m(t)/2=m(t).",
+                "label": "Check"
+              }
+            ]
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-06#explanation.modalities.interactive",
+            "sha256": "231b51a9dcbf9af921b58c77c24c9a05e3638f0b0a0b07a619e33753e960910b"
+          },
+          {
+            "path": "sourceConcepts/C-AM-06#explanation.modalities.textImage.visual",
+            "sha256": "20b77d202a9a84f03759916543d9faca58e26ee1af0a93da90e28d35f57523cc"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-06/cam-107583dd20a8dac5be0287b0/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-06/cam-107583dd20a8dac5be0287b0/scene.json",
+            "sha256": "79a4f894ea170feb3656fde1b0782e35f85376336b5bf50c1af609fc6eb93e80"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "stage": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Stage",
+                "Received DSB-SC"
+              ],
+              [
+                "Ideal message-band scale",
+                "Inspect the next stage"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Original message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Received DSB-SC",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "stage": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Stage",
+                "Received DSB-SC"
+              ],
+              [
+                "Ideal message-band scale",
+                "Inspect the next stage"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Original message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Received DSB-SC",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "stage": 3.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Stage",
+                "Recovery gain 2"
+              ],
+              [
+                "Ideal message-band scale",
+                "1"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Original message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "After gain 2",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+      "mimeType": "audio/wav",
+      "bytes": 3926754
+    }
+  }
+}

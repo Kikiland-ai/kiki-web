@@ -1,3 +1,17 @@
+## All-ten CAM local walkthrough — 18 October 2026
+
+Use the isolated `kiki-web-all-cam-2026-10-18/apps/web` checkout and `npm run dev -- --port 5187` for the explicitly labelled sample. The browser test server stops after tests; older preview addresses below refer to earlier checkouts. Connected trial services are unchanged.
+
+1. Choose **Open sample student**, complete setup, add Analog Communication (semester 5), then **Learn**. Open any of the ten concepts and read Definition, Concept, Application and Recap.
+2. Use the language dial. Every lesson has Odia narration. English narration is available only in C-AM-08; other lessons state its absence and offer no English Listen action. Dial 3 still offers available narration languages.
+3. Press **Listen** to start. Play/pause, seek and speed use the media clock. Six whole-concept recordings explicitly cover all four steps: manual step navigation retains that clip and position, with no invented offsets. C-AM-01/02/03/08 use separate placard clips and close the player when changing steps. Reload restores the saved step/dial without autoplay. Language change stops playback; page hiding pauses it; leaving/sign-out revokes blob URLs.
+4. Concept/Application show that concept's model. Use native keyboard sliders and Reset. C-AM-08 retains its native phase scene; C-AM-04 shows one common canvas in these slots. Draft/scientific-review notes and saved-model limitations remain visible. Exploration awards no check pass and changes no lab settings.
+5. **Check this concept** leads to the existing sample assessment and feedback. Return to the lesson to resume its saved placard. These sample checks never establish connected learner acceptance.
+
+With a published connected manifest but no audio store, text and artifact remain available; a note explains that private narration delivery is unavailable. There is no sample fallback in connected mode. Actual signed-in private delivery and scientific/native-Odia/pronunciation/audio-quality acceptance remain pending. [All-ten evidence and gates](../evidence/all-cam-coverage-2026-10-18.md).
+
+---
+
 ## Local lab-input continuation — 18 October 2026
 
 Isolated implementation branch `continuation/connected-learning-2026-10-18`; original connected trial services still use their existing checkout. In a saved lab, the new panel **Your observations and confirmations** loads the current server definition/policy, shows criterion descriptions, and offers a response kind, own-words field and optional confidence. Record response saves a student report. Learners explicitly choose criteria and describe reviewed evidence before Confirm selected criteria. No criteria are preselected and nothing is assessed by these forms.

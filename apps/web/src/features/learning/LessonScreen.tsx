@@ -6,7 +6,7 @@ import { ServiceError, readableError } from '../../services/types'
 import { useSession } from '../../app/Session'
 import { Button, ErrorState, LanguageDial, LinkButton, LoadingState, StatusBadge, TermChip, type AudioPlayerHandle, type AudioSpeed } from '../../ui/learning'
 import { ArrowBackIcon, ArrowForwardIcon, SpeakerIcon } from '../../ui/learning/icons'
-import { checkManifestForLesson, findRendition, narrationLabel, type MediaManifest } from '../../contracts/concept-media'
+import { checkManifestForLesson, verifyNarrationTextBindings, findRendition, narrationLabel, type MediaManifest } from '../../contracts/concept-media'
 import { lacksOdia, pick, placardMode, shouldShowKeyIdea } from './language'
 import { PlacardText } from './PlacardText'
 import { NarrationPlayer } from './NarrationPlayer'
@@ -121,7 +121,7 @@ export function LessonScreen() {
     setMedia({ status: 'loading' })
     services.media
       .getManifest(mediaLesson.conceptId, controller.signal)
-      .then((manifest) => { if (!controller.signal.aborted) setMedia({ status: 'ready', manifest: checkManifestForLesson(manifest, mediaLesson), cache }) })
+      .then(async (manifest) => { checkManifestForLesson(manifest, mediaLesson); await verifyNarrationTextBindings(manifest, mediaLesson); if (!controller.signal.aborted) setMedia({ status: 'ready', manifest, cache }) })
       .catch((error: unknown) => { if (!controller.signal.aborted) setMedia({ status: 'error', message: error instanceof ServiceError ? error.message : 'The lesson media does not match this lesson.' }) })
     const unregister = services.auth.registerSignOutCleanup(() => { player.current?.pause(); cache.clear() })
     return () => { controller.abort(); cache.clear(); unregister() }
@@ -179,7 +179,7 @@ export function LessonScreen() {
   function goTo(index: number) {
     if (!placards[index]) return
     moved.current = true
-    setStep(index); setSaveError(''); setPositionSaved(false); setListening(false)
+    setStep(index); setSaveError(''); setPositionSaved(false); if (!clip || !('scope' in clip)) setListening(false)
     placeSaver.current?.save(placards[index].id)
   }
 
@@ -260,20 +260,20 @@ export function LessonScreen() {
             <h2 id="placard-title" ref={headingRef} tabIndex={-1} lang={title.lang} className={styles.placardTitle}>
               {title.text}
             </h2>
-            {clip && !listening && (
+            {clip && lesson.mediaExperience?.audioAvailable !== false && !listening && (
               <Button variant="secondary" icon={<SpeakerIcon size={20} />} onClick={() => setListening(true)} className={styles.listen}>
                 Listen
               </Button>
             )}
-            {clip && listening && media.status === 'ready' && (
+            {clip && lesson.mediaExperience?.audioAvailable !== false && listening && media.status === 'ready' && (
               <NarrationPlayer
-                key={`audio-${placard.id}-${audioLang}`}
+                key={`audio-${clip.renditionId}`}
                 ref={player}
                 cache={media.cache}
                 rendition={clip}
-                title={title.text}
+                title={'scope' in clip ? lesson.title.en : title.text}
                 label={narrationLabel(clip, media.manifest.release)}
-                detail="Plays this whole step. Words are not highlighted: the clip has no sentence timing yet."
+                detail={'scope' in clip ? "Plays the whole concept across all four steps. Navigate manually; no placard offsets or sentence timing are available." : "Plays this whole step. Words are not highlighted: the clip has no sentence timing yet."}
                 speed={speed}
                 onSpeedChange={setSpeed}
                 languages={clipLanguages}
@@ -283,6 +283,8 @@ export function LessonScreen() {
                 autoPlay
               />
             )}
+            {manifest && !clip && <p className="helper-note">No {audioLang === 'en' ? 'English' : 'Odia'} narration is available for this step. The text is complete.</p>}
+            {clip && lesson.mediaExperience?.audioAvailable === false && <p className="helper-note">Narration is prepared, but private audio delivery is unavailable. You can still read and explore this lesson.</p>}
             <PlacardText
               key={`${placard.id}-${mode.primary}`}
               text={placard.body[mode.primary]}

@@ -57,6 +57,12 @@ export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label
     return () => el?.pause()
   }, [])
 
+  useEffect(() => {
+    const hidden = () => { if (document.hidden) audio.current?.pause() }
+    document.addEventListener('visibilitychange', hidden)
+    return () => document.removeEventListener('visibilitychange', hidden)
+  }, [])
+
   // Starts once, when the clip arrives after Listen; a new clip remounts the player. A browser that
   // needs a fresh gesture rejects play() here, and the student presses Play instead.
   useEffect(() => {
@@ -109,7 +115,9 @@ export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label
           aria-valuetext={`${clock(current)} of ${clock(duration)}`}
           disabled={!src || !duration || failed}
           onChange={(e) => {
-            if (audio.current) audio.current.currentTime = Number(e.target.value)
+            const position = Number(e.currentTarget.value)
+            setCurrent(position)
+            if (audio.current) audio.current.currentTime = position
           }}
         />
         <span className={styles.time} aria-hidden="true">

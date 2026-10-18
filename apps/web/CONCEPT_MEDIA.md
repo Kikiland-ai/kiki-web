@@ -1,8 +1,16 @@
 # Preprocessed concept media
 
-## Current coverage audit — 18 October 2026
+## All-ten local integration — 18 October 2026
 
-The [current offline coverage ledger](../../docs/evidence/concept-coverage-2026-10-18.md) supersedes older statements below about absent recordings. Recovered backend source `f2dca8b806e4002411b5704e19f0f40681093298` contains metadata for 22 recordings: 16 per-placard Odia clips for C-AM-01/02/03/08 and six whole-concept Odia recordings. In the Mac source checkout all 22 WAV paths contain LFS pointers; three of those hashes also exist in the separate web C-AM-08 package. That package's eight English/Odia clips remain intact and its native publisher dry-run still verifies the same revision. The other recovered scenes are not implemented by this web slice. Current trial configuration has no private media bucket. Connected listening/artifact acceptance remains NOT RUN; no new media is published or generated.
+The [all-ten results](../../docs/evidence/all-cam-coverage-2026-10-18.md) and [80-row ledger](../../docs/evidence/all-cam-coverage-2026-10-18.json) supersede the earlier LFS-pointer-only inventory. The verified handoff archive supplies 26 real recordings and ten supported artifacts. All remain `concept-media-manifest/v1`. This work is local and uncommitted on `integration/all-cam-2026-10-18`, based on `fa87fb61c6b0dd27658ffc495bcb8d74a243ce4c`; it does not publish media or change the running connected trial.
+
+C-AM-01/02/03 each have four Odia placard clips. C-AM-04/05/06/07/09/10 each have one Odia recording covering all four ordered placards. C-AM-08 keeps the exact native phase renderer and eight English/Odia clips at `cm-e0f086007cc9f2062af093f3`. English absence is explicit in the other nine lessons. No recording is split, and no sentence/placard timestamps are invented.
+
+The common `cam-concept-canvas/v1` renderer uses one byte-identical vendored `consumer/cam-models.mjs` module, typed declarations, pinned saved scenes/control domains/source/model hashes and 38 conformance cases. React draws the returned series/flow/spectrum as SVG elements; it never injects returned markup or evaluates manifest code/formulas. C-AM-04's legacy diagrams remain a fallback and are suppressed where the common artifact occupies the same slots.
+
+Published manifest metadata and the lesson's artifact pointer are readable without an audio object store. The pointer sets `audioAvailable: false`; the learner can read/explore and sees that private narration delivery is unavailable. Asset requests remain authenticated/enrollment-checked and return 503 without storage. A missing/unpublished manifest is distinct from missing storage. Connected mode never imports sample records or bypasses the API.
+
+See the [current plan](../../docs/plans/all-cam-integration-2026-10-18.md) for actual checks and remaining publication, private delivery, signed-in acceptance and content-review gates. The older sections below retain the first-package history; the current contract and behavior updates are incorporated where relevant.
 
 ## Sketchbook integration — 18 October 2026
 
@@ -27,15 +35,16 @@ Open Learn → Concept 8: Carrier mismatch and debugging.
   - A separately labelled note that the finite-filter residual is not modelled.
 
   Exploration is local. It saves nothing, changes no lab settings and awards no mastery.
-- C-AM-04 keeps its DSB-SC diagrams. They are not reused as C-AM-08's visual.
-- No media, unconfigured storage or a rejected manifest leaves the complete text lesson. A rejected manifest also shows a note with Retry.
+- C-AM-04 uses its common canvas on the Concept/Application slots; the legacy DSB-SC diagrams are a fallback when that artifact is absent. C-AM-08 keeps its own native visual.
+- Missing or rejected media leaves the complete text lesson. A rejected manifest also shows a note with Retry. Unconfigured audio storage preserves published data-only artifacts and shows an unavailable-delivery note.
 
 ## Contract (Python `media_models.py` ↔ React `contracts/concept-media.ts`)
 
 `lesson.mediaExperience` (optional, `media-experience/v1`) is a small pointer:
 
 - `catalogVersion`, `mediaRevision` and `release` (`sample_unreviewed` | `reviewed`).
-- The placard/language pairs that have narration.
+- The placard/language pairs or ordered whole-concept coverage that have narration.
+- `audioAvailable: false` when private byte delivery is unconfigured (omitted/true retains the prior behavior).
 - The artifacts with their renderer IDs and placard slots.
 
 Text-only lessons omit it. `lesson.media` and `lesson.visual` are unchanged.
@@ -51,6 +60,7 @@ Text-only lessons omit it. `lesson.media` and `lesson.visual` are unchanged.
   - `narrationKind`.
   - Review: pronunciation, native Odia, spoken fidelity and audio quality. Each is pending, accepted or rejected; `reviewed` only if all are accepted.
   - Timing: `clip_duration_only` / `alignment: not_performed`. There are no sentence timestamps until evaluated alignment exists.
+- **Whole-concept renditions:** the common audio/provenance/review/timing fields plus `scope: concept`, `conceptId`, ordered `placardIds` and `{conceptId}.concept.{lang}` identity. The source hash binds the exact four texts joined by a single space. One player retains its position across manual placard navigation; language/concept change, page hiding and sign-out retain pause/cleanup.
 - **Artifacts:** a trusted renderer ID, placard slots, and the authored prompt. They also carry:
   - Parameter bounds and units.
   - Comparison values.
@@ -70,7 +80,8 @@ Both routes have the same requirements as lessons: a verified Google identity, a
 
 | Renderer | Data source | Notes |
 |---|---|---|
-| `dsb-sc-visual/v1` | C-AM-04, from the existing `lesson.visual` | First entry; its projection and placement are unchanged |
+| `dsb-sc-visual/v1` | C-AM-04, from the existing `lesson.visual` | Fallback in slots without its common canvas |
+| `cam-concept-canvas/v1` | Nine candidate artifacts; ten model kinds supported | One trusted static module; pinned scene/source/code/control/conformance contracts |
 | `coherent-phase-recovery/v1` | C-AM-08, from the manifest | Draws only after the app's own cos φ model reproduces the manifest's behavior tests |
 
 Authored strings are never evaluated: the projection accepts only the exact authored formula `cos(phi*pi/180)` and binds it to the known model.
@@ -102,7 +113,7 @@ It is a dry run by default. `--apply` (with `--bucket` or `KIKI_MEDIA_BUCKET`, a
 
 C-AM-08 currently packages to `cm-e0f086007cc9f2062af093f3`.
 
-**Storage is not active.** The documented default bucket is absent and no billing upgrade is authorized (`../api/STORAGE_SETUP.md`). Without `KIKI_MEDIA_BUCKET`, the API serves text-only lessons and the manifest route returns 503. Do not create a bucket, grant IAM or make media public to enable this.
+**Storage remains unconfigured in the inspected trial.** No billing upgrade is authorized (`../api/STORAGE_SETUP.md`). Without `KIKI_MEDIA_BUCKET`, published manifest/artifact metadata is still returned and the lesson pointer truthfully disables audio delivery. The asset route returns 503. No bucket, IAM or public-media change is part of this integration.
 
 Once an approved private bucket and access exist:
 1. Set `KIKI_MEDIA_BUCKET` for the API: object viewer for the API identity, object creator for whoever publishes.
@@ -111,11 +122,11 @@ Once an approved private bucket and access exist:
 
 ## Sample mode and build isolation
 
-`npm run dev` (sample mode) uses `fixtures/media.ts`. It serves the identical manifest, exported by `scripts/export_concept_media_preview.py`, and reads the same committed clips from `data-model/media` through Vite's dev file allowance. It goes through the same verification and blob path as connected mode. Connected builds never import the fixture module.
+`npm run dev` (sample mode) uses `fixtures/media.ts`. It loads the ten exact archive candidate records from `fixtures/all-cam` and reads the 26 verified local clips from `data-model/media/all-cam` through Vite's dev file allowance. It goes through the same verification and blob path as connected mode. Connected builds never import the fixture module.
 
-The production `dist` is now about 0.8 MB with **no WAV files** (previously 8.8 MB, nearly all sample clips under `public/`). The hard-coded `src/media/narration.ts` lookup and the placeholder-clip script are removed. Connected rendering has no silent sample fallback: missing connected media means text only.
+The production `dist` contains **no WAV files** (previously 8.8 MB, nearly all sample clips under `public/`). The hard-coded `src/media/narration.ts` lookup and the placeholder-clip script are removed. Connected rendering has no silent sample fallback: missing connected manifests leave text; unavailable audio storage preserves any published data-only artifacts.
 
-## Verification (17 October)
+## Historical first-package verification (17 October)
 
 - **Python:** 9 new tests (`tests/test_concept_media.py`):
   - The package binds every clip to the exact text, script and audio, with a deterministic revision.
@@ -146,9 +157,9 @@ The production `dist` is now about 0.8 MB with **no WAV files** (previously 8.8 
    - Bounded retries and provider load.
    - Atomic publication. `publish()` is the atomic step to reuse.
 
-   Prepare all ten Analog Modulation concepts before expanding scope. See the current inventory above for existing recordings, their real-byte availability and the whole-concept/placard contract gap; do not regenerate compatible assets. The job store and queue are undecided (`kiki-backend/docs/architecture/mixed-language-fastapi.md`).
+   Prepare all ten Analog Modulation concepts before expanding scope. The verified all-ten archive now supplies compatible records and real bytes; the consumer supports whole-concept scope. Coordinate reviewed publication and delivery acceptance without regenerating compatible assets. The job store and queue are undecided (`kiki-backend/docs/architecture/mixed-language-fastapi.md`).
 5. **Opt-in continuous reading, guided states and evaluated sentence alignment.** The contract's `timing.kind` is the extension point. Do not add timestamps until alignment is evaluated.
 
 The 15 diode/material-balance/eigenvalue concepts need course/catalog/schema generalization first. The Python and Zod contracts still fix `planId` to Analog Modulation.
 
-Rollback: stop setting `KIKI_MEDIA_BUCKET`, or move the concept head back to an earlier revision with `--expected-current`. Lessons fall back to text. No catalog or learner rollback is involved.
+Delivery rollback: stop setting `KIKI_MEDIA_BUCKET`; this disables narration delivery while preserving published artifact metadata. A separately authorized media rollback can move the concept head back to an earlier revision with `--expected-current`. No catalog or learner rollback is involved.

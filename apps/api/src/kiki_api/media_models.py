@@ -5,10 +5,11 @@ prepared ahead of time; reading it never generates anything.
 """
 
 import math
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import Field, model_validator
 
+from .cam_canvas import ConceptCanvasArtifact
 from .models import WireModel
 
 SHA256 = r"^[a-f0-9]{64}$"
@@ -56,9 +57,7 @@ class NarrationReview(WireModel):
         return self
 
 
-class NarrationRendition(WireModel):
-    renditionId: str = Field(pattern=r"^[A-Za-z0-9-]{1,96}\.(en|or)$")
-    placardId: str = Field(min_length=1, max_length=96)
+class NarrationAudio(WireModel):
     lang: Literal["en", "or"]
     assetId: str = Field(pattern=SHA256)
     mimeType: Literal["audio/wav"]
@@ -74,8 +73,34 @@ class NarrationRendition(WireModel):
 
     @model_validator(mode="after")
     def content_addressed(self):
-        if self.assetId != self.audioSha256 or self.renditionId != f"{self.placardId}.{self.lang}":
-            raise ValueError("Rendition identity must follow its placard, language and audio")
+        if self.assetId != self.audioSha256:
+            raise ValueError("Audio must be content-addressed")
+        return self
+
+
+class NarrationRendition(NarrationAudio):
+    renditionId: str = Field(pattern=r"^[A-Za-z0-9-]{1,96}\.(en|or)$")
+    placardId: str = Field(min_length=1, max_length=96)
+
+    @model_validator(mode="after")
+    def identity(self):
+        if self.renditionId != f"{self.placardId}.{self.lang}":
+            raise ValueError("Rendition identity must follow placard and language")
+        return self
+
+
+class ConceptNarrationRendition(NarrationAudio):
+    scope: Literal["concept"]
+    conceptId: str = Field(pattern=r"^C-AM-(0[1-9]|10)$")
+    renditionId: str = Field(pattern=r"^C-AM-(0[1-9]|10)\.concept\.(en|or)$")
+    placardIds: list[str] = Field(min_length=1, max_length=4)
+
+    @model_validator(mode="after")
+    def identity(self):
+        if self.renditionId != f"{self.conceptId}.concept.{self.lang}" or len(
+            set(self.placardIds)
+        ) != len(self.placardIds):
+            raise ValueError("Concept audio identity/coverage is invalid")
         return self
 
 
@@ -160,8 +185,10 @@ class MediaManifest(WireModel):
     catalogVersion: str = Field(pattern=CATALOG_VERSION)
     mediaRevision: str = Field(pattern=MEDIA_REVISION)
     release: Literal["sample_unreviewed", "reviewed"]
-    narration: list[NarrationRendition]
-    artifacts: list[PhaseRecoveryScene]
+    narration: list[NarrationRendition | ConceptNarrationRendition]
+    artifacts: list[
+        Annotated[PhaseRecoveryScene | ConceptCanvasArtifact, Field(discriminator="renderer")]
+    ]
 
     @model_validator(mode="after")
     def unique(self):
@@ -183,6 +210,13 @@ class MediaNarrationRef(WireModel):
     lang: Literal["en", "or"]
 
 
+class ConceptNarrationRef(WireModel):
+    scope: Literal["concept"]
+    conceptId: str
+    placardIds: list[str]
+    lang: Literal["en", "or"]
+
+
 class MediaArtifactRef(WireModel):
     artifactId: str
     renderer: str
@@ -196,7 +230,8 @@ class MediaExperience(WireModel):
     catalogVersion: str = Field(pattern=CATALOG_VERSION)
     mediaRevision: str = Field(pattern=MEDIA_REVISION)
     release: Literal["sample_unreviewed", "reviewed"]
-    narration: list[MediaNarrationRef]
+    audioAvailable: bool = True
+    narration: list[MediaNarrationRef | ConceptNarrationRef]
     artifacts: list[MediaArtifactRef]
 
 
@@ -204,13 +239,24 @@ class MediaManifestEnvelope(WireModel):
     manifest: MediaManifest
 
 
-def experience(manifest: MediaManifest) -> MediaExperience:
+def experience(manifest: MediaManifest, audio_available=True) -> MediaExperience:
     return MediaExperience(
         schema="media-experience/v1",
         catalogVersion=manifest.catalogVersion,
         mediaRevision=manifest.mediaRevision,
         release=manifest.release,
-        narration=[{"placardId": r.placardId, "lang": r.lang} for r in manifest.narration],
+        **({"audioAvailable": False} if not audio_available else {}),
+        narration=[
+            {
+                "scope": "concept",
+                "conceptId": r.conceptId,
+                "placardIds": r.placardIds,
+                "lang": r.lang,
+            }
+            if isinstance(r, ConceptNarrationRendition)
+            else {"placardId": r.placardId, "lang": r.lang}
+            for r in manifest.narration
+        ],
         artifacts=[
             {"artifactId": a.artifactId, "renderer": a.renderer, "placardIds": a.placardIds}
             for a in manifest.artifacts

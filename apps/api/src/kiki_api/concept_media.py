@@ -25,6 +25,7 @@ from .learning_catalog import digest, dump
 from .learning_models import PLAN, Lesson
 from .media_models import (
     MEDIA_REVISION,
+    ConceptNarrationRendition,
     MediaExperience,
     MediaManifest,
     PhaseRecoveryScene,
@@ -54,12 +55,32 @@ def bind(manifest: MediaManifest, lesson: Lesson, source: dict | None = None):
     if manifest.conceptId != lesson.conceptId:
         raise ValueError("Media belongs to another concept")
     for clip in manifest.narration:
-        card = cards.get(clip.placardId)
-        if card is None or sha256(getattr(card.body, "or_" if clip.lang == "or" else "en")) != (
-            clip.sourceTextSha256
-        ):
+        if isinstance(clip, ConceptNarrationRendition):
+            if clip.conceptId != lesson.conceptId or clip.placardIds != list(cards):
+                raise ValueError("Concept narration must cover the exact ordered lesson placards")
+            text = " ".join(
+                getattr(cards[p].body, "or_" if clip.lang == "or" else "en")
+                for p in clip.placardIds
+            )
+        else:
+            card = cards.get(clip.placardId)
+            if card is None:
+                raise ValueError("Narration has an unknown placard")
+            text = getattr(card.body, "or_" if clip.lang == "or" else "en")
+        if sha256(text) != clip.sourceTextSha256:
             raise ValueError(f"Narration {clip.renditionId} no longer matches its placard text")
     for scene in manifest.artifacts:
+        if scene.renderer == "cam-concept-canvas/v1":
+            if scene.scene.conceptId != lesson.conceptId or scene.placardIds != card_ids(lesson):
+                raise ValueError("Canvas identity or slots differ from lesson")
+            if source is not None:
+                modalities = source["explanation"]["modalities"]
+                if (
+                    scene.scene.sourceInteractive != modalities["interactive"]
+                    or scene.scene.visualBrief.model_dump(by_alias=True)
+                    != modalities["textImage"]["visual"]
+                ):
+                    raise ValueError("Canvas differs from authored source")
         if any(p not in cards for p in scene.placardIds):
             raise ValueError(f"Scene {scene.artifactId} is placed on an unknown placard")
         if source is not None and scene_bindings(source) != [dump(b) for b in scene.bindings]:
@@ -357,25 +378,29 @@ class ConceptMedia:
             or set(record["assets"]) != {r.assetId for r in manifest.narration}
         ):
             raise BoundaryError(503, "The lesson media needs a compatibility check.")
+        for rendition in manifest.narration:
+            meta = record["assets"][rendition.assetId]
+            if meta != {
+                "path": asset_path(rendition.assetId),
+                "mimeType": rendition.mimeType,
+                "bytes": rendition.bytes,
+            }:
+                raise BoundaryError(503, "The media asset index needs a compatibility check.")
         return manifest, record
 
     def experience(self, catalog_version, lesson: Lesson) -> MediaExperience | None:
-        # Lessons stay readable text when media is absent, unconfigured or incompatible.
-        if self.assets is None:
-            return None
+        # Published metadata is independent of private audio storage.
         try:
             found = self._record(catalog_version, lesson.conceptId)
             if found is None:
                 return None
             bind(found[0], lesson)
-            return experience(found[0])
+            return experience(found[0], audio_available=self.assets is not None)
         except (BoundaryError, ValidationError, ValueError, KeyError) as exc:
             logger.warning("Lesson media omitted (%s)", type(exc).__name__)
             return None
 
     def manifest(self, catalog_version, lesson: Lesson, source: dict) -> MediaManifest:
-        if self.assets is None:
-            raise BoundaryError(503, "Lesson media storage is not available yet.")
         found = self._compatible(catalog_version, lesson, source)
         if found is None:
             raise BoundaryError(404, "No media has been published for this lesson.")

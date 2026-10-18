@@ -1,3 +1,21 @@
+## All-CAM PR publication authorized — 18 October 2026
+
+The user now requests a PR for this all-ten integration and merging PRs #9, #10 and #11. This supersedes the earlier Git-publication restriction for this step; deployment, cloud/media-head publication and learner changes remain outside scope. Authenticated GitHub identity is `akshitanitr` with push permission; commits use the required repository identity. All-CAM is to remain open for review after the three requested dependency PRs merge. Original trial worktrees/services remain preserved. Last completed: source/check/identity review. Exact next: commit the reviewed all-CAM diff, merge dependency PRs with combined validation, and open the scoped PR against resulting main.
+
+---
+
+## All-ten CAM local integration complete — 18 October 2026 (India time)
+
+User adopted ALL-CAM-WEB-HANDOFF.md. Isolated branch `integration/all-cam-2026-10-18`, worktree `kiki-web-all-cam-2026-10-18`, exact unchanged HEAD/base `fa87fb61c6b0dd27658ffc495bcb8d74a243ce4c`. All changes are uncommitted/unstaged. Published PR #11's checkout remains clean; original trial checkouts, pre-existing dirty records, configuration and running services remain intact. [All-ten results](../../docs/evidence/all-cam-coverage-2026-10-18.md), [80-row ledger](../../docs/evidence/all-cam-coverage-2026-10-18.json), [implementation/next gates](../../docs/plans/all-cam-integration-2026-10-18.md).
+
+Implemented once: `cam-concept-canvas/v1` in Python/Zod/React, typed byte-identical supplied model module, pinned scenes/source/code/control/conformance data, concept-scoped narration with ordered exact text hashes and one preserved clip across manual navigation. Native C-AM-08/eight bilingual clips/revision remain exact. C-AM-04 common slots suppress duplicate legacy diagrams. Published metadata remains available without an audio store; truthful pointer/UI disables unavailable private delivery and retains auth/enrollment checks. No connected sample fallback. Seek state and page-hidden pause are verified.
+
+Actual checks PASS: archive 77/77 hashes/sizes; ten-model verifier/38 cases/zero providers; all 26 real WAVs; **144 API tests**, Ruff check/format; **231 frontend tests / 39 files**, lint/typecheck/build; all-ten Python→React metadata-only receipts; native publisher default dry-run. Final serial browser suite **11/11 PASS** (all ten complete sample journeys plus missing-English regression). Earlier broad run 62/65: two stalled clocks under load and one obsolete expectation; all three pass the final serial run. No single broad 65/65 rerun is claimed. Twenty synthetic 390/1280px model screenshots inspected; all-ten fit/keyboard/reset/cleanup/reload checks pass. Production excludes sample records/audio/answer keys; lockfiles/native package unchanged.
+
+**BLOCKED / NOT RUN:** real private publication/head/configuration and signed-in delivery/journey acceptance; no bucket/cloud/IAM/billing/learner reset/capture/generation/commit/push/merge/deploy. Scientific/native-Odia/pronunciation/fidelity/audio-quality review remains pending. English narration absent outside C-AM-08; no sentence timing. Saved limits remain visible: C-AM-01 two traces vs brief three; C-AM-04 fixed 2000 Hz carrier vs authored adjustable fc; FM/PM normalized examples. Media clocks do not prove physical audibility or phone acceptance. Last completed: local all-ten integration and evidence. Exact next: coordinated authorized publication/private delivery setup and content-quality gates; see linked plan.
+
+---
+
 ## Continuation PR #11 opened — 18 October 2026 (India time)
 
 [PR #11: Add lab evidence controls and reliable execution recovery](https://github.com/Kikiland-ai/kiki-web/pull/11) is open for review, from `continuation/connected-learning-2026-10-18` into `fix/lab-integration-small`. It is stacked on open PR #9; merge #9 first, then retarget this PR to `main`. Implementation source commit: `0e6205a0815aacf9ae36472cb72159dc7a7d0424`. Author and committer verified as `akshitanitr <95952896+akshitanitr@users.noreply.github.com>`; authenticated GitHub login/push permission verified before publication. The separate PR #10 was not changed.

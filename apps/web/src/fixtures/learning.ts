@@ -1,6 +1,6 @@
 import content from './learning-content.json';
 import visual from './dsb-sc-visual.json';
-import { sampleMediaExperience } from './media';
+import { sampleMediaExperienceForConcept } from './media';
 import type { AssessmentApi, LearningApi } from '../contracts/services';
 import { ChapterSchema, LessonSchema, SavedPositionsSchema, type SavedPositions } from '../contracts/learning';
 import { projectLearningProgress } from '../services/learning-progress';
@@ -23,7 +23,7 @@ export function createFixtureLearning(requireUid: () => string, assessments: Ass
   function lesson(id: string) {
     const value = (content.lessons as Record<string, unknown>)[id];
     if (!value) throw new ServiceError('This concept was not found.', 404);
-    return LessonSchema.parse(id === 'C-AM-04' ? {...value as object, visual} : id === 'C-AM-08' ? {...value as object, mediaExperience: sampleMediaExperience} : value);
+    return LessonSchema.parse({ ...value as object, ...(id === 'C-AM-04' ? { visual } : {}), mediaExperience: sampleMediaExperienceForConcept(id) });
   }
   async function progress(uid: string, signal?: AbortSignal) {
     const overview = await assessments.overview(chapter.planId, signal);

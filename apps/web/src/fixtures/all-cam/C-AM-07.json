@@ -1,0 +1,329 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-07",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-973f77077e8827dbd2e4c87b",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "lang": "or",
+        "assetId": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+        "mimeType": "audio/wav",
+        "bytes": 3429474,
+        "durationSeconds": 71.32,
+        "sourceTextSha256": "2118b8e4574c653fb4168c342b308fb62df90283a1eccbd950d5104aa61e9fb6",
+        "speechScriptSha256": "208655105f9bc3eabefadb76244b166757f96bebfacda9a0ec4edc5dd4acfa52",
+        "audioSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        },
+        "scope": "concept",
+        "conceptId": "C-AM-07",
+        "renditionId": "C-AM-07.concept.or",
+        "placardIds": [
+          "CARD-AM-07-definition",
+          "CARD-AM-07-concept",
+          "CARD-AM-07-application",
+          "CARD-AM-07-recap"
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-07-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-07-concept",
+          "CARD-AM-07-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-07",
+          "kind": "filter",
+          "title": "Lowpass filtering and waveform comparison",
+          "controls": [
+            {
+              "name": "cutoff",
+              "label": "Butterworth cutoff",
+              "min": 200.0,
+              "max": 1000.0,
+              "step": 100.0,
+              "default": 500.0,
+              "unit": "Hz"
+            }
+          ],
+          "visualBrief": {
+            "kind": "graph",
+            "description": "Lowpass magnitude response with 100 Hz message inside passband, 500 Hz cutoff, unwanted 3900/4100 Hz products attenuated; show shifted recovered waveform.",
+            "alt": "Lowpass filtering and waveform comparison; Retain message frequencies; suppress the doubled-carrier image; expect finite attenuation and phase lag.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components.",
+              "target": "lowpass filter"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Enter the lowpass coefficients, run the model, and compare steady-state recovered amplitude and frequency.",
+              "target": "500 Hz cutoff"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Retain message frequencies; suppress the doubled-carrier image; expect finite attenuation and phase lag.",
+              "target": "phase lag"
+            }
+          ],
+          "sourceInteractive": {
+            "kind": "step_through",
+            "prompt": "Follow the explanation, then check the worked result.",
+            "steps": [
+              {
+                "detail": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components.",
+                "label": "Define"
+              },
+              {
+                "detail": "100 Hz lies below the cutoff and is largely retained.",
+                "label": "Apply"
+              },
+              {
+                "detail": "Unwanted receiver components near 3900 and 4100 Hz lie far above it and are attenuated.",
+                "label": "Check"
+              }
+            ]
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-07#explanation.modalities.interactive",
+            "sha256": "a134fcf3dc3cc447cd79d33a0673e6715e2cb97aa740e70c69715e74f8b9170f"
+          },
+          {
+            "path": "sourceConcepts/C-AM-07#explanation.modalities.textImage.visual",
+            "sha256": "08adb574ec18c15ee0b4475199f52594fca981e3ec1856608037f76915514e0e"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-07/cam-cb5122737d1bc11d5e7658e5/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-07/cam-cb5122737d1bc11d5e7658e5/scene.json",
+            "sha256": "a0eb51b21e4d19fc09898b87a9f956864b4312ef69df4525e63b4e540443afba"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "cutoff": 500.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "100 Hz gain",
+                "0.99920"
+              ],
+              [
+                "100 Hz phase lag",
+                "-16.42°"
+              ],
+              [
+                "3900 Hz gain",
+                "0.01643"
+              ],
+              [
+                "4100 Hz gain",
+                "0.01487"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Original message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Steady-state recovered message component",
+                "values": [
+                  -0.2823908870553305,
+                  0.9584664536741213,
+                  0.2823908870553308,
+                  -0.2823908870553309,
+                  0.282390887055331,
+                  -0.2823908870553311
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "cutoff": 200.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "100 Hz gain",
+                "0.97014"
+              ],
+              [
+                "100 Hz phase lag",
+                "-43.31°"
+              ],
+              [
+                "3900 Hz gain",
+                "0.00263"
+              ],
+              [
+                "4100 Hz gain",
+                "0.00238"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Original message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Steady-state recovered message component",
+                "values": [
+                  -0.6655122646461624,
+                  0.7058823529411763,
+                  0.6655122646461624,
+                  -0.6655122646461625,
+                  0.6655122646461632,
+                  -0.6655122646461633
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "cutoff": 1000.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "100 Hz gain",
+                "0.99995"
+              ],
+              [
+                "100 Hz phase lag",
+                "-8.13°"
+              ],
+              [
+                "3900 Hz gain",
+                "0.06560"
+              ],
+              [
+                "4100 Hz gain",
+                "0.05938"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Original message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Steady-state recovered message component",
+                "values": [
+                  -0.141407215515758,
+                  0.9899010098990102,
+                  0.14140721551575805,
+                  -0.14140721551575816,
+                  0.1414072155157583,
+                  -0.1414072155157584
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+      "mimeType": "audio/wav",
+      "bytes": 3429474
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "modelVersion": "cam-packets/3",
+  "modelsSha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5",
+  "concepts": {
+    "C-AM-01": {
+      "kind": "signal",
+      "controls": [
+        {
+          "name": "amplitude",
+          "label": "Amplitude",
+          "min": 0.25,
+          "max": 2,
+          "step": 0.25,
+          "default": 1,
+          "unit": "normalized"
+        },
+        {
+          "name": "frequency",
+          "label": "Frequency",
+          "min": 10,
+          "max": 1000,
+          "step": 10,
+          "default": 100,
+          "unit": "Hz"
+        },
+        {
+          "name": "phase",
+          "label": "Phase",
+          "min": 0,
+          "max": 180,
+          "step": 15,
+          "default": 0,
+          "unit": "degree"
+        }
+      ]
+    },
+    "C-AM-02": {
+      "kind": "flow",
+      "controls": [
+        {
+          "name": "stage",
+          "label": "Teaching stage",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ]
+    },
+    "C-AM-03": {
+      "kind": "am",
+      "controls": [
+        {
+          "name": "mu",
+          "label": "Modulation index",
+          "min": 0,
+          "max": 1.5,
+          "step": 0.1,
+          "default": 0.5,
+          "unit": ""
+        }
+      ]
+    },
+    "C-AM-04": {
+      "kind": "dsb",
+      "controls": [
+        {
+          "name": "fm",
+          "label": "Message frequency",
+          "min": 10,
+          "max": 200,
+          "step": 10,
+          "default": 100,
+          "unit": "Hz"
+        }
+      ]
+    },
+    "C-AM-05": {
+      "kind": "spectrum",
+      "controls": [
+        {
+          "name": "family",
+          "label": "0 DSB-SC · 1 SSB · 2 VSB",
+          "min": 0,
+          "max": 2,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ]
+    },
+    "C-AM-06": {
+      "kind": "receiver",
+      "controls": [
+        {
+          "name": "stage",
+          "label": "0 input · 1 multiply · 2 ideal lowpass · 3 gain",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ]
+    },
+    "C-AM-07": {
+      "kind": "filter",
+      "controls": [
+        {
+          "name": "cutoff",
+          "label": "Butterworth cutoff",
+          "min": 200,
+          "max": 1000,
+          "step": 100,
+          "default": 500,
+          "unit": "Hz"
+        }
+      ]
+    },
+    "C-AM-08": {
+      "kind": "phase_recovery",
+      "controls": [
+        {
+          "name": "phase",
+          "label": "Relative phase error",
+          "min": 0,
+          "max": 180,
+          "step": 15,
+          "default": 60,
+          "unit": "degree"
+        }
+      ]
+    },
+    "C-AM-09": {
+      "kind": "fm",
+      "controls": [
+        {
+          "name": "df",
+          "label": "Frequency deviation",
+          "min": 1000,
+          "max": 10000,
+          "step": 500,
+          "default": 5000,
+          "unit": "Hz"
+        },
+        {
+          "name": "B",
+          "label": "Single-tone message frequency / B",
+          "min": 500,
+          "max": 3000,
+          "step": 100,
+          "default": 1000,
+          "unit": "Hz"
+        }
+      ]
+    },
+    "C-AM-10": {
+      "kind": "pm",
+      "controls": [
+        {
+          "name": "sensitivity",
+          "label": "Normalized sensitivity",
+          "min": 0,
+          "max": 2,
+          "step": 0.25,
+          "default": 1,
+          "unit": ""
+        },
+        {
+          "name": "constant",
+          "label": "0 sinusoidal message · 1 constant message",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ]
+    }
+  }
+}

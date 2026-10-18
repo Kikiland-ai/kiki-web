@@ -1,0 +1,236 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-05",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-e951291ded75b2243b041356",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "lang": "or",
+        "assetId": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+        "mimeType": "audio/wav",
+        "bytes": 3020514,
+        "durationSeconds": 62.8,
+        "sourceTextSha256": "f148f3913332d3c406bcdfb7972e76259a65781b8773d8c8f7d20ddb5fdb7af7",
+        "speechScriptSha256": "e0bcdd45b118269d76f3b8a4be1c28f90f2e42a446b9d7f3cfd9939cafbb3443",
+        "audioSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        },
+        "scope": "concept",
+        "conceptId": "C-AM-05",
+        "renditionId": "C-AM-05.concept.or",
+        "placardIds": [
+          "CARD-AM-05-definition",
+          "CARD-AM-05-concept",
+          "CARD-AM-05-application",
+          "CARD-AM-05-recap"
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-05-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-05-concept",
+          "CARD-AM-05-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-05",
+          "kind": "spectrum",
+          "title": "SSB and VSB compared with DSB-SC",
+          "controls": [
+            {
+              "name": "family",
+              "label": "0 DSB-SC · 1 SSB · 2 VSB",
+              "min": 0.0,
+              "max": 2.0,
+              "step": 1.0,
+              "default": 0.0,
+              "unit": ""
+            }
+          ],
+          "visualBrief": {
+            "kind": "graph",
+            "description": "Three aligned spectra: DSB-SC with both sidebands, SSB with only upper sideband, VSB with upper sideband and labelled lower-sideband vestige.",
+            "alt": "SSB and VSB compared with DSB-SC; For message bandwidth B: DSB-SC uses 2B; ideal SSB uses B; VSB retains a vestige.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other.",
+              "target": "DSB-SC"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Compare spectrum sketches rather than adding an SSB subsystem to the selected DSB-SC experiment.",
+              "target": "SSB"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "For message bandwidth B: DSB-SC uses 2B; ideal SSB uses B; VSB retains a vestige.",
+              "target": "VSB"
+            }
+          ],
+          "sourceInteractive": {
+            "kind": "step_through",
+            "prompt": "Follow the explanation, then check the worked result.",
+            "steps": [
+              {
+                "detail": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other.",
+                "label": "Define"
+              },
+              {
+                "detail": "Ideal SSB bandwidth=4 kHz.",
+                "label": "Apply"
+              },
+              {
+                "detail": "DSB-SC bandwidth=2*4=8 kHz.",
+                "label": "Check"
+              }
+            ]
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-05#explanation.modalities.interactive",
+            "sha256": "8ded4e0550a20abc17120a480f5ab08686674f2a543ed579e167ccd87a4f3db0"
+          },
+          {
+            "path": "sourceConcepts/C-AM-05#explanation.modalities.textImage.visual",
+            "sha256": "78305bd1683ed508e1dcbb8c37d535d114f6c81fd47c78a76f671e958fa02938"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-05/cam-909a0af55872a19dbc939eeb/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-05/cam-909a0af55872a19dbc939eeb/scene.json",
+            "sha256": "0d4ec70797af81510ac497543d130b5889a574cea8288d947fd70f534165618e"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "family": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Family",
+                "DSB-SC"
+              ],
+              [
+                "Bandwidth",
+                "2B"
+              ]
+            ],
+            "samples": [],
+            "hasExtraSvg": true
+          },
+          {
+            "inputs": {
+              "family": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Family",
+                "DSB-SC"
+              ],
+              [
+                "Bandwidth",
+                "2B"
+              ]
+            ],
+            "samples": [],
+            "hasExtraSvg": true
+          },
+          {
+            "inputs": {
+              "family": 2.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Family",
+                "VSB"
+              ],
+              [
+                "Bandwidth",
+                "Between B and 2B"
+              ]
+            ],
+            "samples": [],
+            "hasExtraSvg": true
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+      "mimeType": "audio/wav",
+      "bytes": 3020514
+    }
+  }
+}
