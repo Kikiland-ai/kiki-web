@@ -1,0 +1,1685 @@
+{
+  "C-AM-01": [
+    {
+      "inputs": {
+        "amplitude": 1,
+        "frequency": 100,
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "10.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "628.32 rad/s"
+        ],
+        [
+          "Frequency",
+          "100 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "amplitude": 0.25,
+        "frequency": 100,
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "10.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "628.32 rad/s"
+        ],
+        [
+          "Frequency",
+          "100 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            0,
+            0.25,
+            3.061616997868383e-17,
+            -6.123233995736766e-17,
+            9.184850993605148e-17,
+            -1.2246467991473532e-16
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "amplitude": 2,
+        "frequency": 100,
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "10.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "628.32 rad/s"
+        ],
+        [
+          "Frequency",
+          "100 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            0,
+            2,
+            2.4492935982947064e-16,
+            -4.898587196589413e-16,
+            7.347880794884119e-16,
+            -9.797174393178826e-16
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "amplitude": 1,
+        "frequency": 10,
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "100.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "62.83 rad/s"
+        ],
+        [
+          "Frequency",
+          "10 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            0,
+            0.15643446504023087,
+            0.3090169943749474,
+            0.5877852522924731,
+            0.8090169943749475,
+            0.9510565162951535
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            0.15643446504023087,
+            0.3090169943749474,
+            0.5877852522924731,
+            0.8090169943749475,
+            0.9510565162951535
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "amplitude": 1,
+        "frequency": 1000,
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "1.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "6283.19 rad/s"
+        ],
+        [
+          "Frequency",
+          "1000 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            0,
+            6.123233995736766e-16,
+            -1.2246467991473533e-15,
+            -2.4492935982947065e-15,
+            -1.0779367755043061e-14,
+            -4.898587196589413e-15
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            6.123233995736766e-16,
+            -1.2246467991473533e-15,
+            -2.4492935982947065e-15,
+            -1.0779367755043061e-14,
+            -4.898587196589413e-15
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "amplitude": 1,
+        "frequency": 100,
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "10.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "628.32 rad/s"
+        ],
+        [
+          "Frequency",
+          "100 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "amplitude": 1,
+        "frequency": 100,
+        "phase": 180
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Period",
+          "10.000 ms"
+        ],
+        [
+          "Angular frequency",
+          "628.32 rad/s"
+        ],
+        [
+          "Frequency",
+          "100 Hz"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Signal",
+          "values": [
+            1.2246467991473532e-16,
+            -1,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16,
+            6.123233995736766e-16
+          ]
+        },
+        {
+          "label": "Reference: unit amplitude and zero phase",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ],
+  "C-AM-02": [
+    {
+      "inputs": {
+        "stage": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Selected stage",
+          "Message: information"
+        ]
+      ],
+      "samples": [],
+      "hasExtraSvg": true
+    },
+    {
+      "inputs": {
+        "stage": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Selected stage",
+          "Message: information"
+        ]
+      ],
+      "samples": [],
+      "hasExtraSvg": true
+    },
+    {
+      "inputs": {
+        "stage": 3
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Selected stage",
+          "Receiver / recovery"
+        ]
+      ],
+      "samples": [],
+      "hasExtraSvg": true
+    }
+  ],
+  "C-AM-03": [
+    {
+      "inputs": {
+        "mu": 0.5
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Modulation index",
+          "0.50"
+        ],
+        [
+          "Envelope minimum",
+          "0.50"
+        ],
+        [
+          "Envelope detection",
+          "Non-negative envelope"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Conventional AM output",
+          "values": [
+            1.5,
+            1,
+            0.5,
+            1.5,
+            0.5,
+            1.5
+          ]
+        },
+        {
+          "label": "Signed envelope factor",
+          "values": [
+            1.5,
+            1,
+            0.5,
+            1.5,
+            0.5,
+            1.5
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "mu": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Modulation index",
+          "0.00"
+        ],
+        [
+          "Envelope minimum",
+          "1.00"
+        ],
+        [
+          "Envelope detection",
+          "Non-negative envelope"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Conventional AM output",
+          "values": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "label": "Signed envelope factor",
+          "values": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "mu": 1.5
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Modulation index",
+          "1.50"
+        ],
+        [
+          "Envelope minimum",
+          "-0.50"
+        ],
+        [
+          "Envelope detection",
+          "Overmodulation: signed envelope crosses zero"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Conventional AM output",
+          "values": [
+            2.5,
+            1,
+            -0.5,
+            2.5,
+            -0.5,
+            2.5
+          ]
+        },
+        {
+          "label": "Signed envelope factor",
+          "values": [
+            2.5,
+            1,
+            -0.5,
+            2.5,
+            -0.5,
+            2.5
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ],
+  "C-AM-04": [
+    {
+      "inputs": {
+        "fm": 100
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Lower sideband",
+          "1900 Hz"
+        ],
+        [
+          "Upper sideband",
+          "2100 Hz"
+        ],
+        [
+          "Separate carrier line",
+          "Absent for this ideal zero-mean message"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "DSB-SC product",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": true
+    },
+    {
+      "inputs": {
+        "fm": 10
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Lower sideband",
+          "1990 Hz"
+        ],
+        [
+          "Upper sideband",
+          "2010 Hz"
+        ],
+        [
+          "Separate carrier line",
+          "Absent for this ideal zero-mean message"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            0.15643446504023087,
+            0.3090169943749474,
+            0.5877852522924731,
+            0.8090169943749475,
+            0.9510565162951535
+          ]
+        },
+        {
+          "label": "DSB-SC product",
+          "values": [
+            0,
+            0.15643446504023087,
+            0.3090169943749474,
+            0.5877852522924731,
+            0.8090169943749475,
+            0.9510565162951535
+          ]
+        }
+      ],
+      "hasExtraSvg": true
+    },
+    {
+      "inputs": {
+        "fm": 200
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Lower sideband",
+          "1800 Hz"
+        ],
+        [
+          "Upper sideband",
+          "2200 Hz"
+        ],
+        [
+          "Separate carrier line",
+          "Absent for this ideal zero-mean message"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            -4.898587196589413e-16,
+            -7.347880794884119e-16,
+            -9.797174393178826e-16
+          ]
+        },
+        {
+          "label": "DSB-SC product",
+          "values": [
+            0,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            -4.898587196589413e-16,
+            -7.347880794884119e-16,
+            -9.797174393178826e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": true
+    }
+  ],
+  "C-AM-05": [
+    {
+      "inputs": {
+        "family": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Family",
+          "DSB-SC"
+        ],
+        [
+          "Bandwidth",
+          "2B"
+        ]
+      ],
+      "samples": [],
+      "hasExtraSvg": true
+    },
+    {
+      "inputs": {
+        "family": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Family",
+          "DSB-SC"
+        ],
+        [
+          "Bandwidth",
+          "2B"
+        ]
+      ],
+      "samples": [],
+      "hasExtraSvg": true
+    },
+    {
+      "inputs": {
+        "family": 2
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Family",
+          "VSB"
+        ],
+        [
+          "Bandwidth",
+          "Between B and 2B"
+        ]
+      ],
+      "samples": [],
+      "hasExtraSvg": true
+    }
+  ],
+  "C-AM-06": [
+    {
+      "inputs": {
+        "stage": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Stage",
+          "Received DSB-SC"
+        ],
+        [
+          "Ideal message-band scale",
+          "Inspect the next stage"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Received DSB-SC",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "stage": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Stage",
+          "Received DSB-SC"
+        ],
+        [
+          "Ideal message-band scale",
+          "Inspect the next stage"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Received DSB-SC",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "stage": 3
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Stage",
+          "Recovery gain 2"
+        ],
+        [
+          "Ideal message-band scale",
+          "1"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "After gain 2",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ],
+  "C-AM-07": [
+    {
+      "inputs": {
+        "cutoff": 500
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "100 Hz gain",
+          "0.99920"
+        ],
+        [
+          "100 Hz phase lag",
+          "-16.42°"
+        ],
+        [
+          "3900 Hz gain",
+          "0.01643"
+        ],
+        [
+          "4100 Hz gain",
+          "0.01487"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Steady-state recovered message component",
+          "values": [
+            -0.2823908870553305,
+            0.9584664536741213,
+            0.2823908870553308,
+            -0.2823908870553309,
+            0.282390887055331,
+            -0.2823908870553311
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "cutoff": 200
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "100 Hz gain",
+          "0.97014"
+        ],
+        [
+          "100 Hz phase lag",
+          "-43.31°"
+        ],
+        [
+          "3900 Hz gain",
+          "0.00263"
+        ],
+        [
+          "4100 Hz gain",
+          "0.00238"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Steady-state recovered message component",
+          "values": [
+            -0.6655122646461624,
+            0.7058823529411763,
+            0.6655122646461624,
+            -0.6655122646461625,
+            0.6655122646461632,
+            -0.6655122646461633
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "cutoff": 1000
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "100 Hz gain",
+          "0.99995"
+        ],
+        [
+          "100 Hz phase lag",
+          "-8.13°"
+        ],
+        [
+          "3900 Hz gain",
+          "0.06560"
+        ],
+        [
+          "4100 Hz gain",
+          "0.05938"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Steady-state recovered message component",
+          "values": [
+            -0.141407215515758,
+            0.9899010098990102,
+            0.14140721551575805,
+            -0.14140721551575816,
+            0.1414072155157583,
+            -0.1414072155157584
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ],
+  "C-AM-08": [
+    {
+      "inputs": {
+        "phase": 60
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Signed recovery fraction",
+          "0.5000"
+        ],
+        [
+          "Relative phase error",
+          "60°"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Ideal gain-corrected recovered message",
+          "values": [
+            0,
+            0.5000000000000001,
+            6.123233995736767e-17,
+            -1.2246467991473535e-16,
+            1.8369701987210302e-16,
+            -2.449293598294707e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "phase": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Signed recovery fraction",
+          "1.0000"
+        ],
+        [
+          "Relative phase error",
+          "0°"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Ideal gain-corrected recovered message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "phase": 180
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Signed recovery fraction",
+          "-1.0000"
+        ],
+        [
+          "Relative phase error",
+          "180°"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Original message",
+          "values": [
+            0,
+            1,
+            1.2246467991473532e-16,
+            -2.4492935982947064e-16,
+            3.6739403974420594e-16,
+            -4.898587196589413e-16
+          ]
+        },
+        {
+          "label": "Ideal gain-corrected recovered message",
+          "values": [
+            0,
+            -1,
+            -1.2246467991473532e-16,
+            2.4492935982947064e-16,
+            -3.6739403974420594e-16,
+            4.898587196589413e-16
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ],
+  "C-AM-09": [
+    {
+      "inputs": {
+        "df": 5000,
+        "B": 1000
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Single-tone index β",
+          "5.000"
+        ],
+        [
+          "Carson bandwidth estimate",
+          "12000 Hz"
+        ],
+        [
+          "Output amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "Instantaneous frequency (normalized)",
+          "30.000 cycles/window"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Single-tone message (normalized time)",
+          "values": [
+            1,
+            0.7071067811865476,
+            6.123233995736766e-17,
+            -1,
+            -1.8369701987210297e-16,
+            1
+          ]
+        },
+        {
+          "label": "FM: constant amplitude, changing cycle spacing",
+          "values": [
+            0,
+            0.9234034617404372,
+            0.95892427466314,
+            -1.0779367755043061e-14,
+            -0.9589242746631299,
+            -2.1558735510086122e-14
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "df": 1000,
+        "B": 1000
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Single-tone index β",
+          "1.000"
+        ],
+        [
+          "Carson bandwidth estimate",
+          "4000 Hz"
+        ],
+        [
+          "Output amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "Instantaneous frequency (normalized)",
+          "30.000 cycles/window"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Single-tone message (normalized time)",
+          "values": [
+            1,
+            0.7071067811865476,
+            6.123233995736766e-17,
+            -1,
+            -1.8369701987210297e-16,
+            1
+          ]
+        },
+        {
+          "label": "FM: constant amplitude, changing cycle spacing",
+          "values": [
+            0,
+            -0.7602445970756329,
+            -0.8414709848078936,
+            -1.0779367755043061e-14,
+            0.8414709848079129,
+            -2.1558735510086122e-14
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "df": 10000,
+        "B": 1000
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Single-tone index β",
+          "10.000"
+        ],
+        [
+          "Carson bandwidth estimate",
+          "22000 Hz"
+        ],
+        [
+          "Output amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "Instantaneous frequency (normalized)",
+          "30.000 cycles/window"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Single-tone message (normalized time)",
+          "values": [
+            1,
+            0.7071067811865476,
+            6.123233995736766e-17,
+            -1,
+            -1.8369701987210297e-16,
+            1
+          ]
+        },
+        {
+          "label": "FM: constant amplitude, changing cycle spacing",
+          "values": [
+            0,
+            -0.705347906308444,
+            0.5440211108893653,
+            -1.0779367755043061e-14,
+            -0.5440211108893953,
+            -2.1558735510086122e-14
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "df": 5000,
+        "B": 500
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Single-tone index β",
+          "10.000"
+        ],
+        [
+          "Carson bandwidth estimate",
+          "11000 Hz"
+        ],
+        [
+          "Output amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "Instantaneous frequency (normalized)",
+          "30.000 cycles/window"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Single-tone message (normalized time)",
+          "values": [
+            1,
+            0.7071067811865476,
+            6.123233995736766e-17,
+            -1,
+            -1.8369701987210297e-16,
+            1
+          ]
+        },
+        {
+          "label": "FM: constant amplitude, changing cycle spacing",
+          "values": [
+            0,
+            -0.705347906308444,
+            0.5440211108893653,
+            -1.0779367755043061e-14,
+            -0.5440211108893953,
+            -2.1558735510086122e-14
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "df": 5000,
+        "B": 3000
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Single-tone index β",
+          "1.667"
+        ],
+        [
+          "Carson bandwidth estimate",
+          "16000 Hz"
+        ],
+        [
+          "Output amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "Instantaneous frequency (normalized)",
+          "30.000 cycles/window"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Single-tone message (normalized time)",
+          "values": [
+            1,
+            0.7071067811865476,
+            6.123233995736766e-17,
+            -1,
+            -1.8369701987210297e-16,
+            1
+          ]
+        },
+        {
+          "label": "FM: constant amplitude, changing cycle spacing",
+          "values": [
+            0,
+            -0.38230086089377896,
+            -0.9954079577517657,
+            -1.0779367755043061e-14,
+            0.9954079577517629,
+            -2.1558735510086122e-14
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ],
+  "C-AM-10": [
+    {
+      "inputs": {
+        "sensitivity": 1,
+        "constant": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Message",
+          "Sinusoidal"
+        ],
+        [
+          "PM steady frequency with constant message",
+          "Returns to carrier"
+        ],
+        [
+          "Amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "PM instantaneous frequency (normalized)",
+          "8.000"
+        ],
+        [
+          "FM instantaneous frequency (normalized)",
+          "8.159"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            0.7071067811865475,
+            1,
+            1.2246467991473532e-16,
+            -1,
+            -2.4492935982947064e-16
+          ]
+        },
+        {
+          "label": "PM: phase follows message",
+          "values": [
+            0,
+            0.6496369390800626,
+            0.8414709848078963,
+            -9.797174393178826e-16,
+            -0.8414709848078973,
+            -1.959434878635765e-15
+          ]
+        },
+        {
+          "label": "FM: phase integrates message",
+          "values": [
+            0,
+            0.04659852289335751,
+            0.1584838865916043,
+            0.3129617962077855,
+            0.15848388659160684,
+            -1.959434878635765e-15
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "sensitivity": 0,
+        "constant": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Message",
+          "Sinusoidal"
+        ],
+        [
+          "PM steady frequency with constant message",
+          "Returns to carrier"
+        ],
+        [
+          "Amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "PM instantaneous frequency (normalized)",
+          "8.000"
+        ],
+        [
+          "FM instantaneous frequency (normalized)",
+          "8.000"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            0.7071067811865475,
+            1,
+            1.2246467991473532e-16,
+            -1,
+            -2.4492935982947064e-16
+          ]
+        },
+        {
+          "label": "PM: phase follows message",
+          "values": [
+            0,
+            -2.4492935982947064e-16,
+            -4.898587196589413e-16,
+            -9.797174393178826e-16,
+            -1.4695761589768238e-15,
+            -1.959434878635765e-15
+          ]
+        },
+        {
+          "label": "FM: phase integrates message",
+          "values": [
+            0,
+            -2.4492935982947064e-16,
+            -4.898587196589413e-16,
+            -9.797174393178826e-16,
+            -1.4695761589768238e-15,
+            -1.959434878635765e-15
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "sensitivity": 2,
+        "constant": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Message",
+          "Sinusoidal"
+        ],
+        [
+          "PM steady frequency with constant message",
+          "Returns to carrier"
+        ],
+        [
+          "Amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "PM instantaneous frequency (normalized)",
+          "8.000"
+        ],
+        [
+          "FM instantaneous frequency (normalized)",
+          "8.318"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            0.7071067811865475,
+            1,
+            1.2246467991473532e-16,
+            -1,
+            -2.4492935982947064e-16
+          ]
+        },
+        {
+          "label": "PM: phase follows message",
+          "values": [
+            0,
+            0.9877659459927355,
+            0.9092974268256819,
+            -9.797174393178826e-16,
+            -0.909297426825681,
+            -1.959434878635765e-15
+          ]
+        },
+        {
+          "label": "FM: phase integrates message",
+          "values": [
+            0,
+            0.09309580572468638,
+            0.31296179620778597,
+            0.594480768524821,
+            0.3129617962077851,
+            -1.959434878635765e-15
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "sensitivity": 1,
+        "constant": 0
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Message",
+          "Sinusoidal"
+        ],
+        [
+          "PM steady frequency with constant message",
+          "Returns to carrier"
+        ],
+        [
+          "Amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "PM instantaneous frequency (normalized)",
+          "8.000"
+        ],
+        [
+          "FM instantaneous frequency (normalized)",
+          "8.159"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            0,
+            0.7071067811865475,
+            1,
+            1.2246467991473532e-16,
+            -1,
+            -2.4492935982947064e-16
+          ]
+        },
+        {
+          "label": "PM: phase follows message",
+          "values": [
+            0,
+            0.6496369390800626,
+            0.8414709848078963,
+            -9.797174393178826e-16,
+            -0.8414709848078973,
+            -1.959434878635765e-15
+          ]
+        },
+        {
+          "label": "FM: phase integrates message",
+          "values": [
+            0,
+            0.04659852289335751,
+            0.1584838865916043,
+            0.3129617962077855,
+            0.15848388659160684,
+            -1.959434878635765e-15
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    },
+    {
+      "inputs": {
+        "sensitivity": 1,
+        "constant": 1
+      },
+      "cursor": 0.25,
+      "readouts": [
+        [
+          "Message",
+          "Constant"
+        ],
+        [
+          "PM steady frequency with constant message",
+          "Returns to carrier"
+        ],
+        [
+          "Amplitude",
+          "1 (normalized)"
+        ],
+        [
+          "PM instantaneous frequency (normalized)",
+          "8.000"
+        ],
+        [
+          "FM instantaneous frequency (normalized)",
+          "8.159"
+        ]
+      ],
+      "samples": [
+        {
+          "label": "Message",
+          "values": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "label": "PM: phase follows message",
+          "values": [
+            0.8414709848078965,
+            0.8414709848078964,
+            0.8414709848078963,
+            0.841470984807896,
+            0.8414709848078957,
+            0.8414709848078955
+          ]
+        },
+        {
+          "label": "FM: phase integrates message",
+          "values": [
+            0,
+            0.12467473338522744,
+            0.24740395925452247,
+            0.4794255386042021,
+            0.6816387600233331,
+            0.8414709848078955
+          ]
+        }
+      ],
+      "hasExtraSvg": false
+    }
+  ]
+}

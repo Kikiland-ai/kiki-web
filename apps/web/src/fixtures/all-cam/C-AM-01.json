@@ -1,0 +1,644 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-01",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-bbb2e0a4310f0c9690b7af73",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "renditionId": "CARD-AM-01-definition.or",
+        "placardId": "CARD-AM-01-definition",
+        "lang": "or",
+        "assetId": "25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e",
+        "mimeType": "audio/wav",
+        "bytes": 977634,
+        "durationSeconds": 20.24,
+        "sourceTextSha256": "5cd4221c6f7af45ae85d5395cc79ea9cccb34f8733962683596d97f1ff8195a3",
+        "speechScriptSha256": "9c678788dde7884eeeade9ccb6feb79e955f9bb01dddcc863b9365a95dc175b2",
+        "audioSha256": "25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-01-concept.or",
+        "placardId": "CARD-AM-01-concept",
+        "lang": "or",
+        "assetId": "271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93",
+        "mimeType": "audio/wav",
+        "bytes": 2361954,
+        "durationSeconds": 49.08,
+        "sourceTextSha256": "a411dfdcb2ee823dcb609872342c1db3b900a116b9b2b74b885ab6535e44b855",
+        "speechScriptSha256": "b84e09ae6b1ac2b02b3fbe5c4932fd2279ce69b3489c37c95ea8f8efe7a3c0d2",
+        "audioSha256": "271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-01-application.or",
+        "placardId": "CARD-AM-01-application",
+        "lang": "or",
+        "assetId": "df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b",
+        "mimeType": "audio/wav",
+        "bytes": 783714,
+        "durationSeconds": 16.2,
+        "sourceTextSha256": "8660f82e31358ec77e42a8c522dc5815d7cef3e64f7cdcf27bd45b5ea2f3d142",
+        "speechScriptSha256": "5df6605127dac44ee497726ff8926ed083ad03b513367b8b4e82de9a6469f12a",
+        "audioSha256": "df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-01-recap.or",
+        "placardId": "CARD-AM-01-recap",
+        "lang": "or",
+        "assetId": "fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389",
+        "mimeType": "audio/wav",
+        "bytes": 829794,
+        "durationSeconds": 17.16,
+        "sourceTextSha256": "ae4af5c9db35ef73d77f86b24888cf549fc9bfd938d0e55720c289927acd09e2",
+        "speechScriptSha256": "ced103b93f525ebc74ebd00a3963ec5196ad9fdc13c5869f2812d4ca12e151aa",
+        "audioSha256": "fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-01-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-01-concept",
+          "CARD-AM-01-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-01",
+          "kind": "signal",
+          "title": "Amplitude, frequency and phase",
+          "controls": [
+            {
+              "name": "amplitude",
+              "label": "Amplitude",
+              "min": 0.25,
+              "max": 2.0,
+              "step": 0.25,
+              "default": 1.0,
+              "unit": "normalized"
+            },
+            {
+              "name": "frequency",
+              "label": "Frequency",
+              "min": 10.0,
+              "max": 1000.0,
+              "step": 10.0,
+              "default": 100.0,
+              "unit": "Hz"
+            },
+            {
+              "name": "phase",
+              "label": "Phase",
+              "min": 0.0,
+              "max": 180.0,
+              "step": 15.0,
+              "default": 0.0,
+              "unit": "degree"
+            }
+          ],
+          "visualBrief": {
+            "kind": "waveform",
+            "description": "Draw two labelled time traces with equal frequency and different amplitudes; a third trace has a phase shift. Show 10 ms period for 100 Hz.",
+            "alt": "Amplitude, frequency and phase; Peak size: amplitude. Cycles per second: frequency. Relative timing: phase. Convert Hz using 2*pi*f.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "A sinusoid is x(t)=A sin(2*pi*f*t+phi): A is amplitude, f is frequency in Hz and phi is phase in radians.",
+              "target": "Amplitude"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Set a 100 Hz message source using Frequency = 2*pi*100 rad/s; inspect one cycle lasting 10 ms.",
+              "target": "frequency"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Peak size: amplitude. Cycles per second: frequency. Relative timing: phase. Convert Hz using 2*pi*f.",
+              "target": "phase"
+            }
+          ],
+          "sourceInteractive": {
+            "inputs": [
+              {
+                "default": 100,
+                "label": "Frequency",
+                "max": 1000,
+                "min": 10,
+                "name": "f",
+                "step": 10,
+                "unit": "Hz"
+              }
+            ],
+            "kind": "parameter_sweep",
+            "outputs": [
+              {
+                "formula": "1/f",
+                "label": "Period",
+                "name": "T",
+                "unit": "s"
+              },
+              {
+                "formula": "2*pi*f",
+                "label": "Angular frequency",
+                "name": "omega",
+                "unit": "rad/s"
+              }
+            ],
+            "prompt": "Change frequency and observe period and angular frequency."
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-01#explanation.modalities.interactive",
+            "sha256": "5c510219a772a4c9e50a017a0ba2ca701d8a54471a3622c3f9d1166aa7cab5db"
+          },
+          {
+            "path": "sourceConcepts/C-AM-01#explanation.modalities.textImage.visual",
+            "sha256": "7aeafb6e7e7b684c944803788a8a02c0167fac1dd70b61b78d0262fc319d96d6"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-01/cam-70174a2d5e49199490cfb3d9/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-01/cam-70174a2d5e49199490cfb3d9/scene.json",
+            "sha256": "8a5c05f5ab4b20d32bbba41ff3c59e29779e7e9b9aeb533604be4b16ae69dc93"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "amplitude": 1.0,
+              "frequency": 100.0,
+              "phase": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "10.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "628.32 rad/s"
+              ],
+              [
+                "Frequency",
+                "100 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "amplitude": 0.25,
+              "frequency": 100.0,
+              "phase": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "10.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "628.32 rad/s"
+              ],
+              [
+                "Frequency",
+                "100 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  0.0,
+                  0.25,
+                  3.061616997868383e-17,
+                  -6.123233995736766e-17,
+                  9.184850993605148e-17,
+                  -1.2246467991473532e-16
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "amplitude": 2.0,
+              "frequency": 100.0,
+              "phase": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "10.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "628.32 rad/s"
+              ],
+              [
+                "Frequency",
+                "100 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  0.0,
+                  2.0,
+                  2.4492935982947064e-16,
+                  -4.898587196589413e-16,
+                  7.347880794884119e-16,
+                  -9.797174393178826e-16
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "amplitude": 1.0,
+              "frequency": 10.0,
+              "phase": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "100.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "62.83 rad/s"
+              ],
+              [
+                "Frequency",
+                "10 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  0.0,
+                  0.15643446504023087,
+                  0.3090169943749474,
+                  0.5877852522924731,
+                  0.8090169943749475,
+                  0.9510565162951535
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  0.15643446504023087,
+                  0.3090169943749474,
+                  0.5877852522924731,
+                  0.8090169943749475,
+                  0.9510565162951535
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "amplitude": 1.0,
+              "frequency": 1000.0,
+              "phase": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "1.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "6283.19 rad/s"
+              ],
+              [
+                "Frequency",
+                "1000 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  0.0,
+                  6.123233995736766e-16,
+                  -1.2246467991473533e-15,
+                  -2.4492935982947065e-15,
+                  -1.0779367755043061e-14,
+                  -4.898587196589413e-15
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  6.123233995736766e-16,
+                  -1.2246467991473533e-15,
+                  -2.4492935982947065e-15,
+                  -1.0779367755043061e-14,
+                  -4.898587196589413e-15
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "amplitude": 1.0,
+              "frequency": 100.0,
+              "phase": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "10.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "628.32 rad/s"
+              ],
+              [
+                "Frequency",
+                "100 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "amplitude": 1.0,
+              "frequency": 100.0,
+              "phase": 180.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Period",
+                "10.000 ms"
+              ],
+              [
+                "Angular frequency",
+                "628.32 rad/s"
+              ],
+              [
+                "Frequency",
+                "100 Hz"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Signal",
+                "values": [
+                  1.2246467991473532e-16,
+                  -1.0,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16,
+                  6.123233995736766e-16
+                ]
+              },
+              {
+                "label": "Reference: unit amplitude and zero phase",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e",
+      "mimeType": "audio/wav",
+      "bytes": 977634
+    },
+    "271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93",
+      "mimeType": "audio/wav",
+      "bytes": 2361954
+    },
+    "df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b",
+      "mimeType": "audio/wav",
+      "bytes": 783714
+    },
+    "fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389",
+      "mimeType": "audio/wav",
+      "bytes": 829794
+    }
+  }
+}

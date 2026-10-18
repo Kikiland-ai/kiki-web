@@ -62,14 +62,16 @@ test('a clip that cannot be fetched leaves the readable text and offers Retry',a
   await expect.poll(()=>page.evaluate(()=>document.querySelector('audio')?.currentTime??0)).toBeGreaterThan(0.2);
 });
 
-test('C-AM-04 keeps its own DSB-SC diagrams and has no phase scene or audio',async({page})=>{
+test('C-AM-04 uses its common DSB canvas without duplicate legacy diagrams or a phase scene',async({page})=>{
   await openC08(page);
   await page.getByRole('link',{name:'Analog Modulation'}).first().click();
   await page.getByRole('link',{name:/^Concept 4:/}).click();
   await page.getByRole('navigation',{name:'Lesson steps'}).getByRole('button').nth(1).click();
-  await expect(page.getByRole('region',{name:'DSB-SC teaching diagrams'})).toBeVisible();
+  await expect(page.getByRole('region',{name:'CAM concept canvas'})).toBeVisible();
+  await expect(page.getByRole('region',{name:'DSB-SC teaching diagrams'})).toHaveCount(0);
   await expect(scene(page)).toHaveCount(0);
-  await expect(page.getByRole('button',{name:'Listen',exact:true})).toHaveCount(0);
+  await page.getByRole('slider',{name:'Language mix',exact:true}).press('Home');
+  await expect(page.getByRole('button',{name:'Listen',exact:true})).toBeVisible();
 });
 
 for(const width of [320,390,768,1280]) test(`phase scene fits with 48px controls at ${width}px`,async({page})=>{

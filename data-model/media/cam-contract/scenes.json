@@ -1,0 +1,1115 @@
+{
+  "C-AM-01": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-01",
+      "kind": "signal",
+      "title": "Amplitude, frequency and phase",
+      "controls": [
+        {
+          "name": "amplitude",
+          "label": "Amplitude",
+          "min": 0.25,
+          "max": 2,
+          "step": 0.25,
+          "default": 1,
+          "unit": "normalized"
+        },
+        {
+          "name": "frequency",
+          "label": "Frequency",
+          "min": 10,
+          "max": 1000,
+          "step": 10,
+          "default": 100,
+          "unit": "Hz"
+        },
+        {
+          "name": "phase",
+          "label": "Phase",
+          "min": 0,
+          "max": 180,
+          "step": 15,
+          "default": 0,
+          "unit": "degree"
+        }
+      ],
+      "visualBrief": {
+        "kind": "waveform",
+        "description": "Draw two labelled time traces with equal frequency and different amplitudes; a third trace has a phase shift. Show 10 ms period for 100 Hz.",
+        "alt": "Amplitude, frequency and phase; Peak size: amplitude. Cycles per second: frequency. Relative timing: phase. Convert Hz using 2*pi*f.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "Amplitude",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "A sinusoid is x(t)=A sin(2*pi*f*t+phi): A is amplitude, f is frequency in Hz and phi is phase in radians."
+        },
+        {
+          "target": "frequency",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Set a 100 Hz message source using Frequency = 2*pi*100 rad/s; inspect one cycle lasting 10 ms."
+        },
+        {
+          "target": "phase",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Peak size: amplitude. Cycles per second: frequency. Relative timing: phase. Convert Hz using 2*pi*f."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "parameter_sweep",
+        "prompt": "Change frequency and observe period and angular frequency.",
+        "inputs": [
+          {
+            "name": "f",
+            "label": "Frequency",
+            "unit": "Hz",
+            "min": 10,
+            "max": 1000,
+            "step": 10,
+            "default": 100
+          }
+        ],
+        "outputs": [
+          {
+            "name": "T",
+            "label": "Period",
+            "unit": "s",
+            "formula": "1/f"
+          },
+          {
+            "name": "omega",
+            "label": "Angular frequency",
+            "unit": "rad/s",
+            "formula": "2*pi*f"
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "8a5c05f5ab4b20d32bbba41ff3c59e29779e7e9b9aeb533604be4b16ae69dc93",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-01#explanation.modalities.interactive",
+        "sha256": "5c510219a772a4c9e50a017a0ba2ca701d8a54471a3622c3f9d1166aa7cab5db"
+      },
+      {
+        "path": "sourceConcepts/C-AM-01#explanation.modalities.textImage.visual",
+        "sha256": "7aeafb6e7e7b684c944803788a8a02c0167fac1dd70b61b78d0262fc319d96d6"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-01/cam-70174a2d5e49199490cfb3d9/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-01/cam-70174a2d5e49199490cfb3d9/scene.json",
+        "sha256": "8a5c05f5ab4b20d32bbba41ff3c59e29779e7e9b9aeb533604be4b16ae69dc93"
+      }
+    ]
+  },
+  "C-AM-07": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-07",
+      "kind": "filter",
+      "title": "Lowpass filtering and waveform comparison",
+      "controls": [
+        {
+          "name": "cutoff",
+          "label": "Butterworth cutoff",
+          "min": 200,
+          "max": 1000,
+          "step": 100,
+          "default": 500,
+          "unit": "Hz"
+        }
+      ],
+      "visualBrief": {
+        "kind": "graph",
+        "description": "Lowpass magnitude response with 100 Hz message inside passband, 500 Hz cutoff, unwanted 3900/4100 Hz products attenuated; show shifted recovered waveform.",
+        "alt": "Lowpass filtering and waveform comparison; Retain message frequencies; suppress the doubled-carrier image; expect finite attenuation and phase lag.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "lowpass filter",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components."
+        },
+        {
+          "target": "500 Hz cutoff",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Enter the lowpass coefficients, run the model, and compare steady-state recovered amplitude and frequency."
+        },
+        {
+          "target": "phase lag",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Retain message frequencies; suppress the doubled-carrier image; expect finite attenuation and phase lag."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "step_through",
+        "prompt": "Follow the explanation, then check the worked result.",
+        "steps": [
+          {
+            "label": "Define",
+            "detail": "A lowpass filter retains lower-frequency components and attenuates higher-frequency components."
+          },
+          {
+            "label": "Apply",
+            "detail": "100 Hz lies below the cutoff and is largely retained."
+          },
+          {
+            "label": "Check",
+            "detail": "Unwanted receiver components near 3900 and 4100 Hz lie far above it and are attenuated."
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "a0eb51b21e4d19fc09898b87a9f956864b4312ef69df4525e63b4e540443afba",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-07#explanation.modalities.interactive",
+        "sha256": "a134fcf3dc3cc447cd79d33a0673e6715e2cb97aa740e70c69715e74f8b9170f"
+      },
+      {
+        "path": "sourceConcepts/C-AM-07#explanation.modalities.textImage.visual",
+        "sha256": "08adb574ec18c15ee0b4475199f52594fca981e3ec1856608037f76915514e0e"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-07/cam-cb5122737d1bc11d5e7658e5/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-07/cam-cb5122737d1bc11d5e7658e5/scene.json",
+        "sha256": "a0eb51b21e4d19fc09898b87a9f956864b4312ef69df4525e63b4e540443afba"
+      }
+    ]
+  },
+  "C-AM-06": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-06",
+      "kind": "receiver",
+      "title": "Coherent demodulation and recovery gain",
+      "controls": [
+        {
+          "name": "stage",
+          "label": "0 input · 1 multiply · 2 ideal lowpass · 3 gain",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ],
+      "visualBrief": {
+        "kind": "block",
+        "description": "Received DSB-SC plus local carrier feed Product, then lowpass filter and Gain 2; label desired m(t)/2 before gain and image near 2fc.",
+        "alt": "Coherent demodulation and recovery gain; Match frequency and phase; multiply; lowpass-filter; account for the half-amplitude factor.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "coherent receiver",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes."
+        },
+        {
+          "target": "local oscillator",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Add a separate Local carrier and receiver Product block; follow it with the filter and recovery Gain."
+        },
+        {
+          "target": "recovery gain",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Match frequency and phase; multiply; lowpass-filter; account for the half-amplitude factor."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "step_through",
+        "prompt": "Follow the explanation, then check the worked result.",
+        "steps": [
+          {
+            "label": "Define",
+            "detail": "Multiply DSB-SC by a matched local carrier, lowpass-filter it, and use gain 2 to undo the product factor for unit carrier amplitudes."
+          },
+          {
+            "label": "Apply",
+            "detail": "Product detection leaves m(t)/2 in the message band."
+          },
+          {
+            "label": "Check",
+            "detail": "Use gain 2: 2*m(t)/2=m(t)."
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "79a4f894ea170feb3656fde1b0782e35f85376336b5bf50c1af609fc6eb93e80",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-06#explanation.modalities.interactive",
+        "sha256": "231b51a9dcbf9af921b58c77c24c9a05e3638f0b0a0b07a619e33753e960910b"
+      },
+      {
+        "path": "sourceConcepts/C-AM-06#explanation.modalities.textImage.visual",
+        "sha256": "20b77d202a9a84f03759916543d9faca58e26ee1af0a93da90e28d35f57523cc"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-06/cam-107583dd20a8dac5be0287b0/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-06/cam-107583dd20a8dac5be0287b0/scene.json",
+        "sha256": "79a4f894ea170feb3656fde1b0782e35f85376336b5bf50c1af609fc6eb93e80"
+      }
+    ]
+  },
+  "C-AM-10": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-10",
+      "kind": "pm",
+      "title": "Phase modulation and FM–PM distinction",
+      "controls": [
+        {
+          "name": "sensitivity",
+          "label": "Normalized sensitivity",
+          "min": 0,
+          "max": 2,
+          "step": 0.25,
+          "default": 1,
+          "unit": ""
+        },
+        {
+          "name": "constant",
+          "label": "0 sinusoidal message · 1 constant message",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ],
+      "visualBrief": {
+        "kind": "table",
+        "description": "Two-column FM versus PM comparison: directly varied property, mathematical dependence, constant-message result, and ideal constant amplitude.",
+        "alt": "Phase modulation and FM–PM distinction; PM phase follows the message; FM frequency follows the message; frequency is phase’s rate of change.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "Phase modulation",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t))."
+        },
+        {
+          "target": "phase sensitivity",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Use an FM/PM comparison card; retain the DSB-SC lab route without adding angle-modulation tasks."
+        },
+        {
+          "target": "derivative",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "PM phase follows the message; FM frequency follows the message; frequency is phase’s rate of change."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "step_through",
+        "prompt": "Follow the explanation, then check the worked result.",
+        "steps": [
+          {
+            "label": "Define",
+            "detail": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t))."
+          },
+          {
+            "label": "Apply",
+            "detail": "The carrier has a fixed phase offset proportional to that message."
+          },
+          {
+            "label": "Check",
+            "detail": "Its steady instantaneous frequency returns to fc because the constant phase offset has zero derivative."
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "4a470ffd93b271b4fb7d4bee73154af90ac51daf2319e7c135a9934a1541ca6c",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-10#explanation.modalities.interactive",
+        "sha256": "aeac45804b36984177c74808e812463f124cbd45fc8400746c4f32fffb184e05"
+      },
+      {
+        "path": "sourceConcepts/C-AM-10#explanation.modalities.textImage.visual",
+        "sha256": "1195d783116afee6b1ad3247f2437472972cc775261fba21c03ff5139dada5c0"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-10/cam-d3074253f11cac828f9ddeec/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-10/cam-d3074253f11cac828f9ddeec/scene.json",
+        "sha256": "4a470ffd93b271b4fb7d4bee73154af90ac51daf2319e7c135a9934a1541ca6c"
+      }
+    ]
+  },
+  "C-AM-05": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-05",
+      "kind": "spectrum",
+      "title": "SSB and VSB compared with DSB-SC",
+      "controls": [
+        {
+          "name": "family",
+          "label": "0 DSB-SC · 1 SSB · 2 VSB",
+          "min": 0,
+          "max": 2,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ],
+      "visualBrief": {
+        "kind": "graph",
+        "description": "Three aligned spectra: DSB-SC with both sidebands, SSB with only upper sideband, VSB with upper sideband and labelled lower-sideband vestige.",
+        "alt": "SSB and VSB compared with DSB-SC; For message bandwidth B: DSB-SC uses 2B; ideal SSB uses B; VSB retains a vestige.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "DSB-SC",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other."
+        },
+        {
+          "target": "SSB",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Compare spectrum sketches rather than adding an SSB subsystem to the selected DSB-SC experiment."
+        },
+        {
+          "target": "VSB",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "For message bandwidth B: DSB-SC uses 2B; ideal SSB uses B; VSB retains a vestige."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "step_through",
+        "prompt": "Follow the explanation, then check the worked result.",
+        "steps": [
+          {
+            "label": "Define",
+            "detail": "SSB sends one sideband; VSB sends one sideband plus a vestige of the other."
+          },
+          {
+            "label": "Apply",
+            "detail": "Ideal SSB bandwidth=4 kHz."
+          },
+          {
+            "label": "Check",
+            "detail": "DSB-SC bandwidth=2*4=8 kHz."
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "0d4ec70797af81510ac497543d130b5889a574cea8288d947fd70f534165618e",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-05#explanation.modalities.interactive",
+        "sha256": "8ded4e0550a20abc17120a480f5ab08686674f2a543ed579e167ccd87a4f3db0"
+      },
+      {
+        "path": "sourceConcepts/C-AM-05#explanation.modalities.textImage.visual",
+        "sha256": "78305bd1683ed508e1dcbb8c37d535d114f6c81fd47c78a76f671e958fa02938"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-05/cam-909a0af55872a19dbc939eeb/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-05/cam-909a0af55872a19dbc939eeb/scene.json",
+        "sha256": "0d4ec70797af81510ac497543d130b5889a574cea8288d947fd70f534165618e"
+      }
+    ]
+  },
+  "C-AM-09": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-09",
+      "kind": "fm",
+      "title": "Frequency modulation and deviation",
+      "controls": [
+        {
+          "name": "df",
+          "label": "Frequency deviation",
+          "min": 1000,
+          "max": 10000,
+          "step": 500,
+          "default": 5000,
+          "unit": "Hz"
+        },
+        {
+          "name": "B",
+          "label": "Single-tone message frequency / B",
+          "min": 500,
+          "max": 3000,
+          "step": 100,
+          "default": 1000,
+          "unit": "Hz"
+        }
+      ],
+      "visualBrief": {
+        "kind": "waveform",
+        "description": "Constant-amplitude FM trace with dense and sparse cycles according to a low-frequency message; compare to amplitude modulation.",
+        "alt": "Frequency modulation and deviation; FM changes instantaneous frequency. beta=Delta f/fm. Carson bandwidth is an approximation.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "Frequency modulation",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "FM varies instantaneous carrier frequency with the message while ideal carrier amplitude remains constant."
+        },
+        {
+          "target": "Frequency deviation",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Compare FM cycle spacing against DSB-SC amplitude changes in a waveform placard."
+        },
+        {
+          "target": "Carson",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "FM changes instantaneous frequency. beta=Delta f/fm. Carson bandwidth is an approximation."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "parameter_sweep",
+        "prompt": "Estimate FM occupied bandwidth using Carson’s approximation.",
+        "inputs": [
+          {
+            "name": "df",
+            "label": "Frequency deviation",
+            "unit": "Hz",
+            "min": 1000,
+            "max": 10000,
+            "step": 500,
+            "default": 5000
+          },
+          {
+            "name": "B",
+            "label": "Highest message frequency",
+            "unit": "Hz",
+            "min": 500,
+            "max": 3000,
+            "step": 100,
+            "default": 1000
+          }
+        ],
+        "outputs": [
+          {
+            "name": "bw",
+            "label": "Approximate occupied bandwidth",
+            "unit": "Hz",
+            "formula": "2*(df+B)"
+          },
+          {
+            "name": "beta",
+            "label": "Single-tone modulation index",
+            "unit": "dimensionless",
+            "formula": "df/B"
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "f143d1680889da80177af62c103e61f4b8cc8e2f4fce2b365fe2698428104123",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-09#explanation.modalities.interactive",
+        "sha256": "a3b246b4e32ad004c246a78c60a9a4a389a8267090e343d05a7de39475f7532f"
+      },
+      {
+        "path": "sourceConcepts/C-AM-09#explanation.modalities.textImage.visual",
+        "sha256": "c4094e3003e1c9e1864c9313a2635b254864ec365c3ec150f92ae44d8aa847fe"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-09/cam-11cbf3df051551516d24206a/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-09/cam-11cbf3df051551516d24206a/scene.json",
+        "sha256": "f143d1680889da80177af62c103e61f4b8cc8e2f4fce2b365fe2698428104123"
+      }
+    ]
+  },
+  "C-AM-08": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-08",
+      "kind": "phase_recovery",
+      "title": "Carrier mismatch and debugging",
+      "controls": [
+        {
+          "name": "phase",
+          "label": "Relative phase error",
+          "min": 0,
+          "max": 180,
+          "step": 15,
+          "default": 60,
+          "unit": "degree"
+        }
+      ],
+      "visualBrief": {
+        "kind": "waveform",
+        "description": "Compare gain-corrected message-band outputs for relative phase errors 0, 60 and 90 degrees; label ideal predictions and finite-filter residual separately.",
+        "alt": "Carrier mismatch and debugging; Relative phase matters. Frequency mismatch can create beating. Diagnose one parameter at a time.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "Carrier mismatch",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "With frequency matched and unit carrier amplitudes, ideal gain-corrected recovery is m(t)*cos(phi), where phi is relative phase error."
+        },
+        {
+          "target": "relative phase error",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Change only the receiver phase by 90 degrees, inspect recovery, then restore the baseline and rerun."
+        },
+        {
+          "target": "frequency mismatch",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Relative phase matters. Frequency mismatch can create beating. Diagnose one parameter at a time."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "parameter_sweep",
+        "prompt": "Change relative phase error; this is an ideal message-band prediction, not a simulator result.",
+        "inputs": [
+          {
+            "name": "phi",
+            "label": "Relative phase error",
+            "unit": "degree",
+            "min": 0,
+            "max": 180,
+            "step": 15,
+            "default": 60
+          }
+        ],
+        "outputs": [
+          {
+            "name": "fraction",
+            "label": "Signed recovery fraction",
+            "unit": "dimensionless",
+            "formula": "cos(phi*pi/180)"
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "5fcbd136c066906a2b233933770453d1560a52298551c2ba36592157407d3276",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-08#explanation.modalities.interactive",
+        "sha256": "b64be7f1d5cab0db253bc8c5c365f8e9c6576b46189c2cbb5df5971c58a89f53"
+      },
+      {
+        "path": "sourceConcepts/C-AM-08#explanation.modalities.textImage.visual",
+        "sha256": "fdddb491c8eaf08d8f742af2c72a36f233c6ea89b738f74d1082d62ea8f200ce"
+      }
+    ],
+    "modelBindings": []
+  },
+  "C-AM-04": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-04",
+      "kind": "dsb",
+      "title": "DSB-SC generation and sidebands",
+      "controls": [
+        {
+          "name": "fm",
+          "label": "Message frequency",
+          "min": 10,
+          "max": 200,
+          "step": 10,
+          "default": 100,
+          "unit": "Hz"
+        }
+      ],
+      "visualBrief": {
+        "kind": "graph",
+        "description": "Plot a single-tone DSB-SC magnitude spectrum at 1900 and 2100 Hz, no separate 2000 Hz line under zero-mean ideal assumptions; accompany with signed time waveform.",
+        "alt": "DSB-SC generation and sidebands; Product modulation; two sidebands; no intentional carrier offset; simple envelope detection is insufficient.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "DSB-SC",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "DSB-SC is s(t)=Ac*m(t)*cos(2*pi*fc*t); a zero-mean single-tone message produces sidebands at fc-fm and fc+fm."
+        },
+        {
+          "target": "zero-mean message",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Connect Message and Carrier to a Product block; predict 1900 Hz and 2100 Hz sidebands for the chosen sources."
+        },
+        {
+          "target": "sidebands",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Product modulation; two sidebands; no intentional carrier offset; simple envelope detection is insufficient."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "parameter_sweep",
+        "prompt": "Predict the single-tone sidebands without changing the live simulator.",
+        "inputs": [
+          {
+            "name": "fm",
+            "label": "Message frequency",
+            "unit": "Hz",
+            "min": 10,
+            "max": 200,
+            "step": 10,
+            "default": 100
+          },
+          {
+            "name": "fc",
+            "label": "Carrier frequency",
+            "unit": "Hz",
+            "min": 1000,
+            "max": 10000,
+            "step": 100,
+            "default": 2000
+          }
+        ],
+        "outputs": [
+          {
+            "name": "lsb",
+            "label": "Lower sideband",
+            "unit": "Hz",
+            "formula": "fc-fm"
+          },
+          {
+            "name": "usb",
+            "label": "Upper sideband",
+            "unit": "Hz",
+            "formula": "fc+fm"
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "bc8818489d4559fa05d44f046f8d3b7734b6dd4382458bcd0095eec61bee25ca",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-04#explanation.modalities.interactive",
+        "sha256": "b67c8be4770467bbb68d611294f8710dc3c69924d0a66339f02e152ce458a86a"
+      },
+      {
+        "path": "sourceConcepts/C-AM-04#explanation.modalities.textImage.visual",
+        "sha256": "e5f800ac0d4f9f340795783a89d95fc50468661907888386342066558f561386"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-04/cam-e99f388714b78d1f655c7f8f/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-04/cam-e99f388714b78d1f655c7f8f/scene.json",
+        "sha256": "bc8818489d4559fa05d44f046f8d3b7734b6dd4382458bcd0095eec61bee25ca"
+      }
+    ]
+  },
+  "C-AM-03": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-03",
+      "kind": "am",
+      "title": "Conventional AM, envelope and modulation index",
+      "controls": [
+        {
+          "name": "mu",
+          "label": "Modulation index",
+          "min": 0,
+          "max": 1.5,
+          "step": 0.1,
+          "default": 0.5,
+          "unit": ""
+        }
+      ],
+      "visualBrief": {
+        "kind": "waveform",
+        "description": "Compare conventional AM envelopes for mu=0.5 and mu=1.5; show zero crossings and label envelope distortion rather than implying all demodulators fail.",
+        "alt": "Conventional AM, envelope and modulation index; Conventional AM includes carrier plus sidebands. For ordinary envelope recovery, keep mu at or below one.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "Conventional AM",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "For a single tone, conventional AM is s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t)."
+        },
+        {
+          "target": "modulation index",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Use an envelope comparison to distinguish conventional AM from our suppressed-carrier lab waveform."
+        },
+        {
+          "target": "overmodulation",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Conventional AM includes carrier plus sidebands. For ordinary envelope recovery, keep mu at or below one."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "step_through",
+        "prompt": "Follow the explanation, then check the worked result.",
+        "steps": [
+          {
+            "label": "Define",
+            "detail": "For a single tone, conventional AM is s(t)=Ac[1+mu*cos(2*pi*fm*t)]cos(2*pi*fc*t)."
+          },
+          {
+            "label": "Apply",
+            "detail": "mu=(6-2)/(6+2)=0.5."
+          },
+          {
+            "label": "Check",
+            "detail": "This is 50% modulation and is not overmodulated."
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "3c0d7bd80ddfe47a5de342617f093710c38d79cb1a2db862aa51d071fe2de2f8",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-03#explanation.modalities.interactive",
+        "sha256": "4ee13046eaa02c2fa265c59c92b1c344d4af6971808a64deee7e05c52936409c"
+      },
+      {
+        "path": "sourceConcepts/C-AM-03#explanation.modalities.textImage.visual",
+        "sha256": "f257345228d458a0bc19420545e0164d2d1b59452d6efa4e6a57cf941f0c7b15"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-03/cam-cb78ce1a7e2818afee4743fe/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-03/cam-cb78ce1a7e2818afee4743fe/scene.json",
+        "sha256": "3c0d7bd80ddfe47a5de342617f093710c38d79cb1a2db862aa51d071fe2de2f8"
+      }
+    ]
+  },
+  "C-AM-02": {
+    "scene": {
+      "schema": "cam-interactive-scene/v1",
+      "modelVersion": "cam-packets/3",
+      "conceptId": "C-AM-02",
+      "kind": "flow",
+      "title": "Message, carrier and the purpose of modulation",
+      "controls": [
+        {
+          "name": "stage",
+          "label": "Teaching stage",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "default": 0,
+          "unit": ""
+        }
+      ],
+      "visualBrief": {
+        "kind": "block",
+        "description": "Message source and carrier source enter a modulator; output goes to a receiver/demodulator and recovered message. Label which input contains information.",
+        "alt": "Message, carrier and the purpose of modulation; Message is information; carrier is a reference; modulation prepares transmission; demodulation recovers information.",
+        "from": {
+          "origin": "curated",
+          "label": "MathWorks: analog passband modulation; reference for the modulation families",
+          "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+        }
+      },
+      "walkthrough": [
+        {
+          "target": "message signal",
+          "mark": "sweep",
+          "dim": "words",
+          "say": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver."
+        },
+        {
+          "target": "carrier",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Label the two sources Message and Carrier before connecting them; identify which waveform carries information."
+        },
+        {
+          "target": "Modulation",
+          "mark": "marker",
+          "dim": "concept",
+          "say": "Message is information; carrier is a reference; modulation prepares transmission; demodulation recovers information."
+        }
+      ],
+      "sourceInteractive": {
+        "kind": "step_through",
+        "prompt": "Follow the explanation, then check the worked result.",
+        "steps": [
+          {
+            "label": "Define",
+            "detail": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver."
+          },
+          {
+            "label": "Apply",
+            "detail": "The 100 Hz waveform is the message."
+          },
+          {
+            "label": "Check",
+            "detail": "The 2000 Hz oscillator is the carrier; a modulator combines it with the message."
+          }
+        ]
+      },
+      "assumptions": [
+        "Authored draft; scientific review pending",
+        "Trusted analytic teaching model, not live Simulink evidence",
+        "Any normalized examples are illustrative; no new measured device values",
+        "Manual placard states; no sentence alignment"
+      ],
+      "review": {
+        "scientific": "pending",
+        "sourceGrounding": "authored_concept"
+      },
+      "image": {
+        "status": "not_requested",
+        "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim"
+      }
+    },
+    "sha256": "2d5f9c13f6fbb3dffc67316a6691667b0f9ef95c879f6194cc571b7c9d5711d4",
+    "bindings": [
+      {
+        "path": "sourceConcepts/C-AM-02#explanation.modalities.interactive",
+        "sha256": "f7da91eab4179342954dad4eab733e64558bba0292657600c70a3712a42151ae"
+      },
+      {
+        "path": "sourceConcepts/C-AM-02#explanation.modalities.textImage.visual",
+        "sha256": "20d0cb5c80433d55e81884edfd0428a9a0dca138dff3925ff42aebe923817f2e"
+      }
+    ],
+    "modelBindings": [
+      {
+        "path": "concept-library/C-AM-02/cam-2d391d1e9531ee0ec6f1531f/models.js",
+        "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+      },
+      {
+        "path": "concept-library/C-AM-02/cam-2d391d1e9531ee0ec6f1531f/scene.json",
+        "sha256": "2d5f9c13f6fbb3dffc67316a6691667b0f9ef95c879f6194cc571b7c9d5711d4"
+      }
+    ]
+  }
+}

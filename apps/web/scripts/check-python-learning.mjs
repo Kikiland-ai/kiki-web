@@ -38,4 +38,13 @@ try {
   const inputReceipt = JSON.parse(await readFile(new URL('../../api/test-artifacts/lab-input-requirements.json', import.meta.url), 'utf8'));
   execution.ExecutionRequirementsSchema.parse(inputReceipt);
   console.log('Python → React lab input requirements: passed');
+  for (let n = 1; n <= 10; n++) {
+    const id = `C-AM-${String(n).padStart(2, '0')}`;
+    const receipt = JSON.parse(await readFile(new URL(`../../api/test-artifacts/all-cam-${id}.json`, import.meta.url), 'utf8'));
+    const lesson = learning.LessonSchema.parse(receipt.lesson);
+    const manifest = media.MediaManifestSchema.parse(receipt.manifest);
+    media.checkManifestForLesson(manifest, lesson);
+    if (manifest.unsupportedArtifacts.length || manifest.artifacts.length !== 1) throw new Error(`${id}: unsupported artifact`);
+    console.log(`Python → React ${id} scene/scope/metadata-only lesson: passed`);
+  }
 } finally { await server.close(); }

@@ -1,0 +1,337 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-04",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-d64abd1d5bc83b2c8e039a56",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "lang": "or",
+        "assetId": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+        "mimeType": "audio/wav",
+        "bytes": 3986274,
+        "durationSeconds": 82.92,
+        "sourceTextSha256": "c7976238ee8c5a1b68a53fccbd771e5bd3f436125db6aeab97f32c251b14a476",
+        "speechScriptSha256": "b67e9ec55e7449c27d2fc291b3548810c28ef4cb6452934d813646a2d342b006",
+        "audioSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        },
+        "scope": "concept",
+        "conceptId": "C-AM-04",
+        "renditionId": "C-AM-04.concept.or",
+        "placardIds": [
+          "CARD-AM-04-definition",
+          "CARD-AM-04-concept",
+          "CARD-AM-04-application",
+          "CARD-AM-04-recap"
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-04-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-04-concept",
+          "CARD-AM-04-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-04",
+          "kind": "dsb",
+          "title": "DSB-SC generation and sidebands",
+          "controls": [
+            {
+              "name": "fm",
+              "label": "Message frequency",
+              "min": 10.0,
+              "max": 200.0,
+              "step": 10.0,
+              "default": 100.0,
+              "unit": "Hz"
+            }
+          ],
+          "visualBrief": {
+            "kind": "graph",
+            "description": "Plot a single-tone DSB-SC magnitude spectrum at 1900 and 2100 Hz, no separate 2000 Hz line under zero-mean ideal assumptions; accompany with signed time waveform.",
+            "alt": "DSB-SC generation and sidebands; Product modulation; two sidebands; no intentional carrier offset; simple envelope detection is insufficient.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "DSB-SC is s(t)=Ac*m(t)*cos(2*pi*fc*t); a zero-mean single-tone message produces sidebands at fc-fm and fc+fm.",
+              "target": "DSB-SC"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Connect Message and Carrier to a Product block; predict 1900 Hz and 2100 Hz sidebands for the chosen sources.",
+              "target": "zero-mean message"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Product modulation; two sidebands; no intentional carrier offset; simple envelope detection is insufficient.",
+              "target": "sidebands"
+            }
+          ],
+          "sourceInteractive": {
+            "inputs": [
+              {
+                "default": 100,
+                "label": "Message frequency",
+                "max": 200,
+                "min": 10,
+                "name": "fm",
+                "step": 10,
+                "unit": "Hz"
+              },
+              {
+                "default": 2000,
+                "label": "Carrier frequency",
+                "max": 10000,
+                "min": 1000,
+                "name": "fc",
+                "step": 100,
+                "unit": "Hz"
+              }
+            ],
+            "kind": "parameter_sweep",
+            "outputs": [
+              {
+                "formula": "fc-fm",
+                "label": "Lower sideband",
+                "name": "lsb",
+                "unit": "Hz"
+              },
+              {
+                "formula": "fc+fm",
+                "label": "Upper sideband",
+                "name": "usb",
+                "unit": "Hz"
+              }
+            ],
+            "prompt": "Predict the single-tone sidebands without changing the live simulator."
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-04#explanation.modalities.interactive",
+            "sha256": "b67c8be4770467bbb68d611294f8710dc3c69924d0a66339f02e152ce458a86a"
+          },
+          {
+            "path": "sourceConcepts/C-AM-04#explanation.modalities.textImage.visual",
+            "sha256": "e5f800ac0d4f9f340795783a89d95fc50468661907888386342066558f561386"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-04/cam-e99f388714b78d1f655c7f8f/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-04/cam-e99f388714b78d1f655c7f8f/scene.json",
+            "sha256": "bc8818489d4559fa05d44f046f8d3b7734b6dd4382458bcd0095eec61bee25ca"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "fm": 100.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Lower sideband",
+                "1900 Hz"
+              ],
+              [
+                "Upper sideband",
+                "2100 Hz"
+              ],
+              [
+                "Separate carrier line",
+                "Absent for this ideal zero-mean message"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              },
+              {
+                "label": "DSB-SC product",
+                "values": [
+                  0.0,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  3.6739403974420594e-16,
+                  -4.898587196589413e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": true
+          },
+          {
+            "inputs": {
+              "fm": 10.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Lower sideband",
+                "1990 Hz"
+              ],
+              [
+                "Upper sideband",
+                "2010 Hz"
+              ],
+              [
+                "Separate carrier line",
+                "Absent for this ideal zero-mean message"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  0.15643446504023087,
+                  0.3090169943749474,
+                  0.5877852522924731,
+                  0.8090169943749475,
+                  0.9510565162951535
+                ]
+              },
+              {
+                "label": "DSB-SC product",
+                "values": [
+                  0.0,
+                  0.15643446504023087,
+                  0.3090169943749474,
+                  0.5877852522924731,
+                  0.8090169943749475,
+                  0.9510565162951535
+                ]
+              }
+            ],
+            "hasExtraSvg": true
+          },
+          {
+            "inputs": {
+              "fm": 200.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Lower sideband",
+                "1800 Hz"
+              ],
+              [
+                "Upper sideband",
+                "2200 Hz"
+              ],
+              [
+                "Separate carrier line",
+                "Absent for this ideal zero-mean message"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  -4.898587196589413e-16,
+                  -7.347880794884119e-16,
+                  -9.797174393178826e-16
+                ]
+              },
+              {
+                "label": "DSB-SC product",
+                "values": [
+                  0.0,
+                  1.2246467991473532e-16,
+                  -2.4492935982947064e-16,
+                  -4.898587196589413e-16,
+                  -7.347880794884119e-16,
+                  -9.797174393178826e-16
+                ]
+              }
+            ],
+            "hasExtraSvg": true
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+      "mimeType": "audio/wav",
+      "bytes": 3986274
+    }
+  }
+}

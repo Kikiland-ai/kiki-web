@@ -1,0 +1,328 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-02",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-4cbb178d9e769c8be4aa8fc1",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "renditionId": "CARD-AM-02-definition.or",
+        "placardId": "CARD-AM-02-definition",
+        "lang": "or",
+        "assetId": "eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0",
+        "mimeType": "audio/wav",
+        "bytes": 559074,
+        "durationSeconds": 11.52,
+        "sourceTextSha256": "f967236e262a325c6abcc36b90f2b3b7bf3c712c95251a7751e40f34dc22b8cb",
+        "speechScriptSha256": "f967236e262a325c6abcc36b90f2b3b7bf3c712c95251a7751e40f34dc22b8cb",
+        "audioSha256": "eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-02-concept.or",
+        "placardId": "CARD-AM-02-concept",
+        "lang": "or",
+        "assetId": "f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1",
+        "mimeType": "audio/wav",
+        "bytes": 1760994,
+        "durationSeconds": 36.56,
+        "sourceTextSha256": "eae28de0f0d3a1088934c6dbcbdc2837c327f1fdc3481c869094036619da5b12",
+        "speechScriptSha256": "c9f5748f81c0466888ff660b88cf4cc6ab36a4c4ea370ece7379ae8395ca6786",
+        "audioSha256": "f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-02-application.or",
+        "placardId": "CARD-AM-02-application",
+        "lang": "or",
+        "assetId": "67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b",
+        "mimeType": "audio/wav",
+        "bytes": 443874,
+        "durationSeconds": 9.12,
+        "sourceTextSha256": "64c78f2da20e5ab6d43dbf57cc264b877a2690fc17d022507925de1289a3d00c",
+        "speechScriptSha256": "64c78f2da20e5ab6d43dbf57cc264b877a2690fc17d022507925de1289a3d00c",
+        "audioSha256": "67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      },
+      {
+        "renditionId": "CARD-AM-02-recap.or",
+        "placardId": "CARD-AM-02-recap",
+        "lang": "or",
+        "assetId": "b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431",
+        "mimeType": "audio/wav",
+        "bytes": 595554,
+        "durationSeconds": 12.28,
+        "sourceTextSha256": "f75a3d4e8a00d7caa6db44c08a92e8f629e7ad743ddd17e17ab50e2b2a655851",
+        "speechScriptSha256": "f75a3d4e8a00d7caa6db44c08a92e8f629e7ad743ddd17e17ab50e2b2a655851",
+        "audioSha256": "b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-lite-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        }
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-02-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-02-concept",
+          "CARD-AM-02-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-02",
+          "kind": "flow",
+          "title": "Message, carrier and the purpose of modulation",
+          "controls": [
+            {
+              "name": "stage",
+              "label": "Teaching stage",
+              "min": 0.0,
+              "max": 3.0,
+              "step": 1.0,
+              "default": 0.0,
+              "unit": ""
+            }
+          ],
+          "visualBrief": {
+            "kind": "block",
+            "description": "Message source and carrier source enter a modulator; output goes to a receiver/demodulator and recovered message. Label which input contains information.",
+            "alt": "Message, carrier and the purpose of modulation; Message is information; carrier is a reference; modulation prepares transmission; demodulation recovers information.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver.",
+              "target": "message signal"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Label the two sources Message and Carrier before connecting them; identify which waveform carries information.",
+              "target": "carrier"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Message is information; carrier is a reference; modulation prepares transmission; demodulation recovers information.",
+              "target": "Modulation"
+            }
+          ],
+          "sourceInteractive": {
+            "kind": "step_through",
+            "prompt": "Follow the explanation, then check the worked result.",
+            "steps": [
+              {
+                "detail": "Modulation changes a carrier property according to a message; demodulation recovers the message at the receiver.",
+                "label": "Define"
+              },
+              {
+                "detail": "The 100 Hz waveform is the message.",
+                "label": "Apply"
+              },
+              {
+                "detail": "The 2000 Hz oscillator is the carrier; a modulator combines it with the message.",
+                "label": "Check"
+              }
+            ]
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-02#explanation.modalities.interactive",
+            "sha256": "f7da91eab4179342954dad4eab733e64558bba0292657600c70a3712a42151ae"
+          },
+          {
+            "path": "sourceConcepts/C-AM-02#explanation.modalities.textImage.visual",
+            "sha256": "20d0cb5c80433d55e81884edfd0428a9a0dca138dff3925ff42aebe923817f2e"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-02/cam-2d391d1e9531ee0ec6f1531f/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-02/cam-2d391d1e9531ee0ec6f1531f/scene.json",
+            "sha256": "2d5f9c13f6fbb3dffc67316a6691667b0f9ef95c879f6194cc571b7c9d5711d4"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "stage": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Selected stage",
+                "Message: information"
+              ]
+            ],
+            "samples": [],
+            "hasExtraSvg": true
+          },
+          {
+            "inputs": {
+              "stage": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Selected stage",
+                "Message: information"
+              ]
+            ],
+            "samples": [],
+            "hasExtraSvg": true
+          },
+          {
+            "inputs": {
+              "stage": 3.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Selected stage",
+                "Receiver / recovery"
+              ]
+            ],
+            "samples": [],
+            "hasExtraSvg": true
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0",
+      "mimeType": "audio/wav",
+      "bytes": 559074
+    },
+    "f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1",
+      "mimeType": "audio/wav",
+      "bytes": 1760994
+    },
+    "67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b",
+      "mimeType": "audio/wav",
+      "bytes": 443874
+    },
+    "b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431",
+      "mimeType": "audio/wav",
+      "bytes": 595554
+    }
+  }
+}

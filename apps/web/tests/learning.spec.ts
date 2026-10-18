@@ -259,9 +259,11 @@ test('tapping a term pauses the narration and opens its details',async({page})=>
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect.poll(async()=>(await audio(page))!.paused).toBe(true);
 });
-test('lessons without audio show no Listen button',async({page})=>{
+test('an unavailable narration language shows no Listen button',async({page})=>{
   await setup(page); await openFirst(page);
+  await page.getByRole('slider',{name:'Language mix',exact:true}).press('End');
   await expect(page.getByRole('button',{name:'Listen',exact:true})).toHaveCount(0);
+  await expect(page.getByText('No English narration is available for this step. The text is complete.',{exact:true})).toBeVisible();
 });
 for(const width of [320,390,768,1280]) {
   test(`open player fits and keeps 48px controls at ${width}px`,async({page})=>{

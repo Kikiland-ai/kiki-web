@@ -30,7 +30,8 @@ export const LessonSchema = z.object({
 }).superRefine((lesson, ctx) => {
   if (!ASSESSMENT_CONCEPTS.some(c => c.id === lesson.conceptId && c.assessmentId === lesson.assessmentId) || new Set(lesson.placards.map(p => p.id)).size !== 4 || lesson.placards.some((p, i) => p.kind !== ['definition','concept','application','recap'][i] || p.termIds.some(id => !lesson.terms.some(t => t.id === id)))) ctx.addIssue({ code:'custom', message:'Lesson IDs, placards or terms do not match.' });
   const cards = new Set(lesson.placards.map(p => p.id));
-  if (lesson.mediaExperience && [...lesson.mediaExperience.narration.map(n => n.placardId), ...lesson.mediaExperience.artifacts.flatMap(a => a.placardIds)].some(id => !cards.has(id))) ctx.addIssue({ code:'custom', message:'Lesson media refers to placards outside this lesson.' });
+  if (lesson.mediaExperience?.narration.some(n => 'scope' in n && (n.conceptId !== lesson.conceptId || JSON.stringify(n.placardIds) !== JSON.stringify([...cards])))) ctx.addIssue({code:'custom',message:'Concept audio coverage differs from this lesson.'});
+  if (lesson.mediaExperience && [...lesson.mediaExperience.narration.flatMap(n => 'scope' in n ? n.placardIds : [n.placardId]), ...lesson.mediaExperience.artifacts.flatMap(a => a.placardIds)].some(id => !cards.has(id))) ctx.addIssue({ code:'custom', message:'Lesson media refers to placards outside this lesson.' });
   if (lesson.visual && (lesson.conceptId !== 'C-AM-04' || [lesson.visual.sidebandTermId,lesson.visual.carrierTermId,lesson.visual.signalTermId].some(id=>!lesson.terms.some(t=>t.id===id)))) ctx.addIssue({code:'custom',message:'Visual and glossary do not match this concept.'});
 }) satisfies z.ZodType<ConceptLesson>;
 const Coverage = z.object({ done: z.number().nonnegative(), total: z.number().positive() }).refine(c => c.done <= c.total).nullable();

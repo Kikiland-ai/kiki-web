@@ -1,0 +1,21 @@
+.canvas { min-width:0; margin-block:24px; padding:20px; border:1px solid var(--rule); border-radius:8px; background:var(--surface); color:var(--ink); }
+.canvas h2 { font-size:22px; line-height:1.4; }
+.canvas p,.canvas li,.canvas summary { font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
+.canvas figure { margin:20px 0; padding:12px; background:var(--paper); border:1px solid var(--rule); }
+.canvas figcaption { font-size:14px; line-height:1.7; font-weight:600; }
+.canvas svg { display:block; width:100%; height:auto; }
+.canvas svg text { font-size:19px; fill:currentColor; }
+.axes { stroke:var(--muted); fill:none; stroke-width:1; }
+.trace { stroke:var(--lab); fill:none; stroke-width:2; }
+.band { fill:var(--lab-tint); stroke:var(--lab); }
+.readouts { display:grid; gap:8px; margin-block:20px; }
+.readouts div { display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+.readouts dt,.readouts dd { font-size:14px; line-height:1.6; margin:0; overflow-wrap:anywhere; }
+.readouts dd { font-weight:600; }
+.canvas fieldset { min-width:0; border:1px solid var(--rule); padding:16px; }
+.canvas label { display:block; margin-block:16px; font-size:14px; line-height:1.6; }
+.canvas input { display:block; width:100%; min-height:44px; }
+.flow { display:grid; gap:8px; padding-left:24px; }
+.flow li { padding:12px; border:1px solid var(--rule); }
+.flow li[aria-current] { background:var(--lab-tint); border-color:var(--lab); }
+@media(max-width:599px) { .canvas { padding:12px; } .canvas h2 { font-size:20px; } }

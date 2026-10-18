@@ -1,0 +1,461 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-09",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-f7305fdd8e01eb36e2fe3fa3",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "lang": "or",
+        "assetId": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+        "mimeType": "audio/wav",
+        "bytes": 3389154,
+        "durationSeconds": 70.48,
+        "sourceTextSha256": "9e4a9a837d8eda9bb62f2de0b514ea5c5682558c91968c543847ab6edeb4dc1e",
+        "speechScriptSha256": "c14722a7ae00884773c44375b1ff3a7362cef84ce5a4520006ff01dfdb7e7303",
+        "audioSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        },
+        "scope": "concept",
+        "conceptId": "C-AM-09",
+        "renditionId": "C-AM-09.concept.or",
+        "placardIds": [
+          "CARD-AM-09-definition",
+          "CARD-AM-09-concept",
+          "CARD-AM-09-application",
+          "CARD-AM-09-recap"
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-09-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-09-concept",
+          "CARD-AM-09-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-09",
+          "kind": "fm",
+          "title": "Frequency modulation and deviation",
+          "controls": [
+            {
+              "name": "df",
+              "label": "Frequency deviation",
+              "min": 1000.0,
+              "max": 10000.0,
+              "step": 500.0,
+              "default": 5000.0,
+              "unit": "Hz"
+            },
+            {
+              "name": "B",
+              "label": "Single-tone message frequency / B",
+              "min": 500.0,
+              "max": 3000.0,
+              "step": 100.0,
+              "default": 1000.0,
+              "unit": "Hz"
+            }
+          ],
+          "visualBrief": {
+            "kind": "waveform",
+            "description": "Constant-amplitude FM trace with dense and sparse cycles according to a low-frequency message; compare to amplitude modulation.",
+            "alt": "Frequency modulation and deviation; FM changes instantaneous frequency. beta=Delta f/fm. Carson bandwidth is an approximation.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "FM varies instantaneous carrier frequency with the message while ideal carrier amplitude remains constant.",
+              "target": "Frequency modulation"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Compare FM cycle spacing against DSB-SC amplitude changes in a waveform placard.",
+              "target": "Frequency deviation"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "FM changes instantaneous frequency. beta=Delta f/fm. Carson bandwidth is an approximation.",
+              "target": "Carson"
+            }
+          ],
+          "sourceInteractive": {
+            "inputs": [
+              {
+                "default": 5000,
+                "label": "Frequency deviation",
+                "max": 10000,
+                "min": 1000,
+                "name": "df",
+                "step": 500,
+                "unit": "Hz"
+              },
+              {
+                "default": 1000,
+                "label": "Highest message frequency",
+                "max": 3000,
+                "min": 500,
+                "name": "B",
+                "step": 100,
+                "unit": "Hz"
+              }
+            ],
+            "kind": "parameter_sweep",
+            "outputs": [
+              {
+                "formula": "2*(df+B)",
+                "label": "Approximate occupied bandwidth",
+                "name": "bw",
+                "unit": "Hz"
+              },
+              {
+                "formula": "df/B",
+                "label": "Single-tone modulation index",
+                "name": "beta",
+                "unit": "dimensionless"
+              }
+            ],
+            "prompt": "Estimate FM occupied bandwidth using Carson’s approximation."
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-09#explanation.modalities.interactive",
+            "sha256": "a3b246b4e32ad004c246a78c60a9a4a389a8267090e343d05a7de39475f7532f"
+          },
+          {
+            "path": "sourceConcepts/C-AM-09#explanation.modalities.textImage.visual",
+            "sha256": "c4094e3003e1c9e1864c9313a2635b254864ec365c3ec150f92ae44d8aa847fe"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-09/cam-11cbf3df051551516d24206a/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-09/cam-11cbf3df051551516d24206a/scene.json",
+            "sha256": "f143d1680889da80177af62c103e61f4b8cc8e2f4fce2b365fe2698428104123"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "df": 5000.0,
+              "B": 1000.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Single-tone index β",
+                "5.000"
+              ],
+              [
+                "Carson bandwidth estimate",
+                "12000 Hz"
+              ],
+              [
+                "Output amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "Instantaneous frequency (normalized)",
+                "30.000 cycles/window"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Single-tone message (normalized time)",
+                "values": [
+                  1.0,
+                  0.7071067811865476,
+                  6.123233995736766e-17,
+                  -1.0,
+                  -1.8369701987210297e-16,
+                  1.0
+                ]
+              },
+              {
+                "label": "FM: constant amplitude, changing cycle spacing",
+                "values": [
+                  0.0,
+                  0.9234034617404372,
+                  0.95892427466314,
+                  -1.0779367755043061e-14,
+                  -0.9589242746631299,
+                  -2.1558735510086122e-14
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "df": 1000.0,
+              "B": 1000.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Single-tone index β",
+                "1.000"
+              ],
+              [
+                "Carson bandwidth estimate",
+                "4000 Hz"
+              ],
+              [
+                "Output amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "Instantaneous frequency (normalized)",
+                "30.000 cycles/window"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Single-tone message (normalized time)",
+                "values": [
+                  1.0,
+                  0.7071067811865476,
+                  6.123233995736766e-17,
+                  -1.0,
+                  -1.8369701987210297e-16,
+                  1.0
+                ]
+              },
+              {
+                "label": "FM: constant amplitude, changing cycle spacing",
+                "values": [
+                  0.0,
+                  -0.7602445970756329,
+                  -0.8414709848078936,
+                  -1.0779367755043061e-14,
+                  0.8414709848079129,
+                  -2.1558735510086122e-14
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "df": 10000.0,
+              "B": 1000.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Single-tone index β",
+                "10.000"
+              ],
+              [
+                "Carson bandwidth estimate",
+                "22000 Hz"
+              ],
+              [
+                "Output amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "Instantaneous frequency (normalized)",
+                "30.000 cycles/window"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Single-tone message (normalized time)",
+                "values": [
+                  1.0,
+                  0.7071067811865476,
+                  6.123233995736766e-17,
+                  -1.0,
+                  -1.8369701987210297e-16,
+                  1.0
+                ]
+              },
+              {
+                "label": "FM: constant amplitude, changing cycle spacing",
+                "values": [
+                  0.0,
+                  -0.705347906308444,
+                  0.5440211108893653,
+                  -1.0779367755043061e-14,
+                  -0.5440211108893953,
+                  -2.1558735510086122e-14
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "df": 5000.0,
+              "B": 500.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Single-tone index β",
+                "10.000"
+              ],
+              [
+                "Carson bandwidth estimate",
+                "11000 Hz"
+              ],
+              [
+                "Output amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "Instantaneous frequency (normalized)",
+                "30.000 cycles/window"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Single-tone message (normalized time)",
+                "values": [
+                  1.0,
+                  0.7071067811865476,
+                  6.123233995736766e-17,
+                  -1.0,
+                  -1.8369701987210297e-16,
+                  1.0
+                ]
+              },
+              {
+                "label": "FM: constant amplitude, changing cycle spacing",
+                "values": [
+                  0.0,
+                  -0.705347906308444,
+                  0.5440211108893653,
+                  -1.0779367755043061e-14,
+                  -0.5440211108893953,
+                  -2.1558735510086122e-14
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "df": 5000.0,
+              "B": 3000.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Single-tone index β",
+                "1.667"
+              ],
+              [
+                "Carson bandwidth estimate",
+                "16000 Hz"
+              ],
+              [
+                "Output amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "Instantaneous frequency (normalized)",
+                "30.000 cycles/window"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Single-tone message (normalized time)",
+                "values": [
+                  1.0,
+                  0.7071067811865476,
+                  6.123233995736766e-17,
+                  -1.0,
+                  -1.8369701987210297e-16,
+                  1.0
+                ]
+              },
+              {
+                "label": "FM: constant amplitude, changing cycle spacing",
+                "values": [
+                  0.0,
+                  -0.38230086089377896,
+                  -0.9954079577517657,
+                  -1.0779367755043061e-14,
+                  0.9954079577517629,
+                  -2.1558735510086122e-14
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+      "mimeType": "audio/wav",
+      "bytes": 3389154
+    }
+  }
+}

@@ -1,0 +1,516 @@
+{
+  "schema": "concept-media-revision/v1",
+  "manifest": {
+    "schema": "concept-media-manifest/v1",
+    "planId": "LP-ANALOG-MODULATION",
+    "conceptId": "C-AM-10",
+    "catalogVersion": "am-51187527300cba2fa3cca868",
+    "mediaRevision": "cm-d0206eaf5b6f064770261fbe",
+    "release": "sample_unreviewed",
+    "narration": [
+      {
+        "lang": "or",
+        "assetId": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+        "mimeType": "audio/wav",
+        "bytes": 3974754,
+        "durationSeconds": 82.68,
+        "sourceTextSha256": "2a8381638e2217dd1611fb6df66c851bca3b55d3d3e003b9a502ecc699a37206",
+        "speechScriptSha256": "c94be9675e5895269b6805efd7791684e2f71341ed5058611f369956f3292292",
+        "audioSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+        "narrationKind": "generated",
+        "speech": {
+          "provider": "Gemini Developer API",
+          "model": "gemini-3.8-flash-tts",
+          "voice": "Kore",
+          "style": "clear, patient Odia-English teaching narration",
+          "generator": "kiki-backend prototypes/mixed_script/speech.py; recovered packet import",
+          "generatedAt": "not_recorded_in_recovered_packet"
+        },
+        "timing": {
+          "kind": "clip_duration_only",
+          "alignment": "not_performed"
+        },
+        "review": {
+          "status": "unreviewed",
+          "pronunciation": "pending",
+          "nativeOdia": "pending",
+          "spokenFidelity": "pending",
+          "audioQuality": "pending"
+        },
+        "scope": "concept",
+        "conceptId": "C-AM-10",
+        "renditionId": "C-AM-10.concept.or",
+        "placardIds": [
+          "CARD-AM-10-definition",
+          "CARD-AM-10-concept",
+          "CARD-AM-10-application",
+          "CARD-AM-10-recap"
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "SCENE-AM-10-canvas",
+        "renderer": "cam-concept-canvas/v1",
+        "placardIds": [
+          "CARD-AM-10-concept",
+          "CARD-AM-10-application"
+        ],
+        "scene": {
+          "schema": "cam-interactive-scene/v1",
+          "modelVersion": "cam-packets/3",
+          "conceptId": "C-AM-10",
+          "kind": "pm",
+          "title": "Phase modulation and FM–PM distinction",
+          "controls": [
+            {
+              "name": "sensitivity",
+              "label": "Normalized sensitivity",
+              "min": 0.0,
+              "max": 2.0,
+              "step": 0.25,
+              "default": 1.0,
+              "unit": ""
+            },
+            {
+              "name": "constant",
+              "label": "0 sinusoidal message · 1 constant message",
+              "min": 0.0,
+              "max": 1.0,
+              "step": 1.0,
+              "default": 0.0,
+              "unit": ""
+            }
+          ],
+          "visualBrief": {
+            "kind": "table",
+            "description": "Two-column FM versus PM comparison: directly varied property, mathematical dependence, constant-message result, and ideal constant amplitude.",
+            "alt": "Phase modulation and FM–PM distinction; PM phase follows the message; FM frequency follows the message; frequency is phase’s rate of change.",
+            "from": {
+              "origin": "curated",
+              "label": "MathWorks: analog passband modulation; reference for the modulation families",
+              "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+            }
+          },
+          "walkthrough": [
+            {
+              "dim": "words",
+              "mark": "sweep",
+              "say": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t)).",
+              "target": "Phase modulation"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "Use an FM/PM comparison card; retain the DSB-SC lab route without adding angle-modulation tasks.",
+              "target": "phase sensitivity"
+            },
+            {
+              "dim": "concept",
+              "mark": "marker",
+              "say": "PM phase follows the message; FM frequency follows the message; frequency is phase’s rate of change.",
+              "target": "derivative"
+            }
+          ],
+          "sourceInteractive": {
+            "kind": "step_through",
+            "prompt": "Follow the explanation, then check the worked result.",
+            "steps": [
+              {
+                "detail": "PM varies carrier phase directly with the message: s(t)=Ac*cos(2*pi*fc*t+kp*m(t)).",
+                "label": "Define"
+              },
+              {
+                "detail": "The carrier has a fixed phase offset proportional to that message.",
+                "label": "Apply"
+              },
+              {
+                "detail": "Its steady instantaneous frequency returns to fc because the constant phase offset has zero derivative.",
+                "label": "Check"
+              }
+            ]
+          },
+          "assumptions": [
+            "Authored draft; scientific review pending",
+            "Trusted analytic teaching model, not live Simulink evidence",
+            "Any normalized examples are illustrative; no new measured device values",
+            "Manual placard states; no sentence alignment"
+          ],
+          "review": {
+            "scientific": "pending",
+            "sourceGrounding": "authored_concept"
+          },
+          "image": {
+            "reason": "Scientific plots/flow/comparisons are rendered as editable SVG; no generated-image claim",
+            "status": "not_requested"
+          }
+        },
+        "sources": [
+          {
+            "origin": "curated",
+            "label": "MathWorks: analog passband modulation; reference for the modulation families",
+            "url": "https://www.mathworks.com/help/comm/ug/analog-passband-modulation.html"
+          }
+        ],
+        "bindings": [
+          {
+            "path": "sourceConcepts/C-AM-10#explanation.modalities.interactive",
+            "sha256": "aeac45804b36984177c74808e812463f124cbd45fc8400746c4f32fffb184e05"
+          },
+          {
+            "path": "sourceConcepts/C-AM-10#explanation.modalities.textImage.visual",
+            "sha256": "1195d783116afee6b1ad3247f2437472972cc775261fba21c03ff5139dada5c0"
+          }
+        ],
+        "modelBindings": [
+          {
+            "path": "concept-library/C-AM-10/cam-d3074253f11cac828f9ddeec/models.js",
+            "sha256": "41cb3e229a603040d7b1dea9e47e4f8563a347f15aaa1c731c64c02f9a3420a5"
+          },
+          {
+            "path": "concept-library/C-AM-10/cam-d3074253f11cac828f9ddeec/scene.json",
+            "sha256": "4a470ffd93b271b4fb7d4bee73154af90ac51daf2319e7c135a9934a1541ca6c"
+          }
+        ],
+        "behaviorTests": [
+          {
+            "inputs": {
+              "sensitivity": 1.0,
+              "constant": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Message",
+                "Sinusoidal"
+              ],
+              [
+                "PM steady frequency with constant message",
+                "Returns to carrier"
+              ],
+              [
+                "Amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "PM instantaneous frequency (normalized)",
+                "8.000"
+              ],
+              [
+                "FM instantaneous frequency (normalized)",
+                "8.159"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  0.7071067811865475,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -1.0,
+                  -2.4492935982947064e-16
+                ]
+              },
+              {
+                "label": "PM: phase follows message",
+                "values": [
+                  0.0,
+                  0.6496369390800626,
+                  0.8414709848078963,
+                  -9.797174393178826e-16,
+                  -0.8414709848078973,
+                  -1.959434878635765e-15
+                ]
+              },
+              {
+                "label": "FM: phase integrates message",
+                "values": [
+                  0.0,
+                  0.04659852289335751,
+                  0.1584838865916043,
+                  0.3129617962077855,
+                  0.15848388659160684,
+                  -1.959434878635765e-15
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "sensitivity": 0.0,
+              "constant": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Message",
+                "Sinusoidal"
+              ],
+              [
+                "PM steady frequency with constant message",
+                "Returns to carrier"
+              ],
+              [
+                "Amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "PM instantaneous frequency (normalized)",
+                "8.000"
+              ],
+              [
+                "FM instantaneous frequency (normalized)",
+                "8.000"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  0.7071067811865475,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -1.0,
+                  -2.4492935982947064e-16
+                ]
+              },
+              {
+                "label": "PM: phase follows message",
+                "values": [
+                  0.0,
+                  -2.4492935982947064e-16,
+                  -4.898587196589413e-16,
+                  -9.797174393178826e-16,
+                  -1.4695761589768238e-15,
+                  -1.959434878635765e-15
+                ]
+              },
+              {
+                "label": "FM: phase integrates message",
+                "values": [
+                  0.0,
+                  -2.4492935982947064e-16,
+                  -4.898587196589413e-16,
+                  -9.797174393178826e-16,
+                  -1.4695761589768238e-15,
+                  -1.959434878635765e-15
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "sensitivity": 2.0,
+              "constant": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Message",
+                "Sinusoidal"
+              ],
+              [
+                "PM steady frequency with constant message",
+                "Returns to carrier"
+              ],
+              [
+                "Amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "PM instantaneous frequency (normalized)",
+                "8.000"
+              ],
+              [
+                "FM instantaneous frequency (normalized)",
+                "8.318"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  0.7071067811865475,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -1.0,
+                  -2.4492935982947064e-16
+                ]
+              },
+              {
+                "label": "PM: phase follows message",
+                "values": [
+                  0.0,
+                  0.9877659459927355,
+                  0.9092974268256819,
+                  -9.797174393178826e-16,
+                  -0.909297426825681,
+                  -1.959434878635765e-15
+                ]
+              },
+              {
+                "label": "FM: phase integrates message",
+                "values": [
+                  0.0,
+                  0.09309580572468638,
+                  0.31296179620778597,
+                  0.594480768524821,
+                  0.3129617962077851,
+                  -1.959434878635765e-15
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "sensitivity": 1.0,
+              "constant": 0.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Message",
+                "Sinusoidal"
+              ],
+              [
+                "PM steady frequency with constant message",
+                "Returns to carrier"
+              ],
+              [
+                "Amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "PM instantaneous frequency (normalized)",
+                "8.000"
+              ],
+              [
+                "FM instantaneous frequency (normalized)",
+                "8.159"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  0.0,
+                  0.7071067811865475,
+                  1.0,
+                  1.2246467991473532e-16,
+                  -1.0,
+                  -2.4492935982947064e-16
+                ]
+              },
+              {
+                "label": "PM: phase follows message",
+                "values": [
+                  0.0,
+                  0.6496369390800626,
+                  0.8414709848078963,
+                  -9.797174393178826e-16,
+                  -0.8414709848078973,
+                  -1.959434878635765e-15
+                ]
+              },
+              {
+                "label": "FM: phase integrates message",
+                "values": [
+                  0.0,
+                  0.04659852289335751,
+                  0.1584838865916043,
+                  0.3129617962077855,
+                  0.15848388659160684,
+                  -1.959434878635765e-15
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          },
+          {
+            "inputs": {
+              "sensitivity": 1.0,
+              "constant": 1.0
+            },
+            "cursor": 0.25,
+            "readouts": [
+              [
+                "Message",
+                "Constant"
+              ],
+              [
+                "PM steady frequency with constant message",
+                "Returns to carrier"
+              ],
+              [
+                "Amplitude",
+                "1 (normalized)"
+              ],
+              [
+                "PM instantaneous frequency (normalized)",
+                "8.000"
+              ],
+              [
+                "FM instantaneous frequency (normalized)",
+                "8.159"
+              ]
+            ],
+            "samples": [
+              {
+                "label": "Message",
+                "values": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "label": "PM: phase follows message",
+                "values": [
+                  0.8414709848078965,
+                  0.8414709848078964,
+                  0.8414709848078963,
+                  0.841470984807896,
+                  0.8414709848078957,
+                  0.8414709848078955
+                ]
+              },
+              {
+                "label": "FM: phase integrates message",
+                "values": [
+                  0.0,
+                  0.12467473338522744,
+                  0.24740395925452247,
+                  0.4794255386042021,
+                  0.6816387600233331,
+                  0.8414709848078955
+                ]
+              }
+            ],
+            "hasExtraSvg": false
+          }
+        ],
+        "claim": "ideal_teaching_model",
+        "review": {
+          "scientific": "pending"
+        }
+      }
+    ]
+  },
+  "assets": {
+    "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f": {
+      "path": "concept-media/LP-ANALOG-MODULATION/assets/sha256/7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+      "mimeType": "audio/wav",
+      "bytes": 3974754
+    }
+  }
+}

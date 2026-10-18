@@ -1,3 +1,5 @@
+> Historical source-checkout inventory. The later [all-CAM archive integration and results](all-cam-coverage-2026-10-18.md) supersede missing-byte/renderer/scope findings for the new isolated worktree. Connected acceptance remains pending.
+
 # Analog Modulation source and media coverage — 18 October 2026
 
 This is an **offline inventory**, not connected learner acceptance. [Full 80-row ledger](concept-coverage-2026-10-18.json) records every placard/language, catalog/packet/source revision, text hash, narration scope and expected/observed asset hash/size. Connected API, browser playback/artifact operation and reload/cleanup remain **NOT RUN** for every row.
