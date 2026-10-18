@@ -1,3 +1,47 @@
+## Hosted MATLAB trial completed - 18 October 2026
+
+This is the current continuation record; the earlier trial-pending notes below
+are historical. The native trial completed at 23:35 IST (18:05 UTC).
+
+Extension 0.1.3, from backend main ab70fa9193022d6c7145e77569ec9b5068c125fb,
+displayed floating Now/Next guidance on the already-open MATLAB tab. After the
+student's explicit Share gesture, real screen analysis identified the visible
+Simulink workspace. The floating window and hosted tracker agreed on the current
+CP-DSB-01 save-model action. External save state remained explicitly unverified.
+
+The persistent service-wide budget admitted exactly five checks. The independent
+provider journal recorded five attempts, all succeeded with HTTP 200, with zero
+uncertain dispatch records. The integrator clicked Chrome Stop sharing. The
+floating window showed SCREEN SHARING IS OFF; the hosted tracker showed
+Disconnected and requested a fresh Share gesture. Read-only named-database
+metadata confirmed capture status ended, cleared producer/lease/latest metadata,
+and absent capture and checked-frame manifests. Metadata probes made no provider
+calls and read no pixel payloads or student response text.
+
+The five-check allowance is exhausted. Keep KIKI_TRIAL_MAX_CHECKS=5 and the global
+counter unchanged; obtain a new human-approved allowance before further analysis.
+No student confirmation was submitted or model modified by the integrator.
+The tracker still displayed 0/12 completed stages. Full cloud acceptance remains
+unclaimed: student-owned confirmations and CP5-12 progression, remaining native
+lifecycle/revision acknowledgements, fresh quiz/reload/sign-out checks and
+individual all-26 recording audibility remain separate acceptance work.
+
+Application images and Hosting were not rebuilt for the extension-only fix or
+this documentation update. Engine remains kiki-lab-00003-hc4 from cb3e562;
+API remains kiki-api-00002-qp9 and Hosting remains version 76587765327a4261
+from web application source 7c2e68f. No capture or learner data is committed.
+
+Verification detail: [hosted trial record](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/verification/hosted-trial-2026-10-18.md).
+Local detailed receipts and screenshots remain in the full-cloud-build chat's
+outputs: LIVE-HOSTED-TRIAL-RESULT.json, HOSTED-TRIAL-USAGE.json and
+LIVE-TRIAL-STOP-READBACK.json. Generated receipts and screenshots stay out of Git.
+
+Last completed: bounded native analysis and Stop verified, with usage reconciled.
+Exact next: preserve the exhausted cap and continue student-owned acceptance only
+after its required actions and any new analysis allowance are explicitly supplied.
+
+---
+
 ## Hosted cloud release — 18 October 2026
 
 This current record supersedes the historical source-only/local-only statements below.
