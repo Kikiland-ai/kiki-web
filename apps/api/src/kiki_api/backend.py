@@ -47,7 +47,7 @@ class FirebaseVerifier:
     def __init__(self, app):
         self.app = app
 
-    def verify(self, token: str) -> Identity:
+    def _verified_claims(self, token):
         try:
             decoded = auth.verify_id_token(token, app=self.app, check_revoked=True)
         except auth.CertificateFetchError as exc:
@@ -62,10 +62,33 @@ class FirebaseVerifier:
             raise BoundaryError(401, "Your sign-in is invalid or expired. Sign in again.") from exc
         if decoded.get("firebase", {}).get("sign_in_provider") != "google.com":
             raise BoundaryError(403, "Use Sign in with Google for Kiki.")
+        return decoded
+
+    def verify(self, token: str) -> Identity:
+        decoded = self._verified_claims(token)
         try:
             return Identity(uid=decoded["uid"], display_name=decoded.get("name") or "Student")
         except (KeyError, ValidationError) as exc:
             raise BoundaryError(401, "The signed-in identity is unsupported.") from exc
+
+    def stream_grant(self, token):
+        decoded = self._verified_claims(token)
+        return {"uid": decoded["uid"], "auth_time": decoded["auth_time"], "exp": decoded["exp"]}
+
+    def verify_stream_grant(self, grant):
+        import time
+
+        try:
+            user = auth.get_user(grant["uid"], app=self.app)
+            if (
+                user.disabled
+                or grant["exp"] <= time.time()
+                or grant["auth_time"] < user.tokens_valid_after_timestamp / 1000
+            ):
+                raise ValueError()
+            return Identity(uid=user.uid, display_name=user.display_name or "Student")
+        except (auth.UserNotFoundError, ValueError, KeyError, TypeError) as exc:
+            raise BoundaryError(401, "Your sign-in is invalid or expired. Sign in again.") from exc
 
 
 class FirestoreProfiles:

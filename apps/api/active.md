@@ -1,3 +1,41 @@
+## Source publication authorized — 18 October 2026
+
+User requested the verified web integration PR from `fix/lab-command-lifecycle`
+into unchanged main `15628669372853d1165ed6a97474c4a0608bfc9d`. API production
+source/schema and locks remain unchanged; the API diff contains the isolated
+synthetic browser harness and status notes. The recorded 145 API tests and
+Ruff/schema/contract checks pass. Publication is source-only; see GitHub for PR/CI
+state and the web current status for the full verification and connected gates.
+Next: source review and coordinated Mac/backend acceptance. The checkpoint below
+records the pre-publication state.
+
+---
+
+## Next local integration verification — 18 October 2026
+
+Base `15628669372853d1165ed6a97474c4a0608bfc9d` (merged PR #12).
+All-ten metadata/private delivery and pending-create POST recovery already exist.
+145 API tests PASS on Python 3.12.15 with UTF-8 enabled. Synthetic browser harness
+now routes only its test upstream to 8102, preserving production's exact local
+8100 allowlist and leaving the running real backend untouched. It has isolated
+in-memory reset/lost-create-response injection for the full browser regressions.
+No production API schema/storage migration or auth fallback is introduced.
+Five canonical-extension browser cases PASS, including same-lab lost-create
+recovery after reload and the full twelve-stage synthetic response/review path.
+Ruff/format, exact OpenAPI and Python-to-React contracts PASS. These are doubles,
+not real Firebase/private-delivery acceptance. Latest live backend receipt is
+stopped and 8100 refuses health; its owner must provide fresh running provenance
+and authenticated smoke. No restart was performed here. Intended cloud target is
+KiKi / `kiki-512012`; no live config/data cutover was made.
+Last completed: local API/contracts and synthetic browser verification. Exact next:
+review/adopt the patch on Mac and arrange authorized connected acceptance with
+the backend owner. Private delivery, cloud resources/access and durable state remain
+separate gates; production API source/schema and both lockfiles are unchanged.
+See [web current status](../web/active.md) and
+[integration plan](../../docs/plans/next-integration-2026-10-18.md).
+
+---
+
 ## PR #12 opened; #9/#10/#11 merged — 18 October 2026
 
 [PR #12: Integrate all ten CAM modules with shared rendering and scoped narration](https://github.com/Kikiland-ai/kiki-web/pull/12) is open (not draft) into `main`, from `integration/all-cam-2026-10-18`; it remains open for review. User explicitly authorized this source publication and merging #9/#10/#11. #9 merged as `feed380c17862ccc77a0133ffc8971f598ae5728`; #11 was retargeted to main and merged as `99ea53105fe0b2f02ab3b6dc5f0a74bb0d049f9a`; #10 merged as `7eb394592f3cf6a56f981363e9ee490c89c0b651`. API/web CI passed for each. The dependency order was #9 → #11 → #10. #10's documentation conflicts were resolved preserving both histories; its combined validation passed 213 frontend/124 API tests and 21 sample journey/preferences/lab-input browser cases.
@@ -280,3 +318,17 @@ Existing authenticated C-AM-04 lesson reads its already-versioned authored sourc
 **80 Python / 100 frontend / full 67 browser**, Ruff/ESLint/typecheck/build, ten actual Python→React envelope checks and OpenAPI export pass. Numerical browser tests verify real SVG positions, not merely a changed label. Connected real Google lesson/200 Hz change/reset/Odia term sheet, Step 2 save/reload and a 390 px emulated view verified. No graded learner data or lab preparation changed. Earlier pending quiz/lab acceptance entries above are historical; ../web/active.md is current. Exact next: student reviews C-AM-04 diagrams, then reviewed narration content/provider work. Aditya's trusted monitoring/assessment stays deferred.
 
 Shared kiki-web publication: the Python slice and required content snapshot are included on integration/connected-kiki-2026-10-16. A fresh locked environment passes all 80 Python checks and actual response-contract validation; no credentials or live database access are required for those tests. Root TEAM_HANDOFF.md documents team setup. Personal one-off IAM setup script, local env/ADC/tools and generated receipts are excluded.
+
+
+## Full cloud lane C — 18 October 2026
+
+Isolated full-cloud source now has atomic shared Firestore capabilities containing only verified uid/auth_time/exp grants, periodic Firebase revocation/disabled/expiry checks, exact origin/owner/preparation/session bindings, and keyless engine-audience ID tokens on HTTP/SSE/WebSocket. The bearer is never persisted. Local mode remains worker-local.
+
+Web capture awaits the held frame check before another upload. Existing generation cancellation/command queue retained. Extension builder0.1.2 adds exact https://kiki-512012.web.app; version1 publisher/context/revision-bound confirmation handoff focuses the authoritative reader form without selecting, writing or submitting student evidence. Stale drafts remain separate.
+
+Checks:148 API passed/1 opt-in skip before the extra cloud-route regression; latest focused23 passed.247 web tests, TypeScript/changed-file ESLint passed before the final copy notice. Actual named KiKi Firestore two-client contention1 passed, unique synthetic capability document cleaned up; no learner/provider changes. Extension lifecycle8 pass/1 optional skip; core test blocked missing ignored json_stream_site/dist/server/index.js.
+
+Hosted acceptance remains separate: actual IAM-private transport, real Google revocation, hosted Share/masks/lifecycle and student CP5–12 remain pending. Exact next: integrator builds/reviews/deploys managed-secret private engine/API then validates hosted transport and deliberate student acceptance. Per-ID evidence: full-cloud outputs/lane-c-evidence.md.
+
+## Cloud packaging and publication — 18 October 2026
+Added Dockerfile, frozen uv installation, PORT-aware cloud entrypoint and Cloud Build configuration. Prepared generic all-ten v1 publisher is restricted to kiki-512012/kiki-firedb/kiki-web-bucket, reviewed dryrun SHA, no emulator hosts, initial head preconditions and full byte/document readback. Dryrun validates10 packages26 original WAVs and native C08. No cloud publication or image deploy yet. Next: reviewed source main, image build and private upstream acceptance.

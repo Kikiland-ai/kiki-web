@@ -1,6 +1,16 @@
 // Local test artifact only. Release extension remains owned by kiki-backend.
 import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
+// Use an already hash-verified canonical dev bundle without rewriting its version,
+// config or scripts. This option never modifies the backend's running checkout.
+if (process.env.KIKI_EXTENSION_SOURCE) {
+  const source = resolve(process.env.KIKI_EXTENSION_SOURCE), out = resolve('test-artifacts/lab-extension');
+  const manifest = JSON.parse(await readFile(join(source, 'manifest.json'), 'utf8'));
+  if (manifest.version !== '0.1.1' || !manifest.name.endsWith('(dev)')) throw new Error('Expected canonical dev extension 0.1.1');
+  await mkdir(out, { recursive: true });
+  for (const name of ['manifest.json', 'config.js', 'core.js', 'ui.js', 'content.js', 'bridge.js', 'background.js', 'popup.html', 'popup.js']) await copyFile(join(source, name), join(out, name));
+  console.log(`Copied verified canonical dev extension ${manifest.version}: ${out}`);
+} else {
 if (!process.env.KIKI_BACKEND_CHECKOUT) throw new Error('Set KIKI_BACKEND_CHECKOUT to the approved backend checkout');
 const source = resolve(process.env.KIKI_BACKEND_CHECKOUT, 'prototypes/floating_guidance/extension');
 const out = resolve('test-artifacts/lab-extension');
@@ -13,3 +23,4 @@ await writeFile(join(out,'manifest.json'),JSON.stringify(manifest,null,2));
 // Verify source protocol files were actually read; no network or release writes.
 await readFile(join(source,'core.js'),'utf8');
 console.log(`Built local test extension: ${out}`);
+}

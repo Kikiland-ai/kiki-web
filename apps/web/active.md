@@ -1,3 +1,73 @@
+## Source publication authorized — 18 October 2026
+
+The user requested a PR for the verified integration changes. Source publication
+is authorized on `fix/lab-command-lifecycle` into `main`, based on
+`15628669372853d1165ed6a97474c4a0608bfc9d`; fetched main still matches that base.
+All 12 candidate source hashes matched the verified export before these publication
+notes were added. Final validation: **245 frontend tests / 40 files, 145 API tests,
+15 sample browser cases and five canonical-extension lab browser cases PASS**;
+two affected capture cases were repeated after the final late-error guard. The
+build/schema/model and exclusion checks described below also pass. This is source
+publication only; connected acceptance and cloud/deployment gates remain unchanged.
+Commits retain repository-required `akshitanitr` attribution; SSH and the connected
+GitHub profile were verified as `arpanvihan5-sketch`. See GitHub for current PR/CI
+state. Last completed: candidate/base/identity verification and publication
+preparation. Next: CI/review of the source PR, then coordinated Mac adoption and
+separately authorized real private-delivery/student acceptance. The local-only
+checkpoint below records the pre-publication state.
+
+---
+
+## Next local integration candidate verified — 18 October 2026
+
+Fresh checkout base/unchanged HEAD `15628669372853d1165ed6a97474c4a0608bfc9d`
+(merged PR #12), initially clean. The backend-chat handoff is being reconciled with
+this main: shared all-ten CAM/v1 renderer, concept narration, metadata/audio
+separation, review/respond/condition controls and explicit pending-create POST
+recovery are already present. Do not reimplement those historical gaps.
+
+Local/uncommitted changes serialize page/floating pause/resume commands, fence
+queued commands across Stop/sign-out/disposal/new Share, prevent competing input
+writes, ignore late command-error refreshes after capture replacement, and add
+stream/generation to bridge command results and bye with incoming stream filtering.
+Old overlapping publishers cannot handshake/publish/command for a replacement.
+Canonical dev extension 0.1.1 is copied unchanged from the
+hash-verified bundle into ignored test artifacts. Synthetic lab upstream uses
+8102 instead of the live backend's 8100; production origin validation is unchanged.
+
+Actual checks PASS: 69/69 outer and 77/77 inner bundle entry hashes/sizes,
+38 focused capture/bridge tests, 145 API tests; lint/typecheck/build, Ruff/format,
+exact OpenAPI, Python-to-React contracts and production synthetic/audio/answer-key
+exclusions. Node 24.19 / Python 3.12.15 UTF-8 mode. All 15 sample learning/input
+browser cases PASS, including all ten complete CAM journeys and four input widths.
+All five canonical-extension lab browser cases PASS together: delayed Pause/Resume,
+rechecks/route replacement/worker restart/another reader, lost-create reload/recover/
+explicit Share, twelve-stage explicit responses/review/conditions/unassessed reload,
+and native capture/masking/Now-Next-revision/target reload/reopen/sign-out. Eight
+actual-script deterministic lifecycle tests and 38 CAM model cases PASS. Ten
+candidate records and all 26 original WAVs match the supplied bundle; native
+C-AM-08/model/lockfiles unchanged. Initial default Windows encoding failed; UTF-8
+rerun passed. Early test locator/transition/output-collision attempts were corrected
+and retested. Final frontend suite count is recorded in the integration ledger.
+
+Supplied backend review ledger records user-confirmed science/narration/Odia/audio
+quality; this is reported provenance, not a new independent review here. Embedded
+immutable package metadata remains untouched. Real signed-in private media and Mac
+extension/capture acceptance remain separate. Latest backend receipt is stopped and
+8100 refuses health; no restart was performed here. On-disk candidate source hash
+still matches `cba63acd35bdb222070b7fb63c84c00a5a628769e125543d865c64866e480cb0`.
+Latest cloud target correction is KiKi / `kiki-512012`, superseding the old project
+in transferred archives. Live Firebase/verifier/datastore/bucket config was untouched;
+resource/access inspection and coordinated cutover remain separate release gates.
+No real capture/provider calls, backend service changes, cloud/publication/learner
+writes, commit/push/merge/deploy. Last completed: local implementation and synthetic
+acceptance. Exact next: review/adopt the exported patch on Mac; backend owner provides
+fresh running receipt/authenticated smoke; then explicitly authorized connected
+private-media/real-student acceptance. See the scenario evidence and handoff.
+[Implementation plan](../../docs/plans/next-integration-2026-10-18.md).
+
+---
+
 ## PR #12 opened; #9/#10/#11 merged — 18 October 2026
 
 [PR #12: Integrate all ten CAM modules with shared rendering and scoped narration](https://github.com/Kikiland-ai/kiki-web/pull/12) is open (not draft) into `main`, from `integration/all-cam-2026-10-18`; it remains open for review. User explicitly authorized this source publication and merging #9/#10/#11. #9 merged as `feed380c17862ccc77a0133ffc8971f598ae5728`; #11 was retargeted to main and merged as `99ea53105fe0b2f02ab3b6dc5f0a74bb0d049f9a`; #10 merged as `7eb394592f3cf6a56f981363e9ee490c89c0b651`. API/web CI passed for each. The dependency order was #9 → #11 → #10. #10's documentation conflicts were resolved preserving both histories; its combined validation passed 213 frontend/124 API tests and 21 sample journey/preferences/lab-input browser cases.
@@ -476,3 +546,14 @@ User requested commit/push of the completed work to Kikiland-ai/kiki-web. Prepar
 The user explicitly selected **akshitanitr** as author/committer, overriding the older Arpan identity note in the source repository. Authenticated GitHub profile and repository push permission were verified. The integration branch is a reviewable checkpoint; main is not force-pushed or rewritten. Current implementation/acceptance above remains authoritative; no deployment or Firebase write is performed by publishing source.
 
 Fresh publication checkout verification: locked npm/uv install, 80 Python / 100 frontend / full 67 browser / 28 source-model checks, lint/format/typecheck/build, source-case validation, ten actual Python→React response-envelope checks and production fixture/key exclusion pass. Browser checks used this checkout's own server on port 5176. Dependency audit: zero advisories. Staged source contains no local environment, private key/token, dependency/cache/test artifact or oversized file.
+
+
+## Full cloud lane C — 18 October 2026
+
+Isolated full-cloud source now has atomic shared Firestore capabilities containing only verified uid/auth_time/exp grants, periodic Firebase revocation/disabled/expiry checks, exact origin/owner/preparation/session bindings, and keyless engine-audience ID tokens on HTTP/SSE/WebSocket. The bearer is never persisted. Local mode remains worker-local.
+
+Web capture awaits the held frame check before another upload. Existing generation cancellation/command queue retained. Extension builder0.1.2 adds exact https://kiki-512012.web.app; version1 publisher/context/revision-bound confirmation handoff focuses the authoritative reader form without selecting, writing or submitting student evidence. Stale drafts remain separate.
+
+Checks:148 API passed/1 opt-in skip before the extra cloud-route regression; latest focused23 passed.247 web tests, TypeScript/changed-file ESLint passed before the final copy notice. Actual named KiKi Firestore two-client contention1 passed, unique synthetic capability document cleaned up; no learner/provider changes. Extension lifecycle8 pass/1 optional skip; core test blocked missing ignored json_stream_site/dist/server/index.js.
+
+Hosted acceptance remains separate: actual IAM-private transport, real Google revocation, hosted Share/masks/lifecycle and student CP5–12 remain pending. Exact next: integrator builds/reviews/deploys managed-secret private engine/API then validates hosted transport and deliberate student acceptance. Per-ID evidence: full-cloud outputs/lane-c-evidence.md.

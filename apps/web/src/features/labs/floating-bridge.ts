@@ -1,5 +1,5 @@
 /** Reader bridge for the unchanged floating-guidance/v0.1 extension protocol. */
-import { FG_LIMITS, FG_SCHEMA, contentKey, projectSnapshot, type ProjectionInput } from './floating-guidance';
+import { FG_LIMITS, FG_SCHEMA, contentKey, currentScope, projectSnapshot, type ProjectionInput } from './floating-guidance';
 
 type Rect = { x: number; y: number; w: number; h: number };
 export type CaptureTrack = MediaStreamTrack & { getCaptureHandle?: () => { handle?: string; origin?: string } | null };
@@ -28,7 +28,7 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     window.postMessage({ channel: CHANNEL, direction: 'page', bridge_id, ...message }, location.origin);
   });
   async function hello() {
-    if (disposed || helloPending) return;
+    if (disposed || currentPublisher !== ownership || helloPending) return;
     helloPending = true;
     const epoch = ownershipEpoch, targetEpoch = bindingEpoch;
     const result = await post({ type: 'reader_hello', stream_id: streamId, lab_session_id: source()?.state.lab_session_id ?? null });
@@ -40,7 +40,7 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     reports = []; viewport = null; lastKey = null; onChange(); void flush(true);
   }
   async function flush(force = false) {
-    if (disposed || !present || generation === null || !binding || superseded) return;
+    if (disposed || currentPublisher !== ownership || !present || generation === null || !binding || superseded) return;
     const input = source(); if (!input) return;
     const body = projectSnapshot(input.state, { ...input, blockedReason: safety.mode === 'block' ? safety.reason : null });
     const key = contentKey(body), now = performance.now();
@@ -59,15 +59,28 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     }
   }
   async function command(message: Record<string, unknown>) {
+    if (disposed || superseded || currentPublisher !== ownership || generation === null) return;
+    if (message.command === 'focus_confirmation') {
+      const state = source()?.state;
+      if (!state || message.command_version !== 1 || message.stream_id !== streamId || message.generation !== generation || message.lab_revision !== state.revision || JSON.stringify(message.context) !== JSON.stringify(currentScope(state))) return;
+      const form = document.getElementById('kiki-lab-confirmation');
+      form?.scrollIntoView({ block: 'start', behavior: 'smooth' }); form?.focus({ preventScroll: true });
+      return;
+    }
     if (!['pause', 'resume'].includes(String(message.command))) return;
+    const commandGeneration = generation;
     let ok = true;
     try { await onCommand(message.command as 'pause' | 'resume'); } catch { ok = false; }
-    await post({ type: 'reader_command_result', request_id: message.request_id, ok, error: ok ? null : 'Use the controls in Lab mode to reconnect.' });
+    if (disposed || superseded || currentPublisher !== ownership || generation !== commandGeneration) return;
+    await post({ type: 'reader_command_result', stream_id: streamId, generation: commandGeneration, request_id: message.request_id, ok, error: ok ? null : 'Use the controls in Lab mode to reconnect.' });
     void flush(true);
   }
   const receive = (event: MessageEvent) => {
     const m = event.data;
-    if (disposed || event.source !== window || event.origin !== location.origin || !m || m.channel !== CHANNEL || m.direction !== 'extension') return;
+    if (disposed || currentPublisher !== ownership || event.source !== window || event.origin !== location.origin || !m || m.channel !== CHANNEL || m.direction !== 'extension') return;
+    // 0.1.1 supplies response identity. Older protocol events omit it; when
+    // present it must belong to this publisher, including hello replies.
+    if (m.stream_id !== undefined && m.stream_id !== streamId) return;
     if (m.type === 'response') { const item = waiting.get(m.bridge_id); if (item) { clearTimeout(item.timer); waiting.delete(m.bridge_id); item.resolve(m.result ?? {}); } return; }
     if (m.type === 'extension_present') { if (!present) void hello(); return; }
     if (m.type === 'fg_target_bound') {
@@ -120,9 +133,9 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     dispose() {
       if (disposed) return;
       // A pending hello can already have registered upstream even before its reply.
-      // The canonical bye is tab-scoped, so an older instance must not close a replacement.
+      // Identity scopes 0.1.1 controls; ownership also protects legacy tab-scoped bye.
       if (currentPublisher === ownership) {
-        if ((present && generation !== null) || helloPending) window.postMessage({ channel: CHANNEL, direction: 'page', bridge_id: 0, type: 'reader_bye' }, location.origin);
+        if ((present && generation !== null) || helloPending) window.postMessage({ channel: CHANNEL, direction: 'page', bridge_id: 0, type: 'reader_bye', stream_id: streamId, ...(generation !== null ? { generation } : {}) }, location.origin);
         currentPublisher = null;
       }
       disposed = true; clearInterval(heartbeat); window.removeEventListener('message', receive);

@@ -118,7 +118,7 @@ class ConceptCanvasArtifact(StrictModel):
         pinned = json.loads(
             (
                 Path(__file__).resolve().parents[4] / "data-model/media/cam-contract/scenes.json"
-            ).read_text()
+            ).read_text(encoding="utf-8")
         )[self.scene.conceptId]
         if self.scene.model_dump(by_alias=True) != pinned["scene"] or not any(
             b.path.endswith("/scene.json") and b.sha256 == pinned["sha256"]

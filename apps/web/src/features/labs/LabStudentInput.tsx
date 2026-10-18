@@ -49,7 +49,7 @@ export function LabStudentInput({ view, submitInput, retryRequirements, declareC
     <h3>Your observations and confirmations</h3>
     <p>Write what you did and observed. Student reports, explicit confirmations and screen inference remain separate from assessed proficiency.</p>
     {message && <p role="status">{message}</p>}
-    {stale && <div role="alert"><p>The checkpoint or screen context changed. Your earlier draft is kept and will not be submitted to this step.</p><Button variant="secondary" disabled={submitting || view.inputBusy} onClick={() => { setDrafts(old => ({ ...old, [scope]: old[scope] ?? blank() })); setDraftScope(scope); setMessage(''); }}>Use current step</Button></div>}
+    {stale && <div role="alert"><p>The checkpoint or screen context changed. Your earlier draft is kept and will not be submitted to this step. Choose Use current step to open a separate draft for the current context; it does not copy or submit the earlier draft.</p><Button variant="secondary" disabled={submitting || view.inputBusy} onClick={() => { setDrafts(old => ({ ...old, [scope]: old[scope] ?? blank() })); setDraftScope(scope); setMessage(''); }}>Use current step</Button></div>}
     {view.requirementsError && <div role="alert"><p>{view.requirementsError}</p><Button variant="secondary" onClick={retryRequirements}>Retry input instructions</Button></div>}
     {!checkpoint && !view.requirementsError && <p role="status">Loading this step’s input instructions…</p>}
     {checkpoint && <>
@@ -68,7 +68,9 @@ export function LabStudentInput({ view, submitInput, retryRequirements, declareC
           <Button type="submit" disabled={!draft.text.trim()}>Record response</Button>
         </fieldset>
       </form>
-      <form onSubmit={event => { event.preventDefault(); void submit(true); }}>
+      <form id="kiki-lab-confirmation" tabIndex={-1} aria-label="Current step confirmation" onSubmit={event => { event.preventDefault(); void submit(true); }}>
+        <p>Confirm the current step here after reviewing your model. This form records your selections and your own evidence note.</p>
+        {stale && <p role="alert">Your earlier draft is kept. Choose Use current step above to open a separate draft for this context before confirming.</p>}
         <fieldset disabled={disabled}><legend>Confirm evidence you reviewed</legend>
           <p>Select only criteria you personally checked. Nothing is selected automatically.</p>
           {checkpoint.criteria.map(c => {

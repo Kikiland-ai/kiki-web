@@ -32,6 +32,8 @@ export class LabCaptureController {
   private size = '';
   private generation = 0;
   private commandBusy = false;
+  private commandTail: Promise<void> = Promise.resolve();
+  private queuedCommands = 0;
   private loadBusy = false;
   private canRecover = false;
   private inputBusy = false;
@@ -123,7 +125,7 @@ export class LabCaptureController {
     finally { this.requirementsBusy = false; this.emit(); }
   }
   async submitInput(scope: string, input: { kind: ResponseKind; text: string; self_confidence?: number } | { criterion_ids: string[]; review_note: string }) {
-    if (!this.state || this.disposed || this.lifetime.signal.aborted || this.commandBusy || this.inputBusy || this.state.status === 'completed') throw new ServiceError('Wait for the current lab action before submitting.');
+    if (!this.state || this.disposed || this.lifetime.signal.aborted || this.commandBusy || this.queuedCommands || this.inputBusy || this.state.status === 'completed') throw new ServiceError('Wait for the current lab action before submitting.');
     if (scope !== JSON.stringify(currentScope(this.state))) throw new ServiceError('The lab context changed. Your draft is kept for its original step.', 409);
     const current = this.requirements?.checkpoints.find(cp => cp.id === this.state!.queue.current_checkpoint_id);
     if (!current || this.requirements?.definitionSha256 !== this.state.definition?.definition_sha256) throw new ServiceError('Load the current lab input instructions before submitting.');
@@ -139,7 +141,7 @@ export class LabCaptureController {
     await this.mutateInput(scope, (revision, signal) => this.api.context(this.prepId, { revision, action: 'condition', condition: checkpoint.condition }, signal));
   }
   private async mutateInput(scope: string, perform: (revision: number, signal: AbortSignal) => Promise<LabExecutionState>) {
-    if (!this.state || this.disposed || this.lifetime.signal.aborted || this.commandBusy || this.inputBusy || this.state.status === 'completed') throw new ServiceError('Wait for the current lab action before submitting.');
+    if (!this.state || this.disposed || this.lifetime.signal.aborted || this.commandBusy || this.queuedCommands || this.inputBusy || this.state.status === 'completed') throw new ServiceError('Wait for the current lab action before submitting.');
     if (scope !== JSON.stringify(currentScope(this.state))) throw new ServiceError('The lab context changed. Your draft is kept for its original step.', 409);
     this.inputBusy = true; this.commandBusy = true; this.cancelCheck(); this.emit();
     const controller = new AbortController(); this.commandAbort = controller;
@@ -244,7 +246,7 @@ export class LabCaptureController {
       const frame = await this.channel.sendFrame({ type: 'frame', capture_epoch: 1, view_revision: this.state.workspace.view_revision, sequence: ++this.sequence, captured_elapsed_ms: Math.max(0, Math.round(performance.now() - this.started)),
         width: canvas.width, height: canvas.height, source_width: width, source_height: height, byte_count: blob.size, mime_type: 'image/jpeg' }, blob);
       // A skipped frame was not admitted, so there is nothing to check; the next tick resends.
-      if (frame && this.current(generation)) void this.check(frame, generation);
+      if (frame && this.current(generation)) await this.check(frame, generation);
     } catch (error) { if (this.current(generation)) this.stop(readableError(error)); }
     finally { if (this.current(generation)) this.timer = window.setTimeout(() => { void this.tick(generation); }, 2000); }
   }
@@ -284,7 +286,20 @@ export class LabCaptureController {
     } finally { if (this.checkAbort === controller) { this.checkAbort = null; this.reading = false; this.preview = null; this.emit(); } }
   }
   private cancelCheck() { this.checkAbort?.abort(); this.checkAbort = null; this.reading = false; this.preview = null; }
-  async command(action: 'pause' | 'resume') {
+  // A paused snapshot can enable the floating Resume before Pause's final GET
+  // finishes. Keep both surfaces in order and fence the queue to this capture.
+  command(action: 'pause' | 'resume'): Promise<void> {
+    if (this.inputBusy) return Promise.reject(new ServiceError('Wait for the current lab action before changing sharing.'));
+    const generation = this.generation;
+    ++this.queuedCommands;
+    const run = this.commandTail.catch(() => undefined).then(async () => {
+      if (!this.current(generation)) throw new ServiceError('Share your MATLAB tab from Lab mode first.');
+      await this.performCommand(action);
+    }).finally(() => { if (generation === this.generation) --this.queuedCommands; });
+    this.commandTail = run;
+    return run;
+  }
+  private async performCommand(action: 'pause' | 'resume') {
     if (!this.state || !this.stream || !this.channel || this.commandBusy) throw new ServiceError('Share your MATLAB tab from Lab mode first.');
     if ((action === 'pause' && this.phase === 'paused') || (action === 'resume' && this.phase === 'active')) return;
     const generation = this.generation, channel = this.channel;
@@ -294,23 +309,34 @@ export class LabCaptureController {
     try {
       if (action === 'resume') await channel.command('resume');
       if (!this.current(generation)) return;
-      this.adopt(await this.api.get(this.prepId, signal));
+      const fresh = await this.api.get(this.prepId, signal);
       if (!this.current(generation)) return;
+      this.adopt(fresh);
       const value = await this.api.context(this.prepId, { revision: this.state.revision, action }, signal);
       if (!this.current(generation)) return;
       this.adopt(value);
-      if (action === 'pause') { await channel.command('pause'); this.adopt(await this.api.get(this.prepId, signal)); }
+      if (action === 'pause') {
+        await channel.command('pause');
+        if (!this.current(generation)) return;
+        const paused = await this.api.get(this.prepId, signal);
+        if (!this.current(generation)) return;
+        this.adopt(paused);
+      }
       if (!this.current(generation)) return;
       this.phase = action === 'pause' ? 'paused' : 'active'; this.reason = action === 'pause' ? 'Paused. No new frames are sent.' : 'Sharing resumed. Waiting for the next safe frame.';
     } catch (error) {
       if (!this.current(generation) || signal.aborted) return;
-      try { this.adopt(await this.api.get(this.prepId, signal)); } catch { /* preserve guidance */ }
+      try {
+        const latest = await this.api.get(this.prepId, signal);
+        if (this.current(generation) && !signal.aborted) this.adopt(latest);
+      } catch { /* preserve guidance */ }
       if (!this.current(generation)) return;
       this.stop(readableError(error)); throw error;
     } finally { if (this.commandAbort === controller) { this.commandAbort = null; this.commandBusy = false; this.emit(); } }
   }
   stop(reason = 'Sharing stopped. Share your MATLAB tab again to reconnect.', phase: ConnectionPhase = 'disconnected') {
-    ++this.generation; clearTimeout(this.timer); this.cancelCheck(); this.commandAbort?.abort(); this.commandAbort = null; this.commandBusy = false;
+    ++this.generation; this.commandTail = Promise.resolve(); this.queuedCommands = 0;
+    clearTimeout(this.timer); this.cancelCheck(); this.commandAbort?.abort(); this.commandAbort = null; this.commandBusy = false;
     const stream = this.stream, channel = this.channel; this.stream = null; this.channel = null;
     stream?.getTracks().forEach(track => track.stop());
     if (this.video) { this.video.pause(); this.video.srcObject = null; this.video = null; }

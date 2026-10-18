@@ -1,0 +1,17 @@
+.git
+.env*
+**/.env*
+**/node_modules
+**/.venv
+**/__pycache__
+**/*.pyc
+**/test-results
+**/test-artifacts
+**/playwright-report
+**/dist
+**/*.wav
+**/*.sqlite*
+**/*.db
+**/*.log
+.tools
+work

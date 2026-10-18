@@ -30,6 +30,73 @@ beforeEach(() => {
   vi.spyOn(HTMLVideoElement.prototype, 'videoWidth', 'get').mockReturnValue(1280); vi.spyOn(HTMLVideoElement.prototype, 'videoHeight', 'get').mockReturnValue(800);
 });
 afterEach(() => { connection.dispose(); vi.restoreAllMocks(); });
+it('serializes Resume behind the final Pause read using the latest committed revision', async () => {
+  const { api, state, channel } = setup();
+  mocks.safety = { mode: 'block', reason: 'Waiting for positions.' };
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  await connection.share();
+  api.get.mockClear(); api.context.mockClear();
+  const paused = { ...state, revision: state.revision + 1, status: 'paused' as const };
+  let release!: (s: typeof state) => void;
+  api.get.mockResolvedValueOnce(state).mockImplementationOnce(() => new Promise(r => release = r)).mockResolvedValue(paused);
+  api.context.mockResolvedValueOnce(paused).mockResolvedValueOnce({ ...state, revision: state.revision + 2 });
+  const pause = connection.command('pause');
+  await vi.waitFor(() => expect(api.get).toHaveBeenCalledTimes(2));
+  const resume = connection.command('resume');
+  expect(channel.command).not.toHaveBeenCalledWith('resume');
+  await expect(connection.submitInput(JSON.stringify(currentScope(paused)), { kind: 'note', text: 'No competing write' })).rejects.toThrow('Wait');
+  release(paused); await pause; await resume;
+  expect((api.context.mock.calls as unknown as [string, object][]).map(call => call[1])).toEqual([{ revision: state.revision, action: 'pause' }, { revision: paused.revision, action: 'resume' }]);
+  expect(connection.view().phase).toBe('active');
+});
+it.each(['stop', 'sign-out', 'dispose'] as const)('a queued Resume cannot revive capture after %s invalidates its generation', async ending => {
+  const { api, state, channel } = setup();
+  mocks.safety = { mode: 'block', reason: 'Waiting for positions.' };
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  await connection.share();
+  let resolve!: (s: typeof state) => void;
+  api.context.mockReturnValue(new Promise(r => resolve = r));
+  const pause = connection.command('pause');
+  await vi.waitFor(() => expect(api.context).toHaveBeenCalled());
+  const resume = connection.command('resume');
+  const rejected = expect(resume).rejects.toThrow('Share your MATLAB tab');
+  if (ending === 'stop') connection.stop(); else if (ending === 'sign-out') cleanup(); else connection.dispose();
+  resolve({ ...state, status: 'paused' }); await pause; await rejected;
+  expect(channel.command).not.toHaveBeenCalledWith('resume');
+  expect(connection.view().phase).toBe('disconnected');
+  expect(connection.view().snapshot?.runtime.capture_active).toBe(false);
+});
+it('a new Share has its own command queue even while an old command response is lost', async () => {
+  const { api, state } = setup();
+  mocks.safety = { mode: 'block', reason: 'Waiting for positions.' };
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  await connection.share();
+  let release!: (s: typeof state) => void;
+  api.context.mockImplementationOnce(() => new Promise(r => release = r));
+  const old = connection.command('pause');
+  await vi.waitFor(() => expect(api.context).toHaveBeenCalledTimes(1));
+  connection.stop(); await connection.share(); await connection.command('pause');
+  expect(api.context).toHaveBeenCalledTimes(2);
+  const revision = connection.view().state!.revision;
+  release({ ...state, revision: revision + 100, status: 'paused' }); await old;
+  expect(connection.view().state!.revision).toBe(revision);
+  expect(connection.view().phase).toBe('paused');
+});
+it('a delayed command-error refresh cannot replace guidance after Stop and a new Share', async () => {
+  const { api, state } = setup();
+  mocks.safety = { mode: 'block', reason: 'Waiting for positions.' };
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  await connection.share(); api.get.mockClear();
+  let release!: (s: typeof state) => void;
+  api.get.mockResolvedValueOnce(state).mockImplementationOnce(() => new Promise(r => release = r));
+  api.context.mockRejectedValueOnce(new ServiceError('Synthetic interrupted pause'));
+  const old = connection.command('pause');
+  await vi.waitFor(() => expect(api.get).toHaveBeenCalledTimes(2));
+  connection.stop(); await connection.share();
+  release({ ...state, revision: state.revision + 100, status: 'paused' }); await old;
+  expect(connection.view().state!.revision).toBe(state.revision);
+  expect(connection.view().phase).toBe('active');
+});
 it('reload offers reconnect without opening a picker; saved state cannot imply live capture', async () => {
   const { media } = setup(); await connection.load();
   expect(connection.view().phase).toBe('disconnected'); expect(media).not.toHaveBeenCalled();
@@ -186,4 +253,23 @@ it('declares only the current server-defined condition on an explicit action and
   await connection.declareCondition(JSON.stringify(currentScope(fault)));
   expect(api.context).toHaveBeenCalledWith('prep-test', { revision: fault.revision, action: 'condition', condition: 'phase_fault' }, expect.any(AbortSignal));
   expect(connection.view().state?.workspace.condition).toBe('phase_fault');
+});
+
+it('keeps the admitted frame current while a held screen check is pending', async () => {
+  const { api, channel } = setup();
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(callback => callback(new Blob(['jpg'])));
+  let release!: () => void;
+  api.check.mockImplementationOnce(() => new Promise((_, reject) => { release = () => reject(new Error('Controlled completion')); }));
+  vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  try {
+    await connection.share();
+    await vi.waitFor(() => expect(api.check).toHaveBeenCalledTimes(1));
+    await vi.advanceTimersByTimeAsync(8000);
+    expect(channel.sendFrame).toHaveBeenCalledTimes(1);
+    expect(connection.view().reading).toBe(true);
+    release(); await vi.waitFor(() => expect(connection.view().reading).toBe(false));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(channel.sendFrame).toHaveBeenCalledTimes(2);
+  } finally { vi.useRealTimers(); }
 });

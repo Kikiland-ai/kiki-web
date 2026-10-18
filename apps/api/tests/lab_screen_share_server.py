@@ -6,6 +6,7 @@ backend branch. Test verifier/store exist only in this executable, never app sta
 """
 
 import asyncio
+import copy
 import json
 import os
 import secrets
@@ -66,7 +67,7 @@ class Verifier:
 
 
 verifier = Verifier()
-metrics = {"calls": 0, "mode": "normal", "images": [], "commits": []}
+metrics = {"calls": 0, "mode": "normal", "images": [], "commits": [], "creation_ids": []}
 
 
 class Chunks(httpx.AsyncByteStream):
@@ -158,7 +159,26 @@ import_catalog(store, catalog)
 profiles = FirestoreProfiles(store)
 learning = FirestoreLearning(store, profiles)
 preparations = LabPreparations(learning)
-executions = LabExecutions(preparations, LabUpstream(settings))
+
+
+class IsolatedUpstream(LabUpstream):
+    def __init__(self, config):
+        super().__init__(config)
+        # Keep the production allowlist exact. Only this isolated executable
+        # routes its synthetic upstream to a port separate from the real trial.
+        self.origin = "http://127.0.0.1:8102"
+
+    async def request(self, method, path, uid, body=None, operation_key=None):
+        result = await super().request(method, path, uid, body, operation_key)
+        if method == "POST" and path == "/lab-sessions":
+            metrics["creation_ids"].append(json.loads(result[0])["lab_session_id"])
+            if metrics["mode"] == "lose_create_response":
+                metrics["mode"] = "normal"
+                raise BoundaryError(503, "Synthetic lost creation response; reload to recover.")
+        return result
+
+
+executions = LabExecutions(preparations, IsolatedUpstream(settings))
 preparations.execution_status = executions.status
 services = Services(
     verifier,
@@ -184,6 +204,18 @@ with TestClient(api) as client:
         == 200
     )
 
+baseline_docs = copy.deepcopy(store.docs)
+
+
+@api.post("/__test/reset")
+def reset():
+    # Isolated in-memory identity/store only; never import this executable in runtime.
+    store.docs.clear()
+    store.docs.update(copy.deepcopy(baseline_docs))
+    metrics.update(calls=0, mode="normal", images=[], commits=[], creation_ids=[])
+    verifier.revoked = False
+    return {"reset": "synthetic-only"}
+
 
 @api.get("/__test/status")
 def status():
@@ -192,7 +224,7 @@ def status():
 
 @api.post("/__test/mode/{mode}")
 def mode(mode: str):
-    if mode not in {"normal", "advance_action", "waiting", "revoked"}:
+    if mode not in {"normal", "advance_action", "waiting", "revoked", "lose_create_response"}:
         raise BoundaryError(400, "Unknown test mode")
     metrics["mode"] = mode
     verifier.revoked = mode == "revoked"
@@ -218,11 +250,11 @@ def page():
 # Reject a dirty port instead of accidentally testing an unrelated local server.
 import socket
 
-for port in [8100, 8002, 8871]:
+for port in [8102, 8002, 8871]:
     with socket.socket() as check:
         check.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         check.bind(("127.0.0.1", port))
-for app, port in [(upstream, 8100), (target, 8871)]:
+for app, port in [(upstream, 8102), (target, 8871)]:
     threading.Thread(
         target=lambda a=app, p=port: uvicorn.run(
             a, host="127.0.0.1", port=p, log_level="warning", access_log=False

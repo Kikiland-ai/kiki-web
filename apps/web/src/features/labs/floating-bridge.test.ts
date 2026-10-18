@@ -2,6 +2,7 @@
 import { afterEach, it, expect, vi } from 'vitest';
 import { createFloatingPublisher, type CaptureTrack } from './floating-bridge';
 import receipt from './__fixtures__/python-execution.json';
+import { currentScope } from './floating-guidance';
 import { LabExecutionStateSchema } from '../../contracts/lab-execution';
 const message = (value: object, origin = location.origin, source: MessageEventSource = window) => window.dispatchEvent(new MessageEvent('message', { origin, source, data: { channel: 'kiki-floating-guidance', direction: 'extension', ...value } }));
 const track = (handle = 'bound', origin = 'https://matlab.mathworks.com', surface = 'browser') => ({ getSettings: () => ({ displaySurface: surface }), getCaptureHandle: () => ({ handle, origin }) }) as CaptureTrack;
@@ -109,4 +110,58 @@ it('rejects stale ownership and ignores a rejection belonging to an earlier hell
   message({ type: 'response', bridge_id: latest.bridge_id, result: { ok: false, error: 'stale_stream_or_generation' } }); await Promise.resolve();
   expect(publisher.status()).toMatchObject({ superseded: true, bound: false });
   const count = post.mock.calls.length; publisher.changed(); expect(post.mock.calls).toHaveLength(count);
+});
+it('filters identity-bearing replies and includes stream/generation on command results and bye', async () => {
+  const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {}), command = vi.fn(async () => {});
+  const publisher = createFloatingPublisher({ onCommand: command }); disposers.push(() => publisher.dispose());
+  const hello = post.mock.calls.at(-1)![0];
+  const result = { ok: true, generation: 7, binding: null };
+  message({ type: 'response', bridge_id: hello.bridge_id, stream_id: 'another-publisher', result });
+  await Promise.resolve(); expect(publisher.status().present).toBe(false);
+  message({ type: 'response', bridge_id: hello.bridge_id, stream_id: hello.stream_id, result });
+  await Promise.resolve();
+  message({ type: 'fg_command', command: 'pause', request_id: 'req' });
+  await Promise.resolve();
+  expect(command).toHaveBeenCalledTimes(1);
+  expect(post.mock.calls.map(c => c[0]).find(m => m.type === 'reader_command_result')).toMatchObject({ stream_id: hello.stream_id, generation: 7, request_id: 'req', ok: true });
+  publisher.dispose();
+  expect(post.mock.calls.at(-1)![0]).toMatchObject({ type: 'reader_bye', stream_id: hello.stream_id, generation: 7 });
+});
+it('ignores commands while superseded and never acknowledges a late command for its replacement', async () => {
+  const { publisher, post, command } = await setup();
+  let finish!: () => void; command.mockImplementationOnce(() => new Promise<void>(r => finish = r));
+  message({ type: 'fg_command', command: 'pause', request_id: 'old' });
+  message({ type: 'fg_superseded' });
+  message({ type: 'fg_command', command: 'resume', request_id: 'stale' });
+  finish(); await Promise.resolve();
+  expect(command).toHaveBeenCalledTimes(1);
+  expect(post.mock.calls.filter(c => c[0].type === 'reader_command_result')).toHaveLength(0);
+  expect(publisher.status().superseded).toBe(true);
+});
+it('an overlapping old publisher cannot recheck or publish after its replacement owns the document', async () => {
+  const { publisher: old, post, command } = await setup();
+  const replacement = createFloatingPublisher({ onCommand: async () => {} }); disposers.push(() => replacement.dispose());
+  const count = post.mock.calls.length;
+  old.recheck(); old.changed();
+  message({ type: 'fg_command', command: 'pause' });
+  expect(post.mock.calls).toHaveLength(count); expect(command).not.toHaveBeenCalled();
+});
+
+it('focuses the authoritative confirmation form only for a versioned current scope and publisher', async () => {
+  const { post, command } = await setup();
+  const form = document.createElement('form'); form.id = 'kiki-lab-confirmation'; form.tabIndex = -1;
+  form.scrollIntoView = vi.fn(); document.body.append(form);
+  try {
+    const state = LabExecutionStateSchema.parse(receipt.start);
+    const hello = post.mock.calls[0][0];
+    const request = { type: 'fg_command', command: 'focus_confirmation', command_version: 1, stream_id: hello.stream_id, generation: 2, lab_revision: state.revision, context: currentScope(state) };
+    message({ ...request, lab_revision: state.revision - 1 });
+    message({ ...request, generation: 1 });
+    message({ ...request, command_version: 0 });
+    message({ ...request, context: { ...currentScope(state), visit_id: 'old-visit' } });
+    expect(form.scrollIntoView).not.toHaveBeenCalled();
+    message(request);
+    expect(form.scrollIntoView).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).toBe(form); expect(command).not.toHaveBeenCalled();
+  } finally { form.remove(); }
 });
