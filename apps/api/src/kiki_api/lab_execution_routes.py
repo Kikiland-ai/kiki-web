@@ -212,10 +212,26 @@ def register_lab_execution_routes(app, identity, backend, call, settings):
 
     @app.websocket(ROOT + "/screen-sessions/{sid}/stream")
     async def stream(ws: WebSocket, prep_id: str, sid: str):
-        ticket_value = ws.query_params.get("ticket", "")
-        # Uvicorn uses this scope for its accept/close log: never log capabilities.
+        # Capabilities in URLs are recorded by Cloud Run ingress before ASGI.
+        # Only local legacy clients may use query tickets; release uses header protocols.
+        query_ticket = ws.query_params.get("ticket", "")
+        offered = [part.strip() for part in ws.headers.get("sec-websocket-protocol", "").split(",")]
+        protocol = None
+        if len(offered) == 2 and offered[0] == "kiki-lab.v1" and offered[1]:
+            protocol, ticket_value = offered
+        elif settings.lab_execution_mode == "local" and not ws.headers.get(
+            "sec-websocket-protocol"
+        ):
+            ticket_value = query_ticket
+        else:
+            await ws.close(code=1008)
+            return
         ws.scope["query_string"] = b""
-        if ws.headers.get("origin") not in settings.cors_origins or tickets is None:
+        if (
+            (settings.lab_execution_mode == "cloud" and query_ticket)
+            or ws.headers.get("origin") not in settings.cors_origins
+            or tickets is None
+        ):
             await ws.close(code=1008)
             return
         tasks = []
@@ -244,7 +260,7 @@ def register_lab_execution_routes(app, identity, backend, call, settings):
             link = await anyio.to_thread.run_sync(execution.link, uid, prep_id)
             execution.owns_screen(link, sid)
             async with execution.upstream.socket(sid, uid) as upstream:
-                await ws.accept()
+                await ws.accept(subprotocol=protocol)
 
                 async def browser_to_backend():
                     while True:

@@ -43,8 +43,9 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
     async channel(id, sid, onDisconnect, signal) {
       const ticket = z.object({ ticket: z.string().max(2048), expiresInSeconds: z.literal(60) }).parse(await (await request(id, '/stream-ticket', 'POST', { screenSessionId: sid }, signal)).json());
       const url = new URL(root(id) + `/screen-sessions/${encodeURIComponent(sid)}/stream`);
-      url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:'; url.searchParams.set('ticket', ticket.ticket);
-      const socket = new Socket(url.toString());
+      url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+      // Cloud ingress logs request URLs before ASGI; capabilities belong in headers.
+      const socket = new Socket(url.toString(), ['kiki-lab.v1', ticket.ticket]);
       let ended = false, settled = false;
       let control: { status: string; resolve(): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
       let pending: { metadata: FrameMetadata; resolve(value: z.infer<typeof FrameReceiptSchema> | null): void; reject(error: Error): void; timer: ReturnType<typeof setTimeout> } | null = null;
