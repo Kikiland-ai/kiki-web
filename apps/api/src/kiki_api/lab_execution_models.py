@@ -68,6 +68,9 @@ class ExecutionLink(WireModel):
     contentVersion: str
     createdAt: str
     operationKey: str
+    # Fixed at reservation so a retried create sends the same body under operationKey.
+    # Absent on reservations made before create retries existed.
+    modelName: str | None = Field(default=None, min_length=1, max_length=160)
     status: Literal["creating", "linked"] = "creating"
     screenSessions: list[str] = Field(default_factory=list, max_length=20)
     monitoring: Literal["connecting", "active", "paused", "disconnected", "completed"] = (
