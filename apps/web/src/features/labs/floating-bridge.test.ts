@@ -110,3 +110,38 @@ it('rejects stale ownership and ignores a rejection belonging to an earlier hell
   expect(publisher.status()).toMatchObject({ superseded: true, bound: false });
   const count = post.mock.calls.length; publisher.changed(); expect(post.mock.calls).toHaveLength(count);
 });
+it('filters identity-bearing replies and includes stream/generation on command results and bye', async () => {
+  const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {}), command = vi.fn(async () => {});
+  const publisher = createFloatingPublisher({ onCommand: command }); disposers.push(() => publisher.dispose());
+  const hello = post.mock.calls.at(-1)![0];
+  const result = { ok: true, generation: 7, binding: null };
+  message({ type: 'response', bridge_id: hello.bridge_id, stream_id: 'another-publisher', result });
+  await Promise.resolve(); expect(publisher.status().present).toBe(false);
+  message({ type: 'response', bridge_id: hello.bridge_id, stream_id: hello.stream_id, result });
+  await Promise.resolve();
+  message({ type: 'fg_command', command: 'pause', request_id: 'req' });
+  await Promise.resolve();
+  expect(command).toHaveBeenCalledTimes(1);
+  expect(post.mock.calls.map(c => c[0]).find(m => m.type === 'reader_command_result')).toMatchObject({ stream_id: hello.stream_id, generation: 7, request_id: 'req', ok: true });
+  publisher.dispose();
+  expect(post.mock.calls.at(-1)![0]).toMatchObject({ type: 'reader_bye', stream_id: hello.stream_id, generation: 7 });
+});
+it('ignores commands while superseded and never acknowledges a late command for its replacement', async () => {
+  const { publisher, post, command } = await setup();
+  let finish!: () => void; command.mockImplementationOnce(() => new Promise<void>(r => finish = r));
+  message({ type: 'fg_command', command: 'pause', request_id: 'old' });
+  message({ type: 'fg_superseded' });
+  message({ type: 'fg_command', command: 'resume', request_id: 'stale' });
+  finish(); await Promise.resolve();
+  expect(command).toHaveBeenCalledTimes(1);
+  expect(post.mock.calls.filter(c => c[0].type === 'reader_command_result')).toHaveLength(0);
+  expect(publisher.status().superseded).toBe(true);
+});
+it('an overlapping old publisher cannot recheck or publish after its replacement owns the document', async () => {
+  const { publisher: old, post, command } = await setup();
+  const replacement = createFloatingPublisher({ onCommand: async () => {} }); disposers.push(() => replacement.dispose());
+  const count = post.mock.calls.length;
+  old.recheck(); old.changed();
+  message({ type: 'fg_command', command: 'pause' });
+  expect(post.mock.calls).toHaveLength(count); expect(command).not.toHaveBeenCalled();
+});

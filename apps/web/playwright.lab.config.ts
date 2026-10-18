@@ -3,6 +3,7 @@ import { defineConfig } from '@playwright/test';
 const python = process.platform === 'win32' ? '..\\api\\.venv\\Scripts\\python.exe' : '../api/.venv/bin/python';
 export default defineConfig({
   testDir: './tests/lab-screen-share', workers: 1, timeout: 120000,
+  outputDir: './test-artifacts/lab-browser-results',
   use: { baseURL: 'http://127.0.0.1:5174', actionTimeout: 15000 },
   webServer: [
     { command: 'npm run dev -- --port 5174', url: 'http://127.0.0.1:5174', reuseExistingServer: false },

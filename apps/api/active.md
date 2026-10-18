@@ -1,3 +1,41 @@
+## Source publication authorized — 18 October 2026
+
+User requested the verified web integration PR from `fix/lab-command-lifecycle`
+into unchanged main `15628669372853d1165ed6a97474c4a0608bfc9d`. API production
+source/schema and locks remain unchanged; the API diff contains the isolated
+synthetic browser harness and status notes. The recorded 145 API tests and
+Ruff/schema/contract checks pass. Publication is source-only; see GitHub for PR/CI
+state and the web current status for the full verification and connected gates.
+Next: source review and coordinated Mac/backend acceptance. The checkpoint below
+records the pre-publication state.
+
+---
+
+## Next local integration verification — 18 October 2026
+
+Base `15628669372853d1165ed6a97474c4a0608bfc9d` (merged PR #12).
+All-ten metadata/private delivery and pending-create POST recovery already exist.
+145 API tests PASS on Python 3.12.15 with UTF-8 enabled. Synthetic browser harness
+now routes only its test upstream to 8102, preserving production's exact local
+8100 allowlist and leaving the running real backend untouched. It has isolated
+in-memory reset/lost-create-response injection for the full browser regressions.
+No production API schema/storage migration or auth fallback is introduced.
+Five canonical-extension browser cases PASS, including same-lab lost-create
+recovery after reload and the full twelve-stage synthetic response/review path.
+Ruff/format, exact OpenAPI and Python-to-React contracts PASS. These are doubles,
+not real Firebase/private-delivery acceptance. Latest live backend receipt is
+stopped and 8100 refuses health; its owner must provide fresh running provenance
+and authenticated smoke. No restart was performed here. Intended cloud target is
+KiKi / `kiki-512012`; no live config/data cutover was made.
+Last completed: local API/contracts and synthetic browser verification. Exact next:
+review/adopt the patch on Mac and arrange authorized connected acceptance with
+the backend owner. Private delivery, cloud resources/access and durable state remain
+separate gates; production API source/schema and both lockfiles are unchanged.
+See [web current status](../web/active.md) and
+[integration plan](../../docs/plans/next-integration-2026-10-18.md).
+
+---
+
 ## PR #12 opened; #9/#10/#11 merged — 18 October 2026
 
 [PR #12: Integrate all ten CAM modules with shared rendering and scoped narration](https://github.com/Kikiland-ai/kiki-web/pull/12) is open (not draft) into `main`, from `integration/all-cam-2026-10-18`; it remains open for review. User explicitly authorized this source publication and merging #9/#10/#11. #9 merged as `feed380c17862ccc77a0133ffc8971f598ae5728`; #11 was retargeted to main and merged as `99ea53105fe0b2f02ab3b6dc5f0a74bb0d049f9a`; #10 merged as `7eb394592f3cf6a56f981363e9ee490c89c0b651`. API/web CI passed for each. The dependency order was #9 → #11 → #10. #10's documentation conflicts were resolved preserving both histories; its combined validation passed 213 frontend/124 API tests and 21 sample journey/preferences/lab-input browser cases.
