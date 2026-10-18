@@ -546,3 +546,14 @@ User requested commit/push of the completed work to Kikiland-ai/kiki-web. Prepar
 The user explicitly selected **akshitanitr** as author/committer, overriding the older Arpan identity note in the source repository. Authenticated GitHub profile and repository push permission were verified. The integration branch is a reviewable checkpoint; main is not force-pushed or rewritten. Current implementation/acceptance above remains authoritative; no deployment or Firebase write is performed by publishing source.
 
 Fresh publication checkout verification: locked npm/uv install, 80 Python / 100 frontend / full 67 browser / 28 source-model checks, lint/format/typecheck/build, source-case validation, ten actual Python→React response-envelope checks and production fixture/key exclusion pass. Browser checks used this checkout's own server on port 5176. Dependency audit: zero advisories. Staged source contains no local environment, private key/token, dependency/cache/test artifact or oversized file.
+
+
+## Full cloud lane C — 18 October 2026
+
+Isolated full-cloud source now has atomic shared Firestore capabilities containing only verified uid/auth_time/exp grants, periodic Firebase revocation/disabled/expiry checks, exact origin/owner/preparation/session bindings, and keyless engine-audience ID tokens on HTTP/SSE/WebSocket. The bearer is never persisted. Local mode remains worker-local.
+
+Web capture awaits the held frame check before another upload. Existing generation cancellation/command queue retained. Extension builder0.1.2 adds exact https://kiki-512012.web.app; version1 publisher/context/revision-bound confirmation handoff focuses the authoritative reader form without selecting, writing or submitting student evidence. Stale drafts remain separate.
+
+Checks:148 API passed/1 opt-in skip before the extra cloud-route regression; latest focused23 passed.247 web tests, TypeScript/changed-file ESLint passed before the final copy notice. Actual named KiKi Firestore two-client contention1 passed, unique synthetic capability document cleaned up; no learner/provider changes. Extension lifecycle8 pass/1 optional skip; core test blocked missing ignored json_stream_site/dist/server/index.js.
+
+Hosted acceptance remains separate: actual IAM-private transport, real Google revocation, hosted Share/masks/lifecycle and student CP5–12 remain pending. Exact next: integrator builds/reviews/deploys managed-secret private engine/API then validates hosted transport and deliberate student acceptance. Per-ID evidence: full-cloud outputs/lane-c-evidence.md.

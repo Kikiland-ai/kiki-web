@@ -1,0 +1,15 @@
+**
+!apps/
+!apps/api/
+!apps/api/Dockerfile
+!apps/api/pyproject.toml
+!apps/api/uv.lock
+!apps/api/src/
+!apps/api/src/**
+!data-model/
+!data-model/media/
+!data-model/media/cam-contract/
+!data-model/media/cam-contract/**
+**/__pycache__/
+**/*.pyc
+**/.env*

@@ -23,7 +23,7 @@ from .lab_execution_models import (
     StreamTicket,
     StreamTicketRequest,
 )
-from .lab_tickets import StreamTickets
+from .lab_tickets import FirestoreTicketStore, StreamTickets
 from .lab_upstream import UNAVAILABLE
 from .models import Identity
 
@@ -65,7 +65,12 @@ class ExecutionBodyLimit:
 def register_lab_execution_routes(app, identity, backend, call, settings):
     user_dep = Annotated[Identity, Depends(identity)]
     tickets = (
-        StreamTickets(settings.lab_proxy_secret.get_secret_value())
+        StreamTickets(
+            settings.lab_proxy_secret.get_secret_value(),
+            store=(lambda: FirestoreTicketStore(backend().learning.client))
+            if settings.lab_execution_mode == "cloud"
+            else None,
+        )
         if settings.lab_proxy_secret
         else None
     )
@@ -107,7 +112,22 @@ def register_lab_execution_routes(app, identity, backend, call, settings):
         link = await anyio.to_thread.run_sync(execution.link, user.uid, prep_id)
         execution.owns_screen(link, body.screenSessionId)
         token = request.headers["authorization"].split(None, 1)[1]
-        return StreamTicket(ticket=tickets.issue(user.uid, prep_id, body.screenSessionId, token))
+        origin = request.headers.get("origin")
+        if settings.lab_execution_mode == "cloud" and origin not in settings.cors_origins:
+            raise BoundaryError(403, "Open Lab mode from Kiki.")
+        grant = (
+            await anyio.to_thread.run_sync(
+                lambda: call(lambda: backend().verifier.stream_grant(token))
+            )
+            if settings.lab_execution_mode == "cloud"
+            else token
+        )
+        value = await anyio.to_thread.run_sync(
+            lambda: call(
+                lambda: tickets.issue(user.uid, prep_id, body.screenSessionId, grant, origin)
+            )
+        )
+        return StreamTicket(ticket=value)
 
     @app.post(ROOT + "/attach", response_model=ExecutionEnvelope)
     async def attach(prep_id: str, body: AttachExecution, user: user_dep):
@@ -202,10 +222,21 @@ def register_lab_execution_routes(app, identity, backend, call, settings):
         execution = None
         uid = None
         try:
-            lease = tickets.consume(ticket_value, prep_id, sid)
-            user = await anyio.to_thread.run_sync(
-                lambda: call(lambda: backend().verifier.verify(lease["token"]))
+            lease = await anyio.to_thread.run_sync(
+                lambda: call(
+                    lambda: tickets.consume(ticket_value, prep_id, sid, ws.headers.get("origin"))
+                )
             )
+
+            def verify_lease():
+                verifier = backend().verifier
+                return (
+                    verifier.verify_stream_grant(lease["grant"])
+                    if "grant" in lease
+                    else verifier.verify(lease["token"])
+                )
+
+            user = await anyio.to_thread.run_sync(lambda: call(lambda: verify_lease()))
             if user.uid != lease["uid"]:
                 raise BoundaryError(401, "Sign in again.")
             uid = user.uid
@@ -250,9 +281,7 @@ def register_lab_execution_routes(app, identity, backend, call, settings):
                 async def watch_identity():
                     while True:
                         await asyncio.sleep(AUTH_RECHECK_SECONDS)
-                        await anyio.to_thread.run_sync(
-                            lambda: call(lambda: backend().verifier.verify(lease["token"]))
-                        )
+                        await anyio.to_thread.run_sync(lambda: call(lambda: verify_lease()))
                         await anyio.to_thread.run_sync(execution.access, uid, prep_id)
 
                 tasks = [

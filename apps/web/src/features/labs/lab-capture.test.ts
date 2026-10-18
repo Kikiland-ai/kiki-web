@@ -254,3 +254,22 @@ it('declares only the current server-defined condition on an explicit action and
   expect(api.context).toHaveBeenCalledWith('prep-test', { revision: fault.revision, action: 'condition', condition: 'phase_fault' }, expect.any(AbortSignal));
   expect(connection.view().state?.workspace.condition).toBe('phase_fault');
 });
+
+it('keeps the admitted frame current while a held screen check is pending', async () => {
+  const { api, channel } = setup();
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
+  vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation(callback => callback(new Blob(['jpg'])));
+  let release!: () => void;
+  api.check.mockImplementationOnce(() => new Promise((_, reject) => { release = () => reject(new Error('Controlled completion')); }));
+  vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  try {
+    await connection.share();
+    await vi.waitFor(() => expect(api.check).toHaveBeenCalledTimes(1));
+    await vi.advanceTimersByTimeAsync(8000);
+    expect(channel.sendFrame).toHaveBeenCalledTimes(1);
+    expect(connection.view().reading).toBe(true);
+    release(); await vi.waitFor(() => expect(connection.view().reading).toBe(false));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(channel.sendFrame).toHaveBeenCalledTimes(2);
+  } finally { vi.useRealTimers(); }
+});

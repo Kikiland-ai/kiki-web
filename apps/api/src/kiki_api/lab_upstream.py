@@ -2,7 +2,11 @@
 
 from contextlib import asynccontextmanager
 
+import anyio
 import httpx
+from google.auth.exceptions import GoogleAuthError
+from google.auth.transport.requests import Request
+from google.oauth2.id_token import fetch_id_token
 from websockets.asyncio.client import connect
 
 from .backend import BoundaryError
@@ -12,10 +16,14 @@ MAX_JSON_BYTES = 1_000_000
 
 
 class LabUpstream:
-    def __init__(self, settings, transport=None):
+    def __init__(self, settings, transport=None, identity_token=None):
         self.origin = settings.lab_backend_origin
         self.secret = settings.lab_proxy_secret.get_secret_value()
         self.transport = transport
+        self.cloud = settings.lab_execution_mode == "cloud"
+        self.identity_token = identity_token or (
+            lambda audience: fetch_id_token(Request(), audience)
+        )
 
     def headers(self, uid, operation_key=None):
         headers = {
@@ -23,6 +31,8 @@ class LabUpstream:
             "x-kiki-proxy-key": self.secret,
             "Origin": self.origin,
         }
+        if self.cloud:
+            headers["Authorization"] = "Bearer " + self.identity_token(self.origin)
         if operation_key:
             headers["Idempotency-Key"] = operation_key
         return headers
@@ -30,6 +40,7 @@ class LabUpstream:
     @asynccontextmanager
     async def response(self, method, path, uid, body=None, operation_key=None):
         try:
+            headers = await anyio.to_thread.run_sync(lambda: self.headers(uid, operation_key))
             async with httpx.AsyncClient(
                 base_url=self.origin,
                 transport=self.transport,
@@ -37,9 +48,7 @@ class LabUpstream:
                 timeout=httpx.Timeout(45, connect=5),
                 trust_env=False,
             ) as client:
-                async with client.stream(
-                    method, path, headers=self.headers(uid, operation_key), json=body
-                ) as response:
+                async with client.stream(method, path, headers=headers, json=body) as response:
                     status = response.status_code
                     if status == 409:
                         raise BoundaryError(409, "The lab changed. Refresh before trying again.")
@@ -51,7 +60,7 @@ class LabUpstream:
                             "The lab request could not be completed. Refresh and try again.",
                         )
                     yield response
-        except (httpx.HTTPError, OSError, TimeoutError):
+        except (httpx.HTTPError, GoogleAuthError, OSError, TimeoutError):
             raise BoundaryError(503, UNAVAILABLE) from None
 
     async def request(self, method, path, uid, body=None, operation_key=None):
@@ -74,9 +83,10 @@ class LabUpstream:
     async def socket(self, sid, uid):
         origin = self.origin.replace("https://", "wss://").replace("http://", "ws://")
         try:
+            headers = await anyio.to_thread.run_sync(lambda: self.headers(uid))
             async with connect(
                 f"{origin}/screen-sessions/{sid}/stream",
-                additional_headers=self.headers(uid),
+                additional_headers=headers,
                 open_timeout=5,
                 close_timeout=2,
                 max_size=MAX_JSON_BYTES,
@@ -84,5 +94,5 @@ class LabUpstream:
                 proxy=None,
             ) as connection:
                 yield connection
-        except (OSError, TimeoutError):
+        except (GoogleAuthError, OSError, TimeoutError):
             raise BoundaryError(503, UNAVAILABLE) from None

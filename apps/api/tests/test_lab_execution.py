@@ -575,3 +575,60 @@ def test_upstream_settings_refuse_unapproved_origins(origin):
             lab_backend_origin=origin,
             lab_proxy_secret=SECRET,
         )
+
+
+def test_cloud_ticket_cross_app_route_origin_owner_and_revocation(execution, monkeypatch):
+    import time
+
+    from test_learning import Transaction
+
+    client, _, services, _, store, path = execution
+    linked(execution)
+    sid = client.post(path + "/screen-sessions", headers=headers(), json={}).json()["session_id"]
+    verifier = services.verifier
+    verifier.stream_grant = lambda token: {
+        "uid": verifier.verify(token).uid,
+        "auth_time": int(time.time()),
+        "exp": int(time.time()) + 3600,
+    }
+    verifier.verify_stream_grant = lambda grant: verifier.verify("test-" + grant["uid"])
+    monkeypatch.setattr(Transaction, "delete", lambda self, ref: self.set(ref, {}), raising=False)
+    settings = Settings(
+        _env_file=None,
+        firebase_project_id="unit-test-project",
+        lab_execution_mode="cloud",
+        lab_backend_origin="https://private-engine.example.run.app",
+        lab_proxy_secret=SECRET,
+        cors_origins=[ORIGIN],
+    )
+    first, second = [
+        TestClient(create_app(settings, lambda: services), raise_server_exceptions=False)
+        for _ in range(2)
+    ]
+
+    def issue(client, uid="a", origin=ORIGIN):
+        return client.post(
+            path + "/stream-ticket",
+            headers={**headers(uid), "Origin": origin},
+            json={"screenSessionId": sid},
+        )
+
+    assert issue(first, origin="https://foreign.example").status_code == 403
+    assert issue(first, uid="b").status_code == 404
+    value = issue(first).json()["ticket"]
+    url = path + f"/screen-sessions/{sid}/stream?ticket={value}"
+    with second.websocket_connect(url, headers={"Origin": ORIGIN}) as socket:
+        assert socket.receive_json()["type"] == "connected"
+    with pytest.raises(WebSocketDisconnect):
+        first.websocket_connect(url, headers={"Origin": ORIGIN}).__enter__()
+    value = issue(first).json()["ticket"]
+    verifier.revoked = True
+    with pytest.raises(WebSocketDisconnect):
+        second.websocket_connect(
+            path + f"/screen-sessions/{sid}/stream?ticket={value}", headers={"Origin": ORIGIN}
+        ).__enter__()
+    assert all(
+        "token" not in str(data)
+        for key, data in store.docs.items()
+        if key.startswith("labStreamCapabilities/")
+    )

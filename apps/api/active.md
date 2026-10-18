@@ -318,3 +318,17 @@ Existing authenticated C-AM-04 lesson reads its already-versioned authored sourc
 **80 Python / 100 frontend / full 67 browser**, Ruff/ESLint/typecheck/build, ten actual Python→React envelope checks and OpenAPI export pass. Numerical browser tests verify real SVG positions, not merely a changed label. Connected real Google lesson/200 Hz change/reset/Odia term sheet, Step 2 save/reload and a 390 px emulated view verified. No graded learner data or lab preparation changed. Earlier pending quiz/lab acceptance entries above are historical; ../web/active.md is current. Exact next: student reviews C-AM-04 diagrams, then reviewed narration content/provider work. Aditya's trusted monitoring/assessment stays deferred.
 
 Shared kiki-web publication: the Python slice and required content snapshot are included on integration/connected-kiki-2026-10-16. A fresh locked environment passes all 80 Python checks and actual response-contract validation; no credentials or live database access are required for those tests. Root TEAM_HANDOFF.md documents team setup. Personal one-off IAM setup script, local env/ADC/tools and generated receipts are excluded.
+
+
+## Full cloud lane C — 18 October 2026
+
+Isolated full-cloud source now has atomic shared Firestore capabilities containing only verified uid/auth_time/exp grants, periodic Firebase revocation/disabled/expiry checks, exact origin/owner/preparation/session bindings, and keyless engine-audience ID tokens on HTTP/SSE/WebSocket. The bearer is never persisted. Local mode remains worker-local.
+
+Web capture awaits the held frame check before another upload. Existing generation cancellation/command queue retained. Extension builder0.1.2 adds exact https://kiki-512012.web.app; version1 publisher/context/revision-bound confirmation handoff focuses the authoritative reader form without selecting, writing or submitting student evidence. Stale drafts remain separate.
+
+Checks:148 API passed/1 opt-in skip before the extra cloud-route regression; latest focused23 passed.247 web tests, TypeScript/changed-file ESLint passed before the final copy notice. Actual named KiKi Firestore two-client contention1 passed, unique synthetic capability document cleaned up; no learner/provider changes. Extension lifecycle8 pass/1 optional skip; core test blocked missing ignored json_stream_site/dist/server/index.js.
+
+Hosted acceptance remains separate: actual IAM-private transport, real Google revocation, hosted Share/masks/lifecycle and student CP5–12 remain pending. Exact next: integrator builds/reviews/deploys managed-secret private engine/API then validates hosted transport and deliberate student acceptance. Per-ID evidence: full-cloud outputs/lane-c-evidence.md.
+
+## Cloud packaging and publication — 18 October 2026
+Added Dockerfile, frozen uv installation, PORT-aware cloud entrypoint and Cloud Build configuration. Prepared generic all-ten v1 publisher is restricted to kiki-512012/kiki-firedb/kiki-web-bucket, reviewed dryrun SHA, no emulator hosts, initial head preconditions and full byte/document readback. Dryrun validates10 packages26 original WAVs and native C08. No cloud publication or image deploy yet. Next: reviewed source main, image build and private upstream acceptance.

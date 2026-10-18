@@ -2,6 +2,7 @@
 import { afterEach, it, expect, vi } from 'vitest';
 import { createFloatingPublisher, type CaptureTrack } from './floating-bridge';
 import receipt from './__fixtures__/python-execution.json';
+import { currentScope } from './floating-guidance';
 import { LabExecutionStateSchema } from '../../contracts/lab-execution';
 const message = (value: object, origin = location.origin, source: MessageEventSource = window) => window.dispatchEvent(new MessageEvent('message', { origin, source, data: { channel: 'kiki-floating-guidance', direction: 'extension', ...value } }));
 const track = (handle = 'bound', origin = 'https://matlab.mathworks.com', surface = 'browser') => ({ getSettings: () => ({ displaySurface: surface }), getCaptureHandle: () => ({ handle, origin }) }) as CaptureTrack;
@@ -144,4 +145,23 @@ it('an overlapping old publisher cannot recheck or publish after its replacement
   old.recheck(); old.changed();
   message({ type: 'fg_command', command: 'pause' });
   expect(post.mock.calls).toHaveLength(count); expect(command).not.toHaveBeenCalled();
+});
+
+it('focuses the authoritative confirmation form only for a versioned current scope and publisher', async () => {
+  const { post, command } = await setup();
+  const form = document.createElement('form'); form.id = 'kiki-lab-confirmation'; form.tabIndex = -1;
+  form.scrollIntoView = vi.fn(); document.body.append(form);
+  try {
+    const state = LabExecutionStateSchema.parse(receipt.start);
+    const hello = post.mock.calls[0][0];
+    const request = { type: 'fg_command', command: 'focus_confirmation', command_version: 1, stream_id: hello.stream_id, generation: 2, lab_revision: state.revision, context: currentScope(state) };
+    message({ ...request, lab_revision: state.revision - 1 });
+    message({ ...request, generation: 1 });
+    message({ ...request, command_version: 0 });
+    message({ ...request, context: { ...currentScope(state), visit_id: 'old-visit' } });
+    expect(form.scrollIntoView).not.toHaveBeenCalled();
+    message(request);
+    expect(form.scrollIntoView).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).toBe(form); expect(command).not.toHaveBeenCalled();
+  } finally { form.remove(); }
 });

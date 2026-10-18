@@ -1,5 +1,5 @@
 /** Reader bridge for the unchanged floating-guidance/v0.1 extension protocol. */
-import { FG_LIMITS, FG_SCHEMA, contentKey, projectSnapshot, type ProjectionInput } from './floating-guidance';
+import { FG_LIMITS, FG_SCHEMA, contentKey, currentScope, projectSnapshot, type ProjectionInput } from './floating-guidance';
 
 type Rect = { x: number; y: number; w: number; h: number };
 export type CaptureTrack = MediaStreamTrack & { getCaptureHandle?: () => { handle?: string; origin?: string } | null };
@@ -59,7 +59,15 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     }
   }
   async function command(message: Record<string, unknown>) {
-    if (disposed || superseded || currentPublisher !== ownership || generation === null || !['pause', 'resume'].includes(String(message.command))) return;
+    if (disposed || superseded || currentPublisher !== ownership || generation === null) return;
+    if (message.command === 'focus_confirmation') {
+      const state = source()?.state;
+      if (!state || message.command_version !== 1 || message.stream_id !== streamId || message.generation !== generation || message.lab_revision !== state.revision || JSON.stringify(message.context) !== JSON.stringify(currentScope(state))) return;
+      const form = document.getElementById('kiki-lab-confirmation');
+      form?.scrollIntoView({ block: 'start', behavior: 'smooth' }); form?.focus({ preventScroll: true });
+      return;
+    }
+    if (!['pause', 'resume'].includes(String(message.command))) return;
     const commandGeneration = generation;
     let ok = true;
     try { await onCommand(message.command as 'pause' | 'resume'); } catch { ok = false; }

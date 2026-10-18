@@ -1,0 +1,8 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-f', 'apps/api/Dockerfile', '-t', '${_IMAGE}', '.']
+images: ['${_IMAGE}']
+options:
+  logging: CLOUD_LOGGING_ONLY
+serviceAccount: projects/kiki-512012/serviceAccounts/kiki-build@kiki-512012.iam.gserviceaccount.com
+timeout: 900s
