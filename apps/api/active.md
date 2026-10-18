@@ -1,3 +1,58 @@
+## Hosted cloud release — 18 October 2026
+
+This current record supersedes the historical source-only/local-only statements below.
+The user authorized full cloud implementation, reviewed main publication and deployment.
+Application source main7c2e68fff9211fb2b8bc93c728231f17d51d53ed (PR14/15/16) is live at
+https://kiki-512012.web.app. API kiki-api-00002-qp9 serves100% from
+sha256:f90d84b08c2cdc42babcc60cdb17b8660059f7a8720d20abcc2059e311d05f4b,
+https://kiki-api-2j2ne7xpiq-el.a.run.app. Hosting release1792343073733000,
+version76587765327a4261 contains36hash-verified release files. No fixture/auth bypass,
+LOCAL BUNDLE, old-project config, private answer data or WAV payload is bundled.
+
+Cloud project kiki-512012 uses named kiki-firedb and private kiki-web-bucket. All-ten
+authored catalog68docs plus10immutable media records/26original WAVs were published,
+independently hash/MIME/read back; API runtime identity verified all42,934,644bytes.
+Canonical concept-media-storage/v1 JSON/checksum envelopes preserve nested logical
+records. C08 native revision cm-e0f086007cc9f2062af093f3 remains unchanged.
+
+API cloud tickets are atomic single-use capabilities with no stored Firebase bearer.
+Browser WebSocket URLs carry no credential; private subprotocol capability is consumed
+without echo, public kiki-lab.v1 is selected. Firebase expiry/revocation/disable checks,
+owner/enrollment and exact origin checks remain. Upstream Cloud Run uses the API
+runtime identity with audience tokens for HTTP/SSE/WebSocket, plus managed proxy1.
+Unauthenticated API401, foreign CORS400 and private engine403 passed deployed checks.
+
+Web holds frame replacement while a check is pending. Student confirmation uses the
+current reader context with stale drafts retained and explicit Use current step.
+Extension0.1.2 supports exact hosted origin and floating Confirm saved model at CP1/12;
+it focuses the student-owned form and never auto-answers or advances a checkpoint.
+
+Verification: web259 tests, API155passes/2opt-in skips, focused credential-free WS
+regressions, lint/type/build and reviewed GitHub CI passed. Independent hosted checks
+passed16negative/CORS/header/query-WS cases and all36served release hashes. Actual
+private transport/capture/Stop and named-database concurrency proofs use synthetic
+fixtures with zero provider calls; no synthetic pass is student completion.
+
+Engine source cb3e562b3f7140442e716b4f170100b3a2212955, revision kiki-lab-00003-hc4,
+has the human-approved first-trial shared limit: five total screen checks, at most
+fifteen provider HTTP attempts. Cap persists across labs/owners/replacements and
+provider-key count is bounded3. Do not reset/remove it without new authorization.
+
+Human reports hosted audio works and is doing own sign-in/learning. Full hosted
+acceptance remains pending native explicit Share, live analysis/confirmations,
+CP5–12, fresh quiz feedback/reload/sign-out, individual all26 audibility and approved
+separate identities/adversarial lifecycle. Preserve actual preferences and answers;
+do not reset onboarding to manufacture a new-user test. No learner/Auth migration.
+Known missing English, alignment and saved-model limitations remain unchanged.
+
+This documentation update does not rebuild or replace the above application images.
+Release/evidence manifests are in the full-cloud-build chat outputs. Last completed:
+deployment and independent negative/asset/media readback. Exact next: student-driven
+bounded live MATLAB trial with extension0.1.2, then Stop and record actual outcomes.
+See the other app's active.md for the paired API/frontend continuation.
+
+---
+
 ## Source publication authorized — 18 October 2026
 
 User requested the verified web integration PR from `fix/lab-command-lifecycle`
