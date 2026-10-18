@@ -616,16 +616,30 @@ def test_cloud_ticket_cross_app_route_origin_owner_and_revocation(execution, mon
     assert issue(first, origin="https://foreign.example").status_code == 403
     assert issue(first, uid="b").status_code == 404
     value = issue(first).json()["ticket"]
-    url = path + f"/screen-sessions/{sid}/stream?ticket={value}"
-    with second.websocket_connect(url, headers={"Origin": ORIGIN}) as socket:
+    url = path + f"/screen-sessions/{sid}/stream"
+    with pytest.raises(WebSocketDisconnect):
+        second.websocket_connect(url + f"?ticket={value}", headers={"Origin": ORIGIN}).__enter__()
+    for malformed in [["kiki-lab.v1"], ["other-protocol", value], ["kiki-lab.v1", value, "extra"]]:
+        with pytest.raises(WebSocketDisconnect):
+            second.websocket_connect(
+                url, headers={"Origin": ORIGIN}, subprotocols=malformed
+            ).__enter__()
+    with second.websocket_connect(
+        url, headers={"Origin": ORIGIN}, subprotocols=["kiki-lab.v1", value]
+    ) as socket:
+        assert socket.accepted_subprotocol == "kiki-lab.v1"
         assert socket.receive_json()["type"] == "connected"
     with pytest.raises(WebSocketDisconnect):
-        first.websocket_connect(url, headers={"Origin": ORIGIN}).__enter__()
+        first.websocket_connect(
+            url, headers={"Origin": ORIGIN}, subprotocols=["kiki-lab.v1", value]
+        ).__enter__()
     value = issue(first).json()["ticket"]
     verifier.revoked = True
     with pytest.raises(WebSocketDisconnect):
         second.websocket_connect(
-            path + f"/screen-sessions/{sid}/stream?ticket={value}", headers={"Origin": ORIGIN}
+            path + f"/screen-sessions/{sid}/stream",
+            headers={"Origin": ORIGIN},
+            subprotocols=["kiki-lab.v1", value],
         ).__enter__()
     assert all(
         "token" not in str(data)

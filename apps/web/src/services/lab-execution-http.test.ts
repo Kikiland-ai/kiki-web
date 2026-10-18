@@ -7,8 +7,8 @@ const prep = 'prep-12345678-1234-1234-1234-123456789abc';
 const auth = { getIdToken: async () => 'private-test-bearer' } as AuthService;
 const envelope = { schema: 'lab-execution/v1', preparationId: prep, backendLabId: receipt.start.lab_session_id, state: receipt.start };
 class Socket extends EventTarget {
-  static OPEN = 1; static last: Socket; readyState = 1; sent: unknown[] = []; url: string;
-  constructor(url: string) { super(); this.url = url; Socket.last = this; }
+  static OPEN = 1; static last: Socket; readyState = 1; sent: unknown[] = []; url: string; protocols: string | string[] | undefined;
+  constructor(url: string, protocols?: string | string[]) { super(); this.url = url; this.protocols = protocols; Socket.last = this; }
   send(value: unknown) { this.sent.push(value); }
   close() { this.readyState = 3; }
   packet(data: unknown) { this.dispatchEvent(new MessageEvent('message', { data: JSON.stringify(data) })); }
@@ -35,10 +35,12 @@ it('exposes only a valid 503 pending-creation code, never arbitrary error text o
     await expect(api.get(prep)).rejects.toMatchObject({ code: undefined, status });
   }
 });
-it('WebSocket URL contains only a one-time ticket and verifies frame acknowledgement identity', async () => {
-  const api = createLabExecutionApi('http://localhost:8002', auth, async () => Response.json({ ticket: 'one-use-capability', expiresInSeconds: 60 }), socketClass);
+it.each(['http://localhost:8002', 'https://kiki-api.example.run.app'])('WebSocket capability uses headers and a credential-free URL for %s', async baseUrl => {
+  const api = createLabExecutionApi(baseUrl, auth, async () => Response.json({ ticket: 'one-use-capability', expiresInSeconds: 60 }), socketClass);
   const onDisconnect = vi.fn(); const channel = await api.channel(prep, 'screen', onDisconnect);
-  expect(Socket.last.url).toContain('ticket=one-use-capability'); expect(Socket.last.url).not.toContain('private-test-bearer');
+  expect(new URL(Socket.last.url).search).toBe('');
+  expect(Socket.last.url).not.toContain('one-use-capability'); expect(Socket.last.url).not.toContain('private-test-bearer');
+  expect(Socket.last.protocols).toEqual(['kiki-lab.v1', 'one-use-capability']);
   const observation = { schema: 'screen-receiver/v1', session_id: 'screen' };
   Socket.last.packet({ type: 'connected', observation }); await channel.ready;
   const sharing = channel.command('capture_started');
