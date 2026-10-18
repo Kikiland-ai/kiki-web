@@ -34,4 +34,8 @@ try {
   media.checkManifestForLesson(manifest, lesson);
   if (manifest.unsupportedArtifacts.length || manifest.artifacts.length !== lesson.mediaExperience.artifacts.length) throw new Error('React does not render every published scene.');
   console.log('Python → React media lesson/manifest: passed');
+  const execution = await server.ssrLoadModule('/src/contracts/lab-execution.ts');
+  const inputReceipt = JSON.parse(await readFile(new URL('../../api/test-artifacts/lab-input-requirements.json', import.meta.url), 'utf8'));
+  execution.ExecutionRequirementsSchema.parse(inputReceipt);
+  console.log('Python → React lab input requirements: passed');
 } finally { await server.close(); }

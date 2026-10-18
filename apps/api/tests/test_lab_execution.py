@@ -1,11 +1,13 @@
 """Authenticated lab relay over deterministic doubles: no cloud, pixels or provider calls."""
 
 import asyncio
+import hashlib
 import json
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from copy import deepcopy
+from pathlib import Path
 from uuid import uuid4
 
 import httpx
@@ -55,6 +57,10 @@ class FakeUpstream:
         self.created = {}
         self.lock = threading.Lock()
         self.stream_gate = None
+        self.definition = json.loads(
+            Path(__file__).with_name("lab-input-definition.json").read_text()
+        )
+        self.policy = json.loads(Path(__file__).with_name("lab-input-policy.json").read_text())
 
     async def request(self, method, path, uid, body=None, operation_key=None):
         self.calls.append((method, path, uid, deepcopy(body), operation_key))
@@ -75,10 +81,24 @@ class FakeUpstream:
                         "revision": 1,
                         "status": "active",
                         "runtime": {"capture_status": "disconnected"},
+                        "definition": {
+                            "definition_sha256": hashlib.sha256(
+                                json.dumps(
+                                    self.definition,
+                                    sort_keys=True,
+                                    separators=(",", ":"),
+                                    ensure_ascii=False,
+                                ).encode()
+                            ).hexdigest()
+                        },
                     }
             if self.lose_create_response:
                 raise BoundaryError(503, "Lab tracking is unavailable; your progress is kept.")
             value = self.states[replay[1]]
+        elif path == "/lab-definition":
+            value = self.definition
+        elif path == "/lab-guidance-policy":
+            value = self.policy
         elif path == "/screen-sessions":
             value = {
                 "session_id": str(uuid4()),
@@ -223,6 +243,11 @@ def test_lost_create_response_is_replayed_with_the_saved_key_and_body(execution)
     upstream.lose_create_response = True
     assert client.post(path, headers=headers(), json={}).status_code == 503
     assert len(upstream.states) == 1
+    # Reload can now distinguish this recoverable reservation from an outage.
+    pending = client.get(path, headers=headers())
+    assert pending.status_code == 503
+    assert pending.json()["code"] == "lab_creation_pending"
+    assert "operationKey" not in pending.text and "modelName" not in pending.text
     # A later edit to the preparation must not change the replayed create body.
     store.docs[f"learners/a/labPreparations/{path.split('/')[2]}"]["projectRef"] = "Edited.slx"
     upstream.lose_create_response = False
@@ -247,8 +272,67 @@ def test_linked_or_legacy_reservations_read_instead_of_creating(execution):
     for key in ("backendLabId", "modelName"):
         record.pop(key)
     record["status"] = "creating"
+    legacy = client.get(path, headers=headers())
+    assert legacy.status_code == 503 and "code" not in legacy.json()
     assert client.post(path, headers=headers(), json={}).status_code == 503
     assert len([c for c in upstream.calls if c[1] == "/lab-sessions"]) == 1
+
+
+def test_http_response_loss_after_upstream_commit_recovers_the_same_execution(execution):
+    client, _, services, upstream, _, path = execution
+    drop = True
+
+    async def remote(request):
+        nonlocal drop
+        content, mime = await upstream.request(
+            request.method,
+            request.url.path,
+            request.headers["x-kiki-owner"],
+            json.loads(request.content) if request.content else None,
+            request.headers.get("idempotency-key"),
+        )
+        if request.method == "POST" and request.url.path == "/lab-sessions" and drop:
+            drop = False
+            # Commit happened; transport fails before apps/api receives any response.
+            raise httpx.ReadError("Controlled dropped create response", request=request)
+        return httpx.Response(200, content=content, headers={"Content-Type": mime})
+
+    settings = Settings(
+        _env_file=None,
+        lab_execution_mode="local",
+        firebase_project_id="unit-test-project",
+        lab_backend_origin="http://127.0.0.1:8100",
+        lab_proxy_secret=SECRET,
+    )
+    services.lab_executions.upstream = LabUpstream(settings, httpx.MockTransport(remote))
+    assert client.post(path, headers=headers(), json={}).status_code == 503
+    assert len(upstream.states) == 1
+    pending = client.get(path, headers=headers())
+    assert pending.json()["code"] == "lab_creation_pending"
+    recovered = client.post(path, headers=headers(), json={"recoverPending": True})
+    assert recovered.status_code == 200
+    lab_id = recovered.json()["backendLabId"]
+    assert list(upstream.states) == [lab_id]
+    assert client.get(path, headers=headers()).json()["backendLabId"] == lab_id
+    creates = [c for c in upstream.calls if c[1] == "/lab-sessions"]
+    assert len(creates) == 2 and creates[0][3:] == creates[1][3:]
+
+
+def test_recovery_never_reserves_a_new_operation_and_linked_recovery_is_read_only(execution):
+    client, _, _, upstream, store, path = execution
+    assert client.post(path, headers=headers(), json={"recoverPending": True}).status_code == 404
+    assert not upstream.states
+    value = linked(execution)
+    upstream.states[value["backendLabId"]]["status"] = "completed"
+    recovered = client.post(path, headers=headers(), json={"recoverPending": True})
+    assert recovered.json()["backendLabId"] == value["backendLabId"]
+    assert recovered.json()["state"]["status"] == "completed"
+    assert len([c for c in upstream.calls if c[1] == "/lab-sessions"]) == 1
+    key = next(k for k in store.docs if "/labExecutions/" in k)
+    del store.docs[key]
+    assert client.post(path, headers=headers(), json={"recoverPending": True}).status_code == 404
+    assert key not in store.docs
+    assert len(upstream.states) == 1
 
 
 def test_mutations_are_revisioned_and_screens_bound_to_the_preparation(execution):
@@ -280,6 +364,41 @@ def test_mutations_are_revisioned_and_screens_bound_to_the_preparation(execution
         "pointerActive": False,
         "assessmentStatus": "not_assessed",
     }
+
+
+def test_current_input_requirements_are_owner_protected_and_definition_bound(execution):
+    client, _, _, upstream, _, path = execution
+    linked(execution)
+    assert client.get(path + "/requirements").status_code == 401
+    assert client.get(path + "/requirements", headers=headers("b")).status_code == 404
+    response = client.get(path + "/requirements", headers=headers())
+    assert response.status_code == 200, response.text
+    value = response.json()
+    assert value["schema"] == "lab-input-requirements/v1"
+    assert len(value["checkpoints"]) == 12
+    first = value["checkpoints"][0]
+    assert first["criteria"][0]["id"] == "CP-DSB-01:workspace"
+    assert (
+        first["criteria"][0]["description"]
+        == upstream.definition["checkpoints"][0]["completion_criteria"][0]["description"]
+    )
+    assert value["checkpoints"][9]["criteria"][1]["responseKinds"] == ["observation"]
+    assert value["checkpoints"][10]["condition"] == "phase_fault"
+    assert value["checkpoints"][11]["criteria"][-1]["responseKinds"] == ["explanation"]
+    receipt = Path("test-artifacts/lab-input-requirements.json")
+    receipt.parent.mkdir(exist_ok=True)
+    receipt.write_text(json.dumps(value, ensure_ascii=False) + "\n", encoding="utf-8")
+    upstream.definition["checkpoints"][0]["completion_criteria"][0]["description"] = (
+        "Changed server definition"
+    )
+    assert client.get(path + "/requirements", headers=headers()).status_code == 503
+
+
+def test_invalid_input_policy_is_not_projected_as_current_requirements(execution):
+    client, _, _, upstream, _, path = execution
+    linked(execution)
+    upstream.policy["schema"] = "unknown-policy/v99"
+    assert client.get(path + "/requirements", headers=headers()).status_code == 503
 
 
 def test_request_limits_and_allowlist(execution):

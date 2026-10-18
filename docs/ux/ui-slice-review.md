@@ -1,3 +1,9 @@
+## Local lab-input continuation — 18 October 2026
+
+Isolated implementation branch `continuation/connected-learning-2026-10-18`; original connected trial services still use their existing checkout. In a saved lab, the new panel **Your observations and confirmations** loads the current server definition/policy, shows criterion descriptions, and offers a response kind, own-words field and optional confidence. Record response saves a student report. Learners explicitly choose criteria and describe reviewed evidence before Confirm selected criteria. No criteria are preselected and nothing is assessed by these forms.
+
+Review requires an active fresh checked screen in the expected condition; the server also checks image/context/visit and required student responses. If tracker condition differs, Declare intended condition records the learner's intent after their MATLAB action; it neither changes nor verifies MATLAB settings. After a context change, old drafts stay attached to their old context and Use current step opens a separate draft. Errors preserve text and require an explicit retry. Lost creation recovery uses Recover saved lab and never starts sharing. [Actual tests, remaining live gates and exact next action](../plans/connected-learning-continuation.md).
+
 ## Local screen-guidance walkthrough — 18 October 2026
 
 The PR #6 implementation is on `feature/lab-screen-share-implementation`; the user authorized source commit and push. No PR update, merge or deployment is included. Run the approved local setup in [the handoff](../../apps/web/LAB_SCREEN_SHARE_IMPLEMENTATION.md) before using5174; the isolated acceptance test servers are stopped after their run.

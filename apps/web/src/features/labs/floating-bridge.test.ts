@@ -52,3 +52,61 @@ it('publishes ordered unchanged-protocol snapshots on content changes and five-s
   expect(last.sequence).toBeGreaterThan(1);
   message({ type: 'fg_command', command: 'pause', request_id: 'request' }); await Promise.resolve();
 });
+it('a late hello from an unmounted controller cannot bind its replacement to the old generation', async () => {
+  const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {});
+  const old = createFloatingPublisher({ onCommand: async () => {} });
+  const oldHello = post.mock.calls[0][0]; old.dispose();
+  const current = createFloatingPublisher({ onCommand: async () => {} }); disposers.push(() => current.dispose());
+  current.source(() => ({ state: LabExecutionStateSchema.parse(receipt.start) }));
+  const newHello = post.mock.calls.map(c => c[0]).filter(m => m.type === 'reader_hello').at(-1);
+  expect(newHello.bridge_id).not.toBe(oldHello.bridge_id);
+  message({ type: 'response', bridge_id: oldHello.bridge_id, result: { ok: true, generation: 3, binding: { handle: 'old', target_origin: 'https://matlab.mathworks.com' } } });
+  await Promise.resolve(); expect(current.status().present).toBe(false);
+  message({ type: 'response', bridge_id: newHello.bridge_id, result: { ok: true, generation: 4, binding: { handle: 'bound', target_origin: 'https://matlab.mathworks.com' } } });
+  await Promise.resolve(); await Promise.resolve();
+  expect(current.matchesTarget(track())).toBe(true);
+  const snapshot = post.mock.calls.map(c => c[0]).filter(m => m.type === 'reader_snapshot').at(-1);
+  expect(snapshot.message).toMatchObject({ generation: 4, stream_id: newHello.stream_id });
+});
+it('coalesces startup announcements and double re-checks until hello completes', async () => {
+  const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {});
+  const publisher = createFloatingPublisher({ onCommand: async () => {} }); disposers.push(() => publisher.dispose());
+  publisher.recheck(); publisher.recheck(); message({ type: 'extension_present' });
+  expect(post.mock.calls.filter(c => c[0].type === 'reader_hello')).toHaveLength(1);
+  const first = post.mock.calls[0][0];
+  message({ type: 'response', bridge_id: first.bridge_id, result: { ok: true, generation: 5, binding: null } }); await Promise.resolve();
+  publisher.recheck(); publisher.recheck();
+  expect(post.mock.calls.filter(c => c[0].type === 'reader_hello')).toHaveLength(2);
+});
+it('a superseded or closed-target event cannot be undone by a late hello response', async () => {
+  const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {});
+  const publisher = createFloatingPublisher({ onCommand: async () => {} }); disposers.push(() => publisher.dispose());
+  const old = post.mock.calls[0][0]; message({ type: 'fg_superseded' });
+  message({ type: 'response', bridge_id: old.bridge_id, result: { ok: true, generation: 8, binding: { handle: 'bound', target_origin: 'https://matlab.mathworks.com' } } });
+  await Promise.resolve(); expect(publisher.status()).toMatchObject({ superseded: true, bound: false });
+  publisher.recheck(); const hello = post.mock.calls.map(c => c[0]).filter(m => m.type === 'reader_hello').at(-1);
+  message({ type: 'fg_target_closed' });
+  message({ type: 'response', bridge_id: hello.bridge_id, result: { ok: true, generation: 9, binding: { handle: 'bound', target_origin: 'https://matlab.mathworks.com' } } });
+  await Promise.resolve(); expect(publisher.status()).toMatchObject({ superseded: false, bound: false });
+});
+it('closes a pending hello on dispose without letting an old instance close its replacement', () => {
+  const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {});
+  const old = createFloatingPublisher({ onCommand: async () => {} });
+  const replacement = createFloatingPublisher({ onCommand: async () => {} });
+  old.dispose(); expect(post.mock.calls.filter(c => c[0].type === 'reader_bye')).toHaveLength(0);
+  replacement.dispose(); expect(post.mock.calls.filter(c => c[0].type === 'reader_bye')).toHaveLength(1);
+});
+it('rejects stale ownership and ignores a rejection belonging to an earlier hello generation', async () => {
+  const { publisher, post } = await setup();
+  const snapshot = post.mock.calls.map(c => c[0]).filter(m => m.type === 'reader_snapshot').at(-1);
+  publisher.recheck();
+  const hello = post.mock.calls.map(c => c[0]).filter(m => m.type === 'reader_hello').at(-1);
+  message({ type: 'response', bridge_id: hello.bridge_id, result: { ok: true, generation: 3, binding: { handle: 'bound', target_origin: 'https://matlab.mathworks.com' } } });
+  await Promise.resolve(); await Promise.resolve();
+  message({ type: 'response', bridge_id: snapshot.bridge_id, result: { ok: false, error: 'stale_stream_or_generation' } }); await Promise.resolve();
+  expect(publisher.status().superseded).toBe(false);
+  const latest = post.mock.calls.map(c => c[0]).filter(m => m.type === 'reader_snapshot').at(-1);
+  message({ type: 'response', bridge_id: latest.bridge_id, result: { ok: false, error: 'stale_stream_or_generation' } }); await Promise.resolve();
+  expect(publisher.status()).toMatchObject({ superseded: true, bound: false });
+  const count = post.mock.calls.length; publisher.changed(); expect(post.mock.calls).toHaveLength(count);
+});

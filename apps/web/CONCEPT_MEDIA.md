@@ -1,5 +1,9 @@
 # Preprocessed concept media
 
+## Current coverage audit — 18 October 2026
+
+The [current offline coverage ledger](../../docs/evidence/concept-coverage-2026-10-18.md) supersedes older statements below about absent recordings. Recovered backend source `f2dca8b806e4002411b5704e19f0f40681093298` contains metadata for 22 recordings: 16 per-placard Odia clips for C-AM-01/02/03/08 and six whole-concept Odia recordings. In the Mac source checkout all 22 WAV paths contain LFS pointers; three of those hashes also exist in the separate web C-AM-08 package. That package's eight English/Odia clips remain intact and its native publisher dry-run still verifies the same revision. The other recovered scenes are not implemented by this web slice. Current trial configuration has no private media bucket. Connected listening/artifact acceptance remains NOT RUN; no new media is published or generated.
+
 ## Sketchbook integration — 18 October 2026
 
 This package is now integrated locally into `redesign/sketchbook-refinement` with the static text-backed Library and all three component refinement passes. The phase scene uses the shared dark Signal Studio plot tokens and neutral Sketchbook controls. PR #2 source revision `df2de21`; PR #3 Windows fixes also applied. 154 frontend/103 Python tests and shared response contracts pass; native sample narration/phase checks pass. No bucket configured, media published, GitHub PR merged or source pushed in this integration. See [the integration evidence](../../docs/plans/sketchbook-pr-integration.md) for scope and remaining gates.
@@ -142,7 +146,7 @@ The production `dist` is now about 0.8 MB with **no WAV files** (previously 8.8 
    - Bounded retries and provider load.
    - Atomic publication. `publish()` is the atomic step to reuse.
 
-   Prepare all ten Analog Modulation concepts before expanding scope. The remaining nine concepts have no clips yet, and the job store and queue are undecided (`kiki-backend/docs/architecture/mixed-language-fastapi.md`).
+   Prepare all ten Analog Modulation concepts before expanding scope. See the current inventory above for existing recordings, their real-byte availability and the whole-concept/placard contract gap; do not regenerate compatible assets. The job store and queue are undecided (`kiki-backend/docs/architecture/mixed-language-fastapi.md`).
 5. **Opt-in continuous reading, guided states and evaluated sentence alignment.** The contract's `timing.kind` is the extension point. Do not add timestamps until alignment is evaluated.
 
 The 15 diode/material-balance/eigenvalue concepts need course/catalog/schema generalization first. The Python and Zod contracts still fix `planId` to Analog Modulation.

@@ -1,0 +1,3804 @@
+{
+  "schema": "kiki-concept-coverage/v1",
+  "scope": "offline source/bytes only; no connected acceptance",
+  "webBase": "44d2a0847a16b09fcdbfc865dcc5007f2d33a189",
+  "backendBase": "f2dca8b806e4002411b5704e19f0f40681093298",
+  "summary": {
+    "rows": 80,
+    "placards": 40,
+    "backendRecordingBytes": {
+      "git_lfs_pointer": 22
+    },
+    "backendNarrationScopes": {
+      "placard": 16,
+      "concept": 6
+    },
+    "sourceText": {
+      "PASS": 80
+    },
+    "usableLocalPlacardLanguageAudio": {
+      "BLOCKED": 72,
+      "PASS": 8
+    }
+  },
+  "recordings": [
+    {
+      "conceptId": "C-AM-01",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-01-definition"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-01-definition.or.wav",
+        "expectedSha256": "25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e",
+        "observedSha256": "021459821abcdce62310de24e054c55a9e359586cb3cd62797322b2202456a47",
+        "expectedBytes": 977634,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-01",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-01-concept"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-01-concept.or.wav",
+        "expectedSha256": "271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93",
+        "observedSha256": "a83d3b7eaeb0d8e6775284fdbeec14f81f4ec3acb52175b33b8e103302828295",
+        "expectedBytes": 2361954,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-01",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-01-application"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-01-application.or.wav",
+        "expectedSha256": "df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b",
+        "observedSha256": "d364c5eacf2233c05e883e64a5a5ded6d6463d9fa047a884c1fdfdda4ebaf2a7",
+        "expectedBytes": 783714,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-01",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-01-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-01-recap.or.wav",
+        "expectedSha256": "fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389",
+        "observedSha256": "ae9fed13cfe8d48051d95e74946632c2925e25cfebeba60ae11588e040259e16",
+        "expectedBytes": 829794,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-02",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-02-definition"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-02-definition.or.wav",
+        "expectedSha256": "eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0",
+        "observedSha256": "09f5f194a005cd6da4673396b25e37fd9d8d4f340f7a15a4dec53d622ba27fc1",
+        "expectedBytes": 559074,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-02",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-02-concept"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-02-concept.or.wav",
+        "expectedSha256": "f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1",
+        "observedSha256": "111011f20872d892addc1de8e42eb6fe57ba98abfe8f7047e2c550a3d19f8d63",
+        "expectedBytes": 1760994,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-02",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-02-application"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-02-application.or.wav",
+        "expectedSha256": "67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b",
+        "observedSha256": "974ca3f61df2c4bf6d27e62fca82b25df183b736b7158bba04597cce4ecdfc4b",
+        "expectedBytes": 443874,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-02",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-02-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-02-recap.or.wav",
+        "expectedSha256": "b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431",
+        "observedSha256": "657400b00e4f5c7a55d64cbceda2a7ab170438ecffca90db7c2a26717565e783",
+        "expectedBytes": 595554,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-03",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-03-definition"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-03-definition.or.wav",
+        "expectedSha256": "3d5eddba917790dc9558f1ebe140f0aaa3320160b0430e34d0bf467f8073f652",
+        "observedSha256": "1d7a771b7b929f34469d9440c5fec4b9c0bbe37deab9d73b9d92f6bdde690cc6",
+        "expectedBytes": 1021794,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-03",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-03-concept"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-03-concept.or.wav",
+        "expectedSha256": "d4e806484921fb4b205485c956f7c9ea6134cfc36167fa4b95b45efd43d785dc",
+        "observedSha256": "1222fd987b642aa7e0272f1b49edafc34c02fd025e150af74b2fbd62253820e5",
+        "expectedBytes": 2634594,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-03",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-03-application"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-03-application.or.wav",
+        "expectedSha256": "fbecfe3c85aa7e85f5a9fc4ff71a7368774a104d862fa2156ac58470a99925dd",
+        "observedSha256": "9ccbff6e4224856fd869fab5c251b762983b03ded2c9a97657a935c2f61bc15e",
+        "expectedBytes": 376674,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-03",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-03-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-03-recap.or.wav",
+        "expectedSha256": "ac8f98989bd55bd38909353e5bbc7df0fdaed2a736db79095a9b7efb2bf31fca",
+        "observedSha256": "30e5f2593aa1cf3ab03be5c1fda3f323e5882d67b26653e652af5a7594a94d0c",
+        "expectedBytes": 522594,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-04",
+      "scope": "concept",
+      "placardIds": [
+        "CARD-AM-04-definition",
+        "CARD-AM-04-concept",
+        "CARD-AM-04-application",
+        "CARD-AM-04-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "C-AM-04.or.wav",
+        "expectedSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+        "observedSha256": "56022ecc4eba64b8c95ec77b716af1097f60993c59aa73bef2e998ae9d362433",
+        "expectedBytes": 3986274,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-05",
+      "scope": "concept",
+      "placardIds": [
+        "CARD-AM-05-definition",
+        "CARD-AM-05-concept",
+        "CARD-AM-05-application",
+        "CARD-AM-05-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "C-AM-05.or.wav",
+        "expectedSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+        "observedSha256": "d3a2014505169b5008285c28174e37541376d0b4665895f4ea5dc3f40ba1969d",
+        "expectedBytes": 3020514,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-06",
+      "scope": "concept",
+      "placardIds": [
+        "CARD-AM-06-definition",
+        "CARD-AM-06-concept",
+        "CARD-AM-06-application",
+        "CARD-AM-06-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "C-AM-06.or.wav",
+        "expectedSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+        "observedSha256": "222baaaba46744433a72378870cb5536dd450ceb9c9b0bd3c08ee03a15abb3d9",
+        "expectedBytes": 3926754,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-07",
+      "scope": "concept",
+      "placardIds": [
+        "CARD-AM-07-definition",
+        "CARD-AM-07-concept",
+        "CARD-AM-07-application",
+        "CARD-AM-07-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "C-AM-07.or.wav",
+        "expectedSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+        "observedSha256": "584749f8150d33207cc1bb3fe6652049028b6b81b52e8e9bf74e1981270410ef",
+        "expectedBytes": 3429474,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-08",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-08-definition"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-08-definition.or.wav",
+        "expectedSha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+        "observedSha256": "bff4a3b9de0af747e4f1687fbb2383f269d1bf0bf2dddebc3b64cc77fddfd735",
+        "expectedBytes": 674274,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-08",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-08-concept"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-08-concept.or.wav",
+        "expectedSha256": "efb9ec714456093b505994753f0919504ba728067d0a5874ee665ad106620630",
+        "observedSha256": "54590def7efc1047e1b3a16ee367ec4d20eb88e9574d29c9a8a88f6cfa2acb60",
+        "expectedBytes": 1926114,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-08",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-08-application"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-08-application.or.wav",
+        "expectedSha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+        "observedSha256": "60f6f5a178d1b7567be700b0f7443798ed0e24d1d99fc9620bdb15efb0acaaec",
+        "expectedBytes": 503394,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-08",
+      "scope": "placard",
+      "placardIds": [
+        "CARD-AM-08-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "CARD-AM-08-recap.or.wav",
+        "expectedSha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+        "observedSha256": "a9b4d1b66564dd464d36dacd220c137a497f647e5da794f3b43abc3b0f13eec5",
+        "expectedBytes": 537954,
+        "observedBytes": 131
+      }
+    },
+    {
+      "conceptId": "C-AM-09",
+      "scope": "concept",
+      "placardIds": [
+        "CARD-AM-09-definition",
+        "CARD-AM-09-concept",
+        "CARD-AM-09-application",
+        "CARD-AM-09-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "C-AM-09.or.wav",
+        "expectedSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+        "observedSha256": "762dc23cdc807d3e161b4893ee56c10149dddc5c85fbaa2f63f3ceadf372c41e",
+        "expectedBytes": 3389154,
+        "observedBytes": 132
+      }
+    },
+    {
+      "conceptId": "C-AM-10",
+      "scope": "concept",
+      "placardIds": [
+        "CARD-AM-10-definition",
+        "CARD-AM-10-concept",
+        "CARD-AM-10-application",
+        "CARD-AM-10-recap"
+      ],
+      "language": "or",
+      "asset": {
+        "status": "BLOCKED",
+        "reason": "git_lfs_pointer",
+        "path": "C-AM-10.or.wav",
+        "expectedSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+        "observedSha256": "0631cabb8fb2052738778cfed9cf2504c37205a03b68e069e205c74d4c8f5a07",
+        "expectedBytes": 3974754,
+        "observedBytes": 132
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "conceptId": "C-AM-01",
+      "kind": "signal",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "sceneSha256": "63a1f6904c54a00774aeb2812602949ead455502f3410a24ebc394cbbcde6b10",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "kind": "flow",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "sceneSha256": "baa31dbd91a3e5f93a16d789a0e448a366dcf20a1843702b49336d27406e2c2c",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "kind": "am",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "sceneSha256": "0186554d72a6c4abc18b94bd766f8faf8fa8fee2bdf9eccdab43df7f3e3c76a8",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "kind": "dsb",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "sceneSha256": "faac3169a793890d2b38dfa7b2945deae23f0291a33348b37f42bc0ea1e10534",
+      "renderer": "dsb-sc-visual/v1",
+      "contractStatus": "BLOCKED",
+      "note": "existing lesson.visual is separate from recovered scene"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "kind": "spectrum",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "sceneSha256": "0faa40b437f8cf12f0c03397b7d62fae6cf780dbd0b76acd0d4d98d87b61f929",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "kind": "receiver",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "sceneSha256": "cca026d946e4a47d18afc0dc64b98bb99f18a390a21b1bf04559be8d8ab6a17b",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "kind": "filter",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "sceneSha256": "5232f62d77adc27473010ff88e61738b2bcce2b8731df662f769759149f55733",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "kind": "phase_recovery",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "sceneSha256": "50d800b8a4aad21334741ea157a93c550689348ed786eb01b3e2b5b8f7c83157",
+      "renderer": "coherent-phase-recovery/v1",
+      "contractStatus": "PASS",
+      "note": "supported projection"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "kind": "fm",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "sceneSha256": "84c9542028c271c25f1ce6f73764a976db8c97ef240a984b4d78dd977ac633cd",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "kind": "pm",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "sceneSha256": "263b56d6232b7b189bb493711d0dc53b74e9500bfb4c0efb87d65f7e4706ba54",
+      "renderer": null,
+      "contractStatus": "BLOCKED",
+      "note": "trusted renderer and Python/Zod projection required"
+    }
+  ],
+  "rows": [
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "c25e521f52af9c01f18037167c9fd0cd43434e5f0c843f330f11e5fb54e6aaf3",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "5cd4221c6f7af45ae85d5395cc79ea9cccb34f8733962683596d97f1ff8195a3",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-01-definition",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "5cd4221c6f7af45ae85d5395cc79ea9cccb34f8733962683596d97f1ff8195a3",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-01-definition.or.wav",
+            "expectedSha256": "25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e",
+            "observedSha256": "021459821abcdce62310de24e054c55a9e359586cb3cd62797322b2202456a47",
+            "expectedBytes": 977634,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "d0c55f53936931e144545133c448572623cb1dda6c73edf4ec85aa695db7032f",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "a411dfdcb2ee823dcb609872342c1db3b900a116b9b2b74b885ab6535e44b855",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-01-concept",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "a411dfdcb2ee823dcb609872342c1db3b900a116b9b2b74b885ab6535e44b855",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-01-concept.or.wav",
+            "expectedSha256": "271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93",
+            "observedSha256": "a83d3b7eaeb0d8e6775284fdbeec14f81f4ec3acb52175b33b8e103302828295",
+            "expectedBytes": 2361954,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "26e9837ac7d3a3ee55be6db9bdd67b22b37639248476a67e00b32c4ae4624ebb",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "8660f82e31358ec77e42a8c522dc5815d7cef3e64f7cdcf27bd45b5ea2f3d142",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-01-application",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "8660f82e31358ec77e42a8c522dc5815d7cef3e64f7cdcf27bd45b5ea2f3d142",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-01-application.or.wav",
+            "expectedSha256": "df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b",
+            "observedSha256": "d364c5eacf2233c05e883e64a5a5ded6d6463d9fa047a884c1fdfdda4ebaf2a7",
+            "expectedBytes": 783714,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "b2d190ce6ff29bbdd4ff1599f0c9908b29e7e413002dcf8c8e4c2f5e9dfe33d6",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-01",
+      "placardId": "CARD-AM-01-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-70174a2d5e49199490cfb3d9",
+      "textStatus": "PASS",
+      "textSha256": "ae4af5c9db35ef73d77f86b24888cf549fc9bfd938d0e55720c289927acd09e2",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-01-recap",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "ae4af5c9db35ef73d77f86b24888cf549fc9bfd938d0e55720c289927acd09e2",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-01-recap.or.wav",
+            "expectedSha256": "fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389",
+            "observedSha256": "ae9fed13cfe8d48051d95e74946632c2925e25cfebeba60ae11588e040259e16",
+            "expectedBytes": 829794,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "b2f3a2608f956ac747787f30b4ead6df94f9ce455944452b6f74ccda5d9cc261",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "f967236e262a325c6abcc36b90f2b3b7bf3c712c95251a7751e40f34dc22b8cb",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-02-definition",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "f967236e262a325c6abcc36b90f2b3b7bf3c712c95251a7751e40f34dc22b8cb",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-02-definition.or.wav",
+            "expectedSha256": "eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0",
+            "observedSha256": "09f5f194a005cd6da4673396b25e37fd9d8d4f340f7a15a4dec53d622ba27fc1",
+            "expectedBytes": 559074,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "12cf501a74bd5c75ef49bb199e76630b18a5444c81ebe5fcd18068d02ced034a",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "eae28de0f0d3a1088934c6dbcbdc2837c327f1fdc3481c869094036619da5b12",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-02-concept",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "eae28de0f0d3a1088934c6dbcbdc2837c327f1fdc3481c869094036619da5b12",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-02-concept.or.wav",
+            "expectedSha256": "f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1",
+            "observedSha256": "111011f20872d892addc1de8e42eb6fe57ba98abfe8f7047e2c550a3d19f8d63",
+            "expectedBytes": 1760994,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "1b73ed6aba8cfe8c62a4d8782f6590f7e9f0f9f4ebc01c36df3fceef0d0ebac8",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "64c78f2da20e5ab6d43dbf57cc264b877a2690fc17d022507925de1289a3d00c",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-02-application",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "64c78f2da20e5ab6d43dbf57cc264b877a2690fc17d022507925de1289a3d00c",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-02-application.or.wav",
+            "expectedSha256": "67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b",
+            "observedSha256": "974ca3f61df2c4bf6d27e62fca82b25df183b736b7158bba04597cce4ecdfc4b",
+            "expectedBytes": 443874,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "0d80816e56a74fa339e37a64fd7b2bb536e2ddeb33433b92ae174556c5f4621c",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-02",
+      "placardId": "CARD-AM-02-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-2d391d1e9531ee0ec6f1531f",
+      "textStatus": "PASS",
+      "textSha256": "f75a3d4e8a00d7caa6db44c08a92e8f629e7ad743ddd17e17ab50e2b2a655851",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-02-recap",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "f75a3d4e8a00d7caa6db44c08a92e8f629e7ad743ddd17e17ab50e2b2a655851",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-02-recap.or.wav",
+            "expectedSha256": "b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431",
+            "observedSha256": "657400b00e4f5c7a55d64cbceda2a7ab170438ecffca90db7c2a26717565e783",
+            "expectedBytes": 595554,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "e066e315917e531ecca9e7c4ad56cd5b6b6d6ab4e5ae27a80f61a4c62e883fd1",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "e20a62dc31e093579da6df3d61b4056b02c6bed3ad4a2997e8b2707a119cca74",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-03-definition",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "e20a62dc31e093579da6df3d61b4056b02c6bed3ad4a2997e8b2707a119cca74",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-03-definition.or.wav",
+            "expectedSha256": "3d5eddba917790dc9558f1ebe140f0aaa3320160b0430e34d0bf467f8073f652",
+            "observedSha256": "1d7a771b7b929f34469d9440c5fec4b9c0bbe37deab9d73b9d92f6bdde690cc6",
+            "expectedBytes": 1021794,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "e2c7d8a1a2f8171499f555e097274efaf33134f96ce1d505c9b9eea9c632d1b3",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "06c9bca07ce4f02fb82736699fcdab81ebfa6f10628f15aa708cc05ccae0cfe6",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-03-concept",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "06c9bca07ce4f02fb82736699fcdab81ebfa6f10628f15aa708cc05ccae0cfe6",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-03-concept.or.wav",
+            "expectedSha256": "d4e806484921fb4b205485c956f7c9ea6134cfc36167fa4b95b45efd43d785dc",
+            "observedSha256": "1222fd987b642aa7e0272f1b49edafc34c02fd025e150af74b2fbd62253820e5",
+            "expectedBytes": 2634594,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "31b204341c8d6c7783dbdbba4a478646958b65f1212684b071001cca0a7ec199",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "e8f91483cd984b69c61440158436b00765c21636ca52f9af932558bea2c8f3e0",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-03-application",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "e8f91483cd984b69c61440158436b00765c21636ca52f9af932558bea2c8f3e0",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-03-application.or.wav",
+            "expectedSha256": "fbecfe3c85aa7e85f5a9fc4ff71a7368774a104d862fa2156ac58470a99925dd",
+            "observedSha256": "9ccbff6e4224856fd869fab5c251b762983b03ded2c9a97657a935c2f61bc15e",
+            "expectedBytes": 376674,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "86b785e4ff1a44fccf424b985cfe13fc73d0d9413d4114cade63ea18451d5794",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-03",
+      "placardId": "CARD-AM-03-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb78ce1a7e2818afee4743fe",
+      "textStatus": "PASS",
+      "textSha256": "b415ae52a351a7a303fefa67e09b83721a1253a4bcfc5d3cd786134be3d1b82f",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-03-recap",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "b415ae52a351a7a303fefa67e09b83721a1253a4bcfc5d3cd786134be3d1b82f",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-03-recap.or.wav",
+            "expectedSha256": "ac8f98989bd55bd38909353e5bbc7df0fdaed2a736db79095a9b7efb2bf31fca",
+            "observedSha256": "30e5f2593aa1cf3ab03be5c1fda3f323e5882d67b26653e652af5a7594a94d0c",
+            "expectedBytes": 522594,
+            "observedBytes": 131
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "288cc38da7988d358f2a20a721ed79619d4e77e254ebd6246ce3366f0877b5f3",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "386ca520fb7df837e9f6bbae38ea2bff59c7057f87b6296fe7e340bfc82787cc",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "c7976238ee8c5a1b68a53fccbd771e5bd3f436125db6aeab97f32c251b14a476",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-04.or.wav",
+            "expectedSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+            "observedSha256": "56022ecc4eba64b8c95ec77b716af1097f60993c59aa73bef2e998ae9d362433",
+            "expectedBytes": 3986274,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "e3c80d313bdde9897e983b71faf41ad4ee49040ad2bc9f2a08ba0d8a9e487f06",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": "dsb-sc-visual/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "f5e4c03396790011d54bc9caffa22d66ec7229fec1d2b680ae97647e3129e749",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "c7976238ee8c5a1b68a53fccbd771e5bd3f436125db6aeab97f32c251b14a476",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-04.or.wav",
+            "expectedSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+            "observedSha256": "56022ecc4eba64b8c95ec77b716af1097f60993c59aa73bef2e998ae9d362433",
+            "expectedBytes": 3986274,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": "dsb-sc-visual/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "4f3e49d7a5ae5c0f6c844ac6f0ac10b89d12b42a6622d2f2d9f8d3848ae8634d",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": "dsb-sc-visual/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "fbf6e4f9cc21277c85010686845cc896c6e66689d2c3d5991ef1ac4b841bc8df",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "c7976238ee8c5a1b68a53fccbd771e5bd3f436125db6aeab97f32c251b14a476",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-04.or.wav",
+            "expectedSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+            "observedSha256": "56022ecc4eba64b8c95ec77b716af1097f60993c59aa73bef2e998ae9d362433",
+            "expectedBytes": 3986274,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": "dsb-sc-visual/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "4465585308998d11e362a87ae98410a33651c185de409a4ee7bbe22fa00e7f47",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-04",
+      "placardId": "CARD-AM-04-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-e99f388714b78d1f655c7f8f",
+      "textStatus": "PASS",
+      "textSha256": "4ba2cecd7ff132094cdded14cfecaaf99f0a92dc6feca33f980a65ce6b29e87f",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "c7976238ee8c5a1b68a53fccbd771e5bd3f436125db6aeab97f32c251b14a476",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-04.or.wav",
+            "expectedSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+            "observedSha256": "56022ecc4eba64b8c95ec77b716af1097f60993c59aa73bef2e998ae9d362433",
+            "expectedBytes": 3986274,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "36bd5c09c35352e773dbdfa28f930511e05a0c3c4f756251b250c36933707ca4",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "894a88f3b5bcf3301739ce829217e231ac73c9bfe2143b6b6867298240b7151a",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "f148f3913332d3c406bcdfb7972e76259a65781b8773d8c8f7d20ddb5fdb7af7",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-05.or.wav",
+            "expectedSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+            "observedSha256": "d3a2014505169b5008285c28174e37541376d0b4665895f4ea5dc3f40ba1969d",
+            "expectedBytes": 3020514,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "b1432f0f5a99bf96a1fa07183d3c609c9c855086ca63a39dc2ad16634f9d254d",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "0b6ab4c70e9efc02ab90b6f5676277d0ab6036198cfd850bf7cbb0e27f51b5c5",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "f148f3913332d3c406bcdfb7972e76259a65781b8773d8c8f7d20ddb5fdb7af7",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-05.or.wav",
+            "expectedSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+            "observedSha256": "d3a2014505169b5008285c28174e37541376d0b4665895f4ea5dc3f40ba1969d",
+            "expectedBytes": 3020514,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "9860da315c789dad8fd41ecb8849b9530e456123bfcdc3838f32ba2e26ea3dc8",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "5432260665a1cc59253d26ce0d0c1f6e3f7d462befcc3d9a3cc0fd5d5dd4d484",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "f148f3913332d3c406bcdfb7972e76259a65781b8773d8c8f7d20ddb5fdb7af7",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-05.or.wav",
+            "expectedSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+            "observedSha256": "d3a2014505169b5008285c28174e37541376d0b4665895f4ea5dc3f40ba1969d",
+            "expectedBytes": 3020514,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "64f19b337b5cf4005dd65c5cb1467a42e549ac40c598fda7d4a9a3c1f7eaafe3",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-05",
+      "placardId": "CARD-AM-05-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-909a0af55872a19dbc939eeb",
+      "textStatus": "PASS",
+      "textSha256": "d7379be06bdaf0f46ea62fd6ab267e46dc1e6a3b24a10985b6f61d509aeba6e4",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "f148f3913332d3c406bcdfb7972e76259a65781b8773d8c8f7d20ddb5fdb7af7",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-05.or.wav",
+            "expectedSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+            "observedSha256": "d3a2014505169b5008285c28174e37541376d0b4665895f4ea5dc3f40ba1969d",
+            "expectedBytes": 3020514,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "2bb1a5537dfe0de91adcb140fb8904abb997ed3994c16a76ffe7b15dd71aef91",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "2ec220494eb890e4f610a4bb8cfc7b892c4209bbfa2eeee4b4fb36f1d857594f",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "a3ea101a883b7aa14fb034f5e0f3b4fe6b1cc80740a40e8e9c28444229b25b85",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-06.or.wav",
+            "expectedSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+            "observedSha256": "222baaaba46744433a72378870cb5536dd450ceb9c9b0bd3c08ee03a15abb3d9",
+            "expectedBytes": 3926754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "45095b9a74f3e51d1971e20d45778ba03e718939afa0096fa9b07d41e53d1383",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "e44c0394d87c713fe237bff5bb8aae40faf539bfbcf8fe5fc7b5015d311aa2a9",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "a3ea101a883b7aa14fb034f5e0f3b4fe6b1cc80740a40e8e9c28444229b25b85",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-06.or.wav",
+            "expectedSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+            "observedSha256": "222baaaba46744433a72378870cb5536dd450ceb9c9b0bd3c08ee03a15abb3d9",
+            "expectedBytes": 3926754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "2b8b6aa94fc92757e209258666ae0f8268b85031cae0d74b15799614a4e8a3dc",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "610de4bf0f5bb4e476c8d72ce237a7a37f03593ab18afe6a231f87d30b40876e",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "a3ea101a883b7aa14fb034f5e0f3b4fe6b1cc80740a40e8e9c28444229b25b85",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-06.or.wav",
+            "expectedSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+            "observedSha256": "222baaaba46744433a72378870cb5536dd450ceb9c9b0bd3c08ee03a15abb3d9",
+            "expectedBytes": 3926754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "fac8a3dcc55bf0d2717663958a4347e1a22144dfe5fa82f5457d34f523490ab3",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-06",
+      "placardId": "CARD-AM-06-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-107583dd20a8dac5be0287b0",
+      "textStatus": "PASS",
+      "textSha256": "d97bed4a0f45c5fd772de7dae05a6a4f7e9f4d7b2b11c5691e29d25766977253",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "a3ea101a883b7aa14fb034f5e0f3b4fe6b1cc80740a40e8e9c28444229b25b85",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-06.or.wav",
+            "expectedSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+            "observedSha256": "222baaaba46744433a72378870cb5536dd450ceb9c9b0bd3c08ee03a15abb3d9",
+            "expectedBytes": 3926754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "fef17df7ef68d15433d63fc37bb9920a298b9053567d733056d3d43d96ba81af",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "3e07e6b060117d35c2456357b5826adea814e42f8f9d6561938c7d196f16e75a",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2118b8e4574c653fb4168c342b308fb62df90283a1eccbd950d5104aa61e9fb6",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-07.or.wav",
+            "expectedSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+            "observedSha256": "584749f8150d33207cc1bb3fe6652049028b6b81b52e8e9bf74e1981270410ef",
+            "expectedBytes": 3429474,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "0ef92507bef3e999b012a123e3851bfd883ef54c4121988a486dd43d120cde30",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "324e534a3e9f70a8bc70c8ff636fcc0f4c4d4c7be9ff85acbf1b1bd238673deb",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2118b8e4574c653fb4168c342b308fb62df90283a1eccbd950d5104aa61e9fb6",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-07.or.wav",
+            "expectedSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+            "observedSha256": "584749f8150d33207cc1bb3fe6652049028b6b81b52e8e9bf74e1981270410ef",
+            "expectedBytes": 3429474,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "835acdc991fe1bdeedeb64b07900e3c5b293478a780c973cb10b5ff5195619b1",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "4ef49a6c1bbd16f44b2bddaf8634e8983907fcd9207163e28d883986c910d366",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2118b8e4574c653fb4168c342b308fb62df90283a1eccbd950d5104aa61e9fb6",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-07.or.wav",
+            "expectedSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+            "observedSha256": "584749f8150d33207cc1bb3fe6652049028b6b81b52e8e9bf74e1981270410ef",
+            "expectedBytes": 3429474,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "5210c52a53f6461e8c64991c3beeb4d9981a1d8722bfd237a946d1767a08326c",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-07",
+      "placardId": "CARD-AM-07-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-cb5122737d1bc11d5e7658e5",
+      "textStatus": "PASS",
+      "textSha256": "d2a259a77fce0404bf5da269621b6a50dcc3a6707bdd2c2da9b9025247955bfa",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2118b8e4574c653fb4168c342b308fb62df90283a1eccbd950d5104aa61e9fb6",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-07.or.wav",
+            "expectedSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+            "observedSha256": "584749f8150d33207cc1bb3fe6652049028b6b81b52e8e9bf74e1981270410ef",
+            "expectedBytes": 3429474,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "7ba45a5b6afc0ae50b7ef786dc48191ae88bc4db6c92dab378c90c2f161cda14",
+      "narration": [
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "7ba45a5b6afc0ae50b7ef786dc48191ae88bc4db6c92dab378c90c2f161cda14",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-definition.en.wav",
+            "expectedSha256": "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3",
+            "observedSha256": "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3",
+            "expectedBytes": 770274,
+            "observedBytes": 770274
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "e8a9d7c10ad435d5697862ec06af44a0bbfb5e6996addc757a3881fe39848ca1",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-08-definition",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "e8a9d7c10ad435d5697862ec06af44a0bbfb5e6996addc757a3881fe39848ca1",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-08-definition.or.wav",
+            "expectedSha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+            "observedSha256": "bff4a3b9de0af747e4f1687fbb2383f269d1bf0bf2dddebc3b64cc77fddfd735",
+            "expectedBytes": 674274,
+            "observedBytes": 131
+          }
+        },
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "e8a9d7c10ad435d5697862ec06af44a0bbfb5e6996addc757a3881fe39848ca1",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-definition.or.wav",
+            "expectedSha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+            "observedSha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+            "expectedBytes": 674274,
+            "observedBytes": 674274
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "e7eb3101ac99b43d1173dfe7bc378a8650d6d905fd9ee3abd14195dcc9bfd001",
+      "narration": [
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "e7eb3101ac99b43d1173dfe7bc378a8650d6d905fd9ee3abd14195dcc9bfd001",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-concept.en.wav",
+            "expectedSha256": "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7",
+            "observedSha256": "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7",
+            "expectedBytes": 2649954,
+            "observedBytes": 2649954
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": "coherent-phase-recovery/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "3fa9b17d6b2e4c204aa15d2852b213302c6878acd56beb7c49dba715939c72cf",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-08-concept",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "3fa9b17d6b2e4c204aa15d2852b213302c6878acd56beb7c49dba715939c72cf",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-08-concept.or.wav",
+            "expectedSha256": "efb9ec714456093b505994753f0919504ba728067d0a5874ee665ad106620630",
+            "observedSha256": "54590def7efc1047e1b3a16ee367ec4d20eb88e9574d29c9a8a88f6cfa2acb60",
+            "expectedBytes": 1926114,
+            "observedBytes": 132
+          }
+        },
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "3fa9b17d6b2e4c204aa15d2852b213302c6878acd56beb7c49dba715939c72cf",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-concept.or.wav",
+            "expectedSha256": "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30",
+            "observedSha256": "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30",
+            "expectedBytes": 2256354,
+            "observedBytes": 2256354
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": "coherent-phase-recovery/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "d37e1de3cbdc204d7b6bde76aaf04b58c83874695e60d3e21dbb50fd3db4363a",
+      "narration": [
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "d37e1de3cbdc204d7b6bde76aaf04b58c83874695e60d3e21dbb50fd3db4363a",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-application.en.wav",
+            "expectedSha256": "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b",
+            "observedSha256": "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b",
+            "expectedBytes": 457314,
+            "observedBytes": 457314
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": "coherent-phase-recovery/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-08-application",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-08-application.or.wav",
+            "expectedSha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+            "observedSha256": "60f6f5a178d1b7567be700b0f7443798ed0e24d1d99fc9620bdb15efb0acaaec",
+            "expectedBytes": 503394,
+            "observedBytes": 131
+          }
+        },
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "10a06b691b412fff7a19e24e7cd0732ab6719f10b117ea6f46801a2de53695bb",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-application.or.wav",
+            "expectedSha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+            "observedSha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+            "expectedBytes": 503394,
+            "observedBytes": 503394
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": "coherent-phase-recovery/v1",
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "26d8c34a1ea909c89ea4f6d66e0751e9a453637209e0087f0b01514ab4322203",
+      "narration": [
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "26d8c34a1ea909c89ea4f6d66e0751e9a453637209e0087f0b01514ab4322203",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-recap.en.wav",
+            "expectedSha256": "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47",
+            "observedSha256": "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47",
+            "expectedBytes": 489954,
+            "observedBytes": 489954
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-08",
+      "placardId": "CARD-AM-08-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-a674571bb89083b015c68fa5",
+      "textStatus": "PASS",
+      "textSha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "placard",
+          "placardId": "CARD-AM-08-recap",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "CARD-AM-08-recap.or.wav",
+            "expectedSha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+            "observedSha256": "a9b4d1b66564dd464d36dacd220c137a497f647e5da794f3b43abc3b0f13eec5",
+            "expectedBytes": 537954,
+            "observedBytes": 131
+          }
+        },
+        {
+          "origin": "existing_web_package",
+          "scope": "placard",
+          "contractStatus": "PASS",
+          "sourceTextSha256": "6bcdfde9e44ab1662acd5619fd9b05fd4a80c51070236413cbf30f37af56f517",
+          "sourceBindingStatus": "PASS",
+          "asset": {
+            "status": "PASS",
+            "reason": "verified_bytes",
+            "path": "CARD-AM-08-recap.or.wav",
+            "expectedSha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+            "observedSha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+            "expectedBytes": 537954,
+            "observedBytes": 537954
+          }
+        }
+      ],
+      "narrationStatus": "PASS",
+      "narrationNote": "see individual asset evidence",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "2b6f913b48eb2a81d370daaa7009eac011341e30d455c75bb07da6c4743933fc",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "a252ff2541593eff6ac064115c90a6e8e8aa32d42197e7b712051d5afefcc07e",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "9e4a9a837d8eda9bb62f2de0b514ea5c5682558c91968c543847ab6edeb4dc1e",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-09.or.wav",
+            "expectedSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+            "observedSha256": "762dc23cdc807d3e161b4893ee56c10149dddc5c85fbaa2f63f3ceadf372c41e",
+            "expectedBytes": 3389154,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "9f7aa449a920ce3e1a04236048d8408d90876523d2be3cecfea7a8edc8c81315",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "b5246afed8c91a80be277c9c8484a8fa95cbc7fff54dcee7c59aa90afff79f6a",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "9e4a9a837d8eda9bb62f2de0b514ea5c5682558c91968c543847ab6edeb4dc1e",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-09.or.wav",
+            "expectedSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+            "observedSha256": "762dc23cdc807d3e161b4893ee56c10149dddc5c85fbaa2f63f3ceadf372c41e",
+            "expectedBytes": 3389154,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "c912ef9cdaee12ed3ddf0ff3a3bbf72706d51b45a03a6c2f746e36b47a2c15b3",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "79aab3da381662ef3513ab234b6faf7cacfa94cd7c72200693f7a2c524060655",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "9e4a9a837d8eda9bb62f2de0b514ea5c5682558c91968c543847ab6edeb4dc1e",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-09.or.wav",
+            "expectedSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+            "observedSha256": "762dc23cdc807d3e161b4893ee56c10149dddc5c85fbaa2f63f3ceadf372c41e",
+            "expectedBytes": 3389154,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "9619081e1f90d78d1dbda9dcab9ec6a24cb93b964a8f3888968046d4a05cfe34",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-09",
+      "placardId": "CARD-AM-09-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-11cbf3df051551516d24206a",
+      "textStatus": "PASS",
+      "textSha256": "32603062f70ccb8e4d4b505d82f50e4671a43d695eafbb64e60a336824c6de3f",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "9e4a9a837d8eda9bb62f2de0b514ea5c5682558c91968c543847ab6edeb4dc1e",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-09.or.wav",
+            "expectedSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+            "observedSha256": "762dc23cdc807d3e161b4893ee56c10149dddc5c85fbaa2f63f3ceadf372c41e",
+            "expectedBytes": 3389154,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-definition",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "3fd98555c018b5625bc9adf4be21fd532468589e40d880211ee380381d048e0b",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-definition",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "4f1bad04c21ed7677843d48addd92d4674673a9531221d91d412d9f3c41d4109",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2a8381638e2217dd1611fb6df66c851bca3b55d3d3e003b9a502ecc699a37206",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-10.or.wav",
+            "expectedSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+            "observedSha256": "0631cabb8fb2052738778cfed9cf2504c37205a03b68e069e205c74d4c8f5a07",
+            "expectedBytes": 3974754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-concept",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "16287a8725f4bd0843dca9ae120b5ef68b913991b8a393009c34661e2a78d6e1",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-concept",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "519921cb33c74e67c26bedbfb5ae35361880f51a46e2235e8f15932e9e07c3d4",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2a8381638e2217dd1611fb6df66c851bca3b55d3d3e003b9a502ecc699a37206",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-10.or.wav",
+            "expectedSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+            "observedSha256": "0631cabb8fb2052738778cfed9cf2504c37205a03b68e069e205c74d4c8f5a07",
+            "expectedBytes": 3974754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-application",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "39f55a56b8fd24e9e42cbf667f6915c4fa7246462af5fcdd87022b0a8a5eaa96",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-application",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "94892b9296a0f3e2dd3ccaa055951ae0fb8942be50822bd04030adbb39ef40de",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2a8381638e2217dd1611fb6df66c851bca3b55d3d3e003b9a502ecc699a37206",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-10.or.wav",
+            "expectedSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+            "observedSha256": "0631cabb8fb2052738778cfed9cf2504c37205a03b68e069e205c74d4c8f5a07",
+            "expectedBytes": 3974754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "BLOCKED",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-recap",
+      "language": "en",
+      "dialLevels": [
+        4,
+        5
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "a991435fc9bca2f4693de426503684d6d18961176ab0cfb16150f3cbf41dc75c",
+      "narration": [],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "absent language rendition",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    },
+    {
+      "conceptId": "C-AM-10",
+      "placardId": "CARD-AM-10-recap",
+      "language": "or",
+      "dialLevels": [
+        1,
+        2,
+        3
+      ],
+      "dialNote": "level 3 can explicitly choose either narration language; dial is not a new rendition",
+      "sourceRevision": "ba40218d7bf07637debe530019bcf8faf6afb61a",
+      "catalogVersion": "am-51187527300cba2fa3cca868",
+      "packetRevision": "cam-d3074253f11cac828f9ddeec",
+      "textStatus": "PASS",
+      "textSha256": "65d1ed9d48909a5354c2b467b76000afd2eee3530bc4fdbf67d37e82e521e0f0",
+      "narration": [
+        {
+          "origin": "recovered_backend",
+          "scope": "concept",
+          "placardId": null,
+          "contractStatus": "BLOCKED",
+          "sourceTextSha256": "2a8381638e2217dd1611fb6df66c851bca3b55d3d3e003b9a502ecc699a37206",
+          "sourceBindingStatus": "BLOCKED",
+          "asset": {
+            "status": "BLOCKED",
+            "reason": "git_lfs_pointer",
+            "path": "C-AM-10.or.wav",
+            "expectedSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+            "observedSha256": "0631cabb8fb2052738778cfed9cf2504c37205a03b68e069e205c74d4c8f5a07",
+            "expectedBytes": 3974754,
+            "observedBytes": 132
+          }
+        }
+      ],
+      "narrationStatus": "BLOCKED",
+      "narrationNote": "whole-concept audio cannot be a placard clip",
+      "renderer": null,
+      "artifactStatus": "NOT RUN",
+      "publication": {
+        "status": "not_published",
+        "firestore": "not_written"
+      },
+      "connectedApiStatus": "NOT RUN",
+      "browserStatus": "NOT RUN",
+      "reloadCleanupStatus": "NOT RUN",
+      "deliveryStatus": "BLOCKED",
+      "blockerOwner": "operator: approved private media bucket/publication; backend: LFS bytes and audio scope; web: renderer coverage",
+      "evidenceDate": "2026-10-18"
+    }
+  ]
+}
