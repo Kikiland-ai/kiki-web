@@ -165,3 +165,16 @@ it('focuses the authoritative confirmation form only for a versioned current sco
     expect(document.activeElement).toBe(form); expect(command).not.toHaveBeenCalled();
   } finally { form.remove(); }
 });
+it.each(['takeover', 'dispose'] as const)('ignores an otherwise valid confirmation focus after %s', async ending => {
+  const { publisher, post } = await setup();
+  const form = document.createElement('form'); form.id = 'kiki-lab-confirmation'; form.tabIndex = -1;
+  form.scrollIntoView = vi.fn(); document.body.append(form);
+  try {
+    const state = LabExecutionStateSchema.parse(receipt.start), hello = post.mock.calls[0][0];
+    const request = { type: 'fg_command', command: 'focus_confirmation', command_version: 1, stream_id: hello.stream_id, generation: 2, lab_revision: state.revision, context: currentScope(state) };
+    if (ending === 'takeover') message({ type: 'fg_superseded' }); else publisher.dispose();
+    message(request);
+    expect(form.scrollIntoView).not.toHaveBeenCalled();
+    expect(document.activeElement).not.toBe(form);
+  } finally { form.remove(); }
+});

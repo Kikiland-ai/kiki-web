@@ -15,6 +15,7 @@ from kiki_api.concept_media import (
     BucketMediaAssets,
     MediaPackage,
     bind,
+    decode_record,
     head_path,
     publish,
 )
@@ -179,10 +180,12 @@ def main():
             if head.get(timeout=10).to_dict()["currentRevision"] != p.manifest.mediaRevision:
                 raise ValueError("Media head readback differs")
             if (
-                head.collection("revisions")
-                .document(p.manifest.mediaRevision)
-                .get(timeout=10)
-                .to_dict()
+                decode_record(
+                    head.collection("revisions")
+                    .document(p.manifest.mediaRevision)
+                    .get(timeout=10)
+                    .to_dict()
+                )
                 != p.record
             ):
                 raise ValueError("Media revision readback differs")

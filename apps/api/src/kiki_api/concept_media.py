@@ -40,6 +40,36 @@ def sha256(content: bytes | str) -> str:
     return hashlib.sha256(content.encode() if isinstance(content, str) else content).hexdigest()
 
 
+RECORD_STORAGE_SCHEMA = "concept-media-storage/v1"
+
+
+def encode_record(record: dict) -> dict:
+    """Storage-only envelope: Firestore cannot represent nested JSON arrays."""
+    if not isinstance(record, dict) or record.get("schema") != "concept-media-revision/v1":
+        raise ValueError("Unsupported media record")
+    content = json.dumps(
+        record, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False
+    )
+    return {"schema": RECORD_STORAGE_SCHEMA, "recordJson": content, "recordSha256": sha256(content)}
+
+
+def decode_record(stored: dict) -> dict:
+    """Verify envelopes while retaining compatibility with existing raw revisions."""
+    if not isinstance(stored, dict):
+        raise ValueError("Unsupported media storage record")
+    if stored.get("schema") == "concept-media-revision/v1":
+        return stored
+    if stored.get("schema") != RECORD_STORAGE_SCHEMA:
+        raise ValueError("Unsupported media storage schema")
+    content = stored.get("recordJson")
+    if not isinstance(content, str) or sha256(content) != stored.get("recordSha256"):
+        raise ValueError("Media storage checksum differs")
+    record = json.loads(content)
+    if not isinstance(record, dict) or record.get("schema") != "concept-media-revision/v1":
+        raise ValueError("Unsupported media record")
+    return record
+
+
 def head_path(catalog_version: str, concept_id: str) -> str:
     return f"conceptMedia/{PLAN}/catalogVersions/{catalog_version}/concepts/{concept_id}"
 
@@ -328,14 +358,14 @@ def publish(client, assets: MediaAssets, package: MediaPackage, expected_current
         head = head_ref.get(transaction=transaction, timeout=10)
         saved = revision_ref.get(transaction=transaction, timeout=10)
         current = head.to_dict().get("currentRevision") if head.exists else None
-        if saved.exists and saved.to_dict() != package.record:
+        if saved.exists and decode_record(saved.to_dict()) != package.record:
             raise BoundaryError(409, "An immutable media revision already has different content.")
         if current == manifest.mediaRevision and saved.exists:
             return "unchanged"
         if current != expected_current:
             raise BoundaryError(409, "Media changed. Inspect its revision before publishing.")
         if not saved.exists:
-            transaction.create(revision_ref, package.record)
+            transaction.create(revision_ref, encode_record(package.record))
         transaction.set(
             head_ref,
             {
@@ -368,7 +398,7 @@ class ConceptMedia:
         snapshot = head_ref.collection("revisions").document(revision).get(timeout=5)
         if not snapshot.exists:
             raise BoundaryError(404, "This media revision was not found.")
-        record = snapshot.to_dict()
+        record = decode_record(snapshot.to_dict())
         manifest = MediaManifest.model_validate(record["manifest"])
         if (
             record.get("schema") != "concept-media-revision/v1"
