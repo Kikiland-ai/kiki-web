@@ -16,6 +16,8 @@ from kiki_api.concept_media import (
     MemoryMediaAssets,
     asset_path,
     build_package,
+    decode_record,
+    encode_record,
     head_path,
     project_phase_recovery,
     publish,
@@ -199,7 +201,7 @@ def test_publication_is_atomic_idempotent_and_leaves_catalog_and_learners_alone(
     assert store.docs[head]["currentRevision"] == other.manifest.mediaRevision
     assert publish(store, assets, package, other.manifest.mediaRevision) == "published"
     assert store.docs[head]["currentRevision"] == current
-    assert store.docs[f"{head}/revisions/{current}"] == package.record
+    assert decode_record(store.docs[f"{head}/revisions/{current}"]) == package.record
     # Saved place survives: media is a separate revision, not a catalog reimport.
     progress = client.get(f"/learners/me/progress?planId={PLAN}", headers=headers()).json()
     c08 = next(c for c in progress["progress"]["concepts"] if c["conceptId"] == "C-AM-08")
@@ -268,7 +270,8 @@ def test_stale_or_unconfigured_media_falls_back_to_text(harness, package, catalo
     client, store, assets, learning = harness
     publish(store, assets, package)
     revision = f"{head_path(VERSION, 'C-AM-08')}/revisions/{package.manifest.mediaRevision}"
-    record = store.docs[revision]
+    record = decode_record(store.docs[revision])
+    store.docs[revision] = record
     record["manifest"]["narration"][0]["sourceTextSha256"] = "f" * 64
     lesson = client.get("/concepts/C-AM-08/lesson", headers=headers())
     assert lesson.status_code == 200 and "mediaExperience" not in lesson.json()["lesson"]
@@ -307,3 +310,29 @@ def test_media_contract_receipts_for_react(harness, package):
     (folder / "media-contract.json").write_text(
         json.dumps(data, ensure_ascii=False), encoding="utf-8"
     )
+
+
+def test_storage_envelope_preserves_nested_arrays_revision_and_legacy(package):
+    original = deepcopy(package.record)
+    original["manifest"]["artifacts"][0]["behaviorTests"][0]["readouts"] = [["nested", "values"]]
+    wrapped = encode_record(original)
+    assert wrapped["schema"] == "concept-media-storage/v1"
+    assert decode_record(wrapped) == original
+    assert decode_record(original) == original
+    assert encode_record(decode_record(wrapped)) == wrapped
+    assert decode_record(wrapped)["manifest"]["mediaRevision"] == package.manifest.mediaRevision
+    with pytest.raises(ValueError, match="checksum"):
+        decode_record({**wrapped, "recordJson": wrapped["recordJson"] + " "})
+    with pytest.raises(ValueError, match="checksum"):
+        decode_record({**wrapped, "recordSha256": "0" * 64})
+    with pytest.raises(ValueError, match="schema"):
+        decode_record({"schema": "unknown"})
+
+
+def test_legacy_revision_remains_readable_and_idempotent(harness, package):
+    _, store, assets, learning = harness
+    assert publish(store, assets, package) == "published"
+    path = f"{head_path(VERSION, 'C-AM-08')}/revisions/{package.manifest.mediaRevision}"
+    store.docs[path] = deepcopy(package.record)
+    assert publish(store, assets, package) == "unchanged"
+    assert learning.media._record(VERSION, "C-AM-08")[1] == package.record

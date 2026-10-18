@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
 import { ExecutionRequirementsSchema, LabExecutionStateSchema } from '../../contracts/lab-execution';
 import { ServiceError } from '../../services/types';
@@ -19,6 +19,43 @@ function view(checkpoint = 'CP-DSB-01'): LabCaptureView {
   state.workspace.condition = checkpoint === 'CP-DSB-11' ? 'phase_fault' : checkpoint === 'CP-DSB-12' ? 'restored_baseline' : 'baseline';
   return { state, snapshot, requirements: ExecutionRequirementsSchema.parse(requirements), requirementsError: '', phase: 'active', reason: '', extension: { bound: true, present: true, superseded: false }, preview: null, reading: false, retryAfterMs: 0, recovering: false, canRecover: false, inputBusy: false };
 }
+it.each(['CP-DSB-01', 'CP-DSB-12'])('distinguishes a MATLAB save from a student confirmation at %s', checkpoint => {
+  render(<LabStudentInput view={view(checkpoint)} submitInput={vi.fn()} retryRequirements={() => {}} />);
+  expect(within(screen.getByRole('form', { name: 'Current step confirmation' })).getByText(/Save your model in MATLAB first/).textContent).toContain('does not save the MATLAB model or verify the saved file');
+  expect((screen.getAllByRole('checkbox') as HTMLInputElement[]).every(c => !c.checked)).toBe(true);
+});
+it('offers current-context recovery inside the focused confirmation form without copying old evidence', () => {
+  const v = view(), submitInput = vi.fn();
+  const ui = render(<LabStudentInput view={v} submitInput={submitInput} retryRequirements={() => {}} />);
+  fireEvent.click(screen.getAllByRole('checkbox')[0]);
+  fireEvent.change(screen.getByLabelText('What evidence did you review?'), { target: { value: 'Earlier student evidence note.' } });
+  const changed = { ...v, state: { ...v.state!, workspace: { ...v.state!.workspace, view_revision: v.state!.workspace.view_revision + 1 } } };
+  ui.rerender(<LabStudentInput view={changed} submitInput={submitInput} retryRequirements={() => {}} />);
+  const form = screen.getByRole('form', { name: 'Current step confirmation' });
+  fireEvent.click(within(form).getByRole('button', { name: 'Use current step for confirmation' }));
+  expect((screen.getByLabelText('What evidence did you review?') as HTMLTextAreaElement).value).toBe('');
+  expect((screen.getAllByRole('checkbox') as HTMLInputElement[]).every(c => !c.checked)).toBe(true);
+  expect(submitInput).not.toHaveBeenCalled();
+  // Returning to the original context restores its draft rather than rebinding it.
+  ui.rerender(<LabStudentInput view={v} submitInput={submitInput} retryRequirements={() => {}} />);
+  fireEvent.click(within(form).getByRole('button', { name: 'Use current step for confirmation' }));
+  expect((screen.getByLabelText('What evidence did you review?') as HTMLTextAreaElement).value).toBe('Earlier student evidence note.');
+  expect((screen.getAllByRole('checkbox')[0] as HTMLInputElement).checked).toBe(true);
+});
+it.each([409, 422, 503])('keeps selected criteria and review note after rejection %s and suppresses duplicate review', async status => {
+  let reject!: (error: unknown) => void;
+  const submitInput = vi.fn(() => new Promise<void>((_, r) => reject = r));
+  render(<LabStudentInput view={view()} submitInput={submitInput} retryRequirements={() => {}} />);
+  fireEvent.click(screen.getAllByRole('checkbox')[0]);
+  fireEvent.change(screen.getByLabelText('What evidence did you review?'), { target: { value: 'My reviewed evidence from MATLAB.' } });
+  const button = screen.getByRole('button', { name: 'Confirm selected criteria' });
+  fireEvent.click(button); fireEvent.click(button);
+  expect(submitInput).toHaveBeenCalledTimes(1);
+  reject(new ServiceError('Review rejected; your draft is kept.', status));
+  await waitFor(() => expect(screen.getByRole('status').textContent).toContain('Review rejected'));
+  expect((screen.getByLabelText('What evidence did you review?') as HTMLTextAreaElement).value).toBe('My reviewed evidence from MATLAB.');
+  expect((screen.getAllByRole('checkbox')[0] as HTMLInputElement).checked).toBe(true);
+});
 it('requires deliberate criterion selection and records only the chosen criteria with the student note', async () => {
   const v = view(), submitInput = vi.fn(async () => {});
   render(<LabStudentInput view={v} submitInput={submitInput} retryRequirements={() => {}} />);
