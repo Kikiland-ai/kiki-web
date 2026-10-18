@@ -1,3 +1,17 @@
+## PR publication checkpoint — 18 October 2026
+
+User authorized a new PR for the generic account-preference UI. Branch `redesign/aditya-multilingual-profile` now includes latest `main` (`b984c64`, merged #7/#8); pending #9 remains separate.119 API tests, Ruff/format, exact OpenAPI consistency, Python→React receipts,185 frontend tests/build/lint and16 journey/preference browser cases pass. The additive metadata preserves existing records and older-client saves; teaching/media contracts remain Odia/English. Local preview credential-path recovery is documented but its credential files/process configuration are excluded from Git. Genuine signed-in browser/profile retry remains a separate acceptance check. Preparing commit/push/new PR only; no merge, cloud change or learner migration. Earlier local-only statements below are historical.
+
+## Local preview credential-path recovery — 18 October 2026
+
+The reported Google-success/profile-failure was bootstrap503 with `DefaultCredentialsError`: the preview loaded the original checkout's relative `CLOUDSDK_CONFIG` while running from this worktree. Restarted API8001 with that existing approved path resolved against the env file's directory; no credential-file copy, new authentication, IAM, billing or learner write. SDK connection probe reads only the deliberately nonexistent probe document and passes; the restarted API returns401 for an invalid bearer rather than503. README records worktree launch-path handling and health-versus-readiness checks. Genuine signed-in profile retry remains for the user at connected5194. Frontend welcome cleanup and contextual profile-load error copy pass11 focused tests, lint and TypeScript. No commit/push/deployment.
+
+## Generic learning preferences — local UI revision, 18 October 2026
+
+`redesign/aditya-multilingual-profile` adds bounded language preferences beyond `or`/`en` and optional `studyField` metadata, with matching Zod/OpenAPI. Existing profile fields/enrollment are retained. Older update payloads do not clear the new field; learning/media DTOs remain the existing bilingual authored package. New profiles default to unconfirmed English; Aditya's fixture explicitly starts Odia/ECE. No actual translation pipeline/curriculum expansion or Google identity rename is claimed.
+
+**119 API tests** and Ruff/format pass, including generic/custom preference persistence, preservation of unknown learner evidence and older-client field retention. Frontend183 tests, code/build/contracts and16 relevant browser cases pass. API8001 restarted from this worktree using approved config only in its process; public OpenAPI confirms the new field. No live Google/Firestore profile mutation, IAM/billing/Storage change, model call or deployment. Source remains local/uncommitted; next is user UI review. [Current frontend status](../web/active.md), [contract/UX handoff](../web/MULTILINGUAL_PROFILE_UI.md).
+
 ## Status — 18 October 2026, after merge
 
 **Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).

@@ -26,7 +26,7 @@ test('account-first onboarding resumes, subject saves, profile updates and sign-
   await page.getByRole('slider', { name: 'Your starting support' }).fill('3');
   await page.getByRole('button', { name: 'Save and continue' }).click();
   await page.getByRole('button', { name: 'Go to my home' }).click();
-  await expect(page.getByRole('heading', { name: 'Hello, Bikash.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
   await expect(page.getByText('Not assessed', { exact: true })).toHaveCount(4);
   await page.getByRole('link', { name: 'Add your subject' }).click();
   await page.getByLabel('Semester', { exact: true }).selectOption('5');
@@ -113,7 +113,7 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1280, 1440]) {
     await sample(page);
     expect(await overflow()).toBe(false);
     await onboarding(page);
-    await expect(page.getByRole('heading', { name: 'Hello, Bikash.' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
     expect(await overflow()).toBe(false);
     await page.getByRole('link', { name: 'Lab mode', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Lab mode', exact: true })).toBeVisible();

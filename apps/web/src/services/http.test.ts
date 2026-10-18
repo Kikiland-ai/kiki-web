@@ -14,6 +14,10 @@ describe('Python API boundary', () => {
     await expect(createLearnerApi('http://localhost', auth, fetcher).enroll('CRS-AC-ECE', 5)).rejects.toThrow('not saved');
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
+  it.each(['bootstrap', 'getProfile'] as const)('describes an unavailable %s as a profile-loading failure', async (method) => {
+    const api = createLearnerApi('http://localhost', auth, async () => new Response('private dependency details', { status: 503 }));
+    await expect(api[method]()).rejects.toThrow('Your learning profile could not be opened. Please retry.');
+  });
   it('rejects invalid API shapes instead of rendering trusted profile state', async () => {
     await expect(createLearnerApi('http://localhost', auth, async () => new Response('{"profile":{"signedIn":true}}')).bootstrap()).rejects.toThrow('unsupported response');
   });

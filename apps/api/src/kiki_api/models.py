@@ -1,15 +1,28 @@
 from datetime import UTC, datetime
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StringConstraints,
+    field_validator,
+    model_validator,
+)
 
 
 class WireModel(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True, populate_by_name=True)
 
 
+LearningLanguage = Annotated[
+    str, StringConstraints(strip_whitespace=True, min_length=1, max_length=80)
+]
+StudyField = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
+
+
 class SupportRating(WireModel):
-    language: Literal["or", "en"]
+    language: LearningLanguage
     outOf10: int = Field(ge=1, le=10)
 
 
@@ -46,7 +59,8 @@ class Onboarding(WireModel):
 
 
 class Preferences(WireModel):
-    supportLanguage: Literal["or", "en"]
+    supportLanguage: LearningLanguage
+    studyField: StudyField | None = None
     dialLevel: int = Field(ge=1, le=5)
     onboarding: Onboarding
 
@@ -95,7 +109,7 @@ def new_profile(identity: Identity) -> Profile:
         schema="profile/v1",
         id=identity.uid,
         displayName=(identity.display_name.strip() or "Student")[:120],
-        supportLanguage="or",
+        supportLanguage="en",
         dialLevel=2,
         courseIds=[],
         onboarding=Onboarding(
@@ -105,7 +119,7 @@ def new_profile(identity: Identity) -> Profile:
 
 
 def saved_preferences(current: Profile, update: Preferences) -> dict:
-    data = update.model_dump(mode="json")
+    data = update.model_dump(mode="json", exclude_unset=True)
     if update.onboarding.completedAt is not None:
         data["onboarding"]["completedAt"] = current.onboarding.completedAt or datetime.now(
             UTC

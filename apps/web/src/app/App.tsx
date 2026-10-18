@@ -14,6 +14,9 @@ import { MaterialsProvider } from '../features/intake/Materials';
 import { ActionLink, Button, LoadingNotice, StateScreen } from '../ui/kit';
 import type { Services } from '../services/types';
 
+import { demoPathAvailable } from '../contracts/learning-preferences';
+import { StudyPath } from '../features/home/StudyPath';
+
 const LabHome = lazy(() => import('../features/labs/LabPreparation').then(m => ({ default: m.LabHome })));
 const LabTracker = lazy(() => import('../features/labs/LabPreparation').then(m => ({ default: m.LabTracker })));
 const ChapterMapScreen = lazy(() => import('../features/learning/ChapterMapScreen').then(m => ({ default: m.ChapterMapScreen })));
@@ -44,6 +47,7 @@ function PublicGate() {
   if (status === 'error') return <StateScreen title={identity && services.mode === 'connected' ? 'You’re signed in. Your learning profile couldn’t open.' : 'We couldn’t finish opening Kiki.'} action={<div className="form-actions"><Button onClick={retry}>Retry</Button><Button variant="secondary" onClick={() => { logout().catch(() => undefined); }}>Sign out</Button></div>}>{error}</StateScreen>;
   return <Outlet />;
 }
+function StudyRoute({ children }: { children: ReactNode }) { const { profile } = useSession(); return profile && demoPathAvailable(profile) ? children : <StudyPath />; }
 function SelectedSubject() { const { courseId } = useParams(); return courseId === COURSE.id ? <SubjectOverview /> : <StateScreen embedded title="This subject wasn’t found." action={<ActionLink to="/subjects">My subjects</ActionLink>}>Choose one of your subjects to continue.</StateScreen>; }
 class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -57,19 +61,19 @@ export function createAppRouter(services: Services) {
     <Route element={<PublicGate />}><Route path="/" element={<Welcome />} /><Route path="/auth" element={<SignIn />} /></Route>
     <Route element={<Gate onboarding />}><Route path="/onboarding" element={<Onboarding />} /></Route>
     <Route element={<Gate />}><Route element={<Shell />}>
-      <Route path="/home" element={<Home />} /><Route path="/subjects" element={<Subjects />} /><Route path="/subjects/:courseId" element={<SelectedSubject />} /><Route path="/profile" element={<Profile />} />
-      <Route path="/subjects/:courseId/material" element={<Deferred><AddMaterial /></Deferred>} />
+      <Route path="/home" element={<Home />} /><Route path="/subjects" element={<Subjects />} /><Route path="/subjects/:courseId" element={<StudyRoute><SelectedSubject /></StudyRoute>} /><Route path="/profile" element={<Profile />} />
+      <Route path="/subjects/:courseId/material" element={<Deferred><StudyRoute><AddMaterial /></StudyRoute></Deferred>} />
       <Route path="/intake/:requestId" element={<Deferred><MaterialRequest /></Deferred>} />
       <Route path="/learn" element={<Navigate to={`/chapters/${COURSE.chapterId}`} replace />} />
-      <Route path="/chapters/:planId" element={<Deferred><ChapterMapScreen /></Deferred>} />
-      <Route path="/concepts/:conceptId" element={<Deferred><LessonScreen /></Deferred>} />
-      <Route path="/labs" element={<Deferred><LabHome /></Deferred>} />
-      <Route path="/labs/:sessionId" element={<Deferred><LabTracker /></Deferred>} />
+      <Route path="/chapters/:planId" element={<Deferred><StudyRoute><ChapterMapScreen /></StudyRoute></Deferred>} />
+      <Route path="/concepts/:conceptId" element={<Deferred><StudyRoute><LessonScreen /></StudyRoute></Deferred>} />
+      <Route path="/labs" element={<Deferred><StudyRoute><LabHome /></StudyRoute></Deferred>} />
+      <Route path="/labs/:sessionId" element={<Deferred><StudyRoute><LabTracker /></StudyRoute></Deferred>} />
       <Route path="/library" element={<Deferred><Library /></Deferred>} />
       <Route path="/library/:sourceId" element={<Deferred><SourceViewer /></Deferred>} />
-      <Route path="/practice" element={<Deferred><Checks /></Deferred>} />
-      <Route path="/assessments/:assessmentId/new" element={<Deferred><StartCheck /></Deferred>} />
-      <Route path="/assessments/:assessmentId/:runId" element={<Deferred><RunCheck /></Deferred>} />
+      <Route path="/practice" element={<Deferred><StudyRoute><Checks /></StudyRoute></Deferred>} />
+      <Route path="/assessments/:assessmentId/new" element={<Deferred><StudyRoute><StartCheck /></StudyRoute></Deferred>} />
+      <Route path="/assessments/:assessmentId/:runId" element={<Deferred><StudyRoute><RunCheck /></StudyRoute></Deferred>} />
     </Route></Route>
     <Route path="*" element={<StateScreen title="We couldn’t find that page." action={<ActionLink to="/home">Go to home</ActionLink>}>Return to your learning space to pick up where you left off.</StateScreen>} />
   </Route>));

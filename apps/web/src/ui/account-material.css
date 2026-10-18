@@ -201,3 +201,8 @@
   .library-refined .library-empty { padding:24px 20px; }
   .library-refined .library-empty h2 { font-size:25px; }
 }
+
+/* Context is selected before course-specific teaching appears. */
+.preference-field{display:grid;gap:8px;margin-block:20px;min-width:0}.preference-field small{font-size:13px;line-height:1.6;color:var(--muted)}.preference-field input{width:100%;min-width:0}.study-context-summary{display:grid;gap:8px;margin-block:20px}
+
+.study-path :is(h2,p){overflow-wrap:anywhere}
