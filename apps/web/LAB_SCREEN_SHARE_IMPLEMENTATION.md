@@ -1,5 +1,7 @@
 # Local lab screen-sharing integration
 
+**Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).
+
 18 October 2026. Implementation branch: `feature/lab-screen-share-implementation`, based on PR #6 `29724c7` / main `93cce9b`. The user authorized commit and push of this separate implementation branch on18 October. This source publication does not update PR #6, merge into main or deploy the application.
 
 The user confirmed Aditya's approval and explicitly chose local operation. Production origin/hosting (B1) and hosted upstream (B2) remain deferred. This extends saved preparation without changing its URL, notes, readiness, theory marks or practical assessment. Screen-inferred action tracking never grants assessed practical proficiency; `pointerActive` remains false.
@@ -15,7 +17,7 @@ The user confirmed Aditya's approval and explicitly chose local operation. Produ
 
 ## Python compatibility findings
 
-Pinned reference: `Kikiland-ai/kiki-backend`, branch `experiment/floating-guidance-bubbles`, commit `73c6e96ab876ad3a400e76110bcf4abac9dbce60`.
+Pinned reference: `Kikiland-ai/kiki-backend` commit `73c6e96ab876ad3a400e76110bcf4abac9dbce60`, originally on branch `experiment/floating-guidance-bubbles` and now part of kiki-backend `main`. Nothing kiki-web calls has changed on kiki-backend `main` since that commit.
 
 Python has record-shaped `steps`, `capture_status` rather than `capture_active` in full states, seconds in frame timestamps, and an unlimited (`null`) capture-session duration. The bounded committed projection omits capture status. These differences are normalized in `src/contracts/lab-execution.ts`, with receipts produced by the actual Python offline pipeline. Object property ordering is ignored when checking equivalent decisions; array ordering remains significant.
 
