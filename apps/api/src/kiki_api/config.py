@@ -2,7 +2,7 @@ import os
 from typing import Literal
 from urllib.parse import urlparse
 
-from pydantic import field_validator, model_validator
+from pydantic import SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,8 +15,38 @@ class Settings(BaseSettings):
     storage_bucket: str | None = None
     # Private bucket holding published lesson media; unset keeps lessons text-only.
     media_bucket: str | None = None
+    lab_execution_mode: Literal["disabled", "local", "cloud"] = "disabled"
+    lab_backend_origin: str | None = None
+    lab_proxy_secret: SecretStr | None = None
     environment: Literal["cloud", "emulator"] = "cloud"
     cors_origins: list[str] = ["http://127.0.0.1:5174", "http://localhost:5174"]
+
+    @model_validator(mode="after")
+    def lab_upstream(self):
+        if self.lab_execution_mode == "disabled":
+            return self
+        origin = urlparse(self.lab_backend_origin or "")
+        local = self.lab_execution_mode == "local"
+        if (
+            origin.scheme != ("http" if local else "https")
+            or not origin.hostname
+            or origin.username
+            or origin.password
+            or origin.path
+            or origin.query
+            or origin.fragment
+            or (local and self.lab_backend_origin != "http://127.0.0.1:8100")
+            or (not local and origin.hostname in {"localhost", "127.0.0.1", "::1"})
+        ):
+            raise ValueError(
+                "Configure an exact HTTPS lab origin or the approved local :8100 origin"
+            )
+        if (
+            not self.lab_proxy_secret
+            or not 32 <= len(self.lab_proxy_secret.get_secret_value()) <= 256
+        ):
+            raise ValueError("Lab proxy secret must contain 32–256 characters")
+        return self
 
     @field_validator("storage_bucket", "media_bucket")
     @classmethod

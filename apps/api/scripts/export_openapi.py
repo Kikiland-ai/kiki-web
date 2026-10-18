@@ -11,5 +11,5 @@ if __name__ == "__main__":
     Path("openapi.json").write_text(json.dumps(schema, indent=2) + "\n", encoding="utf-8")
     print(
         "Exported public profile, material, learning, assessment "
-        "and lab-preparation OpenAPI contract."
+        "and lab preparation/execution OpenAPI contract."
     )

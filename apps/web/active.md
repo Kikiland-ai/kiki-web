@@ -1,3 +1,23 @@
+## PR #6 — local screen-sharing implementation, 18 October 2026
+
+Current branch/worktree: `feature/lab-screen-share-implementation` / `kiki-web-lab-screen-share`, based on PR #6 `29724c7` (plan only) over merged redesign main `93cce9b`. The user confirmed Aditya's approval and requested local operation. This status supersedes historical publication/monitoring-pending notes below for this branch. The user has now authorized commit and push of this source on the separate implementation branch. This is source publication only: no PR update, merge, cloud, billing or deployment changes.
+
+Implemented the owner-protected API relay/link, transactional single-create reservation, signed opening tickets and revocation-checked WebSocket, incremental SSE, Python/Zod compatibility adapter, native browser-tab capture with masking before JPEG, the unchanged floating-window protocol/projector, and Sketchbook connection/recovery controls. Saved preparation links, notes, theory readiness, Library and existing grade boundaries are retained. Screen-inferred guidance is explicitly not assessed practical proficiency; pointer stays inactive. Default API mode remains disabled until local upstream settings are supplied.
+
+Actual final checks:
+
+- **180 frontend tests / 37 files**, ESLint, TypeScript and production build pass.
+- **118 API tests**, Ruff check/format over src/tests/scripts, regenerated OpenAPI and existing Python→React learning, assessment, preparation, Library text and media receipts pass.
+- **One expanded Playwright integration passes** using the real development extension, native tab capture and actual Python backend `73c6e96`, with an offline fake analyzer/transactional Firestore double. It starts from React Lab mode with no demo reader. Two controlled matches change a procedure action and Now/Next stays coherent in the page/windows. Positive screenshot canary is detected; all inspected model-bound JPEGs contain neutral masks and zero magenta canary pixels. Both pause controls, provider wait, Stop/reconnect, target reload, reader reload, sign-out/resource cleanup and 320/390/768/1280px layout pass. No criterion or score is granted. The browser's temporary profile and test servers are closed afterward.
+- **Eight existing preparation browser regressions pass** on isolated5175: notes/place/session-link persistence, sign-in resume, unsaved-change dialog, failed save/retry, stale-device conflict and 320/390/768/1440px layouts. Broader unrelated browser suites were not repeated.
+- Candidate-source/private-key/local-artifact scan and production test/private-marker scan pass. No test verifier, fixture token, canary or private grading marker enters production output.
+
+The real backend run exposed and fixed capture-start-before-attach ordering, pause/resume revisions, nullable unlimited session duration and Python state differences. The client also refuses foreign acknowledgements/decisions, ignores late old-capture events, cannot reactivate after Stop during pause, and keeps provider-wait metadata separate from the last committed action.
+
+Remaining boundaries: real MATLAB Online + real analyzer acceptance is pending; automated controlled-target tests do not prove vision quality. Production B1/B2 remain deferred by the user. The current upstream ignores `Idempotency-Key`: ambiguous creation is held for explicit reconciliation instead of creating a duplicate. Tickets are worker-local, so local setup uses one worker. Release-extension5174 allowlist remains a backend-owner deliverable; the local dev artifact includes it. No actual Google/Firestore write, real screen capture, Gemini request or physical-device test was performed in this step.
+
+Last completed: code, regression/extension acceptance and local setup handoff. Exact next: configure the approved real local backend/analyzer and run the student-controlled MATLAB trial, then review the published implementation branch before deciding how to integrate it. PR #6 and main are not changed by this publication. Ports5174/8002/8100/8871 were test servers and are stopped; the older user previews are untouched. [Implementation/setup/recovery limits](LAB_SCREEN_SHARE_IMPLEMENTATION.md), [checked plan](LAB_SCREEN_SHARE_PLAN.md), [updated preparation boundary](LAB_PREPARATION_CONTRACT.md).
+
 # Kiki web — active frontend status
 
 Updated: 18 October 2026

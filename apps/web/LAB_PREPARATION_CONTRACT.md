@@ -2,6 +2,18 @@
 
 16 October 2026 · Preparation implementation · Screen-share observation/assessment deferred
 
+## Approved local execution extension — 18 October 2026
+
+The user confirmed Aditya's approval for PR #6's API-fronted Python approach and chose local operation. Saved preparation and screen execution remain separate DTOs/services. The implementation and limits are in [LAB_SCREEN_SHARE_IMPLEMENTATION.md](LAB_SCREEN_SHARE_IMPLEMENTATION.md); the original preparation-only decisions below remain history.
+
+Connected Lab mode now offers optional screen guidance through `LabExecutionApi` → the authenticated `apps/api` allowlist → kiki-backend Python. The existing `/labs/{prepId}` continuation address, notes and preparation revisions are retained. The new owner-only Firestore link at `learners/{uid}/labExecutions/{prepId}` reserves one upstream run. A screen read can track an action but never changes theory grades, mastery or assessed practical proficiency. The local upstream uses its explicit operator-trial path; seven-concept readiness is displayed separately.
+
+`monitoring.status` is now the shared Pydantic/Zod enum `pending_integration | connecting | active | paused | disconnected | completed`. Without a link it stays `pending_integration`; with a link the API derives/caches execution state and conservatively expires an active cache after20s. It is not writable through preparation PATCH. `pointerActive:false` and `assessmentStatus:"not_assessed"` remain invariant. The execution API defaults to disabled; no fixture authentication fallback is installed in connected runtime.
+
+Only a fresh user gesture opens the capture picker. Exact bound tab/origin and safe geometry are required before a JPEG is encoded. Pause/Stop, tab changes/reload, leaving Lab mode, sign-out and API revocation end or suspend capture. Browser reload never silently restores sharing. The floating windows display the same authoritative Now/Next as Lab mode; tentative findings cannot complete a step or grant a score.
+
+Production hosting/origins and a real MATLAB/provider acceptance remain outside the requested local implementation. The original review/assessment, grades, pointer and device-transfer questions below remain deferred; approval of screen guidance does not claim those systems are implemented.
+
 ## Ownership and current scope
 
 Akshita confirmed that **Aditya is researching the backend for monitoring and assessing screen-shared browser software**. Integrate that later. This step implements experiment selection, theory readiness, written checkpoint preparation, saved notes and same-account continuation only. Arpan's lab home/tracker/checkpoint composition from kiki-web/ui/arpan-a11y (2256077) informed the flow; global singleton APIs, simulated extension connections and completion ticks were not imported.

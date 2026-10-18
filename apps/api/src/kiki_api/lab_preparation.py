@@ -86,7 +86,9 @@ class PreparationRecord(WireModel):
 
 
 class Monitoring(WireModel):
-    status: Literal["pending_integration"] = "pending_integration"
+    status: Literal[
+        "pending_integration", "connecting", "active", "paused", "disconnected", "completed"
+    ] = "pending_integration"
     pointerActive: Literal[False] = False
     assessmentStatus: Literal["not_assessed"] = "not_assessed"
 
@@ -150,6 +152,7 @@ def project_practical(content, manifest, version):
 class LabPreparations:
     def __init__(self, learning: FirestoreLearning):
         self.learning, self.client = learning, learning.client
+        self.execution_status = None
 
     def practical(self, uid, practical_id):
         if practical_id != PRACTICAL:
@@ -202,7 +205,9 @@ class LabPreparations:
                     "chapterTestRequired": False,
                 },
                 "monitoring": {
-                    "status": "pending_integration",
+                    "status": self.execution_status(record.ownerLearnerId, record.id)
+                    if self.execution_status
+                    else "pending_integration",
                     "pointerActive": False,
                     "assessmentStatus": "not_assessed",
                 },

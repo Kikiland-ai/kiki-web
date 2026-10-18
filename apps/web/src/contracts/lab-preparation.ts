@@ -12,7 +12,7 @@ export const PreparationSchema = z.object({
   schema:z.literal('lab-preparation/v1'), id:z.string().regex(/^prep-[a-f0-9-]{36}$/), ownerLearnerId:z.string().min(1), practicalId:z.literal('PR-AM-DSB'), contentVersion:z.string(), revision:z.number().int().nonnegative(),
   currentCheckpointId:z.string(), prediction:z.string().max(3000), projectRef:z.string().max(500), observationNotes:z.record(z.string(),z.string().max(3000)), createdAt:z.string().datetime(), updatedAt:z.string().datetime(),
   readiness:z.object({practicalId:z.literal('PR-AM-DSB'),ready:z.boolean(),requiredConceptIds:z.array(z.string()),missingConceptIds:z.array(z.string()),evidenceRunIds:z.array(z.string()),chapterTestRequired:z.literal(false)}),
-  monitoring:z.object({status:z.literal('pending_integration'),pointerActive:z.literal(false),assessmentStatus:z.literal('not_assessed')}),
+  monitoring:z.object({status:z.enum(['pending_integration','connecting','active','paused','disconnected','completed']),pointerActive:z.literal(false),assessmentStatus:z.literal('not_assessed')}),
   sessionPath:z.string(), practical:PracticalSchema,
 }).superRefine((s,ctx)=>{
   const required=ASSESSMENT_CONCEPTS.filter(c=>c.requiredForLab).map(c=>c.id as string), r=s.readiness;
