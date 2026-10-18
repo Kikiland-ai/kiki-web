@@ -1,3 +1,14 @@
+## Local screen-guidance walkthrough — 18 October 2026
+
+The PR #6 implementation is on `feature/lab-screen-share-implementation`; the user authorized source commit and push. No PR update, merge or deployment is included. Run the approved local setup in [the handoff](../../apps/web/LAB_SCREEN_SHARE_IMPLEMENTATION.md) before using5174; the isolated acceptance test servers are stopped after their run.
+
+1. Sign in normally and open **Lab mode → Start/Resume lab preparation**. Existing saved notes/session links remain.
+2. In the connection panel, open MATLAB, show Kiki through the local extension's explicit tab-binding action, then choose **Share your MATLAB tab** and select that same Chrome tab.
+3. Page and floating windows share Now/Next. A tentative read stays labelled until the server commits it. Grey masks keep the windows out of the encoded frame. Screen guidance does not award assessed practical proficiency.
+4. Pause/resume from either page or windows; Stop, wrong tab, tab reload, page reload and sign-out require a fresh Share gesture. Provider waits retain the committed action. Save preparation notes separately, and save the model itself in MathWorks.
+
+The controlled extension/Python/fake-analyzer loop and preparation regressions pass. A real MATLAB/analyzer trial and production hosting remain pending. [Exact current evidence](../../apps/web/active.md).
+
 ## Complete local redesign review — 18 October 2026
 
 Source review: [PR #5](https://github.com/Kikiland-ai/kiki-web/pull/5) contains the completed redesign on `redesign/sketchbook-refinement`. Local review links below still apply; no deployment was performed.

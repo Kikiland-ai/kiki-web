@@ -8,6 +8,7 @@ from .config import Settings
 from .models import Enrollment, Identity, Preferences, Profile, new_profile, saved_preferences, wire
 
 if TYPE_CHECKING:
+    from .lab_execution import LabExecutions
     from .lab_preparation import LabPreparations
     from .learning import FirestoreLearning
     from .materials import MaterialLibrary
@@ -38,6 +39,7 @@ class Services:
     materials: "MaterialLibrary | None" = None
     learning: "FirestoreLearning | None" = None
     lab_preparations: "LabPreparations | None" = None
+    lab_executions: "LabExecutions | None" = None
 
 
 class FirebaseVerifier:
@@ -190,10 +192,19 @@ def firebase_services(settings: Settings) -> Services:
     )
     profiles = FirestoreProfiles(client)
     learning = FirestoreLearning(client, profiles, ConceptMedia(client, media_assets))
+    preparations = LabPreparations(learning)
+    executions = None
+    if settings.lab_execution_mode != "disabled":
+        from .lab_execution import LabExecutions
+        from .lab_upstream import LabUpstream
+
+        executions = LabExecutions(preparations, LabUpstream(settings))
+        preparations.execution_status = executions.status
     return Services(
         FirebaseVerifier(app),
         profiles,
         MaterialLibrary(FirestoreMaterials(client), originals),
         learning,
-        LabPreparations(learning),
+        preparations,
+        executions,
     )

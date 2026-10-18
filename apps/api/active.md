@@ -1,3 +1,13 @@
+## PR #6 — local execution relay, 18 October 2026
+
+Source publication authorized on `feature/lab-screen-share-implementation`, based on plan PR #6 `29724c7` / redesign main `93cce9b`. Aditya's approach is approved; user chose local only. New fixed execution routes reuse Google Firebase identity, enrollment and owner preparation checks, reserve one Firestore link before upstream creation, forward server-owned headers only, enforce body/image/stream bounds, pass409 conflicts, map dependency failures safely, relay SSE incrementally and close ticketed WebSockets on revocation or lost access. Monitoring enum is reconciled in Pydantic/Zod/OpenAPI; no assessed evidence, grade, pointer or original-file Storage change.
+
+**118 Python tests pass**, plus Ruff check/format across src/tests/scripts, regenerated OpenAPI, existing Python→React contracts and actual Python upstream/native-extension acceptance with a test-only verifier/store/fake analyzer. Frontend has180 passing tests, lint/build and nine relevant browser tests (one expanded extension test + eight preparation regressions). No new live Firebase/Firestore read/write or external provider trial was claimed by these doubles. Test subprocesses/profile are closed.
+
+Feature defaults disabled. Enabled local mode requires exact127.0.0.1:8100, a shared32–256-character server secret, one API worker and reader Origin5174. HMAC opening tickets expire after60s and are single use; Firebase tokens stay in worker memory. The pinned upstream lacks durable idempotency replay: an ambiguous first response leaves the reserved link awaiting reconciliation, rather than retrying into duplicate labs. Multi-worker tickets and automatic crash recovery are future hosting gates. B1/B2 production setup and student-controlled MATLAB/provider trial remain pending. User authorized commit and push of this separate branch; no PR update, merge, cloud/IAM/billing/Storage or deployment.
+
+Last completed: local relay, runtime parity, protocol/capture acceptance and documentation. Next: manual trial against the approved configured local analyzer. [Authoritative frontend status](../web/active.md), [setup and implementation limits](../web/LAB_SCREEN_SHARE_IMPLEMENTATION.md). Historical source-publication/preparation-only entries follow.
+
 # Python API — active status
 
 Updated: 18 October 2026

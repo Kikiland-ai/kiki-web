@@ -77,3 +77,7 @@ Use http://127.0.0.1:5174/learn with Google. The source catalog, owned positions
 ## Saved lab preparation — 16 October
 
 Open http://127.0.0.1:5174/labs with Google, then Start/Resume lab preparation. Read checkpoints, save prediction/model/observation drafts and copy the session locator for the same account. localhost links are same-computer only; actual phone/laptop continuation needs shared hosting. Aditya’s monitoring/assessment integration and Hey Clickky remain pending. See [active.md](active.md) and [LAB_PREPARATION_CONTRACT.md](LAB_PREPARATION_CONTRACT.md).
+
+## Local lab screen guidance
+
+The optional PR #6 integration runs from Lab mode at127.0.0.1:5174 through this repository's authenticated API. It defaults to disabled server-side. Read [setup, verification and remaining gates](LAB_SCREEN_SHARE_IMPLEMENTATION.md) before enabling it. The development extension/native-capture acceptance suite uses `playwright.lab.config.ts`; it is separate from normal browser-only fixture tests and requires the pinned backend checkout. No production origin or deployment is configured.

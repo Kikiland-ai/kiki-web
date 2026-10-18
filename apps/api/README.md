@@ -89,3 +89,7 @@ Versioned source catalog imported (68 content documents plus head; no seeds). Py
 ## Lab preparation — 16 October
 
 Preparation-only practical/start/active/get/revisioned PATCH routes are implemented and exported in OpenAPI. See [the lab boundary](../web/LAB_PREPARATION_CONTRACT.md) for Firestore paths, drafts, owned locator links and Aditya’s deferred monitoring/assessment integration. 78 Python tests pass; no preparation operation changes practical proficiency or trusted experiment evidence.
+
+## Optional local lab execution
+
+`KIKI_LAB_EXECUTION_MODE` defaults to `disabled`. For the approved local screen-guidance path, configure the exact upstream origin and server-only shared secret as described in [the integration handoff](../web/LAB_SCREEN_SHARE_IMPLEMENTATION.md). The existing Firebase identity, enrollment and preparation ownership checks remain mandatory. Use one API worker for local opening tickets. Ambiguous upstream-create failure is held for reconciliation because the pinned upstream lacks durable idempotency replay. No assessment or practical grade is awarded by this integration.
