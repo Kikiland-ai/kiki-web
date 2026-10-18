@@ -1,14 +1,16 @@
 # Lab mode screen sharing — kiki-web plan
 
+**Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).
+
 18 October 2026 · Original PR #6 was plan-only; local implementation is now on `feature/lab-screen-share-implementation`. See [implementation, verification and limits](LAB_SCREEN_SHARE_IMPLEMENTATION.md). The user authorized commit and push on the separate implementation branch; PR #6 and main remain unchanged.
 
 The student should start, see and control MATLAB/Simulink Online screen sharing from **Lab mode** (`/labs/:sessionId`), not from kiki-backend's demo reader page. Kiki's floating windows on the MATLAB tab, already working in kiki-backend with live Gemini reads, follow this page instead. This file lists **only the kiki-web work**; the other owners' parts are dependencies (§5).
 
-Source handoff, decisions and reference code live in kiki-backend on branch `experiment/floating-guidance-bubbles`:
+Source handoff, decisions and reference code live in kiki-backend on `main` (originally on branch `experiment/floating-guidance-bubbles`):
 
-- [Handoff](https://github.com/Kikiland-ai/kiki-backend/blob/experiment/floating-guidance-bubbles/docs/handoffs/kiki-web-lab-mode-screen-share.md)
-- [ADR 0010 — kiki-web's API fronts lab execution](https://github.com/Kikiland-ai/kiki-backend/blob/experiment/floating-guidance-bubbles/docs/decisions/0010-kiki-web-api-fronts-lab-execution.md)
-- [ADR 0009 — keep Kiki's windows out of screen reads](https://github.com/Kikiland-ai/kiki-backend/blob/experiment/floating-guidance-bubbles/docs/decisions/0009-floating-window-capture-redaction.md)
+- [Handoff](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md)
+- [ADR 0010 — kiki-web's API fronts lab execution](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/decisions/0010-kiki-web-api-fronts-lab-execution.md)
+- [ADR 0009 — keep Kiki's windows out of screen reads](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/decisions/0009-floating-window-capture-redaction.md)
 
 ## 1. Decisions (Arpan, 18 October)
 

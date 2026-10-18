@@ -1,3 +1,7 @@
+## Status — 18 October 2026, after merge
+
+**Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).
+
 ## PR #6 — local execution relay, 18 October 2026
 
 Source publication authorized on `feature/lab-screen-share-implementation`, based on plan PR #6 `29724c7` / redesign main `93cce9b`. Aditya's approach is approved; user chose local only. New fixed execution routes reuse Google Firebase identity, enrollment and owner preparation checks, reserve one Firestore link before upstream creation, forward server-owned headers only, enforce body/image/stream bounds, pass409 conflicts, map dependency failures safely, relay SSE incrementally and close ticketed WebSockets on revocation or lost access. Monitoring enum is reconciled in Pydantic/Zod/OpenAPI; no assessed evidence, grade, pointer or original-file Storage change.

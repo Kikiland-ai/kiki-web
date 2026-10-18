@@ -1,3 +1,7 @@
+## Status — 18 October 2026, after merge
+
+**Merged, 18 October:** the implementation is on `main` as PR #7 (`0ee6646`, merge `0ed7c06`). The kiki-backend code it calls is on kiki-backend `main` (its PR #3); the backend branches named in older notes were deleted after that merge. Open items by owner are in the [kiki-backend lab handoff §0](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/handoffs/kiki-web-lab-mode-screen-share.md); testing across machines (SSH forward, ngrok or Tailscale) is in [connected integration testing](https://github.com/Kikiland-ai/kiki-backend/blob/main/docs/plans/connected-integration-testing.md).
+
 ## PR #6 — local screen-sharing implementation, 18 October 2026
 
 Current branch/worktree: `feature/lab-screen-share-implementation` / `kiki-web-lab-screen-share`, based on PR #6 `29724c7` (plan only) over merged redesign main `93cce9b`. The user confirmed Aditya's approval and requested local operation. This status supersedes historical publication/monitoring-pending notes below for this branch. The user has now authorized commit and push of this source on the separate implementation branch. This is source publication only: no PR update, merge, cloud, billing or deployment changes.
