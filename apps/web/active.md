@@ -1,3 +1,27 @@
+## Canvas fix deployed and verified - 19 November 2026
+
+Application source `2b7f32d0f8e8189b9b30086b7394983e752aabb6` was committed
+with repository-required attribution and pushed normally to main. GitHub CI run
+44400873017 passed both web and API jobs. A connected production build retained
+the exact live Firebase/API settings. Hosting version `f3da29de698fc7af`, release
+`1795037095823000`, is live at https://kiki-512012.web.app. All 36 served file
+hashes match the new build. Browser verification confirms production Google
+sign-in with no sample entry and, using a labelled DOM specimen with the actual
+live lesson and learning stylesheets, dark rgb(19,25,20) plots with green
+rgb(121,223,149) traces. The probe initially omitted the lazy learning stylesheet;
+loading both actual lesson dependencies resolved it. This is stylesheet evidence,
+not a signed-in learner walkthrough. Earlier ten-concept sample browser tests
+cover actual renderer placement/controls at both artifact steps/four widths.
+
+API, engine, media and learner records were unchanged. No provider calls. Release
+and verification JSON receipts are in the 19 November chat outputs. Last completed:
+source publication, connected frontend release, live hashes and browser smoke.
+Exact next: user refreshes any already-open lesson to load the new frontend;
+signed-in student acceptance remains separate. This status-only update requires
+no application rebuild; deployed application source stays pinned to 2b7f32d.
+
+---
+
 ## Canvas fix publication and frontend deployment authorized - 19 November 2026
 
 User explicitly requested commit/push to main and continued deployment. The
