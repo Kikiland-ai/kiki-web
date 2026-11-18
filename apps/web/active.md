@@ -1,3 +1,56 @@
+## Canvas fix publication and frontend deployment authorized - 19 November 2026
+
+User explicitly requested commit/push to main and continued deployment. The
+reviewed scope is the shared canvas palette, carrier reference, browser appearance
+regression and this continuation record. Prior verification: ten browser cases,
+24 focused unit tests, lint/type/build and whitespace pass. Both GitHub connector
+and the repository-configured SSH key authenticate as arpanvihan5-sketch; repository
+required commit attribution remains akshitanitr. Source publication is a normal
+fast-forward from main 2b537ce, without force. Rebuild using the existing hosted
+Firebase/API configuration and release only kiki-512012 Hosting; API, engine and
+media require no change. Last completed: authorization, source and identity checks.
+Exact next: publish the reviewed commit, build/release and verify live file hashes
+and actual plot styling; record the deployment receipt in this chat's outputs.
+
+---
+
+## Lesson canvas appearance audit - 19 November 2026
+
+Isolated audit worktree based on current main `2b537ce`; original checkout remains
+on its existing `fix/lab-command-lifecycle` branch. Explicit fetch of all remote
+heads retrieved 31 branches. GitHub reports all 17 frontend PRs closed: 14 merged,
+with #2/#3/#6 closed without merge and covered by later integration work. No open
+frontend PR remains. Main since deployed application source `7c2e68f` changes only
+the two active status records. Read-only hosted GETs match all 36 recorded release
+SHA-256 hashes at `https://kiki-512012.web.app`.
+
+Root cause: PR #12 introduced `CamCanvas.module.css` for nine concepts with white
+paper figures and blue `--lab` signal strokes. Native C-AM-08 retains its separate
+dark scope renderer. The shared renderer never adopted the existing scope palette.
+Artifacts are intentionally bound to concept/application placards (steps 2/3),
+not every placard. C-AM-02 is signal flow and C-AM-05 a spectrum comparison;
+preserve these authored representations rather than inventing sinusoidal content.
+
+Local, uncommitted repair gives shared SVG plots the existing dark scope surface,
+grid, green signal/band outlines and readable light labels/axes. Carrier reference
+uses matching dark fill. Existing controls, model equations, narration, media
+revisions and native C-AM-08 remain unchanged.
+
+Verification: new browser appearance regression fails against original C-AM-04;
+after repair all 10 concept tests pass across both artifact placards, colours,
+control/reset behavior and widths 320/390/768/1280. Initial test selector omitted
+flow/spectrum shapes; corrected to include band rectangles before final all-ten run.
+24 focused model/token tests, TypeScript, ESLint, production build and whitespace
+checks pass. Build is a local compilation check without hosted configuration.
+Before/after screenshots and audit evidence are in the 19 November chat outputs.
+
+No commit, push, merge, deployment, learner mutation or provider call. Last completed:
+source/deployment comparison and verified local appearance repair. Exact next:
+review/export the local patch; publish and rebuild/deploy the frontend only if
+requested. A signed-in production lesson walkthrough was not performed by this audit.
+
+---
+
 ## Hosted MATLAB trial completed - 18 October 2026
 
 This is the current continuation record; the earlier trial-pending notes below

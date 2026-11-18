@@ -3,11 +3,12 @@
 .canvas p,.canvas li,.canvas summary { font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
 .canvas figure { margin:20px 0; padding:12px; background:var(--paper); border:1px solid var(--rule); }
 .canvas figcaption { font-size:14px; line-height:1.7; font-weight:600; }
-.canvas svg { display:block; width:100%; height:auto; }
+.canvas svg { display:block; width:100%; height:auto; color:var(--learning-scope-text); border-radius:3px; background-color:var(--learning-scope-glass); background-image:linear-gradient(var(--learning-scope-grid) 1px,transparent 1px),linear-gradient(90deg,var(--learning-scope-grid) 1px,transparent 1px); background-size:24px 24px; }
 .canvas svg text { font-size:19px; fill:currentColor; }
-.axes { stroke:var(--muted); fill:none; stroke-width:1; }
-.trace { stroke:var(--lab); fill:none; stroke-width:2; }
-.band { fill:var(--lab-tint); stroke:var(--lab); }
+.axes { stroke:var(--learning-scope-text); fill:none; stroke-width:1; }
+.trace { stroke:var(--learning-scope-trace); fill:none; stroke-width:2; }
+.band { fill:var(--learning-scope-grid); stroke:var(--learning-scope-trace); }
+.reference { fill:var(--learning-scope-glass); stroke:var(--learning-scope-text); }
 .readouts { display:grid; gap:8px; margin-block:20px; }
 .readouts div { display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap; padding-bottom:8px; border-bottom:1px solid var(--rule); }
 .readouts dt,.readouts dd { font-size:14px; line-height:1.6; margin:0; overflow-wrap:anywhere; }
