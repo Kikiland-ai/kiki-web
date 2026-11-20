@@ -14,8 +14,10 @@ for (const width of [390, 1280]) {
     });
     await page.goto('/auth');
     await page.getByRole('button', { name: 'Open sample student' }).click();
-    for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-    await page.getByRole('button', { name: 'Go to my home' }).click();
+    // One-step onboarding (#24): a new student lands on the chapter map, then goes Home
+    await page.getByRole('button', { name: 'Start learning' }).click();
+    await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+    await page.getByRole('link', { name: 'Home', exact: true }).click();
     const green = page.getByRole('button', { name: 'Lab extension is up to date', exact: true });
     await expect(green).toBeVisible();
     const iconBox = await green.boundingBox(), labBox = await page.getByRole('link', { name: 'Lab mode', exact: true }).boundingBox();
@@ -48,8 +50,10 @@ test('isolated browser without extension shows install action and serves the rel
   await page.setViewportSize({ width: 1280, height: 850 });
   await page.goto('/auth');
   await page.getByRole('button', { name: 'Open sample student' }).click();
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  // One-step onboarding (#24): a new student lands on the chapter map, then goes Home
+  await page.getByRole('button', { name: 'Start learning' }).click();
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('button', { name: 'Lab extension not detected — install or enable', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Download latest extension' })).toBeVisible();
   const latest = await page.request.get('/lab-extension/latest.json');
