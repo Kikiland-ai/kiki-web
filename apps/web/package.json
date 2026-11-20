@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check:connected": "node scripts/check-connected-config.mjs"
+    "check:connected": "node scripts/check-connected-config.mjs",
+    "narration:timings": "node scripts/build-narration-timings.mjs"
   },
   "dependencies": {
     "fflate": "0.8.3",

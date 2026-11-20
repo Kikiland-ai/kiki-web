@@ -2,9 +2,16 @@ import { describe, expect, it } from 'vitest'
 import { MediaManifestSchema } from '../../contracts/concept-media'
 import record from '../../fixtures/all-cam/C-AM-08.json'
 import content from '../../fixtures/learning-content.json'
-import { activeCueIndex, cueTextRange, cueTrackFor, cueTracks, readingSplit } from './narrationCues'
+import { activeCueIndex, cuePlacardId, cueTextRange, cueTrackFor, cueTracks, foundTracks, readingSplit, type CueTrack } from './narrationCues'
 
 const manifest = MediaManifestSchema.parse(record.manifest)
+const allManifests = Object.values(import.meta.glob<{ manifest: unknown }>('../../fixtures/all-cam/*.json', { eager: true, import: 'default' })).map((r) => MediaManifestSchema.parse(r.manifest))
+
+/** The hand-placed track (with scene beats); fails the test if a found track came back instead. */
+function hand(track: CueTrack | null) {
+  if (!track || track.timing !== 'manual') throw new Error('expected the hand-placed track')
+  return track
+}
 
 type Card = { id: string; body: { en: string; or: string } }
 function cards(node: unknown, out: Card[] = []): Card[] {
@@ -53,7 +60,7 @@ describe('hand-timed narration cues', () => {
 
   it('moves the reading edge through the sentence and stops on whole words', () => {
     const clip = manifest.narration.find((r) => r.renditionId === 'CARD-AM-08-concept.en')!
-    const track = cueTrackFor(clip)!
+    const track = hand(cueTrackFor(clip))
     const text = placards.find((p) => p.id === 'CARD-AM-08-concept')!.body.en
     const i = track.cues.findIndex((c) => c.phi === 60)
     const atStart = readingSplit(track, i, track.cues[i].at, clip.durationSeconds, text)!
@@ -67,10 +74,51 @@ describe('hand-timed narration cues', () => {
   })
 
   it('finds the cue in force at a moment', () => {
-    const track = cueTrackFor(manifest.narration.find((r) => r.renditionId === 'CARD-AM-08-concept.en'))!
+    const track = hand(cueTrackFor(manifest.narration.find((r) => r.renditionId === 'CARD-AM-08-concept.en')))
     expect(activeCueIndex(track, 0)).toBeNull()
     expect(track.cues[activeCueIndex(track, 19)!].phi).toBe(60)
     expect(track.cues[activeCueIndex(track, 22)!].phi).toBe(90)
     expect(track.cues[activeCueIndex(track, 54)!].focus).toBe('control')
+  })
+})
+
+describe('sentence starts found from pauses', () => {
+  const narration = allManifests.flatMap((m) => m.narration)
+
+  it('times every narrated clip, keyed to its exact recording', () => {
+    for (const clip of narration) {
+      const track = cueTrackFor(clip)
+      expect(track, clip.renditionId).not.toBeNull()
+      expect(track!.audioSha256).toBe(clip.audioSha256)
+    }
+    expect(foundTracks).toHaveLength(narration.length)
+  })
+
+  it('places every sentence on its own placard text, in order, within the clip', () => {
+    for (const track of foundTracks) {
+      if (track.timing !== 'pauses') throw new Error('found tracks are pause-timed')
+      const clip = narration.find((r) => r.renditionId === track.renditionId)!
+      const times = track.cues.map((c) => c.at)
+      expect(times).toEqual([...times].sort((a, b) => a - b))
+      expect(Math.max(...times)).toBeLessThan(clip.durationSeconds)
+      const ids = 'scope' in clip ? clip.placardIds : [clip.placardId]
+      expect(track.cues.map((c) => c.placardId).filter((id, i, all) => all.indexOf(id) === i)).toEqual(ids)
+      track.cues.forEach((cue, i) => {
+        const text = placards.find((p) => p.id === cue.placardId)!.body[clip.lang]
+        expect(text.startsWith(cue.from, cue.start), `${track.renditionId} #${i}`).toBe(true)
+        expect(cueTextRange(track, i, text, cue.placardId)).not.toBeNull()
+      })
+    }
+  })
+
+  it('lights a whole-concept sentence only on its own placard, and says which one it is on', () => {
+    const clip = narration.find((r) => r.renditionId === 'C-AM-06.concept.or')!
+    const track = cueTrackFor(clip)!
+    const later = track.cues.findIndex((c) => 'placardId' in c && c.placardId === 'CARD-AM-06-concept')
+    const definition = placards.find((p) => p.id === 'CARD-AM-06-definition')!.body.or
+    const concept = placards.find((p) => p.id === 'CARD-AM-06-concept')!.body.or
+    expect(cuePlacardId(track, later)).toBe('CARD-AM-06-concept')
+    expect(cueTextRange(track, later, definition, 'CARD-AM-06-definition')).toBeNull()
+    expect(cueTextRange(track, later, concept, 'CARD-AM-06-concept')!.start).toBe(0)
   })
 })

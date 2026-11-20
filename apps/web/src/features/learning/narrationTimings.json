@@ -1,0 +1,949 @@
+{
+ "generator": "scripts/build-narration-timings.mjs",
+ "timing": "pauses",
+ "note": "Sentence starts found from pauses in each recording; not word alignment.",
+ "tracks": [
+  {
+   "renditionId": "CARD-AM-01-definition.or",
+   "audioSha256": "25c90241fd2429ccb539a2f086ca091ee10a5cf7191f19de12e99af45f0f2e3e",
+   "sentences": [
+    {
+     "at": 0.34,
+     "placardId": "CARD-AM-01-definition",
+     "start": 0,
+     "from": "ଏକ sinusoid ହେଉଛି x(t)=A"
+    },
+    {
+     "at": 8.77,
+     "placardId": "CARD-AM-01-definition",
+     "start": 44,
+     "from": "A ହେଉଛି Amplitude, f"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-01-concept.or",
+   "audioSha256": "271a8af8291f1a3e2e5cee5000facb8cc744339dab97212a22444d76d0563b93",
+   "sentences": [
+    {
+     "at": 0.14,
+     "placardId": "CARD-AM-01-concept",
+     "start": 0,
+     "from": "Sinusoidal signal ସମୟ ସହିତ"
+    },
+    {
+     "at": 6.03,
+     "placardId": "CARD-AM-01-concept",
+     "start": 53,
+     "from": "Amplitude ଏହାର ସର୍ବାଧିକ ଆକାର,"
+    },
+    {
+     "at": 18.7,
+     "placardId": "CARD-AM-01-concept",
+     "start": 173,
+     "from": "Period T=1/f।"
+    },
+    {
+     "at": 23.92,
+     "placardId": "CARD-AM-01-concept",
+     "start": 187,
+     "from": "100 Hz signal ର"
+    },
+    {
+     "at": 30.08,
+     "placardId": "CARD-AM-01-concept",
+     "start": 218,
+     "from": "Simulink ର time-based Sine"
+    },
+    {
+     "at": 39.37,
+     "placardId": "CARD-AM-01-concept",
+     "start": 300,
+     "from": "Amplitude ବଦଳିଲେ Frequency ଆପେଆପେ"
+    },
+    {
+     "at": 44.19,
+     "placardId": "CARD-AM-01-concept",
+     "start": 346,
+     "from": "Waveform ତୁଳନା ପୂର୍ବରୁ axis"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-01-application.or",
+   "audioSha256": "df5303354538f8d60d84f53a586b91fe32a43afd0049303bc54e0089616fb38b",
+   "sentences": [
+    {
+     "at": 0.23,
+     "placardId": "CARD-AM-01-application",
+     "start": 0,
+     "from": "100 Hz message source"
+    },
+    {
+     "at": 9.97,
+     "placardId": "CARD-AM-01-application",
+     "start": 63,
+     "from": "Scope ରେ ଏକ cycle"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-01-recap.or",
+   "audioSha256": "fd4bd5c7a75d3cbcaf2b55d6dac1b0a06792f124265ad8f2d16b2c70236f9389",
+   "sentences": [
+    {
+     "at": 0.23,
+     "placardId": "CARD-AM-01-recap",
+     "start": 0,
+     "from": "ସର୍ବାଧିକ ଆକାର: Amplitude।"
+    },
+    {
+     "at": 4.29,
+     "placardId": "CARD-AM-01-recap",
+     "start": 26,
+     "from": "ପ୍ରତି ସେକେଣ୍ଡ cycle: Frequency।"
+    },
+    {
+     "at": 8.32,
+     "placardId": "CARD-AM-01-recap",
+     "start": 58,
+     "from": "Reference ସହିତ ସ୍ଥିତି: Phase।"
+    },
+    {
+     "at": 12.46,
+     "placardId": "CARD-AM-01-recap",
+     "start": 88,
+     "from": "Hz ରୁ rad/s ପାଇଁ"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-02-definition.or",
+   "audioSha256": "eaa1ef235581d45f0a0a9787e2c6ffdc55d23fa8d19a43af5d873c9d5d7cf7e0",
+   "sentences": [
+    {
+     "at": 0.21,
+     "placardId": "CARD-AM-02-definition",
+     "start": 0,
+     "from": "Message ଅନୁସାରେ Carrier ର"
+    },
+    {
+     "at": 6.51,
+     "placardId": "CARD-AM-02-definition",
+     "start": 60,
+     "from": "Receiver ରେ message ଫେରାଇବାକୁ"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-02-concept.or",
+   "audioSha256": "f84c81a6e9929ed2ef4761d7858fd168a259a2bfcaaf8ec4cdd53ae6bbd90aa1",
+   "sentences": [
+    {
+     "at": 0.25,
+     "placardId": "CARD-AM-02-concept",
+     "start": 0,
+     "from": "Message signal ରେ ଆମେ"
+    },
+    {
+     "at": 4.57,
+     "placardId": "CARD-AM-02-concept",
+     "start": 51,
+     "from": "Carrier ଏକ reference oscillation,"
+    },
+    {
+     "at": 13.18,
+     "placardId": "CARD-AM-02-concept",
+     "start": 159,
+     "from": "Modulation ରେ message ଅନୁସାରେ"
+    },
+    {
+     "at": 20.11,
+     "placardId": "CARD-AM-02-concept",
+     "start": 239,
+     "from": "Receiver ରେ ତଥ୍ୟ ଫେରାଇବା"
+    },
+    {
+     "at": 24.57,
+     "placardId": "CARD-AM-02-concept",
+     "start": 294,
+     "from": "ଏହି lab ରେ message"
+    },
+    {
+     "at": 30.46,
+     "placardId": "CARD-AM-02-concept",
+     "start": 347,
+     "from": "ଏଗୁଡ଼ିକ ଶିକ୍ଷା ପାଇଁ ବାଛିଥିବା"
+    },
+    {
+     "at": 33.57,
+     "placardId": "CARD-AM-02-concept",
+     "start": 383,
+     "from": "କେବଳ Carrier ରେ ନିର୍ଦ୍ଦିଷ୍ଟ"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-02-application.or",
+   "audioSha256": "67d77f19f885000c7905aa825ad9f9de656c8bd7b68233dec108963aad0f761b",
+   "sentences": [
+    {
+     "at": 0.18,
+     "placardId": "CARD-AM-02-application",
+     "start": 0,
+     "from": "ଦୁଇଟି source କୁ Message"
+    },
+    {
+     "at": 5.37,
+     "placardId": "CARD-AM-02-application",
+     "start": 47,
+     "from": "କେଉଁ waveform ରେ ତଥ୍ୟ"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-02-recap.or",
+   "audioSha256": "b7b245795bbf7642ac2ea26fe28cfb096f9a512f2aabdf00e048b17850850431",
+   "sentences": [
+    {
+     "at": 0.27,
+     "placardId": "CARD-AM-02-recap",
+     "start": 0,
+     "from": "Message ରେ ତଥ୍ୟ ଥାଏ;"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-03-definition.or",
+   "audioSha256": "3d5eddba917790dc9558f1ebe140f0aaa3320160b0430e34d0bf467f8073f652",
+   "sentences": [
+    {
+     "at": 0.2,
+     "placardId": "CARD-AM-03-definition",
+     "start": 0,
+     "from": "ଏକ single-tone message ପାଇଁ"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-03-concept.or",
+   "audioSha256": "d4e806484921fb4b205485c956f7c9ea6134cfc36167fa4b95b45efd43d785dc",
+   "sentences": [
+    {
+     "at": 0.23,
+     "placardId": "CARD-AM-03-concept",
+     "start": 0,
+     "from": "Conventional AM ରେ Carrier"
+    },
+    {
+     "at": 8.39,
+     "placardId": "CARD-AM-03-concept",
+     "start": 76,
+     "from": "Normalised single-tone message ପାଇଁ"
+    },
+    {
+     "at": 17.27,
+     "placardId": "CARD-AM-03-concept",
+     "start": 139,
+     "from": "0<=mu<=1 ହେଲେ Envelope ଶୂନ୍ୟକୁ"
+    },
+    {
+     "at": 23.54,
+     "placardId": "CARD-AM-03-concept",
+     "start": 189,
+     "from": "mu>1 ହେଲେ Overmodulation ହୁଏ"
+    },
+    {
+     "at": 33.62,
+     "placardId": "CARD-AM-03-concept",
+     "start": 270,
+     "from": "Envelope ର ସର୍ବାଧିକ ଓ"
+    },
+    {
+     "at": 46.09,
+     "placardId": "CARD-AM-03-concept",
+     "start": 343,
+     "from": "ଏହି Envelope ନିୟମ Conventional"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-03-application.or",
+   "audioSha256": "fbecfe3c85aa7e85f5a9fc4ff71a7368774a104d862fa2156ac58470a99925dd",
+   "sentences": [
+    {
+     "at": 0.22,
+     "placardId": "CARD-AM-03-application",
+     "start": 0,
+     "from": "Envelope ତୁଳନା କରି Conventional"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-03-recap.or",
+   "audioSha256": "ac8f98989bd55bd38909353e5bbc7df0fdaed2a736db79095a9b7efb2bf31fca",
+   "sentences": [
+    {
+     "at": 0.3,
+     "placardId": "CARD-AM-03-recap",
+     "start": 0,
+     "from": "Conventional AM ରେ Carrier"
+    },
+    {
+     "at": 4.76,
+     "placardId": "CARD-AM-03-recap",
+     "start": 44,
+     "from": "ସରଳ Envelope recovery ପାଇଁ"
+    }
+   ]
+  },
+  {
+   "renditionId": "C-AM-04.concept.or",
+   "audioSha256": "510482f37fce1a7031ede6f03378bcdaf9f1ea5647b690315174e0fd75a2c2ef",
+   "sentences": [
+    {
+     "at": 0.18,
+     "placardId": "CARD-AM-04-definition",
+     "start": 0,
+     "from": "DSB-SC ହେଉଛି s(t)=Ac*m(t)*cos(2*pi*fc*t)।"
+    },
+    {
+     "at": 2.23,
+     "placardId": "CARD-AM-04-definition",
+     "start": 42,
+     "from": "Zero-mean single-tone message ପାଇଁ"
+    },
+    {
+     "at": 8.61,
+     "placardId": "CARD-AM-04-concept",
+     "start": 0,
+     "from": "DSB-SC ର ପୂର୍ଣ୍ଣ ନାମ"
+    },
+    {
+     "at": 15.89,
+     "placardId": "CARD-AM-04-concept",
+     "start": 78,
+     "from": "Zero-mean Message କୁ Carrier"
+    },
+    {
+     "at": 22.21,
+     "placardId": "CARD-AM-04-concept",
+     "start": 154,
+     "from": "Single-tone message ପାଇଁ Lower"
+    },
+    {
+     "at": 31.96,
+     "placardId": "CARD-AM-04-concept",
+     "start": 233,
+     "from": "Conventional AM ପରି Carrier"
+    },
+    {
+     "at": 39.65,
+     "placardId": "CARD-AM-04-concept",
+     "start": 284,
+     "from": "Ideal zero-mean model ରେ"
+    },
+    {
+     "at": 43.49,
+     "placardId": "CARD-AM-04-concept",
+     "start": 339,
+     "from": "Message ର DC offset"
+    },
+    {
+     "at": 47.91,
+     "placardId": "CARD-AM-04-concept",
+     "start": 384,
+     "from": "fm=100 Hz ଓ fc=2000"
+    },
+    {
+     "at": 51.83,
+     "placardId": "CARD-AM-04-concept",
+     "start": 441,
+     "from": "Suppressed carrier ର ଅର୍ଥ"
+    },
+    {
+     "at": 60.57,
+     "placardId": "CARD-AM-04-application",
+     "start": 0,
+     "from": "Message ଓ Carrier କୁ"
+    },
+    {
+     "at": 64.11,
+     "placardId": "CARD-AM-04-application",
+     "start": 50,
+     "from": "ବାଛିଥିବା source ପାଇଁ Sidebands"
+    },
+    {
+     "at": 74.87,
+     "placardId": "CARD-AM-04-recap",
+     "start": 0,
+     "from": "Product ଦ୍ୱାରା Modulation; ଦୁଇଟି"
+    }
+   ]
+  },
+  {
+   "renditionId": "C-AM-05.concept.or",
+   "audioSha256": "1546077d7d5c4cd0e2f6e16cf43cbfaaf62b32a7080806ea84965dd78cbcc928",
+   "sentences": [
+    {
+     "at": 0.22,
+     "placardId": "CARD-AM-05-definition",
+     "start": 0,
+     "from": "SSB ଗୋଟିଏ Sideband ପଠାଏ।"
+    },
+    {
+     "at": 2.34,
+     "placardId": "CARD-AM-05-definition",
+     "start": 25,
+     "from": "VSB ଗୋଟିଏ Sideband ସହିତ"
+    },
+    {
+     "at": 6.78,
+     "placardId": "CARD-AM-05-concept",
+     "start": 0,
+     "from": "Amplitude modulation ର ପ୍ରକାରଗୁଡ଼ିକ"
+    },
+    {
+     "at": 12.9,
+     "placardId": "CARD-AM-05-concept",
+     "start": 81,
+     "from": "Message ର ସର୍ବାଧିକ Frequency"
+    },
+    {
+     "at": 18.32,
+     "placardId": "CARD-AM-05-concept",
+     "start": 143,
+     "from": "SSB କେବଳ ଗୋଟିଏ Sideband"
+    },
+    {
+     "at": 23.31,
+     "placardId": "CARD-AM-05-concept",
+     "start": 197,
+     "from": "VSB ଗୋଟିଏ Sideband ସହିତ"
+    },
+    {
+     "at": 27.7,
+     "placardId": "CARD-AM-05-concept",
+     "start": 243,
+     "from": "ସମାନ Message ପାଇଁ ଏହାର"
+    },
+    {
+     "at": 32.81,
+     "placardId": "CARD-AM-05-concept",
+     "start": 298,
+     "from": "ଏହି ଛୋଟ ଅଂଶ Carrier"
+    },
+    {
+     "at": 37.63,
+     "placardId": "CARD-AM-05-concept",
+     "start": 357,
+     "from": "ଆମ lab DSB-SC ବ୍ୟବହାର"
+    },
+    {
+     "at": 46.05,
+     "placardId": "CARD-AM-05-application",
+     "start": 0,
+     "from": "Spectrum ଚିତ୍ର ତୁଳନା କରନ୍ତୁ।"
+    },
+    {
+     "at": 48.26,
+     "placardId": "CARD-AM-05-application",
+     "start": 29,
+     "from": "ବାଛିଥିବା DSB-SC experiment ରେ"
+    },
+    {
+     "at": 53.95,
+     "placardId": "CARD-AM-05-recap",
+     "start": 0,
+     "from": "Message bandwidth B ପାଇଁ"
+    }
+   ]
+  },
+  {
+   "renditionId": "C-AM-06.concept.or",
+   "audioSha256": "231312a668e5ab23161ba882d32059886eb8b5adf7fd5eccd91bb580231fc79f",
+   "sentences": [
+    {
+     "at": 0.12,
+     "placardId": "CARD-AM-06-definition",
+     "start": 0,
+     "from": "DSB-SC କୁ ସମାନ local"
+    },
+    {
+     "at": 15.24,
+     "placardId": "CARD-AM-06-concept",
+     "start": 0,
+     "from": "Coherent receiver ର local"
+    },
+    {
+     "at": 23.27,
+     "placardId": "CARD-AM-06-concept",
+     "start": 102,
+     "from": "Unit-amplitude Carrier ପାଇଁ product"
+    },
+    {
+     "at": 30.49,
+     "placardId": "CARD-AM-06-concept",
+     "start": 161,
+     "from": "cos^2(theta)=[1+cos(2*theta)]/2 ରୁ m(t)/2 ଏବଂ"
+    },
+    {
+     "at": 36.55,
+     "placardId": "CARD-AM-06-concept",
+     "start": 232,
+     "from": "Lowpass filter message band"
+    },
+    {
+     "at": 41.26,
+     "placardId": "CARD-AM-06-concept",
+     "start": 292,
+     "from": "Carrier amplitude ଦୁଇଟି 1"
+    },
+    {
+     "at": 46.33,
+     "placardId": "CARD-AM-06-concept",
+     "start": 361,
+     "from": "Practical filter କିଛି Amplitude"
+    },
+    {
+     "at": 52.52,
+     "placardId": "CARD-AM-06-concept",
+     "start": 421,
+     "from": "Coherent recovery message ର"
+    },
+    {
+     "at": 66.67,
+     "placardId": "CARD-AM-06-application",
+     "start": 0,
+     "from": "ଅଲଗା Local carrier ଓ"
+    },
+    {
+     "at": 70.65,
+     "placardId": "CARD-AM-06-application",
+     "start": 52,
+     "from": "ତାପରେ Filter ଓ Recovery"
+    },
+    {
+     "at": 73.99,
+     "placardId": "CARD-AM-06-recap",
+     "start": 0,
+     "from": "Frequency ଓ Phase ମେଳାନ୍ତୁ;"
+    }
+   ]
+  },
+  {
+   "renditionId": "C-AM-07.concept.or",
+   "audioSha256": "279d82e7d73489a27643e7263bcaeb16085236a84811573e659cd2285411d2ce",
+   "sentences": [
+    {
+     "at": 0.09,
+     "placardId": "CARD-AM-07-definition",
+     "start": 0,
+     "from": "Lowpass filter କମ Frequency"
+    },
+    {
+     "at": 6.29,
+     "placardId": "CARD-AM-07-concept",
+     "start": 0,
+     "from": "Product detection ପରେ Lowpass"
+    },
+    {
+     "at": 14.98,
+     "placardId": "CARD-AM-07-concept",
+     "start": 113,
+     "from": "ଆମ model ରେ Message"
+    },
+    {
+     "at": 24.86,
+     "placardId": "CARD-AM-07-concept",
+     "start": 218,
+     "from": "wc=2*pi*500 rad/s ଏବଂ H(s)=wc^2/(s^2+sqrt(2)*wc*s+wc^2)।"
+    },
+    {
+     "at": 29.56,
+     "placardId": "CARD-AM-07-concept",
+     "start": 275,
+     "from": "ଏହା ସମସ୍ତ unwanted component"
+    },
+    {
+     "at": 38.5,
+     "placardId": "CARD-AM-07-concept",
+     "start": 327,
+     "from": "ଆରମ୍ଭରେ transient ଏବଂ ପରେ"
+    },
+    {
+     "at": 40.58,
+     "placardId": "CARD-AM-07-concept",
+     "start": 368,
+     "from": "Startup ପରେ output ତୁଳନା"
+    },
+    {
+     "at": 44.33,
+     "placardId": "CARD-AM-07-concept",
+     "start": 401,
+     "from": "Frequency ଓ Amplitude ଯାଞ୍ଚ"
+    },
+    {
+     "at": 48.23,
+     "placardId": "CARD-AM-07-application",
+     "start": 0,
+     "from": "Lowpass coefficient ଦିଅନ୍ତୁ, model"
+    },
+    {
+     "at": 64.42,
+     "placardId": "CARD-AM-07-recap",
+     "start": 0,
+     "from": "Message frequency ରଖନ୍ତୁ; doubled-carrier"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-definition.or",
+   "audioSha256": "05af66931e3c7cc3198016f579182d2e0fdb46d4572c6592e13ed98d5addf390",
+   "sentences": [
+    {
+     "at": 0.38,
+     "placardId": "CARD-AM-08-definition",
+     "start": 0,
+     "from": "Frequency ମେଳିଥିଲେ ଓ unit"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-definition.en",
+   "audioSha256": "ee0fe2cd99600a46da4fd0719bc5dede85038e633906d5b1c3789ff6497383b3",
+   "sentences": [
+    {
+     "at": 0.25,
+     "placardId": "CARD-AM-08-definition",
+     "start": 0,
+     "from": "With frequency matched and"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-concept.or",
+   "audioSha256": "2047beec8dee933ff91b058db260011d676ad2e9cd11ecad22e21a732f618a30",
+   "sentences": [
+    {
+     "at": 0.24,
+     "placardId": "CARD-AM-08-concept",
+     "start": 0,
+     "from": "Carrier mismatch receiver ର"
+    },
+    {
+     "at": 9.4,
+     "placardId": "CARD-AM-08-concept",
+     "start": 103,
+     "from": "Frequency ସମାନ ହେଲେ relative"
+    },
+    {
+     "at": 20.15,
+     "placardId": "CARD-AM-08-concept",
+     "start": 209,
+     "from": "60 degree error ରେ"
+    },
+    {
+     "at": 24.44,
+     "placardId": "CARD-AM-08-concept",
+     "start": 247,
+     "from": "90 degree error ରେ"
+    },
+    {
+     "at": 35.88,
+     "placardId": "CARD-AM-08-concept",
+     "start": 359,
+     "from": "Frequency mismatch ରେ recovery"
+    },
+    {
+     "at": 40.96,
+     "placardId": "CARD-AM-08-concept",
+     "start": 409,
+     "from": "ପ୍ରଥମେ transmitter ଦେଖନ୍ତୁ, ତାପରେ"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-concept.en",
+   "audioSha256": "bde8c0f42f79fae1fadcddaff378d0ccbc6a223e44ede2632f4b19084da519a7",
+   "sentences": [
+    {
+     "at": 0.23,
+     "placardId": "CARD-AM-08-concept",
+     "start": 0,
+     "from": "Carrier mismatch is a"
+    },
+    {
+     "at": 7.13,
+     "placardId": "CARD-AM-08-concept",
+     "start": 90,
+     "from": "With equal carrier frequencies,"
+    },
+    {
+     "at": 18.05,
+     "placardId": "CARD-AM-08-concept",
+     "start": 219,
+     "from": "A 60 degree error"
+    },
+    {
+     "at": 26.7,
+     "placardId": "CARD-AM-08-concept",
+     "start": 323,
+     "from": "A finite filter can"
+    },
+    {
+     "at": 36.23,
+     "placardId": "CARD-AM-08-concept",
+     "start": 431,
+     "from": "A frequency mismatch adds"
+    },
+    {
+     "at": 45.5,
+     "placardId": "CARD-AM-08-concept",
+     "start": 537,
+     "from": "Inspect the transmitter first,"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-application.or",
+   "audioSha256": "b53dd2227bbdd7dc728a400c35fb42ca7843c4133c5d428b14446f4ecd57972d",
+   "sentences": [
+    {
+     "at": 0.24,
+     "placardId": "CARD-AM-08-application",
+     "start": 0,
+     "from": "କେବଳ Receiver phase କୁ"
+    },
+    {
+     "at": 5.24,
+     "placardId": "CARD-AM-08-application",
+     "start": 43,
+     "from": "Recovery ଦେଖି baseline Phase"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-application.en",
+   "audioSha256": "0b8b07405a8e384139414dba31cb3b525baaa7a5fb51809f728df6766c8e2e5b",
+   "sentences": [
+    {
+     "at": 0.28,
+     "placardId": "CARD-AM-08-application",
+     "start": 0,
+     "from": "Change only the receiver"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-recap.or",
+   "audioSha256": "4628ebc6a120880caa8297561f7a43708fefbc662fc53d87e5d86cb1edff8b12",
+   "sentences": [
+    {
+     "at": 0.27,
+     "placardId": "CARD-AM-08-recap",
+     "start": 0,
+     "from": "Relative Phase ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ।"
+    },
+    {
+     "at": 3.44,
+     "placardId": "CARD-AM-08-recap",
+     "start": 31,
+     "from": "Frequency mismatch ରେ beating"
+    },
+    {
+     "at": 7.27,
+     "placardId": "CARD-AM-08-recap",
+     "start": 70,
+     "from": "ଏକ ସମୟରେ ଗୋଟିଏ Parameter"
+    }
+   ]
+  },
+  {
+   "renditionId": "CARD-AM-08-recap.en",
+   "audioSha256": "d13986da29b5c59a3ff8d0d3bade19014481a7f69f10a90f8c51366674354f47",
+   "sentences": [
+    {
+     "at": 0.29,
+     "placardId": "CARD-AM-08-recap",
+     "start": 0,
+     "from": "Relative phase matters."
+    },
+    {
+     "at": 2.95,
+     "placardId": "CARD-AM-08-recap",
+     "start": 24,
+     "from": "Frequency mismatch can create"
+    },
+    {
+     "at": 6.82,
+     "placardId": "CARD-AM-08-recap",
+     "start": 63,
+     "from": "Diagnose one parameter at"
+    }
+   ]
+  },
+  {
+   "renditionId": "C-AM-09.concept.or",
+   "audioSha256": "26b9221db1e80b4b772d54e66a9070341a4eef615a19d9a6ecafa86c21117559",
+   "sentences": [
+    {
+     "at": 0.26,
+     "placardId": "CARD-AM-09-definition",
+     "start": 0,
+     "from": "FM ରେ Message ଅନୁସାରେ"
+    },
+    {
+     "at": 8.65,
+     "placardId": "CARD-AM-09-concept",
+     "start": 0,
+     "from": "Frequency modulation କିମ୍ବା FM"
+    },
+    {
+     "at": 15.8,
+     "placardId": "CARD-AM-09-concept",
+     "start": 88,
+     "from": "Ideal FM ର Amplitude"
+    },
+    {
+     "at": 18.48,
+     "placardId": "CARD-AM-09-concept",
+     "start": 116,
+     "from": "Carrier frequency ଠାରୁ ସର୍ବାଧିକ"
+    },
+    {
+     "at": 24.49,
+     "placardId": "CARD-AM-09-concept",
+     "start": 194,
+     "from": "Single-tone message frequency fm"
+    },
+    {
+     "at": 32.75,
+     "placardId": "CARD-AM-09-concept",
+     "start": 266,
+     "from": "FM ରେ ଅନେକ Sideband"
+    },
+    {
+     "at": 35.46,
+     "placardId": "CARD-AM-09-concept",
+     "start": 295,
+     "from": "Carson’s rule ଅନୁସାରେ useful"
+    },
+    {
+     "at": 44,
+     "placardId": "CARD-AM-09-concept",
+     "start": 392,
+     "from": "ଏହା ଏକ approximation, ସମସ୍ତ"
+    },
+    {
+     "at": 49.15,
+     "placardId": "CARD-AM-09-concept",
+     "start": 459,
+     "from": "FM chapter ରେ ଅଛି,"
+    },
+    {
+     "at": 54.42,
+     "placardId": "CARD-AM-09-application",
+     "start": 0,
+     "from": "Waveform placard ରେ FM"
+    },
+    {
+     "at": 61.58,
+     "placardId": "CARD-AM-09-recap",
+     "start": 0,
+     "from": "FM instantaneous Frequency ବଦଳାଏ।"
+    },
+    {
+     "at": 64.51,
+     "placardId": "CARD-AM-09-recap",
+     "start": 34,
+     "from": "beta=Delta f/fm।"
+    },
+    {
+     "at": 68.06,
+     "placardId": "CARD-AM-09-recap",
+     "start": 51,
+     "from": "Carson bandwidth ଏକ approximation।"
+    }
+   ]
+  },
+  {
+   "renditionId": "C-AM-10.concept.or",
+   "audioSha256": "7a4e4f944d01629a1d1d1e5c57e31e9e17d367bdce45daac7f5e54f401c9259f",
+   "sentences": [
+    {
+     "at": 0.2,
+     "placardId": "CARD-AM-10-definition",
+     "start": 0,
+     "from": "PM ରେ Carrier phase"
+    },
+    {
+     "at": 4.94,
+     "placardId": "CARD-AM-10-concept",
+     "start": 0,
+     "from": "Phase modulation କିମ୍ବା PM"
+    },
+    {
+     "at": 22.41,
+     "placardId": "CARD-AM-10-concept",
+     "start": 109,
+     "from": "s(t)=Ac*cos(2*pi*fc*t+kp*m(t)), ଯେଉଁଠି kp ହେଉଛି"
+    },
+    {
+     "at": 28.56,
+     "placardId": "CARD-AM-10-concept",
+     "start": 176,
+     "from": "FM ଓ PM ଦୁଇଟି"
+    },
+    {
+     "at": 30.69,
+     "placardId": "CARD-AM-10-concept",
+     "start": 208,
+     "from": "FM ର Frequency deviation"
+    },
+    {
+     "at": 34.49,
+     "placardId": "CARD-AM-10-concept",
+     "start": 293,
+     "from": "Instantaneous Frequency ହେଉଛି Phase"
+    },
+    {
+     "at": 44.86,
+     "placardId": "CARD-AM-10-concept",
+     "start": 385,
+     "from": "ତେଣୁ PM ର Frequency"
+    },
+    {
+     "at": 52.04,
+     "placardId": "CARD-AM-10-concept",
+     "start": 450,
+     "from": "Constant message PM ରେ"
+    },
+    {
+     "at": 57.29,
+     "placardId": "CARD-AM-10-concept",
+     "start": 496,
+     "from": "PM ଏହି lab ର"
+    },
+    {
+     "at": 61.42,
+     "placardId": "CARD-AM-10-application",
+     "start": 0,
+     "from": "FM/PM comparison card ଦେଖନ୍ତୁ।"
+    },
+    {
+     "at": 64.36,
+     "placardId": "CARD-AM-10-application",
+     "start": 31,
+     "from": "DSB-SC lab route ରେ"
+    },
+    {
+     "at": 73.87,
+     "placardId": "CARD-AM-10-recap",
+     "start": 0,
+     "from": "PM ର Phase Message"
+    }
+   ]
+  }
+ ]
+}
