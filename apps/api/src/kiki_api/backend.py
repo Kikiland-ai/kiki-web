@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from .lab_preparation import LabPreparations
     from .learning import FirestoreLearning
     from .materials import MaterialLibrary
+    from .tutor.service import TutorService
 
 
 class BoundaryError(Exception):
@@ -41,6 +42,7 @@ class Services:
     learning: "FirestoreLearning | None" = None
     lab_preparations: "LabPreparations | None" = None
     lab_executions: "LabExecutions | None" = None
+    tutor: "TutorService | None" = None
 
 
 class FirebaseVerifier:
@@ -224,6 +226,9 @@ def firebase_services(settings: Settings) -> Services:
 
         executions = LabExecutions(preparations, LabUpstream(settings))
         preparations.execution_status = executions.status
+    from .tutor.wiring import build_tutor
+
+    tutor = build_tutor(settings, client)
     return Services(
         FirebaseVerifier(app),
         profiles,
@@ -231,4 +236,5 @@ def firebase_services(settings: Settings) -> Services:
         learning,
         preparations,
         executions,
+        tutor,
     )

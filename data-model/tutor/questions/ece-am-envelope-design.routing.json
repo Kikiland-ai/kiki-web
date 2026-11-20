@@ -1,0 +1,43 @@
+{
+ "questionId": "ece-am-envelope-design",
+ "replies": [
+  {"stage": "power", "node": "p-power", "text": "Carrier is 10 squared over 2, so 50 W. Each sideband is 3 V, so 4.5 W each, 9 W together, and 59 W total.", "lang": "en", "label": "pt-59", "note": "Full ok answer with the per-sideband route."},
+  {"stage": "power", "node": "p-power", "text": "Carrier power 50 watt, sideband dui ta mila ke 9 watt, total 59 watt hela.", "lang": "mixed", "label": "pt-59", "note": "Romanised Odia ('dui ta mila ke' = the two together, 'hela' = becomes): same content as the ok answer."},
+  {"stage": "power", "node": "p-power", "text": "The carrier is 50 W. For the sidebands I'd just add mu to it, so about 50.6 W total?", "lang": "en", "label": "carrier-right-only", "note": "Carrier correct; the sideband step is a guess that matches neither catalogued slip (not 18/68, not 15/65)."},
+  {"stage": "power", "node": "p-power", "text": "Sideband power μ²Pc = 0.36 × 50 = 18 W, ତେଣୁ ମୋଟ 68 W।", "lang": "or", "label": "sideband-no-half", "note": "Odia script with the formula: drops the ½, giving 18 W and 68 W."},
+  {"stage": "power", "node": "p-power", "text": "Mu 0.6 ke 50 re gun kari 2 re bhag kale 15 W sideband, total 65 W.", "lang": "mixed", "label": "mu-not-squared", "note": "Romanised Odia ('gun kari' = multiplying, 'bhag kale' = dividing): uses μ instead of μ², 15 W and 65 W."},
+
+  {"stage": "power", "node": "p-eff", "text": "9 out of 59, so about 15 percent.", "lang": "en", "label": "eta-15", "note": "The ok answer."},
+  {"stage": "power", "node": "p-eff", "text": "Efficiency ta 60 percent, karan mu 0.6 achhi.", "lang": "mixed", "label": "eta-equals-mu", "note": "Romanised Odia ('karan' = because): takes μ as η."},
+  {"stage": "power", "node": "p-eff", "text": "The modulation index is 0.6, so the efficiency is 0.6.", "lang": "en", "label": "eta-equals-mu", "note": "Second firing of eta-equals-mu, in plain English."},
+  {"stage": "power", "node": "p-eff", "text": "Mu squared over one plus mu squared, 0.36 over 1.36, so roughly 26 percent.", "lang": "en", "label": "sideband-no-half", "note": "μ²/(1+μ²) is the efficiency you get after dropping the ½ in sideband power (18/68). A second firing of sideband-no-half."},
+  {"stage": "power", "node": "p-eff", "text": "Using 15 W of sidebands out of 65 W total, I get about 23 percent.", "lang": "en", "label": "mu-not-squared", "note": "Carries the μ-not-squared sideband power into η. A second firing of mu-not-squared."},
+  {"stage": "power", "node": "p-eff", "text": "Ei question ta GATE re asithila ki?", "lang": "mixed", "label": "off_topic", "note": "Romanised Odia: 'did this question come in GATE?'. Not an answer."},
+
+  {"stage": "window", "node": "p-window", "text": "RC must be much bigger than 1 microsecond and much smaller than 200 microseconds. Too small and the carrier ripple comes through; too big and the capacitor can't discharge fast enough to follow the envelope down, so you get diagonal clipping.", "lang": "en", "label": "window-both", "note": "Both limits and both reasons: the ok answer."},
+  {"stage": "window", "node": "p-window", "text": "Between 1 µs and 200 µs, because the diode needs about 1 µs to switch on and the capacitor is damaged if it charges for longer than 200 µs.", "lang": "en", "label": "window-no-why", "note": "Router discipline: right numbers, wrong physics. Label the reasoning (partial), not the numbers (ok)."},
+  {"stage": "window", "node": "p-window", "text": "RC ଯେତେ ବଡ଼ ହେବ ସେତେ ଭଲ, Output ସେତେ Smooth ହେବ।", "lang": "or", "label": "rc-carrier-only", "note": "Odia script: 'the bigger RC the better, the smoother the output'. Ignores the upper limit."},
+  {"stage": "window", "node": "p-window", "text": "Carrier period au message period kana, mote bujhi parilini.", "lang": "mixed", "label": "unclear", "note": "Romanised Odia: 'what are the carrier period and message period, I didn't understand'. A request for help, not a claim."},
+
+  {"stage": "clipping", "node": "p-clip", "text": "Root of 1 minus 0.36 is 0.8, divided by 0.6 times 2 pi times 5000, that's about 42 microseconds.", "lang": "en", "label": "rcmax-42", "note": "The ok answer with the working."},
+  {"stage": "clipping", "node": "p-clip", "text": "RC max is 0.8 over 0.6 times 31 416, so 42.4 milliseconds.", "lang": "en", "label": "formula-slip", "note": "Router discipline: near-miss unit slip. Right method and digits, but ms instead of µs, which is 1000× too large. Partial, not ok."},
+  {"stage": "clipping", "node": "p-clip", "text": "It can go up to the message period, 200 microseconds.", "lang": "en", "label": "just-period", "note": "Uses the loose 1/fm bound with no μ dependence."},
+  {"stage": "clipping", "node": "p-clip", "text": "0.8 ke 0.6 guna 5000 re bhag kale 267 microsecond aasuchhi.", "lang": "mixed", "label": "M-AM-01", "note": "Romanised Odia ('bhag kale' = on dividing, 'aasuchhi' = comes out): fm in Hz in place of ωm."},
+  {"stage": "clipping", "node": "p-clip", "text": "I remember there's a square root somewhere but I don't remember the formula.", "lang": "en", "label": "unclear", "note": "No number and no usable claim: hint ladder."},
+
+  {"stage": "clipping", "node": "p-choose", "text": "2.2 nF, giving 22 µs. Strictly anything up to about 4.2 nF avoids clipping, but capacitors are ±10% so I'd keep the margin, and it's still 22 carrier periods.", "lang": "en", "label": "c-in-window", "note": "Router discipline: a correct answer plus an extra caveat about tolerance. The caveat supports the choice, so still ok."},
+  {"stage": "clipping", "node": "p-choose", "text": "4.7 nF nebi, sei standard value limit ra sabu theke pakhare.", "lang": "mixed", "label": "c-above-limit", "note": "Romanised Odia: 'I'll take 4.7 nF, the standard value nearest the limit'. 47 µs exceeds 42.4 µs."},
+  {"stage": "clipping", "node": "p-choose", "text": "100 pF, that keeps RC at 1 microsecond so there's no way it can clip.", "lang": "en", "label": "c-too-small", "note": "Safe from clipping but RC equals one carrier period: large ripple."},
+  {"stage": "clipping", "node": "p-choose", "text": "A big 100 nF electrolytic so the output is nice and smooth.", "lang": "en", "label": "rc-carrier-only", "note": "Second firing of rc-carrier-only: RC = 1 ms, about 24× the limit."},
+  {"stage": "clipping", "node": "p-choose", "text": "Which shop sells these capacitors near the college?", "lang": "en", "label": "off_topic", "note": "Not about the design."},
+
+  {"stage": "deeper", "node": "p-mu09", "text": "Limit ta ebe root 0.19 by 0.9 times 31 416, prai 15.4 microsecond, 22 ru kam, tenu clipping hiba. 1.5 nF lagaibi.", "lang": "mixed", "label": "clips-fix", "note": "Romanised Odia ('tenu' = so, 'lagaibi' = I'll fit): new limit, the comparison and the fix."},
+  {"stage": "deeper", "node": "p-mu09", "text": "No, the deeper envelope falls faster now, so the capacitor will lag behind and clip.", "lang": "en", "label": "clips-no-number", "note": "Right diagnosis, no new limit or C."},
+  {"stage": "deeper", "node": "p-mu09", "text": "କିଛି ବଦଳିବ ନାହିଁ, RC କେବଳ fc ଓ fm ଉପରେ ନିର୍ଭର କରେ।", "lang": "or", "label": "rc-carrier-only", "note": "Odia script: 'nothing changes, RC depends only on fc and fm'. Third firing of rc-carrier-only."},
+  {"stage": "deeper", "node": "p-mu09", "text": "Root 0.19 over 0.9 times 5000 is about 97 microseconds, so 22 is still well under it.", "lang": "en", "label": "M-AM-01", "note": "Second firing of M-AM-01: Hz in place of rad/s, so wrongly concludes the detector is fine."},
+
+  {"stage": "explain", "node": "p-explain", "text": "As the modulation index approaches 1, the largest RC that avoids diagonal clipping shrinks towards zero, but RC still has to be much larger than the carrier period to hold the peaks. So no time constant satisfies both, and the envelope gets distorted.", "lang": "en", "label": "tradeoff", "note": "Mechanism and consequence: the ok answer."},
+  {"stage": "explain", "node": "p-explain", "text": "Mu 1 hele distortion besi hei jae, sethi pain.", "lang": "mixed", "label": "vague-tradeoff", "note": "Romanised Odia: 'when mu is 1 distortion increases, that's why'. True but no mechanism."},
+  {"stage": "explain", "node": "p-explain", "text": "Because of the diode drop, maybe?", "lang": "en", "label": "unclear", "note": "The ideal-diode problem has no diode drop, and the reply makes no claim about RC or μ: hint ladder."}
+ ]
+}

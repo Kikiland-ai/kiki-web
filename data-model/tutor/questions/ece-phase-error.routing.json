@@ -1,0 +1,213 @@
+{
+ "questionId": "ece-phase-error",
+ "replies": [
+  {
+   "stage": "predict",
+   "node": "predict-60",
+   "text": "I think some of it comes through, just weaker than before.",
+   "lang": "en",
+   "label": "part-survives",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "predict",
+   "node": "predict-60",
+   "text": "ସବୁ ଫେରିବ, କାରଣ Frequency ତ ସମାନ ଅଛି।",
+   "lang": "or",
+   "label": "phase-does-not-matter",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "predict",
+   "node": "predict-60",
+   "text": "Kichhi bi pheriba nahin. Phase mela na khaile message puri hajijiba.",
+   "lang": "or",
+   "label": "any-error-loses-all",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "predict",
+   "node": "predict-60",
+   "text": "None. Once the carriers are out of phase the message is gone completely.",
+   "lang": "en",
+   "label": "any-error-loses-all",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "predict",
+   "node": "predict-60",
+   "text": "ଆଜି Canteen ରେ କଣ ମିଳୁଛି?",
+   "lang": "or",
+   "label": "off_topic",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "mechanism",
+   "node": "why-cos",
+   "text": "Multiplying by the shifted carrier and filtering leaves m(t) times cos phi.",
+   "lang": "en",
+   "label": "scaled-by-cos",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "mechanism",
+   "node": "why-cos",
+   "text": "Lowpass filter phase error ku remove kari dei, so output re pura m(t) asiba.",
+   "lang": "mixed",
+   "label": "phase-does-not-matter",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "mechanism",
+   "node": "why-cos",
+   "text": "The product gives m(t)/2 and then the gain of 2 makes it m(t) again.",
+   "lang": "en",
+   "label": "half-factor-only",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "mechanism",
+   "node": "why-cos",
+   "text": "Phase error ପାଇଁ m(t) ଟିକିଏ ଡେରିରେ ଆସେ, ଅର୍ଥାତ୍ ସମୟରେ ଘୁଞ୍ଚିଯାଏ।",
+   "lang": "or",
+   "label": "unclear",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "calculate",
+   "node": "calc-60",
+   "text": "cos 60 is 0.5, so half the amplitude.",
+   "lang": "en",
+   "label": "half",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "calculate",
+   "node": "calc-60",
+   "text": "Calculator re cos 60 dele -0.95 asuchhi.",
+   "lang": "or",
+   "label": "angle-unit-mixup",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "calculate",
+   "node": "calc-60",
+   "text": "60 degree re adha, mane aligned amplitude ra 0.5 times.",
+   "lang": "mixed",
+   "label": "half",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "calculate",
+   "node": "calc-60",
+   "text": "Two thirds, since 60 is two thirds of 90.",
+   "lang": "en",
+   "label": "unclear",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "extend",
+   "node": "predict-90",
+   "text": "Nothing comes out because cos 90 is zero.",
+   "lang": "en",
+   "label": "vanishes",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "extend",
+   "node": "predict-90",
+   "text": "90° ମାନେ ଅଧା Cycle, ତେଣୁ Message ଓଲଟା ହୋଇଯିବ।",
+   "lang": "or",
+   "label": "angle-unit-mixup",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "extend",
+   "node": "predict-90",
+   "text": "Ideal case re kichhi asiba nahin because cos 90 = 0, but filter pain tike ripple rahipare.",
+   "lang": "mixed",
+   "label": "vanishes",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "extend",
+   "node": "predict-90",
+   "text": "Will this come in the end-sem exam?",
+   "lang": "en",
+   "label": "off_topic",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "articulate",
+   "node": "explain-english",
+   "text": "The local carrier is 60 degrees out of phase, so after the product and the lowpass filter the output is m(t) cos phi. That gives half the amplitude at 60 degrees and nothing at 90 degrees.",
+   "lang": "en",
+   "label": "clear-explanation",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "articulate",
+   "node": "explain-english",
+   "text": "Phase error thile output kame. 60 re half, 90 re zero.",
+   "lang": "mixed",
+   "label": "partial-explanation",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "articulate",
+   "node": "explain-english",
+   "text": "Mote gote sentence starter diantu, kemiti arambha karibi?",
+   "lang": "mixed",
+   "label": "unclear",
+   "note": "from Design-Thinking routing set"
+  },
+  {
+   "stage": "articulate",
+   "node": "explain-english",
+   "text": "Because the local oscillator is 60 degrees out of phase, after the product and the lowpass filter the output is m(t) cos phi, so we get half at 60 and nothing at 90.",
+   "lang": "en",
+   "label": "clear-explanation",
+   "note": "full reason + result + terms"
+  },
+  {
+   "stage": "mechanism",
+   "node": "why-cos",
+   "text": "The product gives m(t)/2 after filtering, and the recovery gain of 2 makes it m(t) again.",
+   "lang": "en",
+   "label": "half-factor-only",
+   "note": "aligned result only, no phi"
+  },
+  {
+   "stage": "calculate",
+   "node": "calc-60",
+   "text": "ଆଜି ପରୀକ୍ଷା କେବେ ଅଛି?",
+   "lang": "or",
+   "label": "off_topic",
+   "note": "Odia off-topic: when is the exam today"
+  },
+  {
+   "stage": "predict",
+   "node": "predict-60",
+   "text": "probably zero, since they are not aligned",
+   "lang": "en",
+   "label": "any-error-loses-all",
+   "note": "tempting 'not aligned' = lost"
+  },
+  {
+   "stage": "calculate",
+   "node": "calc-60",
+   "text": "50 percent of the aligned one",
+   "lang": "en",
+   "label": "half",
+   "note": "percent form"
+  },
+  {
+   "stage": "extend",
+   "node": "predict-90",
+   "text": "cos 90 is zero so the message is gone, maybe some ripple stays",
+   "lang": "en",
+   "label": "vanishes",
+   "note": "ripple caveat is still vanishes"
+  }
+ ]
+}

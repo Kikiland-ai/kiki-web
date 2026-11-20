@@ -1,0 +1,2248 @@
+{
+ "schema": "kiki-tutor-question/v1",
+ "id": "ece-dsb-receive-drift",
+ "version": "2026-11-20.1",
+ "courseId": "CRS-AC-ECE",
+ "conceptIds": [
+  "C-AM-04",
+  "C-AM-03",
+  "C-AM-06",
+  "C-AM-07",
+  "C-AM-08",
+  "C-AM-05"
+ ],
+ "difficulty": "hard",
+ "title": {
+  "en": "Receiving DSB-SC: envelope, filter and drift",
+  "or": "DSB-SC ଗ୍ରହଣ: Envelope, Filter ଓ Drift"
+ },
+ "framing": {
+  "en": "A 100 kHz DSB-SC signal carries a 1 kHz tone. We'll find its spectrum, see why a cheap envelope detector fails, then watch what a 50 Hz oscillator drift does.",
+  "or": "ଏକ 100 kHz DSB-SC signal ଗୋଟିଏ 1 kHz tone ବହନ କରେ। ଏହାର Spectrum ବାହାର କରିବା, ଶସ୍ତା Envelope detector କାହିଁକି ବିଫଳ ହୁଏ ଦେଖିବା, ତାପରେ 50 Hz Oscillator drift ର ପ୍ରଭାବ ଦେଖିବା।"
+ },
+ "languages": [
+  "en",
+  "or"
+ ],
+ "speech": {
+  "en": "scripted",
+  "or": "scripted"
+ },
+ "review": {
+  "content": "draft",
+  "languages": {
+   "en": "draft",
+   "or": "draft"
+  }
+ },
+ "metrics": [
+  {
+   "id": "conceptual-understanding",
+   "label": {
+    "en": "Conceptual understanding",
+    "or": "ଧାରଣା ବୁଝିବା"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "calculation-accuracy",
+   "label": {
+    "en": "Calculation accuracy",
+    "or": "ହିସାବର ସଠିକତା"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "terms",
+   "label": {
+    "en": "Technical terms",
+    "or": "Technical term ବ୍ୟବହାର"
+   },
+   "dim": "words"
+  },
+  {
+   "id": "articulation",
+   "label": {
+    "en": "Explaining in English",
+    "or": "ଇଂରାଜୀରେ ବୁଝାଇବା"
+   },
+   "dim": "english"
+  }
+ ],
+ "misconceptions": [
+  {
+   "id": "carrier-line-in-dsb",
+   "desc": "Believes a DSB-SC spectrum still has a line at the carrier frequency, as conventional AM does.",
+   "conceptIds": [
+    "C-AM-04",
+    "C-AM-03"
+   ]
+  },
+  {
+   "id": "M-AM-03",
+   "desc": "An envelope detector works equally well on DSB-SC (ledger M-AM-03).",
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-04"
+   ]
+  },
+  {
+   "id": "any-carrier-enough",
+   "desc": "Believes adding any carrier, however small, makes envelope detection work; ignores overmodulation (μ > 1).",
+   "conceptIds": [
+    "C-AM-03"
+   ]
+  },
+  {
+   "id": "offset-shifts-tone",
+   "desc": "Believes a local-oscillator frequency offset only shifts the recovered tone by Δf (SSB behaviour), with no beating or fading.",
+   "conceptIds": [
+    "C-AM-08",
+    "C-AM-05"
+   ]
+  },
+  {
+   "id": "M-AM-06",
+   "desc": "The receiver can use an arbitrary (or merely close) carrier frequency or phase (ledger M-AM-06).",
+   "conceptIds": [
+    "C-AM-06",
+    "C-AM-08"
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "id": "T-AM-04-1",
+   "term": "DSB-SC",
+   "alsoAccept": [
+    "double sideband suppressed carrier"
+   ]
+  },
+  {
+   "id": "T-AM-04-2",
+   "term": "sideband",
+   "alsoAccept": [
+    "sidebands",
+    "upper sideband",
+    "lower sideband"
+   ]
+  },
+  {
+   "id": "T-AM-04-3",
+   "term": "suppressed carrier",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-05-3",
+   "term": "bandwidth",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-03-2",
+   "term": "envelope",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-03-3",
+   "term": "modulation index",
+   "alsoAccept": [
+    "modulation depth",
+    "mu"
+   ]
+  },
+  {
+   "id": "T-AM-06-1",
+   "term": "coherent demodulation",
+   "alsoAccept": [
+    "coherent detection",
+    "synchronous detection",
+    "product detection"
+   ]
+  },
+  {
+   "id": "T-AM-06-2",
+   "term": "local oscillator",
+   "alsoAccept": [
+    "local carrier",
+    "LO"
+   ]
+  },
+  {
+   "id": "T-AM-07-1",
+   "term": "lowpass filter",
+   "alsoAccept": [
+    "low-pass filter",
+    "LPF"
+   ]
+  },
+  {
+   "id": "T-AM-07-2",
+   "term": "cutoff frequency",
+   "alsoAccept": [
+    "cut-off frequency",
+    "cutoff"
+   ]
+  },
+  {
+   "id": "T-AM-08-2",
+   "term": "frequency mismatch",
+   "alsoAccept": [
+    "frequency offset",
+    "frequency error",
+    "drift"
+   ]
+  },
+  {
+   "id": "T-AM-08-3",
+   "term": "beating",
+   "alsoAccept": [
+    "beat",
+    "beats"
+   ]
+  }
+ ],
+ "board": {
+  "q": {
+   "id": "q",
+   "kind": "question",
+   "text": {
+    "en": "A DSB-SC signal s(t) = 2cos(2π·10³t)·cos(2π·10⁵t) V arrives at a receiver. (a) Which frequencies does it contain, and what bandwidth? (b) What does an envelope detector give, and what is the smallest carrier A·cos(2π·10⁵t) to add so that one works? (c) Where should a coherent receiver's lowpass cutoff go? (d) If the local oscillator drifts to 100.05 kHz, what comes out and how often does it fade to zero?",
+    "or": "ଏକ DSB-SC signal s(t) = 2cos(2π·10³t)·cos(2π·10⁵t) V Receiver ରେ ପହଞ୍ଚେ। (a) ଏଥିରେ କେଉଁ Frequency ଅଛି, Bandwidth କେତେ? (b) Envelope detector କଣ ଦିଏ, ଏବଂ ଏହା କାମ କରିବା ପାଇଁ ସବୁଠାରୁ ଛୋଟ କେତେ Carrier A·cos(2π·10⁵t) ଯୋଡ଼ିବାକୁ ପଡ଼ିବ? (c) Coherent receiver ର Lowpass cutoff କେଉଁଠି ରଖିବେ? (d) Local oscillator 100.05 kHz କୁ ଘୁଞ୍ଚିଗଲେ Output କଣ ହୁଏ, ଏବଂ ଏହା କେତେ ଥର ଶୂନ୍ୟ ହୁଏ?"
+   },
+   "given": [
+    {
+     "en": "Message m(t) = 2cos(2π·10³t) V (a 1 kHz tone); carrier frequency fc = 100 kHz.",
+     "or": "Message m(t) = 2cos(2π·10³t) V (1 kHz tone); Carrier frequency fc = 100 kHz।"
+    },
+    {
+     "en": "Coherent receiver: product with a unit-amplitude local oscillator, ideal lowpass filter, then gain 2.",
+     "or": "Coherent receiver: unit-amplitude Local oscillator ସହ Product, ideal Lowpass filter, ତାପରେ Gain 2।"
+    },
+    {
+     "en": "Powers are normalised to a 1 Ω load.",
+     "or": "Power 1 Ω load ପାଇଁ normalised।"
+    }
+   ]
+  },
+  "note-identity": {
+   "id": "note-identity",
+   "kind": "note",
+   "text": {
+    "en": "Product to sum: cos A · cos B = ½[cos(A−B) + cos(A+B)].",
+    "or": "Product ରୁ Sum: cos A · cos B = ½[cos(A−B) + cos(A+B)]।"
+   }
+  },
+  "step-identity": {
+   "id": "step-identity",
+   "kind": "step",
+   "tex": "s(t)=2\\cos(2\\pi 10^3 t)\\cos(2\\pi 10^5 t)=\\cos(2\\pi\\,99\\times10^3 t)+\\cos(2\\pi\\,101\\times10^3 t)",
+   "note": {
+    "en": "Two sidebands of 1 V each; no term at 100 kHz."
+   }
+  },
+  "fig-spec-tx": {
+   "id": "fig-spec-tx",
+   "kind": "figure",
+   "template": "spectrum",
+   "caption": {
+    "en": "Spectrum of s(t): two sidebands, no carrier line",
+    "or": "s(t) ର Spectrum: ଦୁଇଟି Sideband, Carrier line ନାହିଁ"
+   },
+   "params": {
+    "lines": [
+     {
+      "f": 99,
+      "a": 1,
+      "label": {
+       "en": "LSB 99 kHz"
+      },
+      "style": "sideband"
+     },
+     {
+      "f": 101,
+      "a": 1,
+      "label": {
+       "en": "USB 101 kHz"
+      },
+      "style": "sideband"
+     }
+    ],
+    "fRange": [
+     97,
+     103
+    ],
+    "unit": "kHz"
+   }
+  },
+  "res-bw": {
+   "id": "res-bw",
+   "kind": "result",
+   "tex": "f=99\\ \\text{kHz},\\ 101\\ \\text{kHz};\\quad B=2f_m=2\\ \\text{kHz}",
+   "text": {
+    "en": "Lines at 99 and 101 kHz (1 V each), nothing at 100 kHz; bandwidth 2 kHz.",
+    "or": "99 ଓ 101 kHz ରେ Line (ପ୍ରତ୍ୟେକ 1 V), 100 kHz ରେ କିଛି ନାହିଁ; Bandwidth 2 kHz।"
+   }
+  },
+  "fig-wave-dsb": {
+   "id": "fig-wave-dsb",
+   "kind": "figure",
+   "template": "waveform",
+   "caption": {
+    "en": "DSB-SC wave with ±m(t) traced (carrier drawn at 12× the tone, not 100×, for clarity)"
+   },
+   "params": {
+    "series": [
+     {
+      "label": {
+       "en": "s(t)"
+      },
+      "tones": [
+       {
+        "a": 1,
+        "f": 11
+       },
+       {
+        "a": 1,
+        "f": 13
+       }
+      ],
+      "style": "signal"
+     },
+     {
+      "label": {
+       "en": "+m(t)"
+      },
+      "tones": [
+       {
+        "a": 2,
+        "f": 1
+       }
+      ],
+      "style": "envelope"
+     },
+     {
+      "label": {
+       "en": "−m(t)"
+      },
+      "tones": [
+       {
+        "a": -2,
+        "f": 1
+       }
+      ],
+      "style": "envelope"
+     }
+    ],
+    "t": [
+     0,
+     2
+    ],
+    "yRange": [
+     -2.4,
+     2.4
+    ],
+    "xLabel": {
+     "en": "time (ms)"
+    },
+    "yLabel": {
+     "en": "volts"
+    }
+   }
+  },
+  "step-env": {
+   "id": "step-env",
+   "kind": "step",
+   "tex": "\\text{envelope}=|m(t)|=2\\,|\\cos(2\\pi 10^3 t)|",
+   "note": {
+    "en": "The detector follows the peaks, so the sign of m(t) is lost at every zero crossing."
+   }
+  },
+  "note-env-spectrum": {
+   "id": "note-env-spectrum",
+   "kind": "note",
+   "text": {
+    "en": "|m(t)| holds 4/π ≈ 1.27 V of DC, 0.85 V at 2 kHz, 0.17 V at 4 kHz … and nothing at 1 kHz: the tone itself is gone.",
+    "or": "|m(t)| ରେ 4/π ≈ 1.27 V DC, 2 kHz ରେ 0.85 V, 4 kHz ରେ 0.17 V … ଅଛି, କିନ୍ତୁ 1 kHz ରେ କିଛି ନାହିଁ।"
+   }
+  },
+  "step-am": {
+   "id": "step-am",
+   "kind": "step",
+   "tex": "s_{AM}(t)=\\left[A+2\\cos(2\\pi 10^3 t)\\right]\\cos(2\\pi 10^5 t)=A\\left[1+\\tfrac{2}{A}\\cos(2\\pi 10^3 t)\\right]\\cos(2\\pi 10^5 t)",
+   "note": {
+    "en": "Adding a carrier turns DSB-SC into conventional AM."
+   }
+  },
+  "step-mu": {
+   "id": "step-mu",
+   "kind": "step",
+   "tex": "\\mu=\\frac{2}{A}\\le 1\\ \\Rightarrow\\ A\\ge 2\\ \\text{V}",
+   "note": {
+    "en": "For μ ≤ 1 the bracket never goes negative, so the envelope equals A + m(t)."
+   }
+  },
+  "res-carrier": {
+   "id": "res-carrier",
+   "kind": "result",
+   "tex": "A_{\\min}=2\\ \\text{V}\\ (\\mu=1)",
+   "text": {
+    "en": "Smallest added carrier: 2 V, giving 100% modulation.",
+    "or": "ସବୁଠାରୁ ଛୋଟ Carrier: 2 V, ଅର୍ଥାତ୍ 100% Modulation।"
+   }
+  },
+  "note-eff": {
+   "id": "note-eff",
+   "kind": "note",
+   "text": {
+    "en": "Price of the cheap detector: carrier power A²/2 = 2 W against 1 W in the sidebands, so efficiency η = 1/3 at best (μ²/(2+μ²) at μ = 1).",
+    "or": "ଶସ୍ତା Detector ର ମୂଲ୍ୟ: Carrier power 2 W, Sideband ରେ 1 W, ତେଣୁ Efficiency ସର୍ବାଧିକ 1/3।"
+   }
+  },
+  "fig-rx": {
+   "id": "fig-rx",
+   "kind": "figure",
+   "template": "block",
+   "caption": {
+    "en": "Coherent (product) receiver",
+    "or": "Coherent (product) receiver"
+   },
+   "params": {
+    "blocks": [
+     {
+      "id": "in",
+      "label": {
+       "en": "Received s(t)"
+      },
+      "kind": "source"
+     },
+     {
+      "id": "lo",
+      "label": {
+       "en": "Local oscillator cos(2π f_LO t)"
+      },
+      "kind": "oscillator"
+     },
+     {
+      "id": "mul",
+      "label": {
+       "en": "Product"
+      },
+      "kind": "multiplier"
+     },
+     {
+      "id": "lpf",
+      "label": {
+       "en": "Lowpass filter"
+      },
+      "kind": "filter"
+     },
+     {
+      "id": "g",
+      "label": {
+       "en": "Gain 2"
+      },
+      "kind": "gain"
+     },
+     {
+      "id": "out",
+      "label": {
+       "en": "Output y(t)"
+      },
+      "kind": "output"
+     }
+    ],
+    "edges": [
+     {
+      "from": "in",
+      "to": "mul"
+     },
+     {
+      "from": "lo",
+      "to": "mul",
+      "label": "f_LO"
+     },
+     {
+      "from": "mul",
+      "to": "lpf",
+      "label": "v(t)"
+     },
+     {
+      "from": "lpf",
+      "to": "g"
+     },
+     {
+      "from": "g",
+      "to": "out"
+     }
+    ]
+   }
+  },
+  "step-product": {
+   "id": "step-product",
+   "kind": "step",
+   "tex": "v(t)=s(t)\\cos(2\\pi 10^5 t)=\\cos(2\\pi 10^3 t)+\\tfrac12\\cos(2\\pi\\,199\\times10^3 t)+\\tfrac12\\cos(2\\pi\\,201\\times10^3 t)",
+   "note": {
+    "en": "With a matched oscillator: the message at 1 kHz plus copies near 2fc = 200 kHz."
+   }
+  },
+  "fig-spec-product": {
+   "id": "fig-spec-product",
+   "kind": "figure",
+   "template": "spectrum",
+   "caption": {
+    "en": "Multiplier output v(t) with a matched oscillator",
+    "or": "Matched oscillator ସହ Multiplier output v(t)"
+   },
+   "params": {
+    "lines": [
+     {
+      "f": 1,
+      "a": 1,
+      "label": {
+       "en": "1 kHz message"
+      },
+      "style": "message"
+     },
+     {
+      "f": 199,
+      "a": 0.5,
+      "label": {
+       "en": "199 kHz"
+      },
+      "style": "muted"
+     },
+     {
+      "f": 201,
+      "a": 0.5,
+      "label": {
+       "en": "201 kHz"
+      },
+      "style": "muted"
+     }
+    ],
+    "fRange": [
+     0,
+     210
+    ],
+    "unit": "kHz"
+   }
+  },
+  "res-lpf": {
+   "id": "res-lpf",
+   "kind": "result",
+   "tex": "1\\ \\text{kHz}<f_{\\text{cut}}<199\\ \\text{kHz}\\ (\\text{e.g. } 5\\ \\text{kHz});\\quad y(t)=2\\cdot\\cos(2\\pi 10^3 t)=m(t)",
+   "text": {
+    "en": "Cutoff above the message and well below 2fc; gain 2 then returns exactly m(t).",
+    "or": "Cutoff Message ଠାରୁ ଉପରେ ଓ 2fc ଠାରୁ ବହୁତ ତଳେ; Gain 2 ପରେ ଠିକ୍ m(t) ମିଳେ।"
+   }
+  },
+  "eq-lo-off": {
+   "id": "eq-lo-off",
+   "kind": "equation",
+   "tex": "c_{LO}(t)=\\cos(2\\pi\\,100.05\\times10^3 t),\\quad \\Delta f=50\\ \\text{Hz}",
+   "label": {
+    "en": "Drifted local oscillator",
+    "or": "ଘୁଞ୍ଚିଥିବା Local oscillator"
+   }
+  },
+  "step-off-product": {
+   "id": "step-off-product",
+   "kind": "step",
+   "tex": "y(t)=2\\,\\mathrm{LPF}\\{s(t)\\cos(2\\pi\\,100050\\,t)\\}=m(t)\\cos(2\\pi\\,50\\,t)",
+   "note": {
+    "en": "The 2fc terms (199.05 and 201.05 kHz) are filtered out."
+   }
+  },
+  "step-off-lines": {
+   "id": "step-off-lines",
+   "kind": "step",
+   "tex": "=2\\cos(2\\pi 10^3 t)\\cos(2\\pi 50 t)=\\cos(2\\pi\\,950\\,t)+\\cos(2\\pi\\,1050\\,t)",
+   "note": {
+    "en": "Each sideband lands 50 Hz off, in opposite directions."
+   }
+  },
+  "fig-spec-off": {
+   "id": "fig-spec-off",
+   "kind": "figure",
+   "template": "spectrum",
+   "caption": {
+    "en": "Output with a 50 Hz drift: two tones, not one",
+    "or": "50 Hz drift ସହ Output: ଗୋଟିଏ ନୁହେଁ, ଦୁଇଟି Tone"
+   },
+   "params": {
+    "lines": [
+     {
+      "f": 950,
+      "a": 1,
+      "label": {
+       "en": "950 Hz (from USB)"
+      },
+      "style": "message"
+     },
+     {
+      "f": 1050,
+      "a": 1,
+      "label": {
+       "en": "1050 Hz (from LSB)"
+      },
+      "style": "message"
+     }
+    ],
+    "fRange": [
+     800,
+     1200
+    ],
+    "unit": "Hz"
+   }
+  },
+  "fig-wave-beat": {
+   "id": "fig-wave-beat",
+   "kind": "figure",
+   "template": "waveform",
+   "caption": {
+    "en": "Recovered output beating: it fades to zero at 5 ms and 15 ms",
+    "or": "Output ର Beating: 5 ms ଓ 15 ms ରେ ଶୂନ୍ୟ"
+   },
+   "params": {
+    "series": [
+     {
+      "label": {
+       "en": "y(t)"
+      },
+      "tones": [
+       {
+        "a": 1,
+        "f": 950
+       },
+       {
+        "a": 1,
+        "f": 1050
+       }
+      ],
+      "style": "signal"
+     },
+     {
+      "label": {
+       "en": "+2cos(2π·50t)"
+      },
+      "tones": [
+       {
+        "a": 2,
+        "f": 50
+       }
+      ],
+      "style": "envelope"
+     },
+     {
+      "label": {
+       "en": "−2cos(2π·50t)"
+      },
+      "tones": [
+       {
+        "a": -2,
+        "f": 50
+       }
+      ],
+      "style": "envelope"
+     }
+    ],
+    "t": [
+     0,
+     0.02
+    ],
+    "yRange": [
+     -2.4,
+     2.4
+    ],
+    "xLabel": {
+     "en": "time (s)"
+    },
+    "yLabel": {
+     "en": "volts"
+    }
+   }
+  },
+  "res-fade": {
+   "id": "res-fade",
+   "kind": "result",
+   "tex": "|\\cos(2\\pi 50 t)|=0\\ \\text{every}\\ \\tfrac{1}{2\\cdot 50}=10\\ \\text{ms}\\ \\Rightarrow\\ 100\\ \\text{fades per second}",
+   "text": {
+    "en": "The output dies 100 times a second (at 5 ms, 15 ms, 25 ms …).",
+    "or": "Output ପ୍ରତି ସେକେଣ୍ଡରେ 100 ଥର ଶୂନ୍ୟ ହୁଏ।"
+   }
+  },
+  "note-ssb": {
+   "id": "note-ssb",
+   "kind": "note",
+   "text": {
+    "en": "Contrast: with only the upper sideband (SSB), the same +50 Hz drift just moves the tone to 950 Hz, a pitch shift with no fading. DSB-SC has two sidebands that move apart.",
+    "or": "ତୁଳନା: କେବଳ Upper sideband (SSB) ଥିଲେ ସେହି 50 Hz drift Tone କୁ 950 Hz କୁ ଘୁଞ୍ଚାଏ, Fading ନାହିଁ।"
+   }
+  },
+  "res-final": {
+   "id": "res-final",
+   "kind": "result",
+   "text": {
+    "en": "DSB-SC needs a locked local oscillator: a drift Δf splits the message into two tones Δf either side, which beat and fade 2Δf times a second.",
+    "or": "DSB-SC ପାଇଁ Locked local oscillator ଦରକାର: Δf drift Message କୁ ଦୁଇଟି Tone ରେ ଭାଗ କରେ, ଯାହା Beat କରି ପ୍ରତି ସେକେଣ୍ଡରେ 2Δf ଥର Fade ହୁଏ।"
+   }
+  },
+  "term-T-AM-04-1": {
+   "id": "term-T-AM-04-1",
+   "kind": "term",
+   "termId": "T-AM-04-1"
+  },
+  "term-T-AM-04-2": {
+   "id": "term-T-AM-04-2",
+   "kind": "term",
+   "termId": "T-AM-04-2"
+  },
+  "term-T-AM-04-3": {
+   "id": "term-T-AM-04-3",
+   "kind": "term",
+   "termId": "T-AM-04-3"
+  },
+  "term-T-AM-05-3": {
+   "id": "term-T-AM-05-3",
+   "kind": "term",
+   "termId": "T-AM-05-3"
+  },
+  "term-T-AM-03-2": {
+   "id": "term-T-AM-03-2",
+   "kind": "term",
+   "termId": "T-AM-03-2"
+  },
+  "term-T-AM-03-3": {
+   "id": "term-T-AM-03-3",
+   "kind": "term",
+   "termId": "T-AM-03-3"
+  },
+  "term-T-AM-06-1": {
+   "id": "term-T-AM-06-1",
+   "kind": "term",
+   "termId": "T-AM-06-1"
+  },
+  "term-T-AM-06-2": {
+   "id": "term-T-AM-06-2",
+   "kind": "term",
+   "termId": "T-AM-06-2"
+  },
+  "term-T-AM-07-1": {
+   "id": "term-T-AM-07-1",
+   "kind": "term",
+   "termId": "T-AM-07-1"
+  },
+  "term-T-AM-07-2": {
+   "id": "term-T-AM-07-2",
+   "kind": "term",
+   "termId": "T-AM-07-2"
+  },
+  "term-T-AM-08-2": {
+   "id": "term-T-AM-08-2",
+   "kind": "term",
+   "termId": "T-AM-08-2"
+  },
+  "term-T-AM-08-3": {
+   "id": "term-T-AM-08-3",
+   "kind": "term",
+   "termId": "T-AM-08-3"
+  }
+ },
+ "pinned": [
+  "q"
+ ],
+ "stages": [
+  {
+   "id": "spectrum",
+   "title": {
+    "en": "What is on air",
+    "or": "Air ରେ କଣ ଅଛି"
+   },
+   "conceptIds": [
+    "C-AM-04",
+    "C-AM-05"
+   ],
+   "intro": {
+    "say": {
+     "en": "First, the transmitted spectrum.",
+     "or": "ପ୍ରଥମେ, ପଠାଯାଉଥିବା Spectrum।"
+    },
+    "reveal": [
+     {
+      "item": "term-T-AM-04-1",
+      "on": "enter"
+     }
+    ]
+   },
+   "start": "p-spectrum",
+   "nodes": {
+    "p-spectrum": {
+     "kind": "probe",
+     "goal": "Student finds the two sideband lines (99 and 101 kHz, 1 V each), notes there is no line at 100 kHz, and gives bandwidth 2 kHz.",
+     "line": {
+      "say": {
+       "en": "s(t) is a 1 kHz tone times a 100 kHz carrier. Which frequencies are actually in it, and how wide is it?",
+       "or": "s(t) ହେଉଛି 1 kHz tone × 100 kHz Carrier। ଏଥିରେ ପ୍ରକୃତରେ କେଉଁ Frequency ଅଛି, ଏବଂ ଏହା କେତେ ଚଉଡ଼ା?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "two-sidebands",
+       "desc": "Lines at fc − fm and fc + fm (99 and 101 kHz), no carrier line at 100 kHz, bandwidth 2 kHz (2fm). Saying 'two sidebands around 100 kHz, 2 kHz wide' counts.",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "step-identity",
+        "fig-spec-tx",
+        "res-bw",
+        "term-T-AM-04-2",
+        "term-T-AM-05-3"
+       ],
+       "ack": {
+        "en": "Yes: two sidebands, 2 kHz wide, and nothing at 100 kHz.",
+        "or": "ହଁ: ଦୁଇଟି Sideband, 2 kHz ଚଉଡ଼ା, 100 kHz ରେ କିଛି ନାହିଁ।"
+       }
+      },
+      {
+       "id": "bw-equals-fm",
+       "desc": "Gets the sideband frequencies (99 and 101 kHz) but gives the bandwidth as 1 kHz (fm) or omits it.",
+       "metric": "calculation-accuracy",
+       "level": "partial",
+       "next": "show-bw",
+       "reveal": [
+        "step-identity",
+        "fig-spec-tx",
+        "res-bw"
+       ],
+       "ack": {
+        "en": "The two lines are right. Now measure from one to the other.",
+        "or": "Line ଦୁଇଟି ଠିକ୍। ଏବେ ଗୋଟିଏରୁ ଅନ୍ୟଟି ପର୍ଯ୍ୟନ୍ତ ମାପନ୍ତୁ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "carrier-line-in-dsb",
+       "desc": "Includes a component at the carrier frequency 100 kHz (three lines: 99, 100, 101 kHz), as in conventional AM.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-no-carrier",
+       "reveal": [
+        "step-identity",
+        "fig-spec-tx",
+        "res-bw"
+       ],
+       "ack": {
+        "en": "Not yet. That third line belongs to conventional AM; let's check this product.",
+        "or": "ଏବେ ନୁହେଁ। ସେହି ତୃତୀୟ Line Conventional AM ର; ଏହି Product କୁ ଯାଞ୍ଚ କରିବା।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "If you multiply two cosines, what do you get?",
+        "or": "ଦୁଇଟି Cosine କୁ ଗୁଣନ କଲେ କଣ ମିଳେ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "A product of cosines splits into a difference frequency and a sum frequency.",
+        "or": "Cosine ର Product ଏକ Difference frequency ଓ ଏକ Sum frequency ରେ ଭାଙ୍ଗେ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "Use the identity on the board with A at 100 kHz and B at 1 kHz.",
+        "or": "Board ରେ ଥିବା Identity ରେ A = 100 kHz ଓ B = 1 kHz ନିଅନ୍ତୁ।"
+       },
+       "reveal": [
+        {
+         "item": "note-identity",
+         "on": "enter"
+        }
+       ],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "Two lines, at 99 and 101 kHz, 1 V each, and none at 100 kHz. The bandwidth is 101 − 99 = 2 kHz.",
+        "or": "ଦୁଇଟି Line, 99 ଓ 101 kHz ରେ, ପ୍ରତ୍ୟେକ 1 V, 100 kHz ରେ କିଛି ନାହିଁ। Bandwidth 101 − 99 = 2 kHz।"
+       },
+       "reveal": [
+        {
+         "item": "step-identity",
+         "on": "speech-end"
+        },
+        {
+         "item": "fig-spec-tx",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-bw",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "99 and 101 kHz",
+        "or": "99 ଓ 101 kHz"
+       },
+       "text": "Two lines at 99 kHz and 101 kHz, so the bandwidth is 2 kHz.",
+       "route": "two-sidebands"
+      },
+      {
+       "label": {
+        "en": "99, 100, 101 kHz",
+        "or": "99, 100, 101 kHz"
+       },
+       "text": "Three lines: 99, 100 and 101 kHz.",
+       "route": "carrier-line-in-dsb"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-identity",
+      "fig-spec-tx",
+      "res-bw"
+     ],
+     "mustNotReveal": [
+      "99 kHz",
+      "101 kHz",
+      "2 kHz",
+      "no line at 100"
+     ]
+    },
+    "show-bw": {
+     "kind": "show",
+     "goal": "Bandwidth is the span between the outer lines: 101 − 99 = 2 kHz = 2fm, not fm.",
+     "line": {
+      "say": {
+       "en": "Bandwidth is the width the signal occupies, from 99 to 101 kHz. That is 2 kHz, twice the tone.",
+       "or": "Bandwidth ହେଉଛି Signal ଅଧିକାର କରୁଥିବା ଚଉଡ଼ା, 99 ରୁ 101 kHz। ତାହା 2 kHz, Tone ର ଦୁଇଗୁଣ।"
+      },
+      "reveal": [
+       {
+        "item": "term-T-AM-05-3",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "res-bw"
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-no-carrier": {
+     "kind": "show",
+     "goal": "Expand the product: only difference and sum terms appear; no term at fc because m(t) has no DC.",
+     "line": {
+      "say": {
+       "en": "Expand the product and only 99 and 101 kHz appear. A 100 kHz line needs a DC part in m(t), and this tone has none.",
+       "or": "Product ଖୋଲିଲେ କେବଳ 99 ଓ 101 kHz ଆସେ। 100 kHz line ପାଇଁ m(t) ରେ DC ଦରକାର, ଏହି Tone ରେ ତାହା ନାହିଁ।"
+      },
+      "reveal": [
+       {
+        "item": "term-T-AM-04-3",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "fig-spec-tx"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "envelope",
+   "title": {
+    "en": "The cheap detector",
+    "or": "ଶସ୍ତା Detector"
+   },
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-04"
+   ],
+   "intro": {
+    "say": {
+     "en": "An envelope detector is cheap: a diode and a capacitor. Here is the wave it would see.",
+     "or": "Envelope detector ଶସ୍ତା: ଗୋଟିଏ Diode ଓ ଗୋଟିଏ Capacitor। ଏହା ଦେଖିବା Wave ଏଠାରେ।"
+    },
+    "reveal": [
+     {
+      "item": "fig-wave-dsb",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-03-2",
+      "on": "say:envelope detector"
+     }
+    ]
+   },
+   "start": "p-envelope",
+   "nodes": {
+    "p-envelope": {
+     "kind": "probe",
+     "goal": "Student says the detector follows the peaks, giving |m(t)|: the sign flips of m(t) are lost, so the output is a rectified wave, not the 1 kHz tone.",
+     "line": {
+      "say": {
+       "en": "An envelope detector traces the positive peaks. What would it hand you for this wave?",
+       "or": "Envelope detector Positive peak ଗୁଡ଼ିକୁ ଅନୁସରଣ କରେ। ଏହି Wave ପାଇଁ ଏହା କଣ ଦେବ?"
+      },
+      "reveal": [],
+      "focus": [
+       "fig-wave-dsb"
+      ]
+     },
+     "expect": [
+      {
+       "id": "sign-lost",
+       "desc": "Output is |m(t)| (a rectified, always-positive version of the tone): the detector cannot see the sign/phase reversals at zero crossings, so the message is distorted (doubled frequency).",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "p-carrier",
+       "reveal": [
+        "step-env",
+        "note-env-spectrum"
+       ],
+       "ack": {
+        "en": "Right: it gives |m(t)|, and the sign is gone.",
+        "or": "ଠିକ୍: ଏହା |m(t)| ଦିଏ, Sign ହଜିଯାଏ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "M-AM-03",
+       "desc": "Says the envelope detector recovers m(t), the 1 kHz tone, just as it would for AM.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-env-fails",
+       "reveal": [
+        "step-env",
+        "note-env-spectrum"
+       ],
+       "ack": {
+        "en": "Not yet. Follow the top edge of the wave across a zero crossing.",
+        "or": "ଏବେ ନୁହେଁ। Zero crossing ପାର ହେବା ସମୟରେ Wave ର ଉପର ଧାର ଦେଖନ୍ତୁ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "Look where m(t) crosses zero. What happens to the top edge of s(t) there?",
+        "or": "m(t) ଯେଉଁଠି ଶୂନ୍ୟ ପାର କରେ, ସେଠାରେ s(t) ର ଉପର ଧାର କଣ ହୁଏ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "The top edge follows +m(t) while m(t) is positive. When m(t) goes negative, which trace is on top?",
+        "or": "m(t) Positive ଥିବା ବେଳେ ଉପର ଧାର +m(t) ଅନୁସରଣ କରେ। m(t) Negative ହେଲେ କେଉଁ Trace ଉପରେ ଥାଏ?"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "Where m(t) is negative, −m(t) is the upper trace, so the peaks always follow the positive one.",
+        "or": "m(t) Negative ଥିବା ଜାଗାରେ −m(t) ଉପରେ ଥାଏ, ତେଣୁ Peak ସବୁବେଳେ Positive ଟିକୁ ଅନୁସରଣ କରେ।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "It gives |m(t)| = 2|cos(2π·10³t)|, a rectified wave. It has no 1 kHz part at all.",
+        "or": "ଏହା |m(t)| = 2|cos(2π·10³t)| ଦିଏ। ଏଥିରେ 1 kHz ଅଂଶ ଆଦୌ ନାହିଁ।"
+       },
+       "reveal": [
+        {
+         "item": "step-env",
+         "on": "speech-end"
+        },
+        {
+         "item": "note-env-spectrum",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "The 1 kHz tone",
+        "or": "1 kHz tone"
+       },
+       "text": "It gives back the 1 kHz message.",
+       "route": "M-AM-03"
+      },
+      {
+       "label": {
+        "en": "A rectified tone",
+        "or": "Rectified tone"
+       },
+       "text": "It gives the magnitude of m(t), so the sign is lost.",
+       "route": "sign-lost"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-env",
+      "note-env-spectrum"
+     ],
+     "mustNotReveal": [
+      "|m(t)|",
+      "rectified",
+      "magnitude",
+      "2 kHz",
+      "sign is lost"
+     ]
+    },
+    "show-env-fails": {
+     "kind": "show",
+     "goal": "Counter M-AM-03: the DSB-SC envelope is |m(t)|; its spectrum has DC and 2 kHz but no 1 kHz, so the detector cannot return the tone.",
+     "line": {
+      "say": {
+       "en": "Past each zero crossing the lower trace becomes the top, so the peaks give |m(t)|. That wave has no 1 kHz in it.",
+       "or": "ପ୍ରତି Zero crossing ପରେ ତଳ Trace ଉପରକୁ ଆସେ, ତେଣୁ Peak ଗୁଡ଼ିକ |m(t)| ଦିଏ। ସେଥିରେ 1 kHz ନାହିଁ।"
+      },
+      "reveal": [],
+      "focus": [
+       "fig-wave-dsb",
+       "note-env-spectrum"
+      ]
+     },
+     "next": "p-carrier"
+    },
+    "p-carrier": {
+     "kind": "probe",
+     "goal": "Student writes μ = 2/A and requires μ ≤ 1, giving the smallest added carrier A = 2 V.",
+     "line": {
+      "say": {
+       "en": "Fix: add a carrier A·cos(2π·10⁵t). What is the smallest A that lets the envelope detector work?",
+       "or": "ସମାଧାନ: ଏକ Carrier A·cos(2π·10⁵t) ଯୋଡ଼ନ୍ତୁ। Envelope detector କାମ କରିବା ପାଇଁ ସବୁଠାରୁ ଛୋଟ A କେତେ?"
+      },
+      "reveal": [
+       {
+        "item": "step-am",
+        "on": "enter"
+       },
+       {
+        "item": "term-T-AM-03-3",
+        "on": "speech-end"
+       }
+      ]
+     },
+     "expect": [
+      {
+       "id": "a-min-2",
+       "desc": "A = 2 V (or A ≥ 2 V): μ = peak of m(t)/A = 2/A must be ≤ 1 so A + m(t) never goes negative.",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "show-efficiency",
+       "reveal": [
+        "step-mu",
+        "res-carrier"
+       ],
+       "ack": {
+        "en": "Yes: A = 2 V, exactly 100% modulation.",
+        "or": "ହଁ: A = 2 V, ଠିକ୍ 100% Modulation।"
+       }
+      },
+      {
+       "id": "a-min-1",
+       "desc": "Gives A = 1 V or similar, treating μ as the message peak or ignoring that the tone's peak is 2 V.",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-mu-def",
+       "reveal": [
+        "step-mu",
+        "res-carrier"
+       ],
+       "ack": {
+        "en": "Not yet. Check the message peak against A.",
+        "or": "ଏବେ ନୁହେଁ। Message peak କୁ A ସହ ତୁଳନା କରନ୍ତୁ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "any-carrier-enough",
+       "desc": "Says any carrier, however small, makes envelope detection work (ignores overmodulation, μ > 1).",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-overmod",
+       "reveal": [
+        "step-mu",
+        "res-carrier"
+       ],
+       "ack": {
+        "en": "Not yet. A small carrier still lets the bracket go negative.",
+        "or": "ଏବେ ନୁହେଁ। ଛୋଟ Carrier ରେ Bracket ଏବେ ବି Negative ହୁଏ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "The envelope is A + m(t). When could it go negative?",
+        "or": "Envelope ହେଉଛି A + m(t)। ଏହା କେବେ Negative ହୋଇପାରେ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Read μ off the bracket on the board. μ must not exceed one.",
+        "or": "Board ର Bracket ରୁ μ ପଢ଼ନ୍ତୁ। μ ଏକରୁ ଅଧିକ ହେବା ଉଚିତ ନୁହେଁ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "The bracket is 1 + (2/A)cos(…), so μ = 2/A.",
+        "or": "Bracket ହେଉଛି 1 + (2/A)cos(…), ତେଣୁ μ = 2/A।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "2/A ≤ 1, so A must be at least 2 V. At 2 V the modulation is exactly 100%.",
+        "or": "2/A ≤ 1, ତେଣୁ A ଅତି କମରେ 2 V। 2 V ରେ Modulation ଠିକ୍ 100%।"
+       },
+       "reveal": [
+        {
+         "item": "step-mu",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-carrier",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "A = 2 V",
+        "or": "A = 2 V"
+       },
+       "text": "A has to be 2 V, so that mu is 1.",
+       "route": "a-min-2"
+      },
+      {
+       "label": {
+        "en": "A = 1 V",
+        "or": "A = 1 V"
+       },
+       "text": "A of 1 V is enough.",
+       "route": "a-min-1"
+      },
+      {
+       "label": {
+        "en": "Any carrier works",
+        "or": "ଯେକୌଣସି Carrier"
+       },
+       "text": "Any small carrier is enough, it just has to be there.",
+       "route": "any-carrier-enough"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-mu",
+      "res-carrier"
+     ],
+     "mustNotReveal": [
+      "2 V",
+      "A = 2",
+      "μ = 1",
+      "100%",
+      "at least 2"
+     ]
+    },
+    "show-mu-def": {
+     "kind": "show",
+     "goal": "μ compares the message peak (2 V) with A; with A = 1 V, μ = 2 and the detector distorts.",
+     "line": {
+      "say": {
+       "en": "The message peak is 2 V, so μ = 2/A. With A = 1 V, μ would be 2: overmodulated.",
+       "or": "Message peak 2 V, ତେଣୁ μ = 2/A। A = 1 V ରେ μ = 2: Overmodulation।"
+      },
+      "reveal": [],
+      "focus": [
+       "step-mu"
+      ]
+     },
+     "next": "show-efficiency"
+    },
+    "show-overmod": {
+     "kind": "show",
+     "goal": "Counter any-carrier-enough: for μ > 1 the bracket A + m(t) goes negative, the envelope is |A + m(t)| and the detector distorts.",
+     "line": {
+      "say": {
+       "en": "With a small A, A + m(t) still dips below zero, and the detector sees its magnitude again. So we need A ≥ 2 V.",
+       "or": "ଛୋଟ A ରେ A + m(t) ଶୂନ୍ୟ ତଳକୁ ଯାଏ, Detector ପୁଣି Magnitude ଦେଖେ। ତେଣୁ A ≥ 2 V ଦରକାର।"
+      },
+      "reveal": [],
+      "focus": [
+       "step-mu"
+      ]
+     },
+     "next": "show-efficiency"
+    },
+    "show-efficiency": {
+     "kind": "show",
+     "goal": "Show the cost: at A = 2 V the carrier takes 2 W against 1 W of sidebands, η = 1/3.",
+     "line": {
+      "say": {
+       "en": "That carrier costs power: 2 W of carrier for 1 W of sidebands. Efficiency is only one third.",
+       "or": "ସେହି Carrier ପାଇଁ Power ଲାଗେ: 1 W Sideband ପାଇଁ 2 W Carrier। Efficiency କେବଳ ଏକ-ତୃତୀୟାଂଶ।"
+      },
+      "reveal": [
+       {
+        "item": "note-eff",
+        "on": "enter"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "coherent",
+   "title": {
+    "en": "The coherent receiver",
+    "or": "Coherent receiver"
+   },
+   "conceptIds": [
+    "C-AM-06",
+    "C-AM-07"
+   ],
+   "intro": {
+    "say": {
+     "en": "Instead, keep DSB-SC and use a product receiver with a matched local oscillator.",
+     "or": "ବଦଳରେ, DSB-SC ରଖି ମେଳ ଥିବା Local oscillator ସହ Product receiver ବ୍ୟବହାର କରନ୍ତୁ।"
+    },
+    "reveal": [
+     {
+      "item": "fig-rx",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-06-1",
+      "on": "say:product receiver"
+     },
+     {
+      "item": "term-T-AM-06-2",
+      "on": "say:local oscillator"
+     }
+    ]
+   },
+   "start": "p-lpf",
+   "nodes": {
+    "p-lpf": {
+     "kind": "probe",
+     "goal": "Student finds the multiplier output (1 kHz message plus terms near 2fc: 199 and 201 kHz) and puts the cutoff between them, e.g. 5 kHz.",
+     "line": {
+      "say": {
+       "en": "After the product, what frequencies are in v(t), and where should the lowpass cutoff go?",
+       "or": "Product ପରେ v(t) ରେ କେଉଁ Frequency ଅଛି, ଏବଂ Lowpass cutoff କେଉଁଠି ରଖିବେ?"
+      },
+      "reveal": [
+       {
+        "item": "term-T-AM-07-1",
+        "on": "say:lowpass"
+       },
+       {
+        "item": "term-T-AM-07-2",
+        "on": "speech-end"
+       }
+      ],
+      "focus": [
+       "fig-rx"
+      ]
+     },
+     "expect": [
+      {
+       "id": "cutoff-between",
+       "desc": "Message at 1 kHz plus components near 2fc (199 and 201 kHz); cutoff above 1 kHz and well below 199 kHz (any value such as 2, 5, 10 or 50 kHz).",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "show-gain",
+       "reveal": [
+        "step-product",
+        "fig-spec-product",
+        "res-lpf"
+       ],
+       "ack": {
+        "en": "Yes: keep 1 kHz, block the 200 kHz pair.",
+        "or": "ହଁ: 1 kHz ରଖନ୍ତୁ, 200 kHz ପାଖର ଯୋଡ଼ିକୁ ରୋକନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "cutoff-too-low",
+       "desc": "Puts the cutoff at or below the 1 kHz message (e.g. 500 Hz or 1 kHz exactly), or says filter out the 1 kHz part.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-too-low",
+       "reveal": [
+        "step-product",
+        "fig-spec-product",
+        "res-lpf"
+       ],
+       "ack": {
+        "en": "Not yet. Which line is the message you want to keep?",
+        "or": "ଏବେ ନୁହେଁ। ରଖିବାକୁ ଥିବା Message କେଉଁ Line?"
+       }
+      }
+     ],
+     "misconceptions": [],
+     "hints": [
+      {
+       "say": {
+        "en": "Multiply the two sidebands by the 100 kHz oscillator. Where do the new terms land?",
+        "or": "ଦୁଇଟି Sideband କୁ 100 kHz Oscillator ସହ ଗୁଣନ କରନ୍ତୁ। ନୂଆ Term କେଉଁଠି ପଡ଼େ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Each product gives a difference and a sum. The differences sit near zero, the sums near twice the carrier.",
+        "or": "ପ୍ରତି Product ଏକ Difference ଓ ଏକ Sum ଦିଏ। Difference ଶୂନ୍ୟ ପାଖରେ, Sum Carrier ର ଦୁଇଗୁଣ ପାଖରେ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "The differences add up to the 1 kHz tone. Now pick a cutoff that keeps it and blocks the rest.",
+        "or": "Difference ଗୁଡ଼ିକ ମିଶି 1 kHz tone ହୁଏ। ଏହାକୁ ରଖି ବାକି ରୋକୁଥିବା Cutoff ବାଛନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "v(t) has 1 kHz plus 199 and 201 kHz. Any cutoff between them works, say 5 kHz, and gain 2 gives back m(t).",
+        "or": "v(t) ରେ 1 kHz ସହ 199 ଓ 201 kHz ଅଛି। ମଝିରେ ଯେକୌଣସି Cutoff, ଯେପରି 5 kHz, ଚଳିବ, ଏବଂ Gain 2 ପରେ m(t) ମିଳେ।"
+       },
+       "reveal": [
+        {
+         "item": "step-product",
+         "on": "speech-end"
+        },
+        {
+         "item": "fig-spec-product",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-lpf",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "Between 1 and 199 kHz",
+        "or": "1 ରୁ 199 kHz ମଝିରେ"
+       },
+       "text": "Keep 1 kHz and remove 199 and 201 kHz, so a cutoff around 5 kHz.",
+       "route": "cutoff-between"
+      },
+      {
+       "label": {
+        "en": "Below 1 kHz",
+        "or": "1 kHz ତଳେ"
+       },
+       "text": "Cut off at 500 Hz to be safe.",
+       "route": "cutoff-too-low"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-product",
+      "fig-spec-product",
+      "res-lpf"
+     ],
+     "mustNotReveal": [
+      "199 kHz",
+      "201 kHz",
+      "5 kHz",
+      "between"
+     ]
+    },
+    "show-too-low": {
+     "kind": "show",
+     "goal": "A cutoff at or below 1 kHz removes or attenuates the message itself; the cutoff must sit above the message and below 2fc.",
+     "line": {
+      "say": {
+       "en": "The message is the 1 kHz line, so a 500 Hz cutoff throws it away. The cutoff must sit above 1 kHz.",
+       "or": "Message ହେଉଛି 1 kHz line, 500 Hz cutoff ତାକୁ ହଟାଇଦିଏ। Cutoff 1 kHz ଉପରେ ରହିବା ଦରକାର।"
+      },
+      "reveal": [],
+      "focus": [
+       "fig-spec-product"
+      ]
+     },
+     "next": "show-gain"
+    },
+    "show-gain": {
+     "kind": "show",
+     "goal": "The filtered 1 kHz term is cos(2π·10³t), half of m(t); gain 2 restores m(t) exactly with a matched oscillator.",
+     "line": {
+      "say": {
+       "en": "After the filter you have cos(2π·10³t), half of m(t). Gain 2 brings back the full 2 V tone.",
+       "or": "Filter ପରେ cos(2π·10³t) ମିଳେ, m(t) ର ଅଧା। Gain 2 ପୂରା 2 V tone ଫେରାଇ ଆଣେ।"
+      },
+      "reveal": [],
+      "focus": [
+       "res-lpf"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "drift",
+   "title": {
+    "en": "A 50 Hz drift",
+    "or": "50 Hz drift"
+   },
+   "conceptIds": [
+    "C-AM-08",
+    "C-AM-06"
+   ],
+   "intro": {
+    "say": {
+     "en": "Now the local oscillator drifts to 100.05 kHz, just 50 Hz off.",
+     "or": "ଏବେ Local oscillator 100.05 kHz କୁ ଘୁଞ୍ଚିଯାଏ, କେବଳ 50 Hz ତଫାତ।"
+    },
+    "reveal": [
+     {
+      "item": "eq-lo-off",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-08-2",
+      "on": "speech-end"
+     }
+    ]
+   },
+   "start": "p-freq",
+   "nodes": {
+    "p-freq": {
+     "kind": "probe",
+     "goal": "Student finds y(t) = m(t)cos(2π·50t) = cos(2π·950t) + cos(2π·1050t): two tones, a 1 kHz tone whose amplitude swells and dies at the offset rate.",
+     "line": {
+      "say": {
+       "en": "Same receiver, oscillator 50 Hz high. What comes out of the gain stage now?",
+       "or": "ସେହି Receiver, Oscillator 50 Hz ଉପରେ। ଏବେ Gain stage ରୁ କଣ ବାହାରେ?"
+      },
+      "reveal": [],
+      "focus": [
+       "eq-lo-off",
+       "fig-rx"
+      ]
+     },
+     "expect": [
+      {
+       "id": "beat-two-tones",
+       "desc": "y(t) = m(t)cos(2π·50t), i.e. two tones at 950 Hz and 1050 Hz (1 V each); equivalently a 1 kHz tone whose amplitude is multiplied by cos(2π·50t).",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "p-fade",
+       "reveal": [
+        "step-off-product",
+        "step-off-lines",
+        "fig-spec-off",
+        "term-T-AM-08-3"
+       ],
+       "ack": {
+        "en": "Exactly: the tone times cos(2π·50t), two lines at 950 and 1050 Hz.",
+        "or": "ଠିକ୍: Tone × cos(2π·50t), 950 ଓ 1050 Hz ରେ ଦୁଇଟି Line।"
+       }
+      },
+      {
+       "id": "fades-vague",
+       "desc": "Says the output is the tone but its loudness/amplitude rises and falls slowly (wobbles, fades), without the 950/1050 Hz or m(t)cos(2π·50t) form.",
+       "metric": "conceptual-understanding",
+       "level": "partial",
+       "next": "p-fade",
+       "reveal": [
+        "step-off-product",
+        "step-off-lines",
+        "fig-spec-off",
+        "term-T-AM-08-3"
+       ],
+       "ack": {
+        "en": "Good instinct. Here is the exact form behind that wobble.",
+        "or": "ଭଲ ଅନୁମାନ। ସେହି Wobble ର ସଠିକ୍ ରୂପ ଏଠାରେ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "offset-shifts-tone",
+       "desc": "Says the recovered tone is simply shifted by 50 Hz, to one frequency (1050 Hz or 950 Hz), with steady amplitude.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-both-sidebands",
+       "reveal": [
+        "step-off-product",
+        "step-off-lines",
+        "fig-spec-off"
+       ],
+       "ack": {
+        "en": "Not yet. There are two sidebands; follow each one.",
+        "or": "ଏବେ ନୁହେଁ। ଦୁଇଟି Sideband ଅଛି; ପ୍ରତ୍ୟେକକୁ ଅନୁସରଣ କରନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "M-AM-06",
+       "desc": "Says a 50 Hz offset is negligible (0.05% of the carrier) and the output is still essentially m(t), or that the filter/gain removes the error.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-drift-matters",
+       "reveal": [
+        "step-off-product",
+        "step-off-lines",
+        "fig-spec-off"
+       ],
+       "ack": {
+        "en": "Not yet. 50 Hz is tiny next to 100 kHz, but not next to the message.",
+        "or": "ଏବେ ନୁହେଁ। 100 kHz ତୁଳନାରେ 50 Hz ଛୋଟ, କିନ୍ତୁ Message ତୁଳନାରେ ନୁହେଁ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "Redo the product with cos(2π·100050t). What is the difference frequency for each sideband?",
+        "or": "cos(2π·100050t) ସହ Product ପୁଣି କରନ୍ତୁ। ପ୍ରତି Sideband ର Difference frequency କେତେ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "The upper sideband is at 101 kHz and the lower at 99 kHz. Subtract 100.05 kHz from each, ignoring sign.",
+        "or": "Upper sideband 101 kHz, Lower 99 kHz। ପ୍ରତ୍ୟେକରୁ 100.05 kHz ବିୟୋଗ କରନ୍ତୁ, Sign ଛାଡ଼ି।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "In general the output is m(t) times cos(2πΔf t). Put Δf in.",
+        "or": "ସାଧାରଣତଃ Output = m(t) × cos(2πΔf t)। Δf ବସାନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "y(t) = m(t)cos(2π·50t) = cos(2π·950t) + cos(2π·1050t). Two tones, not one.",
+        "or": "y(t) = m(t)cos(2π·50t) = cos(2π·950t) + cos(2π·1050t)। ଗୋଟିଏ ନୁହେଁ, ଦୁଇଟି Tone।"
+       },
+       "reveal": [
+        {
+         "item": "step-off-product",
+         "on": "speech-end"
+        },
+        {
+         "item": "step-off-lines",
+         "on": "speech-end"
+        },
+        {
+         "item": "fig-spec-off",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "Two tones",
+        "or": "ଦୁଇଟି Tone"
+       },
+       "text": "Two tones, at 950 Hz and 1050 Hz.",
+       "route": "beat-two-tones"
+      },
+      {
+       "label": {
+        "en": "Just 1050 Hz",
+        "or": "କେବଳ 1050 Hz"
+       },
+       "text": "The tone just shifts up to 1050 Hz.",
+       "route": "offset-shifts-tone"
+      },
+      {
+       "label": {
+        "en": "Same as before",
+        "or": "ଆଗ ପରି"
+       },
+       "text": "50 Hz is tiny, so it is still m(t).",
+       "route": "M-AM-06"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-off-product",
+      "step-off-lines",
+      "fig-spec-off"
+     ],
+     "mustNotReveal": [
+      "950",
+      "1050",
+      "cos(2π·50t)",
+      "two tones",
+      "beat"
+     ]
+    },
+    "show-both-sidebands": {
+     "kind": "show",
+     "goal": "Counter offset-shifts-tone: the USB lands at 950 Hz and the LSB at 1050 Hz; a single shifted tone is what SSB would give.",
+     "line": {
+      "say": {
+       "en": "The upper sideband lands at 950 Hz and the lower at 1050 Hz, so both tones come out. A single shifted tone is what SSB would give.",
+       "or": "Upper sideband 950 Hz ରେ ଓ Lower 1050 Hz ରେ ପଡ଼େ, ତେଣୁ ଦୁଇଟି Tone ବାହାରେ। ଗୋଟିଏ ଘୁଞ୍ଚିଥିବା Tone SSB ରେ ମିଳନ୍ତା।"
+      },
+      "reveal": [
+       {
+        "item": "note-ssb",
+        "on": "speech-end"
+       },
+       {
+        "item": "term-T-AM-08-3",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "fig-spec-off"
+      ]
+     },
+     "next": "p-fade"
+    },
+    "show-drift-matters": {
+     "kind": "show",
+     "goal": "Counter M-AM-06: what matters is Δf relative to the message, not to the carrier; cos(2π·50t) multiplies the output.",
+     "line": {
+      "say": {
+       "en": "The error rides on the output as cos(2π·50t), and 50 Hz is comparable to the 1 kHz tone. No filter after the product can remove it.",
+       "or": "Error ଟି Output ରେ cos(2π·50t) ଭାବେ ରହେ, ଏବଂ 50 Hz, 1 kHz tone ସହ ତୁଳନୀୟ। Product ପରର କୌଣସି Filter ଏହାକୁ ହଟାଇ ପାରିବ ନାହିଁ।"
+      },
+      "reveal": [
+       {
+        "item": "term-T-AM-08-3",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "step-off-product"
+      ]
+     },
+     "next": "p-fade"
+    },
+    "p-fade": {
+     "kind": "probe",
+     "goal": "Student sees |cos(2π·50t)| hits zero twice per 20 ms cycle, so the output fades out 100 times a second (every 10 ms).",
+     "line": {
+      "say": {
+       "en": "The output is the tone times cos(2π·50t). How many times a second does it fade to nothing?",
+       "or": "Output ହେଉଛି Tone × cos(2π·50t)। ପ୍ରତି ସେକେଣ୍ଡରେ ଏହା କେତେ ଥର ଶୂନ୍ୟ ହୁଏ?"
+      },
+      "reveal": [],
+      "focus": [
+       "step-off-product"
+      ]
+     },
+     "expect": [
+      {
+       "id": "hundred-per-second",
+       "desc": "100 times per second (every 10 ms), because cos(2π·50t) passes through zero twice per 20 ms period; 2Δf counts.",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "fig-wave-beat",
+        "res-fade"
+       ],
+       "ack": {
+        "en": "Yes: 100 fades a second, one every 10 ms.",
+        "or": "ହଁ: ପ୍ରତି ସେକେଣ୍ଡରେ 100 ଥର, ପ୍ରତି 10 ms ରେ ଥରେ।"
+       }
+      },
+      {
+       "id": "fifty-per-second",
+       "desc": "Says 50 times per second (every 20 ms), taking the 50 Hz cosine frequency as the fade rate.",
+       "metric": "calculation-accuracy",
+       "level": "partial",
+       "next": "show-null-count",
+       "reveal": [
+        "fig-wave-beat",
+        "res-fade"
+       ],
+       "ack": {
+        "en": "Close. Count the zeros in one 20 ms cycle of the cosine.",
+        "or": "ପାଖାପାଖି। Cosine ର ଗୋଟିଏ 20 ms Cycle ରେ Zero ଗଣନ୍ତୁ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "offset-shifts-tone",
+       "desc": "Says it never fades: the output is a steady tone at a shifted frequency.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-fades",
+       "reveal": [
+        "fig-wave-beat",
+        "res-fade"
+       ],
+       "ack": {
+        "en": "Not yet. Two close tones cannot stay steady together.",
+        "or": "ଏବେ ନୁହେଁ। ପାଖାପାଖି ଦୁଇଟି Tone ମିଶି ସ୍ଥିର ରହେ ନାହିଁ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "When is cos(2π·50t) equal to zero?",
+        "or": "cos(2π·50t) କେବେ ଶୂନ୍ୟ ହୁଏ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "One cycle of a 50 Hz cosine lasts 20 ms. How many zero crossings fit in one cycle?",
+        "or": "50 Hz Cosine ର ଗୋଟିଏ Cycle 20 ms। ଗୋଟିଏ Cycle ରେ କେତୋଟି Zero crossing?"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "A cosine crosses zero twice per cycle, so count crossings over fifty cycles.",
+        "or": "Cosine ପ୍ରତି Cycle ରେ ଦୁଇଥର ଶୂନ୍ୟ ପାର କରେ, ତେଣୁ ପଚାଶ Cycle ରେ ଗଣନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "Twice per 20 ms cycle, so 100 fades a second, at 5 ms, 15 ms, 25 ms and so on.",
+        "or": "ପ୍ରତି 20 ms ରେ ଦୁଇଥର, ତେଣୁ ପ୍ରତି ସେକେଣ୍ଡରେ 100 ଥର: 5 ms, 15 ms, 25 ms…"
+       },
+       "reveal": [
+        {
+         "item": "fig-wave-beat",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-fade",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "100 per second",
+        "or": "ସେକେଣ୍ଡରେ 100"
+       },
+       "text": "100 times a second, every 10 ms.",
+       "route": "hundred-per-second"
+      },
+      {
+       "label": {
+        "en": "50 per second",
+        "or": "ସେକେଣ୍ଡରେ 50"
+       },
+       "text": "50 times a second, since the offset is 50 Hz.",
+       "route": "fifty-per-second"
+      },
+      {
+       "label": {
+        "en": "It never fades",
+        "or": "କେବେ ଶୂନ୍ୟ ହୁଏ ନାହିଁ"
+       },
+       "text": "It never fades; it is a steady shifted tone.",
+       "route": "offset-shifts-tone"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "fig-wave-beat",
+      "res-fade"
+     ],
+     "mustNotReveal": [
+      "100 times",
+      "10 ms",
+      "twice per",
+      "5 ms",
+      "15 ms"
+     ]
+    },
+    "show-null-count": {
+     "kind": "show",
+     "goal": "cos(2π·50t) has two zeros per 20 ms period, so the envelope |2cos(2π·50t)| nulls 2Δf = 100 times a second.",
+     "line": {
+      "say": {
+       "en": "The envelope is |2cos(2π·50t)|, and it hits zero twice in each 20 ms cycle. So the fades come every 10 ms.",
+       "or": "Envelope ହେଉଛି |2cos(2π·50t)|, ପ୍ରତି 20 ms Cycle ରେ ଦୁଇଥର ଶୂନ୍ୟ। ତେଣୁ ପ୍ରତି 10 ms ରେ Fade।"
+      },
+      "reveal": [],
+      "focus": [
+       "fig-wave-beat"
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-fades": {
+     "kind": "show",
+     "goal": "Counter offset-shifts-tone: 950 and 1050 Hz beat; the waveform shows nulls at 5 ms and 15 ms.",
+     "line": {
+      "say": {
+       "en": "Look at the trace: the 950 and 1050 Hz tones cancel at 5 ms and 15 ms. That is beating, not a steady tone.",
+       "or": "Trace ଦେଖନ୍ତୁ: 950 ଓ 1050 Hz tone 5 ms ଓ 15 ms ରେ ପରସ୍ପରକୁ କାଟନ୍ତି। ଏହା Beating, ସ୍ଥିର Tone ନୁହେଁ।"
+      },
+      "reveal": [
+       {
+        "item": "note-ssb",
+        "on": "speech-end"
+       }
+      ],
+      "focus": [
+       "fig-wave-beat"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "explain",
+   "title": {
+    "en": "Say it in English",
+    "or": "ଇଂରାଜୀରେ କୁହନ୍ତୁ"
+   },
+   "conceptIds": [
+    "C-AM-08",
+    "C-AM-04"
+   ],
+   "intro": {
+    "say": {
+     "en": "Last step: put the whole story in your own words.",
+     "or": "ଶେଷ ପଦକ୍ଷେପ: ପୂରା କଥାଟି ନିଜ ଭାଷାରେ କୁହନ୍ତୁ।"
+    },
+    "reveal": []
+   },
+   "start": "p-explain",
+   "nodes": {
+    "p-explain": {
+     "kind": "probe",
+     "goal": "Student explains in English that the drift moves the two sidebands to Δf either side of the tone, and the two beat, so DSB-SC needs a frequency-locked local oscillator.",
+     "line": {
+      "say": {
+       "en": "In one or two English sentences: why does a tiny oscillator drift ruin DSB-SC reception?",
+       "or": "ଏକ ବା ଦୁଇଟି ଇଂରାଜୀ ବାକ୍ୟରେ: ଛୋଟ Oscillator drift DSB-SC reception କୁ କାହିଁକି ନଷ୍ଟ କରେ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "mechanism",
+       "desc": "Explains the mechanism: the frequency mismatch moves the two sidebands to two different output frequencies (fm ± Δf) and they beat, so the output fades at 2Δf; the oscillator must be locked to the carrier.",
+       "metric": "articulation",
+       "level": "ok",
+       "next": "conclusion",
+       "reveal": [
+        "res-final"
+       ],
+       "ack": {
+        "en": "Clear and complete.",
+        "or": "ସ୍ପଷ୍ଟ ଓ ସମ୍ପୂର୍ଣ୍ଣ।"
+       }
+      },
+      {
+       "id": "vague-mismatch",
+       "desc": "Says the oscillator must match or the output is distorted, without saying why (no two sidebands, no beating or fading).",
+       "metric": "articulation",
+       "level": "partial",
+       "next": "conclusion",
+       "reveal": [
+        "res-final"
+       ],
+       "ack": {
+        "en": "True. Add the why: what happens to the two sidebands?",
+        "or": "ଠିକ୍। କାହିଁକି ଯୋଡ଼ନ୍ତୁ: ଦୁଇଟି Sideband ର କଣ ହୁଏ?"
+       }
+      }
+     ],
+     "misconceptions": [],
+     "hints": [
+      {
+       "say": {
+        "en": "What happens to each sideband when the oscillator is off by Δf?",
+        "or": "Oscillator Δf ତଫାତ ହେଲେ ପ୍ରତି Sideband ର କଣ ହୁଏ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Use the words sideband, frequency mismatch and beating.",
+        "or": "Sideband, Frequency mismatch ଓ Beating ଶବ୍ଦ ବ୍ୟବହାର କରନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "Start with: 'The frequency mismatch moves the two sidebands…'",
+        "or": "ଏହିପରି ଆରମ୍ଭ କରନ୍ତୁ: 'The frequency mismatch moves the two sidebands…'"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "The frequency mismatch moves the two sidebands to fm − Δf and fm + Δf. They beat, so the output fades 2Δf times a second; the oscillator must be locked.",
+        "or": "Frequency mismatch ଦୁଇଟି Sideband କୁ fm − Δf ଓ fm + Δf କୁ ନିଏ। ସେମାନେ Beat କରନ୍ତି, Output ପ୍ରତି ସେକେଣ୍ଡରେ 2Δf ଥର Fade ହୁଏ।"
+       },
+       "reveal": [
+        {
+         "item": "res-final",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "Sidebands split and beat",
+        "or": "Sideband ଭାଗ ହୋଇ Beat କରେ"
+       },
+       "text": "The mismatch moves the two sidebands to different frequencies, so they beat and the output fades.",
+       "route": "mechanism"
+      },
+      {
+       "label": {
+        "en": "It must match",
+        "or": "ମେଳ ହେବା ଦରକାର"
+       },
+       "text": "The oscillator must match, otherwise there is distortion.",
+       "route": "vague-mismatch"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "res-final"
+     ],
+     "mustNotReveal": [
+      "fm − Δf",
+      "fm + Δf",
+      "2Δf"
+     ]
+    },
+    "conclusion": {
+     "kind": "conclusion",
+     "goal": "Wrap up: DSB-SC saves carrier power but needs a coherent, locked receiver; envelope detection needs μ ≤ 1 carrier; drift causes beating at 2Δf.",
+     "line": {
+      "say": {
+       "en": "DSB-SC saves the carrier's power, but the receiver must then supply a locked carrier. Otherwise, add 2 V of carrier and pay for it in efficiency.",
+       "or": "DSB-SC Carrier power ବଞ୍ଚାଏ, କିନ୍ତୁ Receiver କୁ Locked carrier ଦେବାକୁ ପଡ଼େ। ନଚେତ୍ 2 V Carrier ଯୋଡ଼ି Efficiency ରେ ମୂଲ୍ୟ ଦିଅନ୍ତୁ।"
+      },
+      "reveal": [
+       {
+        "item": "note-ssb",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "res-final",
+       "note-eff"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  }
+ ],
+ "nextSteps": [
+  {
+   "kind": "lab",
+   "id": "PR-AM-DSB",
+   "why": {
+    "en": "Try fault F-AM-FREQ in the DSB-SC lab: a 2010 Hz local carrier against 2000 Hz should fade 20 times a second.",
+    "or": "DSB-SC lab ରେ F-AM-FREQ fault ଚେଷ୍ଟା କରନ୍ତୁ: 2000 Hz ବଦଳରେ 2010 Hz local carrier ପ୍ରତି ସେକେଣ୍ଡରେ 20 ଥର Fade ହେବା ଉଚିତ।"
+   },
+   "whenMisconception": "offset-shifts-tone"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-08",
+   "why": {
+    "en": "Revisit carrier mismatch: m(t)cos(2πΔf t + φ)."
+   },
+   "whenMisconception": "M-AM-06"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-04",
+   "why": {
+    "en": "Revisit DSB-SC sidebands and why there is no carrier line."
+   },
+   "whenMisconception": "carrier-line-in-dsb"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-03",
+   "why": {
+    "en": "Revisit the AM envelope and the μ ≤ 1 condition."
+   },
+   "whenMisconception": "any-carrier-enough"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-03",
+   "why": {
+    "en": "Revisit why envelope detection needs a retained carrier."
+   },
+   "whenMisconception": "M-AM-03"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-07",
+   "why": {
+    "en": "Revisit choosing a lowpass cutoff between the message and 2fc."
+   },
+   "whenMetric": "conceptual-understanding",
+   "whenLevel": "not_yet"
+  },
+  {
+   "kind": "question",
+   "id": "ece-phase-error",
+   "why": {
+    "en": "Next, the phase-error twin: matched frequency, 60° and 90° phase."
+   },
+   "whenMetric": "calculation-accuracy",
+   "whenLevel": "partial"
+  }
+ ],
+ "sources": [
+  {
+   "id": "haykin-moher-2e-ch3",
+   "title": "S. Haykin, M. Moher, Introduction to Analog and Digital Communications, 2nd ed., Wiley, 2007",
+   "locator": "Ch. 3 Amplitude Modulation: AM, envelope detection and overmodulation; DSB-SC spectrum; coherent detection and local-carrier errors"
+  },
+  {
+   "id": "lathi-ding-4e-ch4",
+   "title": "B. P. Lathi, Z. Ding, Modern Digital and Analog Communication Systems, 4th ed., Oxford University Press, 2009",
+   "locator": "Ch. 4 Amplitude Modulations and Demodulations: DSB-SC, AM (μ ≤ 1, power efficiency μ²/(2+μ²)), effect of local-carrier frequency and phase error"
+  },
+  {
+   "id": "wiki-dsbsc",
+   "title": "Wikipedia: Double-sideband suppressed-carrier transmission",
+   "locator": "https://en.wikipedia.org/wiki/Double-sideband_suppressed-carrier_transmission (demodulation: output ½f(t)cos(Δωt+θ); envelope detector unable to receive)"
+  },
+  {
+   "id": "wiki-am",
+   "title": "Wikipedia: Amplitude modulation",
+   "locator": "https://en.wikipedia.org/wiki/Amplitude_modulation (modulation index; m > 1 overmodulation; carrier power twice sideband power at 100%)"
+  },
+  {
+   "id": "C-AM-08",
+   "title": "Ledger concept: Carrier mismatch and debugging (fault F-AM-FREQ)",
+   "locator": "kiki-web/data-model/ledgers/electronics/analog-modulation.json"
+  },
+  {
+   "id": "C-AM-03",
+   "title": "Ledger concept: Conventional AM, envelope and modulation index",
+   "locator": "kiki-web/data-model/ledgers/electronics/analog-modulation.json"
+  }
+ ]
+}
