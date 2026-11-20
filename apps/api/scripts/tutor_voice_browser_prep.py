@@ -22,7 +22,9 @@ def working_key(env_file=None):
     from kiki_api.tutor.keys import Clients, load_keys
 
     pool = load_keys(env_file or os.environ.get("KIKI_GEMINI_ENV_FILE"))
-    Clients(pool).call(lambda c: c.models.generate_content(model="gemini-3.5-flash-lite", contents="ok"))
+    Clients(pool).call(
+        lambda c: c.models.generate_content(model="gemini-3.5-flash-lite", contents="ok")
+    )
     return pool.healthy().key, pool
 
 
@@ -30,15 +32,19 @@ def main(out: str, text: str):
     key, pool = working_key()
     d = Path(out)
     d.mkdir(parents=True, exist_ok=True)
-    client = genai.Client(api_key=key)          # keep a reference: a collected client closes itself
+    client = genai.Client(api_key=key)  # keep a reference: a collected client closes itself
     res = client.models.generate_content(
-        model="gemini-3.8-flash-lite-tts", contents=text,
-        config=types.GenerateContentConfig(response_modalities=["AUDIO"]))
+        model="gemini-3.8-flash-lite-tts",
+        contents=text,
+        config=types.GenerateContentConfig(response_modalities=["AUDIO"]),
+    )
     pcm = res.candidates[0].content.parts[0].inline_data.data
     with wave.open(str(d / "student.wav"), "wb") as w:
         w.setnchannels(1), w.setsampwidth(2), w.setframerate(24000)
         w.writeframes(bytes(int(24000 * 1.5) * 2) + pcm + bytes(24000 * 4 * 2))
-    (d / "token.json").write_text(json.dumps(VoiceTokens(pool, "gemini-3.8-live").mint()), encoding="utf-8")
+    (d / "token.json").write_text(
+        json.dumps(VoiceTokens(pool, "gemini-3.8-live").mint()), encoding="utf-8"
+    )
     print("wrote", d / "student.wav", "and token.json")
 
 

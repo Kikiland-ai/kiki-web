@@ -8,7 +8,8 @@ chain into one brief, so KiKi says "explanation, next stage, next question" in o
 import re
 from dataclasses import dataclass, field
 
-from .content import EXIT, Branch, Node, Reveal as ContentReveal, TutorQuestion
+from .content import EXIT, Branch, Node, TutorQuestion
+from .content import Reveal as ContentReveal
 from .session import (
     OFF_TOPIC,
     UNCLEAR,
@@ -20,7 +21,7 @@ from .session import (
     TutorState,
 )
 
-MAX_CHAIN = 64   # defensive bound; validated content is acyclic
+MAX_CHAIN = 64  # defensive bound; validated content is acyclic
 
 
 class EngineError(Exception):
@@ -32,7 +33,7 @@ class Step:
     state: TutorState
     events: list[Event]
     brief: Brief
-    revealed: list[str] = field(default_factory=list)   # new board items, in order
+    revealed: list[str] = field(default_factory=list)  # new board items, in order
 
     @property
     def done(self) -> bool:
@@ -56,11 +57,15 @@ class _Run:
         return self.stage.nodes[self.s.node]
 
     def emit(self, type_, **fields):
-        fields.setdefault("stage", self.stage.id if self.s.stageIndex < len(self.q.stages) else None)
+        fields.setdefault(
+            "stage", self.stage.id if self.s.stageIndex < len(self.q.stages) else None
+        )
         self.events.append(Event(seq=self.s.seq, type=type_, turn=self.s.turn, **fields))
         self.s.seq += 1
 
-    def reveal(self, items: list[ContentReveal] | list[str], node: str | None = None) -> list[Reveal]:
+    def reveal(
+        self, items: list[ContentReveal] | list[str], node: str | None = None
+    ) -> list[Reveal]:
         out = []
         for r in items:
             item, on = (r, "enter") if isinstance(r, str) else (r.item, r.on)
@@ -78,7 +83,13 @@ class _Run:
 
     def say(self, kind, line_say, reveals=(), node=None, focus=()):
         self.segments.append(
-            Segment(kind=kind, node=node, say=self.text(line_say), reveals=list(reveals), focus=list(focus))
+            Segment(
+                kind=kind,
+                node=node,
+                say=self.text(line_say),
+                reveals=list(reveals),
+                focus=list(focus),
+            )
         )
 
     # -- movement
@@ -116,15 +127,28 @@ class _Run:
         metric = next(m for m in self.q.metrics if m.id == branch.metric)
         node = self.s.node
         self.emit(
-            "evidence", node=node, metric=metric.id, dim=metric.dim, level=level or branch.level,
-            quote=reply.quote if reply else None, basis=basis, label=branch.id,
+            "evidence",
+            node=node,
+            metric=metric.id,
+            dim=metric.dim,
+            level=level or branch.level,
+            quote=reply.quote if reply else None,
+            basis=basis,
+            label=branch.id,
             misconception=branch.id if branch in self.node.misconceptions else None,
         )
-        self.emit("move", node=node, move="forced" if basis == "forced" else "branch", label=branch.id)
+        self.emit(
+            "move", node=node, move="forced" if basis == "forced" else "branch", label=branch.id
+        )
         rv = self.reveal(branch.reveal, node)
         if branch.ack or rv:
             self.segments.append(
-                Segment(kind="ack", node=node, say=self.text(branch.ack) if branch.ack else "", reveals=rv)
+                Segment(
+                    kind="ack",
+                    node=node,
+                    say=self.text(branch.ack) if branch.ack else "",
+                    reveals=rv,
+                )
             )
         self.enter_node(branch.next)
 
@@ -137,14 +161,29 @@ class _Run:
             used = _match_terms(self.q, reply.termsUsed)
             words = next((m for m in self.q.metrics if m.dim == "words"), None)
             if words and used:
-                self.emit("evidence", node=node, metric=words.id, dim="words", level="ok",
-                          termsUsed=used, basis="terms", quote=reply.quote)
+                self.emit(
+                    "evidence",
+                    node=node,
+                    metric=words.id,
+                    dim="words",
+                    level="ok",
+                    termsUsed=used,
+                    basis="terms",
+                    quote=reply.quote,
+                )
         if reply.clarity is not None:
             expr = next((m for m in self.q.metrics if m.dim == "english"), None)
             if expr:
                 level = {2: "ok", 1: "partial", 0: "not_yet"}[reply.clarity]
-                self.emit("evidence", node=node, metric=expr.id, dim="english", level=level,
-                          basis="clarity", quote=reply.quote)
+                self.emit(
+                    "evidence",
+                    node=node,
+                    metric=expr.id,
+                    dim="english",
+                    level=level,
+                    basis="clarity",
+                    quote=reply.quote,
+                )
 
     def brief(self, studentSaid: str | None) -> Brief:
         waiting = self.s.status == "active"
@@ -193,8 +232,17 @@ def state_at(q: TutorQuestion, node: str, lang: str = "en") -> TutorState:
     for i, s in enumerate(q.stages):
         if node in s.nodes:
             return TutorState(
-                questionId=q.id, questionVersion=q.version, lang=lang, stageIndex=i, node=node,
-                hintLevel=0, turn=0, status="active", board=[], seq=0, version=0,
+                questionId=q.id,
+                questionVersion=q.version,
+                lang=lang,
+                stageIndex=i,
+                node=node,
+                hintLevel=0,
+                turn=0,
+                status="active",
+                board=[],
+                seq=0,
+                version=0,
             )
     raise KeyError(node)
 
@@ -204,8 +252,17 @@ def start(q: TutorQuestion, lang: str) -> Step:
         raise EngineError(f"Language {lang} is not offered for this question")
     first = q.stages[0]
     state = TutorState(
-        questionId=q.id, questionVersion=q.version, lang=lang, stageIndex=0, node=first.start,
-        hintLevel=0, turn=0, status="active", board=[], seq=0, version=0,
+        questionId=q.id,
+        questionVersion=q.version,
+        lang=lang,
+        stageIndex=0,
+        node=first.start,
+        hintLevel=0,
+        turn=0,
+        status="active",
+        board=[],
+        seq=0,
+        version=0,
     )
     run = _Run(q, state)
     run.emit("session_started")
@@ -227,10 +284,17 @@ def step(q: TutorQuestion, state: TutorState, reply: Reply) -> Step:
     run.s.turn += 1
     run.emit("student_turn", node=state.node, mode=reply.mode, text=reply.text or None)
     branches = {b.id: b for b in node.branches()}
-    label = reply.label if reply.label in branches or reply.label in (UNCLEAR, OFF_TOPIC) else UNCLEAR
+    label = (
+        reply.label if reply.label in branches or reply.label in (UNCLEAR, OFF_TOPIC) else UNCLEAR
+    )
     run.emit(
-        "labelled", node=state.node, label=label, confidence=reply.confidence,
-        quote=reply.quote, termsUsed=reply.termsUsed or None, mode=reply.mode,
+        "labelled",
+        node=state.node,
+        label=label,
+        confidence=reply.confidence,
+        quote=reply.quote,
+        termsUsed=reply.termsUsed or None,
+        mode=reply.mode,
     )
     run.turn_evidence(reply)
     said = reply.quote or (reply.text if reply.mode != "chip" else None) or None

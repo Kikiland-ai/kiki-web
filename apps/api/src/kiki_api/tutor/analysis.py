@@ -28,11 +28,12 @@ def combine(levels: list[str]) -> str:
 
 
 def analyse(q: TutorQuestion, events: list[Event]) -> dict:
-    metrics = {m.id: m for m in q.metrics}
     stage_of = {nid: s.id for s in q.stages for nid in s.nodes}
     by_metric: dict[str, list[Event]] = defaultdict(list)
-    stage = {s.id: {"turns": 0, "hints": 0, "forced": False, "misconceptions": [], "levels": []}
-             for s in q.stages}
+    stage = {
+        s.id: {"turns": 0, "hints": 0, "forced": False, "misconceptions": [], "levels": []}
+        for s in q.stages
+    }
     fired: list[str] = []
     terms: list[str] = []
     free_turns = 0
@@ -66,17 +67,25 @@ def analyse(q: TutorQuestion, events: list[Event]) -> dict:
                 level = "n/a"
             else:
                 share = len(terms) / max(1, len(q.terms))
-                level = "ok" if len(terms) >= 3 or share >= 0.5 else "partial" if terms else "not_yet"
+                level = (
+                    "ok" if len(terms) >= 3 or share >= 0.5 else "partial" if terms else "not_yet"
+                )
         else:
             level = combine([e.level for e in evs])
         # quotes from the step that judged this metric first; incidental (clarity/terms) ones after
         rank = {"branch": 0, "forced": 1, "clarity": 2, "terms": 3}
-        quoted = sorted((e for e in evs if e.quote), key=lambda e: (rank.get(e.basis or "", 9), e.seq))
-        metric_rows.append({
-            "id": m.id, "dim": m.dim, "level": level,
-            "quotes": list(dict.fromkeys(e.quote for e in quoted))[:3],
-            **({"termsUsed": terms} if m.dim == "words" else {}),
-        })
+        quoted = sorted(
+            (e for e in evs if e.quote), key=lambda e: (rank.get(e.basis or "", 9), e.seq)
+        )
+        metric_rows.append(
+            {
+                "id": m.id,
+                "dim": m.dim,
+                "level": level,
+                "quotes": list(dict.fromkeys(e.quote for e in quoted))[:3],
+                **({"termsUsed": terms} if m.dim == "words" else {}),
+            }
+        )
     levels = {r["id"]: r["level"] for r in metric_rows}
 
     stages = []
@@ -86,8 +95,16 @@ def analyse(q: TutorQuestion, events: list[Event]) -> dict:
     for s in q.stages:
         st = stage[s.id]
         level = combine(st["levels"])
-        stages.append({"id": s.id, "turns": st["turns"], "hints": st["hints"], "forced": st["forced"],
-                       "misconceptions": st["misconceptions"], "level": level})
+        stages.append(
+            {
+                "id": s.id,
+                "turns": st["turns"],
+                "hints": st["hints"],
+                "forced": st["forced"],
+                "misconceptions": st["misconceptions"],
+                "level": level,
+            }
+        )
         for mid in st["misconceptions"]:
             for c in catalogue[mid].conceptIds:
                 revise.setdefault(c, f"{mid} in {s.id}")
@@ -96,8 +113,12 @@ def analyse(q: TutorQuestion, events: list[Event]) -> dict:
                 revise.setdefault(c, f"needed the answer in {s.id}")
         elif level == "partial" or st["hints"] >= 2:
             for c in s.conceptIds:
-                strengthen.setdefault(c, f"{st['hints']} hints in {s.id}" if st["hints"] >= 2
-                                      else f"partly right in {s.id}")
+                strengthen.setdefault(
+                    c,
+                    f"{st['hints']} hints in {s.id}"
+                    if st["hints"] >= 2
+                    else f"partly right in {s.id}",
+                )
     for c in revise:
         strengthen.pop(c, None)
 
@@ -107,7 +128,13 @@ def analyse(q: TutorQuestion, events: list[Event]) -> dict:
             continue
         if step.whenMetric and levels.get(step.whenMetric) != (step.whenLevel or "not_yet"):
             continue
-        nxt.append({"kind": step.kind, "id": step.id, "why": step.why.model_dump(by_alias=True, exclude_none=True)})
+        nxt.append(
+            {
+                "kind": step.kind,
+                "id": step.id,
+                "why": step.why.model_dump(by_alias=True, exclude_none=True),
+            }
+        )
 
     completed = any(e.type == "session_completed" for e in events)
     sheet = []
@@ -115,7 +142,8 @@ def analyse(q: TutorQuestion, events: list[Event]) -> dict:
         if e.type == "item_revealed":
             sheet += [r.item for r in e.items or [] if r.item not in sheet]
     return {
-        "questionId": q.id, "completed": completed,
+        "questionId": q.id,
+        "completed": completed,
         "metrics": metric_rows,
         "stages": stages,
         "revise": [{"concept": c, "why": w} for c, w in revise.items()],
@@ -148,21 +176,32 @@ class GeminiSummarizer:
         pool = keys if isinstance(keys, KeyPool) else KeyPool.from_config(keys)
         self.clients = Clients(pool, http_options={"timeout": timeout_ms})
 
-    def summarise(self, q: TutorQuestion, report: dict, lang: str, concept_titles: dict[str, str]) -> str | None:
+    def summarise(
+        self, q: TutorQuestion, report: dict, lang: str, concept_titles: dict[str, str]
+    ) -> str | None:
         from google.genai import types
 
         # a deep copy: trimming what the model sees must never change the report the student gets
-        slim = copy.deepcopy({k: report[k] for k in ("metrics", "stages", "revise", "strengthen", "next")})
+        slim = copy.deepcopy(
+            {k: report[k] for k in ("metrics", "stages", "revise", "strengthen", "next")}
+        )
         for row in slim["metrics"]:
             row.pop("quotes", None)
         prompt = SUMMARY_PROMPT.format(
-            sentences=3, language="Odia (technical terms in English)" if lang == "or" else "English",
-            title=q.title.en, concepts=json.dumps(concept_titles), report=json.dumps(slim),
+            sentences=3,
+            language="Odia (technical terms in English)" if lang == "or" else "English",
+            title=q.title.en,
+            concepts=json.dumps(concept_titles),
+            report=json.dumps(slim),
         )
         try:
             t0 = time.perf_counter()
             config = types.GenerateContentConfig(temperature=0.3, max_output_tokens=300)
-            res = self.clients.call(lambda c: c.models.generate_content(model=self.model, contents=prompt, config=config))
+            res = self.clients.call(
+                lambda c: c.models.generate_content(
+                    model=self.model, contents=prompt, config=config
+                )
+            )
             logger.info("Tutor summary in %d ms", int((time.perf_counter() - t0) * 1000))
             text = (res.text or "").strip()
             return text[:1200] or None

@@ -28,8 +28,14 @@ def pool(*pools, clock=None):
 
 
 def test_parses_the_kiki_backend_format_strings_and_a_bare_key():
-    raw = json.dumps([{"key": "a", "quota_pool": "gareebi"}, {"key": "b", "quota_pool": "default"}, {"key": "c"}])
-    assert [(e.index, e.key, e.pool) for e in parse_keys(raw)] == [(0, "a", "gareebi"), (1, "b", "default"), (2, "c", "key-2")]
+    raw = json.dumps(
+        [{"key": "a", "quota_pool": "gareebi"}, {"key": "b", "quota_pool": "default"}, {"key": "c"}]
+    )
+    assert [(e.index, e.key, e.pool) for e in parse_keys(raw)] == [
+        (0, "a", "gareebi"),
+        (1, "b", "default"),
+        (2, "c", "key-2"),
+    ]
     assert [e.pool for e in parse_keys('["x", "y"]')] == ["key-0", "key-1"]
     assert [e.key for e in parse_keys("  single  ")] == ["single"]
     with pytest.raises(ValueError):
@@ -42,7 +48,7 @@ def test_round_robin_and_one_attempt_per_quota_pool():
     p = pool("a", "b", "c", "c")
     firsts = [p.order()[0].index for _ in range(4)]
     assert firsts == [0, 1, 2, 3]
-    assert [e.pool for e in p.order()] == ["a", "b", "c"]   # keys 2 and 3 share pool c: tried once
+    assert [e.pool for e in p.order()] == ["a", "b", "c"]  # keys 2 and 3 share pool c: tried once
 
 
 def test_a_billing_failure_cools_the_whole_pool_and_the_call_moves_on():
@@ -51,10 +57,10 @@ def test_a_billing_failure_cools_the_whole_pool_and_the_call_moves_on():
     assert p.failed(p.entries[2], HTTPError(402, "prepayment credits are depleted"))
     for _ in range(4):
         order = p.order()
-        assert order[-1].pool == "default"                   # cooling pool goes last for every call
-    clock.t += 3601                                          # after the billing cooldown it is warm again
+        assert order[-1].pool == "default"  # cooling pool goes last for every call
+    clock.t += 3601  # after the billing cooldown it is warm again
     seen = {tuple(e.pool for e in p.order()) for _ in range(4)}
-    assert any(order[-1] != "default" for order in seen)    # no longer forced to the back
+    assert any(order[-1] != "default" for order in seen)  # no longer forced to the back
 
 
 def test_rate_limit_uses_the_advised_delay():
@@ -94,7 +100,7 @@ def test_clients_fall_through_to_a_working_pool_and_remember_health():
     assert clients.call(fn) == "ok from 1" and calls == [0, 1]
     assert p.healthy().index == 1 and p.has_success()
     calls.clear()
-    assert clients.call(fn).startswith("ok") and 0 not in calls   # the cooling pool is tried last
+    assert clients.call(fn).startswith("ok") and 0 not in calls  # the cooling pool is tried last
 
 
 def test_every_pool_failing_raises_the_last_error():
@@ -113,13 +119,17 @@ def test_status_parsing():
 
 
 def test_settings_accept_a_key_list_and_reject_a_broken_one():
-    ok = Settings(_env_file=None, firebase_project_id="p", tutor_enabled=True,
-                  gemini_api_keys=json.dumps([{"key": "a", "quota_pool": "x"}]))
+    ok = Settings(
+        _env_file=None,
+        firebase_project_id="p",
+        tutor_enabled=True,
+        gemini_api_keys=json.dumps([{"key": "a", "quota_pool": "x"}]),
+    )
     assert ok.gemini_keys_raw().startswith("[")
     with pytest.raises(ValidationError, match="valid key list"):
         Settings(_env_file=None, firebase_project_id="p", gemini_api_keys="[{")
     shown = repr(ok) + str(ok.model_dump())
-    assert '"key": "a"' not in shown and "'key': 'a'" not in shown    # the key list stays secret
+    assert '"key": "a"' not in shown and "'key': 'a'" not in shown  # the key list stays secret
 
 
 def test_voice_tokens_probe_for_a_working_pool_before_the_first_mint():

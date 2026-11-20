@@ -1,6 +1,7 @@
 """Synthesise a student's spoken answers for a scripted voice run of the tutor screen.
 
-  uv run python scripts/tutor_voice_answers.py <out.json> --env-file <kiki-backend/.env> "answer 1" "answer 2" ...
+  uv run python scripts/tutor_voice_answers.py <out.json> --env-file <kiki-backend/.env> \\
+      "answer 1" "answer 2" ...
 Writes {"rate": 24000, "answers": [{"text", "pcm"}]} with base64 16-bit PCM at 24 kHz per answer.
 Uses the key pool (rotates by quota pool); never prints a key.
 """
@@ -25,8 +26,13 @@ def main():
     clients = Clients(load_keys(a.env_file))
     out = []
     for text in a.answers:
-        res = clients.call(lambda c: c.models.generate_content(
-            model=a.model, contents=text, config=types.GenerateContentConfig(response_modalities=["AUDIO"])))
+        res = clients.call(
+            lambda c, text=text: c.models.generate_content(
+                model=a.model,
+                contents=text,
+                config=types.GenerateContentConfig(response_modalities=["AUDIO"]),
+            )
+        )
         pcm = res.candidates[0].content.parts[0].inline_data.data
         out.append({"text": text, "pcm": base64.b64encode(pcm).decode()})
         print(f"{len(pcm) / 48000:5.1f} s  {text[:70]}")

@@ -40,8 +40,8 @@ def load_questions(directory: Path = QUESTIONS_DIR) -> dict[str, TutorQuestion]:
     return out
 
 
-MAX_EVENTS = 3000          # a session is a few hundred events; beyond this something is looping
-MAX_VOICE_TOKENS = 8       # per session: a reconnect or two, not a token farm
+MAX_EVENTS = 3000  # a session is a few hundred events; beyond this something is looping
+MAX_VOICE_TOKENS = 8  # per session: a reconnect or two, not a token farm
 
 
 def session_id(uid: str, qid: str, lang: str, key: str) -> str:
@@ -51,12 +51,26 @@ def session_id(uid: str, qid: str, lang: str, key: str) -> str:
 
 
 # "I don't know" in the ways students say it: these are real answers (they earn a hint), not noise.
-DONT_KNOW = {"jaanini", "janini", "jani", "ଜାଣିନି", "ଜାଣେନି", "जानिनी", "जानिनि", "dunno", "idk", "pata", "maloom"}
+DONT_KNOW = {
+    "jaanini",
+    "janini",
+    "jani",
+    "ଜାଣିନି",
+    "ଜାଣେନି",
+    "जानिनी",
+    "जानिनि",
+    "dunno",
+    "idk",
+    "pata",
+    "maloom",
+}
 
 
 def is_voice_noise(text: str) -> bool:
-    """A voice turn that is one word with no digits, and not an 'I don't know': a filler or a mis-hearing."""
-    # split on spaces and punctuation, not on \W: Indic vowel signs are combining marks, not word breaks
+    """A voice turn that is one word with no digits, and not an 'I don't know': a filler or a mis-
+    hearing."""
+    # split on spaces and punctuation, not on \W: Indic vowel signs are combining marks, not word
+    # breaks
     words = [w for w in re.split(r"[\s.,!?;:।॥'\"()\-]+", text.lower()) if w]
     if len(words) != 1 or any(ch.isdigit() for ch in text):
         return len(words) == 0
@@ -67,21 +81,32 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
-LEDGER = Path(__file__).resolve().parents[5] / "data-model/ledgers/electronics/analog-modulation.json"
+LEDGER = (
+    Path(__file__).resolve().parents[5] / "data-model/ledgers/electronics/analog-modulation.json"
+)
 
 
 def load_concept_titles(path: Path = LEDGER) -> dict[str, str]:
     try:
         import json
 
-        return {c["id"]: c["title"] for c in json.loads(path.read_text(encoding="utf-8"))["concepts"]}
+        return {
+            c["id"]: c["title"] for c in json.loads(path.read_text(encoding="utf-8"))["concepts"]
+        }
     except (OSError, ValueError, KeyError):
         return {}
 
 
 class TutorService:
-    def __init__(self, questions: dict[str, TutorQuestion], classifier: Classifier, store: TutorStore,
-                 summarizer=None, concept_titles: dict[str, str] | None = None, voice=None):
+    def __init__(
+        self,
+        questions: dict[str, TutorQuestion],
+        classifier: Classifier,
+        store: TutorStore,
+        summarizer=None,
+        concept_titles: dict[str, str] | None = None,
+        voice=None,
+    ):
         self.questions, self.classifier, self.store = questions, classifier, store
         self.summarizer, self.voice = summarizer, voice
         self.titles = load_concept_titles() if concept_titles is None else concept_titles
@@ -111,31 +136,61 @@ class TutorService:
     def question_view(self, qid: str) -> dict:
         q = self._question(qid)
         return {
-            "id": q.id, "version": q.version, "title": _lt(q.title), "difficulty": q.difficulty,
-            "conceptIds": q.conceptIds, "languages": q.languages,
+            "id": q.id,
+            "version": q.version,
+            "title": _lt(q.title),
+            "difficulty": q.difficulty,
+            "conceptIds": q.conceptIds,
+            "languages": q.languages,
             "review": q.review.model_dump(by_alias=True),
             "stages": [{"id": s.id, "title": _lt(s.title)} for s in q.stages],
             "metrics": [{"id": m.id, "label": _lt(m.label), "dim": m.dim} for m in q.metrics],
         }
 
-    def _view(self, sid: str, q: TutorQuestion, state: TutorState, brief: Brief, revealed: list[str],
-              route: dict | None, model_ms: int) -> dict:
+    def _view(
+        self,
+        sid: str,
+        q: TutorQuestion,
+        state: TutorState,
+        brief: Brief,
+        revealed: list[str],
+        route: dict | None,
+        model_ms: int,
+    ) -> dict:
         guided = brief.mode == "guided"
         node = q.stages[state.stageIndex].nodes[state.node]
         return {
-            "sessionId": sid, "questionId": q.id, "status": state.status,
-            "stageIndex": state.stageIndex, "stage": q.stages[state.stageIndex].id,
-            "node": state.node, "hintLevel": state.hintLevel, "turn": state.turn, "lang": state.lang,
+            "sessionId": sid,
+            "questionId": q.id,
+            "status": state.status,
+            "stageIndex": state.stageIndex,
+            "stage": q.stages[state.stageIndex].id,
+            "node": state.node,
+            "hintLevel": state.hintLevel,
+            "turn": state.turn,
+            "lang": state.lang,
             "brief": {
-                "mode": brief.mode, "lang": brief.lang, "expectsReply": brief.expectsReply,
+                "mode": brief.mode,
+                "lang": brief.lang,
+                "expectsReply": brief.expectsReply,
                 "say": brief.say,
-                "segments": [s.model_dump(by_alias=True, exclude_none=True) for s in brief.segments],
+                "segments": [
+                    s.model_dump(by_alias=True, exclude_none=True) for s in brief.segments
+                ],
                 "cuePhrases": brief.cuePhrases,
-                **({"goal": brief.goal, "mustNotReveal": brief.mustNotReveal,
-                    "studentSaid": brief.studentSaid} if guided else {}),
+                **(
+                    {
+                        "goal": brief.goal,
+                        "mustNotReveal": brief.mustNotReveal,
+                        "studentSaid": brief.studentSaid,
+                    }
+                    if guided
+                    else {}
+                ),
             },
             "chips": [{"label": _lt(c.label), "route": c.route} for c in node.chips]
-            if state.status == "active" else [],
+            if state.status == "active"
+            else [],
             "board": [board_item(q, i) for i in state.board],
             "revealed": revealed,
             "route": route,
@@ -156,7 +211,7 @@ class TutorService:
         try:
             self.store.create(uid, sid, first.state, first.events, view)
         except Conflict:
-            _, last = self.store.load(uid, sid)     # retried start: same session
+            _, last = self.store.load(uid, sid)  # retried start: same session
             return last
         return view
 
@@ -164,7 +219,9 @@ class TutorService:
         _, last = self._load(uid, sid)
         return last
 
-    def turn(self, uid: str, sid: str, key: str, text: str | None, chip: str | None, mode: str) -> dict:
+    def turn(
+        self, uid: str, sid: str, key: str, text: str | None, chip: str | None, mode: str
+    ) -> dict:
         try:
             replay = self.store.turn_response(uid, sid, key)
         except Missing:
@@ -188,14 +245,21 @@ class TutorService:
             labelled = self.classifier.classify(q, state, text or "", mode)
             reply, model_ms = labelled.reply, labelled.model_ms
             if labelled.error:
-                # The model could not be reached. That says nothing about the student: ask them to say it
-                # again, and leave the session exactly where it was (no hint rung, no evidence, no events).
+                # The model could not be reached. That says nothing about the student: ask them to
+                # say it
+                # again, and leave the session exactly where it was (no hint rung, no evidence, no
+                # events).
                 return self._retry_view(sid, q, state, model_ms, labelled.error)
             if mode == "voice" and reply.label == UNCLEAR and is_voice_noise(text or ""):
-                # A filler sound or a one-word mis-hearing ("ah", "coche") is not an answer: keep listening.
+                # A filler sound or a one-word mis-hearing ("ah", "coche") is not an answer: keep
+                # listening.
                 return self._retry_view(sid, q, state, model_ms, None, listening=True)
-        route = {"label": reply.label, "confidence": reply.confidence, "quote": reply.quote,
-                 "termsUsed": reply.termsUsed}
+        route = {
+            "label": reply.label,
+            "confidence": reply.confidence,
+            "quote": reply.quote,
+            "termsUsed": reply.termsUsed,
+        }
         for attempt in range(3):
             try:
                 nxt = step(q, state, reply)
@@ -208,13 +272,20 @@ class TutorService:
                 # A speech-leak log or a voice token bumped the version. If the graph position is
                 # unchanged, the same label applies: re-run the pure engine on the fresh state.
                 fresh, _ = self._load(uid, sid)
-                same_place = (fresh.status, fresh.stageIndex, fresh.node, fresh.hintLevel, fresh.turn) == \
-                    (state.status, state.stageIndex, state.node, state.hintLevel, state.turn)
+                same_place = (
+                    fresh.status,
+                    fresh.stageIndex,
+                    fresh.node,
+                    fresh.hintLevel,
+                    fresh.turn,
+                ) == (state.status, state.stageIndex, state.node, state.hintLevel, state.turn)
                 replay = self.store.turn_response(uid, sid, key)
                 if replay is not None:
                     return replay
                 if not same_place or attempt == 2:
-                    raise TutorError(409, "Another reply changed this session. Reload to continue.") from None
+                    raise TutorError(
+                        409, "Another reply changed this session. Reload to continue."
+                    ) from None
                 state = fresh
         raise TutorError(409, "Another reply changed this session. Reload to continue.")
 
@@ -238,12 +309,23 @@ class TutorService:
             logger.warning("Tutor turn not processed (%s); asked the student to repeat", error)
             say = f"{self.RETRY_LINE[state.lang]} {node.line.say.get(state.lang)}"
         brief = Brief(
-            mode=q.speech.get(state.lang, "scripted"), lang=state.lang, goal=node.goal, expectsReply=True,
+            mode=q.speech.get(state.lang, "scripted"),
+            lang=state.lang,
+            goal=node.goal,
+            expectsReply=True,
             mustNotReveal=list(node.mustNotReveal),
             segments=[Segment(kind="restate", node=state.node, say=say)],
         )
         label = "listening" if listening else "retry"
-        view = self._view(sid, q, state, brief, [], {"label": label, "confidence": 0.0, "quote": None, "termsUsed": []}, model_ms)
+        view = self._view(
+            sid,
+            q,
+            state,
+            brief,
+            [],
+            {"label": label, "confidence": 0.0, "quote": None, "termsUsed": []},
+            model_ms,
+        )
         view["retry"] = True
         return view
 
@@ -256,16 +338,31 @@ class TutorService:
         node = q.stages[state.stageIndex].nodes[state.node]
         said = _norm(text)
         leaks = [p for p in node.mustNotReveal if _norm(p) in said]
-        # log each phrase once per turn, and never past the event cap (the endpoint can be called often)
+        # log each phrase once per turn, and never past the event cap (the endpoint can be called
+        # often)
         fresh = [p for p in leaks if f"{state.turn}:{state.node}:{p}" not in state.leakKeys]
         if fresh and state.seq + len(fresh) <= MAX_EVENTS:
             from .session import Event
 
-            events = [Event(seq=state.seq + i, type="speech_leak", stage=q.stages[state.stageIndex].id,
-                            node=state.node, turn=state.turn, phrase=p) for i, p in enumerate(fresh)]
+            events = [
+                Event(
+                    seq=state.seq + i,
+                    type="speech_leak",
+                    stage=q.stages[state.stageIndex].id,
+                    node=state.node,
+                    turn=state.turn,
+                    phrase=p,
+                )
+                for i, p in enumerate(fresh)
+            ]
             keys = (state.leakKeys + [f"{state.turn}:{state.node}:{p}" for p in fresh])[-50:]
-            new = state.model_copy(update={"seq": state.seq + len(fresh), "version": state.version + 1,
-                                           "leakKeys": keys})
+            new = state.model_copy(
+                update={
+                    "seq": state.seq + len(fresh),
+                    "version": state.version + 1,
+                    "leakKeys": keys,
+                }
+            )
             try:
                 self.store.append(uid, sid, state.version, new, events)
             except Conflict:
@@ -273,17 +370,27 @@ class TutorService:
         return {"leaks": leaks}
 
     def voice_token(self, uid: str, sid: str) -> dict:
-        state, _ = self._load(uid, sid)            # only for the learner's own, active session
+        state, _ = self._load(uid, sid)  # only for the learner's own, active session
         if state.status != "active":
             raise TutorError(409, "This session is complete.")
         if self.voice is None:
             raise TutorError(503, "Voice is not available. Continue by typing.")
         if state.voiceTokens >= MAX_VOICE_TOKENS:
-            raise TutorError(429, "Voice has reconnected too many times in this session. Continue by typing, or start again.")
+            raise TutorError(
+                429,
+                "Voice has reconnected too many times in this session. Continue by typing, or "
+                "start again.",
+            )
         try:
-            self.store.append(uid, sid, state.version,
-                              state.model_copy(update={"voiceTokens": state.voiceTokens + 1,
-                                                       "version": state.version + 1}), [])
+            self.store.append(
+                uid,
+                sid,
+                state.version,
+                state.model_copy(
+                    update={"voiceTokens": state.voiceTokens + 1, "version": state.version + 1}
+                ),
+                [],
+            )
         except Conflict:
             raise TutorError(409, "This session just changed. Try voice again.") from None
         try:

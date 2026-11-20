@@ -21,14 +21,24 @@ class Missing(Exception):
 
 
 class TutorStore(Protocol):
-    def create(self, uid: str, sid: str, state: TutorState, events: list[Event], response: dict) -> None: ...
+    def create(
+        self, uid: str, sid: str, state: TutorState, events: list[Event], response: dict
+    ) -> None: ...
     def load(self, uid: str, sid: str) -> tuple[TutorState, dict]: ...
     def turn_response(self, uid: str, sid: str, key: str) -> dict | None: ...
     def commit(
-        self, uid: str, sid: str, expected_version: int, state: TutorState, events: list[Event],
-        key: str, response: dict,
+        self,
+        uid: str,
+        sid: str,
+        expected_version: int,
+        state: TutorState,
+        events: list[Event],
+        key: str,
+        response: dict,
     ) -> dict: ...
-    def append(self, uid: str, sid: str, expected_version: int, state: TutorState, events: list[Event]) -> None: ...
+    def append(
+        self, uid: str, sid: str, expected_version: int, state: TutorState, events: list[Event]
+    ) -> None: ...
     def events(self, uid: str, sid: str) -> list[Event]: ...
     def get_report(self, uid: str, sid: str) -> dict | None: ...
     def put_report(self, uid: str, sid: str, report: dict) -> None: ...
@@ -45,7 +55,12 @@ class FirestoreTutorStore:
         self.client, self.fs = client, firestore
 
     def _session(self, uid, sid):
-        return self.client.collection("learners").document(uid).collection("tutorSessions").document(sid)
+        return (
+            self.client.collection("learners")
+            .document(uid)
+            .collection("tutorSessions")
+            .document(sid)
+        )
 
     def create(self, uid, sid, state, events, response):
         ref = self._session(uid, sid)
@@ -55,10 +70,16 @@ class FirestoreTutorStore:
         def apply(tx):
             if ref.get(transaction=tx).exists:
                 raise Conflict("session exists")
-            tx.create(ref, {
-                "state": _dump(state), "lastResponse": response, "questionId": state.questionId,
-                "createdAt": fs.SERVER_TIMESTAMP, "updatedAt": fs.SERVER_TIMESTAMP,
-            })
+            tx.create(
+                ref,
+                {
+                    "state": _dump(state),
+                    "lastResponse": response,
+                    "questionId": state.questionId,
+                    "createdAt": fs.SERVER_TIMESTAMP,
+                    "updatedAt": fs.SERVER_TIMESTAMP,
+                },
+            )
             for e in events:
                 tx.create(ref.collection("events").document(f"{e.seq:06d}"), _dump(e))
 
@@ -85,11 +106,14 @@ class FirestoreTutorStore:
             snap, done = ref.get(transaction=tx), turn_ref.get(transaction=tx)
             if not snap.exists:
                 raise Missing(sid)
-            if done.exists:                       # duplicate delivery: replay, don't move again
+            if done.exists:  # duplicate delivery: replay, don't move again
                 return done.to_dict()["response"]
             if snap.to_dict()["state"]["version"] != expected_version:
                 raise Conflict("stale version")
-            tx.update(ref, {"state": _dump(state), "lastResponse": response, "updatedAt": fs.SERVER_TIMESTAMP})
+            tx.update(
+                ref,
+                {"state": _dump(state), "lastResponse": response, "updatedAt": fs.SERVER_TIMESTAMP},
+            )
             tx.create(turn_ref, {"response": response, "at": fs.SERVER_TIMESTAMP})
             for e in events:
                 tx.create(ref.collection("events").document(f"{e.seq:06d}"), _dump(e))
@@ -138,7 +162,10 @@ class MemoryTutorStore:
         if (uid, sid) in self.sessions:
             raise Conflict("session exists")
         self.sessions[(uid, sid)] = {
-            "state": state.model_copy(deep=True), "events": list(events), "turns": {}, "last": response,
+            "state": state.model_copy(deep=True),
+            "events": list(events),
+            "turns": {},
+            "last": response,
         }
 
     def _get(self, uid, sid):

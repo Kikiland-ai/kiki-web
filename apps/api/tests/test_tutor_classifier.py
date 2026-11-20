@@ -1,4 +1,4 @@
-"""Classifier: offline contract tests always; live Gemini behaviour tests with KIKI_LIVE_GEMINI=1."""
+"""Classifier: offline contract tests always; live Gemini tests with KIKI_LIVE_GEMINI=1."""
 
 import json
 import os
@@ -36,30 +36,47 @@ def test_prompt_and_schema_are_scoped_to_the_current_node():
     prompt, labels = build_prompt(q, st, "  cos 60 = 0.5  ")
     assert labels == ["half", "angle-unit-mixup", UNCLEAR, OFF_TOPIC]
     assert "`half`:" in prompt and "`angle-unit-mixup`:" in prompt
-    assert "scaled-by-cos" not in prompt                       # other nodes' labels never leak in
+    assert "scaled-by-cos" not in prompt  # other nodes' labels never leak in
     assert "Use that factor. At 60°" in prompt and prompt.rstrip().endswith("cos 60 = 0.5")
-    assert "local carrier" in prompt                           # alsoAccept terms listed
+    assert "local carrier" in prompt  # alsoAccept terms listed
     schema = response_schema(labels)
     assert schema["properties"]["label"]["enum"] == labels
     assert set(schema["required"]) == {"label", "quote", "confidence", "termsUsed", "clarity"}
 
 
 def test_parse_accepts_a_good_answer():
-    r = parse(json.dumps({"label": "half", "quote": "0.5", "confidence": 1.4,
-                          "termsUsed": ["phase error"], "clarity": -1}),
-              ["half", UNCLEAR, OFF_TOPIC], "cos 60 = 0.5", "voice")
+    r = parse(
+        json.dumps(
+            {
+                "label": "half",
+                "quote": "0.5",
+                "confidence": 1.4,
+                "termsUsed": ["phase error"],
+                "clarity": -1,
+            }
+        ),
+        ["half", UNCLEAR, OFF_TOPIC],
+        "cos 60 = 0.5",
+        "voice",
+    )
     assert (r.label, r.confidence, r.clarity, r.mode) == ("half", 1.0, None, "voice")
 
 
 def test_parse_drops_the_quote_for_off_topic():
-    r = parse(json.dumps({"label": OFF_TOPIC, "quote": "lunch", "confidence": 0.9,
-                          "termsUsed": [], "clarity": 1}), [OFF_TOPIC], "lunch?", "text")
+    r = parse(
+        json.dumps(
+            {"label": OFF_TOPIC, "quote": "lunch", "confidence": 0.9, "termsUsed": [], "clarity": 1}
+        ),
+        [OFF_TOPIC],
+        "lunch?",
+        "text",
+    )
     assert r.quote is None and r.clarity == 1
 
 
 @pytest.mark.parametrize("raw", ["", "not json", json.dumps({"label": "vanishes"}), "null"])
 def test_parse_rejects_bad_output(raw):
-    with pytest.raises(Exception):
+    with pytest.raises((ValueError, AttributeError, TypeError)):
         parse(raw, ["half", UNCLEAR, OFF_TOPIC], "x", "text")
 
 
@@ -81,8 +98,10 @@ class _Text:
 
 
 def _clf(models, retries=0):
-    c = GeminiClassifier("only-key", "gemini-3.5-flash-lite", thinking=None, retries_on_429=retries, retry_sleep_s=0)
-    c.clients._clients[0] = type("C", (), {"models": models})()     # inject a fake client for key 0
+    c = GeminiClassifier(
+        "only-key", "gemini-3.5-flash-lite", thinking=None, retries_on_429=retries, retry_sleep_s=0
+    )
+    c.clients._clients[0] = type("C", (), {"models": models})()  # inject a fake client for key 0
     return c
 
 
@@ -94,7 +113,9 @@ def test_provider_failure_degrades_to_unclear_never_raises():
 
 def test_label_outside_the_node_set_degrades_to_unclear():
     q = load()
-    raw = json.dumps({"label": "vanishes", "quote": "", "confidence": 1, "termsUsed": [], "clarity": 0})
+    raw = json.dumps(
+        {"label": "vanishes", "quote": "", "confidence": 1, "termsUsed": [], "clarity": 0}
+    )
     out = _clf(_Text(raw)).classify(q, state_at(q, "calc-60"), "it vanishes", "text")
     assert out.reply.label == UNCLEAR and out.error == "ValueError"
 
@@ -117,7 +138,9 @@ live = pytest.mark.skipif(not LIVE, reason="set KIKI_LIVE_GEMINI=1 to call Gemin
 def _live_clf():
     from kiki_api.tutor.keys import load_keys
 
-    return GeminiClassifier(load_keys(os.environ.get("KIKI_GEMINI_ENV_FILE")), MODEL, retries_on_429=4, retry_sleep_s=5)
+    return GeminiClassifier(
+        load_keys(os.environ.get("KIKI_GEMINI_ENV_FILE")), MODEL, retries_on_429=4, retry_sleep_s=5
+    )
 
 
 @live
@@ -147,9 +170,11 @@ def test_live_free_text_session_reaches_the_scorecard():
         "why-cos": "the output gets multiplied by cos phi, so it is m(t) cos phi after the gain",
         "calc-60": "cos 60 degrees is 0.5 so half of the amplitude",
         "predict-90": "at 90 the cos is zero so the message disappears",
-        "explain-english": ("Because the local carrier is out of phase by phi, after multiplying and the "
-                            "lowpass filter the output is m(t) cos phi, so 60 degrees gives half and 90 "
-                            "degrees gives nothing."),
+        "explain-english": (
+            "Because the local carrier is out of phase by phi, after multiplying and the "
+            "lowpass filter the output is m(t) cos phi, so 60 degrees gives half and 90 "
+            "degrees gives nothing."
+        ),
     }
     s = start(q, "en")
     events = list(s.events)
@@ -172,7 +197,13 @@ def test_live_struggling_student_gets_hints_then_misconception_route():
     s = start(q, "en")
     s = step(q, s.state, c.classify(q, s.state, "umm I don't know", "text").reply)
     assert [e.rung for e in s.events if e.type == "hint_given"] == ["question"]
-    s = step(q, s.state, c.classify(q, s.state, "all of it, the frequency is the same so phase doesn't matter", "text").reply)
+    s = step(
+        q,
+        s.state,
+        c.classify(
+            q, s.state, "all of it, the frequency is the same so phase doesn't matter", "text"
+        ).reply,
+    )
     ev = [e for e in s.events if e.type == "evidence" and e.basis == "branch"]
     assert ev and ev[0].misconception == "phase-does-not-matter"
     assert s.state.node == "why-cos"

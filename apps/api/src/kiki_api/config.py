@@ -22,7 +22,8 @@ class Settings(BaseSettings):
     # Tutor mode stays off until explicitly enabled with a server-side Gemini key.
     tutor_enabled: bool = False
     gemini_api_key: SecretStr | None = None
-    # Several keys, rotated by quota pool: a JSON list of {"key", "quota_pool"} (kiki-backend format)
+    # Several keys, rotated by quota pool: a JSON list of {"key", "quota_pool"} (kiki-backend
+    # format)
     gemini_api_keys: SecretStr | None = None
     tutor_classifier_model: str = "gemini-3.5-flash-lite"
     tutor_live_model: str = "gemini-3.8-live"
@@ -58,7 +59,8 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def tutor_needs_key(self):
         if self.tutor_enabled and not self.gemini_keys_raw():
-            raise ValueError("KIKI_TUTOR_ENABLED needs KIKI_GEMINI_API_KEYS or KIKI_GEMINI_API_KEY (server-side, from Secret Manager)")
+            raise ValueError("KIKI_TUTOR_ENABLED needs KIKI_GEMINI_API_KEYS or "
+            "KIKI_GEMINI_API_KEY (server-side, from Secret Manager)")
         if self.gemini_api_keys:
             from .tutor.keys import parse_keys
 

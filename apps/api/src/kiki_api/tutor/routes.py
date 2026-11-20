@@ -43,7 +43,7 @@ def register_tutor_routes(app, identity, backend, call):
         def guarded():
             try:
                 return op()
-            except TutorError as exc:     # `call` passes BoundaryError through; anything else is 503
+            except TutorError as exc:  # `call` passes BoundaryError through; anything else is 503
                 raise BoundaryError(exc.status, exc.message) from None
 
         return call(guarded)
@@ -73,7 +73,9 @@ def register_tutor_routes(app, identity, backend, call):
 
     @app.post("/tutor/sessions/{session_id}/turns")
     def turn(session_id: str, body: TurnBody, user: user_dep, key: key_dep):
-        return run(lambda: service().turn(user.uid, session_id, key, body.text, body.chip, body.mode))
+        return run(
+            lambda: service().turn(user.uid, session_id, key, body.text, body.chip, body.mode)
+        )
 
     @app.post("/tutor/sessions/{session_id}/voice-token")
     def voice_token(session_id: str, user: user_dep):

@@ -25,10 +25,14 @@ from kiki_api.tutor.classifier import GeminiClassifier
 from kiki_api.tutor.service import TutorService, load_questions
 from kiki_api.tutor.store import MemoryTutorStore
 
-PROMPT = (Path(__file__).resolve().parents[1] / "src/kiki_api/tutor/prompts/voice.v1.md").read_text(encoding="utf-8")
+PROMPT = (Path(__file__).resolve().parents[1] / "src/kiki_api/tutor/prompts/voice.v1.md").read_text(
+    encoding="utf-8"
+)
 SUBMIT = types.FunctionDeclaration(
     name="submit_reply",
-    description="Send the student's answer to the tutoring system. Returns the next BRIEF to speak.",
+    description=(
+        "Send the student's answer to the tutoring system. Returns the next BRIEF to speak."
+    ),
     parameters=types.Schema(
         type="OBJECT",
         properties={
@@ -50,7 +54,9 @@ def brief_for_voice(view: dict) -> dict:
 
 
 def similarity(a: str, b: str) -> float:
-    norm = lambda s: re.sub(r"[^\w]+", " ", s.lower()).split()
+    def norm(s):
+        return re.sub(r"[^\w]+", " ", s.lower()).split()
+
     return round(difflib.SequenceMatcher(None, norm(a), norm(b)).ratio(), 3)
 
 
@@ -59,14 +65,17 @@ def working_key(env_file=None):
     from kiki_api.tutor.keys import Clients, load_keys
 
     pool = load_keys(env_file or os.environ.get("KIKI_GEMINI_ENV_FILE"))
-    Clients(pool).call(lambda c: c.models.generate_content(model="gemini-3.5-flash-lite", contents="ok"))
+    Clients(pool).call(
+        lambda c: c.models.generate_content(model="gemini-3.5-flash-lite", contents="ok")
+    )
     return pool.healthy().key, pool
 
 
 async def tts_pcm16k(client, text: str) -> bytes:
     """Student speech for --audio: Gemini TTS at 24 kHz, decimated to 16 kHz PCM."""
     res = client.models.generate_content(
-        model="gemini-3.8-flash-lite-tts", contents=text,
+        model="gemini-3.8-flash-lite-tts",
+        contents=text,
         config=types.GenerateContentConfig(response_modalities=["AUDIO"]),
     )
     pcm24 = res.candidates[0].content.parts[0].inline_data.data
@@ -81,8 +90,12 @@ async def tts_pcm16k(client, text: str) -> bytes:
 async def main(a):
     key, pool = working_key()
     client = genai.Client(api_key=key)
-    svc = TutorService(load_questions(), GeminiClassifier(pool, a.classifier, retries_on_429=3),
-                       MemoryTutorStore(), None)
+    svc = TutorService(
+        load_questions(),
+        GeminiClassifier(pool, a.classifier, retries_on_429=3),
+        MemoryTutorStore(),
+        None,
+    )
     view = svc.start("spike", a.question, a.lang, "spike-start-1")
     sid = view["sessionId"]
     config = types.LiveConnectConfig(
@@ -93,7 +106,8 @@ async def main(a):
         input_audio_transcription=types.AudioTranscriptionConfig(),
     )
     turns, report = list(a.say), {"model": a.live_model, "lang": a.lang, "turns": []}
-    # synthesise student speech BEFORE connecting: blocking calls inside the session starve keep-alives
+    # synthesise student speech BEFORE connecting: blocking calls inside the session starve keep-
+    # alives
     pcms = [await tts_pcm16k(client, s) for s in turns] if a.audio else [None] * len(turns)
     async with client.aio.live.connect(model=a.live_model, config=config) as session:
 
@@ -125,23 +139,33 @@ async def main(a):
                 import wave
 
                 Path(a.save_audio).mkdir(parents=True, exist_ok=True)
-                name = Path(a.save_audio) / f"{a.lang}-turn{record.get('turn', 0)}-{len(report['turns'])}.wav"
+                name = (
+                    Path(a.save_audio)
+                    / f"{a.lang}-turn{record.get('turn', 0)}-{len(report['turns'])}.wav"
+                )
                 with wave.open(str(name), "wb") as w:
                     w.setnchannels(1), w.setsampwidth(2), w.setframerate(24000)
                     w.writeframes(bytes(audio))
                 record["audioFile"] = str(name)
                 record["audioSeconds"] = round(len(audio) / 48000, 1)
-            record.update({
-                "spoken": said, "expected": expected, "verbatim": similarity(said, expected),
-                "firstAudioMs": int((first_audio - t_sent) * 1000) if first_audio else None,
-            })
+            record.update(
+                {
+                    "spoken": said,
+                    "expected": expected,
+                    "verbatim": similarity(said, expected),
+                    "firstAudioMs": int((first_audio - t_sent) * 1000) if first_audio else None,
+                }
+            )
             return tool_call
 
         # KiKi opens with the first brief
         first = brief_for_voice(view)
         t0 = time.perf_counter()
         await session.send_client_content(
-            turns=types.Content(role="user", parts=[types.Part(text="BRIEF " + json.dumps(first, ensure_ascii=False))]),
+            turns=types.Content(
+                role="user",
+                parts=[types.Part(text="BRIEF " + json.dumps(first, ensure_ascii=False))],
+            ),
             turn_complete=True,
         )
         rec = {"turn": 0, "node": view["node"]}
@@ -153,14 +177,18 @@ async def main(a):
             t_sent = time.perf_counter()
             if a.audio:
                 pcm = pcms[i - 1]
-                for k in range(0, len(pcm), 3200):            # 100 ms chunks at real-time pace
-                    await session.send_realtime_input(audio=types.Blob(data=pcm[k:k + 3200], mime_type="audio/pcm;rate=16000"))
+                for k in range(0, len(pcm), 3200):  # 100 ms chunks at real-time pace
+                    await session.send_realtime_input(
+                        audio=types.Blob(data=pcm[k : k + 3200], mime_type="audio/pcm;rate=16000")
+                    )
                     await asyncio.sleep(0.1)
                 silence = bytes(3200)
-                for _ in range(8):                            # 0.8 s of silence lets VAD end the turn
-                    await session.send_realtime_input(audio=types.Blob(data=silence, mime_type="audio/pcm;rate=16000"))
+                for _ in range(8):  # 0.8 s of silence lets VAD end the turn
+                    await session.send_realtime_input(
+                        audio=types.Blob(data=silence, mime_type="audio/pcm;rate=16000")
+                    )
                     await asyncio.sleep(0.1)
-                t_sent = time.perf_counter() - 0.8            # measure from the end of speech
+                t_sent = time.perf_counter() - 0.8  # measure from the end of speech
             else:
                 await session.send_realtime_input(text=student)
             call = await speak_and_listen("", t_sent, rec)
@@ -171,21 +199,53 @@ async def main(a):
                 report["turns"].append(rec)
                 break
             fc = call.function_calls[0]
-            rec.update({"toolCalled": True, "toolMs": int((time.perf_counter() - t_sent) * 1000),
-                        "heard": fc.args.get("heard_text"), "heardLang": fc.args.get("lang")})
+            rec.update(
+                {
+                    "toolCalled": True,
+                    "toolMs": int((time.perf_counter() - t_sent) * 1000),
+                    "heard": fc.args.get("heard_text"),
+                    "heardLang": fc.args.get("lang"),
+                }
+            )
             t_api = time.perf_counter()
-            view = svc.turn("spike", sid, f"spike-turn-{i:04d}", fc.args.get("heard_text") or student, None, "voice")
-            rec.update({"apiMs": int((time.perf_counter() - t_api) * 1000), "label": view["route"]["label"],
-                        "next": view["node"], "done": view["done"]})
+            view = svc.turn(
+                "spike",
+                sid,
+                f"spike-turn-{i:04d}",
+                fc.args.get("heard_text") or student,
+                None,
+                "voice",
+            )
+            rec.update(
+                {
+                    "apiMs": int((time.perf_counter() - t_api) * 1000),
+                    "label": view["route"]["label"],
+                    "next": view["node"],
+                    "done": view["done"],
+                }
+            )
             brief = brief_for_voice(view)
             t_resp = time.perf_counter()
-            await session.send_tool_response(function_responses=[
-                types.FunctionResponse(id=fc.id, name=fc.name, response={"brief": brief})])
+            await session.send_tool_response(
+                function_responses=[
+                    types.FunctionResponse(id=fc.id, name=fc.name, response={"brief": brief})
+                ]
+            )
             spoken = {}
             await speak_and_listen(brief["say"], t_resp, spoken)
-            rec.update({"kikiSaid": spoken["spoken"], "expected": brief["say"], "verbatim": spoken["verbatim"],
-                        "firstAudioAfterToolMs": spoken["firstAudioMs"]})
-            leaks = svc.speech("spike", sid, spoken["spoken"] or "-")["leaks"] if not view["done"] else []
+            rec.update(
+                {
+                    "kikiSaid": spoken["spoken"],
+                    "expected": brief["say"],
+                    "verbatim": spoken["verbatim"],
+                    "firstAudioAfterToolMs": spoken["firstAudioMs"],
+                }
+            )
+            leaks = (
+                svc.speech("spike", sid, spoken["spoken"] or "-")["leaks"]
+                if not view["done"]
+                else []
+            )
             rec["leaks"] = leaks
             report["turns"].append(rec)
             if view["done"]:

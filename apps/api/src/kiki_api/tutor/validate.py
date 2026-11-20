@@ -157,11 +157,12 @@ def validate(q: TutorQuestion) -> Report:
             r.errors.append(f"{where}: no path reaches {EXIT}")
 
     graph_broken = any(
-        k in e for e in r.errors
+        k in e
+        for e in r.errors
         for k in ("not a node in this stage", "is not a node", "cycle", "unreachable", "no path")
     )
     if graph_broken:
-        return r   # leak analysis needs a sound graph; reference errors alone don't block it
+        return r  # leak analysis needs a sound graph; reference errors alone don't block it
 
     # answers only once earned (conservative over all paths)
     earlier: set[str] = set(q.pinned)
@@ -185,13 +186,19 @@ def validate(q: TutorQuestion) -> Report:
                     before |= {r_.item for r_ in h.reveal}
             leaked = sorted(answers & before)
             if leaked:
-                r.errors.append(f"stage {stage.id}/{pid}: answer items shown before earned: {leaked}")
+                r.errors.append(
+                    f"stage {stage.id}/{pid}: answer items shown before earned: {leaked}"
+                )
             earned = set().union(*(set(b.reveal) for b in probe.branches()))
             answer_rung = {r_.item for h in probe.hints if h.rung == "answer" for r_ in h.reveal}
             if not answers & (earned | answer_rung):
-                r.warnings.append(f"stage {stage.id}/{pid}: answer items are never revealed by its branches")
+                r.warnings.append(
+                    f"stage {stage.id}/{pid}: answer items are never revealed by its branches"
+                )
             # spoken leaks in KiKi's own scripted lines
-            spoken = [probe.line.say] + [h.say for h in probe.hints if h.rung in ("question", "nudge")]
+            spoken = [probe.line.say] + [
+                h.say for h in probe.hints if h.rung in ("question", "nudge")
+            ]
             for text in spoken:
                 for lang_text in filter(None, (text.en, text.or_)):
                     for phrase in probe.mustNotReveal:

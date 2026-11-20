@@ -1,4 +1,5 @@
-"""Hardening: configuration, startup isolation, health, caps, and concurrency between voice and turns."""
+"""Hardening: configuration, startup isolation, health, caps, and concurrency between voice and
+turns."""
 
 from unittest.mock import Mock
 
@@ -11,7 +12,14 @@ from kiki_api.config import Settings
 from kiki_api.main import create_app
 from kiki_api.tutor import wiring
 from kiki_api.tutor.classifier import FakeClassifier
-from kiki_api.tutor.service import MAX_EVENTS, MAX_VOICE_TOKENS, TutorError, TutorService, load_questions, session_id
+from kiki_api.tutor.service import (
+    MAX_EVENTS,
+    MAX_VOICE_TOKENS,
+    TutorError,
+    TutorService,
+    load_questions,
+    session_id,
+)
 from kiki_api.tutor.store import MemoryTutorStore
 
 Q = load_questions()
@@ -54,13 +62,21 @@ def test_disabled_tutor_reports_why():
 def test_bad_tutor_content_disables_only_the_tutor(monkeypatch):
     import kiki_api.tutor.service as service
 
-    monkeypatch.setattr(service, "load_questions", lambda: (_ for _ in ()).throw(ValueError("Tutor question x.json is invalid")))
-    tutor = wiring.build_tutor(settings(tutor_enabled=True, gemini_api_key="k"), client=None, store=MemoryTutorStore())
+    monkeypatch.setattr(
+        service,
+        "load_questions",
+        lambda: (_ for _ in ()).throw(ValueError("Tutor question x.json is invalid")),
+    )
+    tutor = wiring.build_tutor(
+        settings(tutor_enabled=True, gemini_api_key="k"), client=None, store=MemoryTutorStore()
+    )
     assert tutor is None and wiring.STATUS["reason"] == "startup failed: ValueError"
 
 
 def test_enabled_tutor_builds_without_network_and_reports_models():
-    tutor = wiring.build_tutor(settings(tutor_enabled=True, gemini_api_key="k"), client=None, store=MemoryTutorStore())
+    tutor = wiring.build_tutor(
+        settings(tutor_enabled=True, gemini_api_key="k"), client=None, store=MemoryTutorStore()
+    )
     assert tutor is not None
     assert wiring.STATUS["enabled"] and wiring.STATUS["liveModel"] == "gemini-3.8-live"
     assert set(wiring.STATUS["questions"]) == set(load_questions())
@@ -73,7 +89,10 @@ def test_health_is_public_and_secret_free(monkeypatch):
     services = Services(TestVerifier(), FirestoreProfiles(FirestoreDouble()))
     client = TestClient(create_app(settings(), Mock(return_value=services)))
     r = client.get("/tutor/health")
-    assert r.status_code == 200 and r.json() == {"enabled": False, "reason": "KIKI_TUTOR_ENABLED is off"}
+    assert r.status_code == 200 and r.json() == {
+        "enabled": False,
+        "reason": "KIKI_TUTOR_ENABLED is off",
+    }
     # profiles are unaffected by the tutor being off
     assert client.post("/learners/me/bootstrap", headers=headers()).status_code == 200
 
@@ -83,11 +102,18 @@ def test_health_is_public_and_secret_free(monkeypatch):
 
 class _Voice:
     def mint(self, lang="en"):
-        return {"token": "auth_tokens/t", "model": "gemini-3.8-live", "expiresAt": "x", "prompt": "voice.v1"}
+        return {
+            "token": "auth_tokens/t",
+            "model": "gemini-3.8-live",
+            "expiresAt": "x",
+            "prompt": "voice.v1",
+        }
 
 
 def svc(store=None, voice=None):
-    return TutorService(Q, FakeClassifier({"weaker": "part-survives"}), store or MemoryTutorStore(), voice=voice)
+    return TutorService(
+        Q, FakeClassifier({"weaker": "part-survives"}), store or MemoryTutorStore(), voice=voice
+    )
 
 
 def test_session_ids_never_cross_questions_or_languages():
@@ -115,14 +141,19 @@ def test_speech_leaks_are_logged_once_per_turn():
     sid = s.start("u", "ece-phase-error", "en", "leak-key-01")["sessionId"]
     for _ in range(5):
         assert s.speech("u", sid, "is it half? so 0.5")["leaks"] == ["half", "0.5"]
-    assert sorted(e.phrase for e in store.events("u", sid) if e.type == "speech_leak") == ["0.5", "half"]
+    assert sorted(e.phrase for e in store.events("u", sid) if e.type == "speech_leak") == [
+        "0.5",
+        "half",
+    ]
 
 
 def test_runaway_sessions_stop_at_the_event_cap():
     store = MemoryTutorStore()
     s = svc(store)
     sid = s.start("u", "ece-phase-error", "en", "cap-key-002")["sessionId"]
-    store.sessions[("u", sid)]["state"] = store.sessions[("u", sid)]["state"].model_copy(update={"seq": MAX_EVENTS})
+    store.sessions[("u", sid)]["state"] = store.sessions[("u", sid)]["state"].model_copy(
+        update={"seq": MAX_EVENTS}
+    )
     with pytest.raises(TutorError) as long:
         s.turn("u", sid, "turn-key-0001", "weaker", None, "text")
     assert long.value.status == 409
@@ -136,7 +167,9 @@ class _DownClassifier:
         from kiki_api.tutor.classifier import Labelled
         from kiki_api.tutor.session import Reply
 
-        return Labelled(Reply(mode=mode, text=text, label="unclear", confidence=0.0), 3000, "ClientError")
+        return Labelled(
+            Reply(mode=mode, text=text, label="unclear", confidence=0.0), 3000, "ClientError"
+        )
 
 
 def test_a_provider_outage_asks_to_repeat_and_changes_nothing():
@@ -153,7 +186,10 @@ def test_a_provider_outage_asks_to_repeat_and_changes_nothing():
     assert store.load("u", sid)[0] == state_before and len(store.events("u", sid)) == events_before
     # the student can simply try again; the turn key was not burned
     s.classifier = FakeClassifier({"part of it comes back": "part-survives"})
-    assert s.turn("u", sid, "outage-turn-1", "part of it comes back", None, "voice")["node"] == "why-cos"
+    assert (
+        s.turn("u", sid, "outage-turn-1", "part of it comes back", None, "voice")["node"]
+        == "why-cos"
+    )
 
 
 def test_voice_noise_keeps_listening_without_spending_a_hint():
@@ -161,15 +197,20 @@ def test_voice_noise_keeps_listening_without_spending_a_hint():
     from kiki_api.tutor.service import is_voice_noise
 
     assert all(is_voice_noise(t) for t in ["Ah", "coche", "yani", "ঠিক", "  ", "um."])
-    assert not any(is_voice_noise(t) for t in ["jaanini", "ଜାଣିନି", "I don't know", "9/59", "42", "not sure"])
+    assert not any(
+        is_voice_noise(t) for t in ["jaanini", "ଜାଣିନି", "I don't know", "9/59", "42", "not sure"]
+    )
     store = MemoryTutorStore()
-    s = TutorService(Q, FakeClassifier({}), store)                       # everything → unclear
+    s = TutorService(Q, FakeClassifier({}), store)  # everything → unclear
     sid = s.start("u", "ece-phase-error", "en", "noise-key-01")["sessionId"]
     before = len(store.events("u", sid))
     view = s.turn("u", sid, "noise-turn-01", "coche", None, "voice")
     assert view["route"]["label"] == "listening" and view["hintLevel"] == 0
-    assert view["brief"]["say"] == "Take your time. I'm listening." and len(store.events("u", sid)) == before
-    typed = s.turn("u", sid, "noise-turn-02", "coche", None, "text")     # typed text is never filtered
+    assert (
+        view["brief"]["say"] == "Take your time. I'm listening."
+        and len(store.events("u", sid)) == before
+    )
+    typed = s.turn("u", sid, "noise-turn-02", "coche", None, "text")  # typed text is never filtered
     assert typed["hintLevel"] == 1
     dont_know = s.turn("u", sid, "noise-turn-03", "jaanini", None, "voice")
     assert dont_know["hintLevel"] == 2
@@ -196,7 +237,7 @@ def test_a_speech_log_landing_mid_turn_does_not_break_the_turn():
     def racing_commit(*args, **kw):
         calls["n"] += 1
         if calls["n"] == 1:
-            s.speech("u", sid, "is it half")      # KiKi's transcript arrives while we classify
+            s.speech("u", sid, "is it half")  # KiKi's transcript arrives while we classify
         return real_commit(*args, **kw)
 
     store.commit = racing_commit
@@ -214,7 +255,7 @@ def test_a_real_concurrent_turn_still_conflicts():
 
     def other_turn_first(*args, **kw):
         store.commit = real_commit
-        s.turn("u", sid, "other-turn-01", None, "phase-does-not-matter", "text")   # moves the graph
+        s.turn("u", sid, "other-turn-01", None, "phase-does-not-matter", "text")  # moves the graph
         return real_commit(*args, **kw)
 
     store.commit = other_turn_first

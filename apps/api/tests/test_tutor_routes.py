@@ -35,7 +35,9 @@ def make(monkeypatch, tutor=True, classifier=None):
     svc = TutorService(QUESTIONS, clf, store) if tutor else None
     services = Services(TestVerifier(), FirestoreProfiles(FirestoreDouble()), tutor=svc)
     settings = Settings(_env_file=None, firebase_project_id="unit-test-project")
-    client = TestClient(create_app(settings, Mock(return_value=services)), raise_server_exceptions=False)
+    client = TestClient(
+        create_app(settings, Mock(return_value=services)), raise_server_exceptions=False
+    )
     return client, store, clf
 
 
@@ -48,7 +50,9 @@ def h(user="a", n=0):
 
 
 def begin(client, user="a", n=1, lang="en"):
-    r = client.post("/tutor/sessions", json={"questionId": "ece-phase-error", "lang": lang}, headers=h(user, n))
+    r = client.post(
+        "/tutor/sessions", json={"questionId": "ece-phase-error", "lang": lang}, headers=h(user, n)
+    )
     assert r.status_code == 201, r.text
     return r.json()
 
@@ -64,7 +68,12 @@ def answers_on_board_too_early(view):
 
 def test_requires_sign_in(monkeypatch):
     client, _, _ = make(monkeypatch)
-    assert client.post("/tutor/sessions", json={"questionId": "ece-phase-error"}, headers=key(1)).status_code == 401
+    assert (
+        client.post(
+            "/tutor/sessions", json={"questionId": "ece-phase-error"}, headers=key(1)
+        ).status_code
+        == 401
+    )
 
 
 def test_disabled_tutor_is_503(monkeypatch):
@@ -88,9 +97,13 @@ def test_start_shows_only_the_question_and_is_idempotent(monkeypatch):
     a = begin(client, n=1)
     assert [i["id"] for i in a["board"]] == ["q"] and a["brief"]["expectsReply"]
     assert [s["kind"] for s in a["brief"]["segments"]] == ["framing", "intro", "probe"]
-    assert "goal" not in a["brief"] and "mustNotReveal" not in a["brief"]     # scripted mode
-    assert {c["route"] for c in a["chips"]} == {"part-survives", "phase-does-not-matter",
-                                                "any-error-loses-all", "unclear"}
+    assert "goal" not in a["brief"] and "mustNotReveal" not in a["brief"]  # scripted mode
+    assert {c["route"] for c in a["chips"]} == {
+        "part-survives",
+        "phase-does-not-matter",
+        "any-error-loses-all",
+        "unclear",
+    }
     again = begin(client, n=1)
     assert again == a
     assert begin(client, n=2)["sessionId"] != a["sessionId"]
@@ -117,15 +130,23 @@ def test_full_text_session_reaches_done_without_early_answers(monkeypatch):
 def test_chip_routes_without_the_classifier(monkeypatch):
     client, _, clf = make(monkeypatch)
     sid = begin(client)["sessionId"]
-    r = client.post(f"/tutor/sessions/{sid}/turns", json={"chip": "phase-does-not-matter"}, headers=h(n=5))
+    r = client.post(
+        f"/tutor/sessions/{sid}/turns", json={"chip": "phase-does-not-matter"}, headers=h(n=5)
+    )
     assert r.status_code == 200 and clf.calls == []
     body = r.json()
-    assert body["node"] == "why-cos" and [s["kind"] for s in body["brief"]["segments"]] == ["show", "intro", "probe"]
+    assert body["node"] == "why-cos" and [s["kind"] for s in body["brief"]["segments"]] == [
+        "show",
+        "intro",
+        "probe",
+    ]
     bad = client.post(f"/tutor/sessions/{sid}/turns", json={"chip": "half"}, headers=h(n=6))
     assert bad.status_code == 422
 
 
-@pytest.mark.parametrize("body", [{}, {"text": "a", "chip": "half"}, {"text": ""}, {"text": "x", "extra": 1}])
+@pytest.mark.parametrize(
+    "body", [{}, {"text": "a", "chip": "half"}, {"text": ""}, {"text": "x", "extra": 1}]
+)
 def test_turn_body_validation(monkeypatch, body):
     client, _, _ = make(monkeypatch)
     sid = begin(client)["sessionId"]
@@ -135,16 +156,27 @@ def test_turn_body_validation(monkeypatch, body):
 def test_turn_requires_an_idempotency_key(monkeypatch):
     client, _, _ = make(monkeypatch)
     sid = begin(client)["sessionId"]
-    assert client.post(f"/tutor/sessions/{sid}/turns", json={"text": "half"}, headers=headers()).status_code == 422
+    assert (
+        client.post(
+            f"/tutor/sessions/{sid}/turns", json={"text": "half"}, headers=headers()
+        ).status_code
+        == 422
+    )
 
 
 def test_duplicate_turn_replays_without_moving_again(monkeypatch):
     client, store, clf = make(monkeypatch)
     sid = begin(client)["sessionId"]
-    first = client.post(f"/tutor/sessions/{sid}/turns", json={"text": "it gets weaker"}, headers=h(n=7)).json()
+    first = client.post(
+        f"/tutor/sessions/{sid}/turns", json={"text": "it gets weaker"}, headers=h(n=7)
+    ).json()
     count = len(store.events("a", sid))
-    again = client.post(f"/tutor/sessions/{sid}/turns", json={"text": "it gets weaker"}, headers=h(n=7)).json()
-    assert again == first and len(store.events("a", sid)) == count and clf.calls == ["it gets weaker"]
+    again = client.post(
+        f"/tutor/sessions/{sid}/turns", json={"text": "it gets weaker"}, headers=h(n=7)
+    ).json()
+    assert (
+        again == first and len(store.events("a", sid)) == count and clf.calls == ["it gets weaker"]
+    )
 
 
 def test_sessions_are_owner_scoped(monkeypatch):
@@ -158,14 +190,16 @@ def test_sessions_are_owner_scoped(monkeypatch):
 def test_completed_session_rejects_turns(monkeypatch):
     client, _, _ = make(monkeypatch)
     sid = begin(client)["sessionId"]
-    for n, chip in enumerate(["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"], 20):
+    for n, chip in enumerate(
+        ["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"], 20
+    ):
         client.post(f"/tutor/sessions/{sid}/turns", json={"chip": chip}, headers=h(n=n))
     r = client.post(f"/tutor/sessions/{sid}/turns", json={"text": "more"}, headers=h(n=99))
     assert r.status_code == 409
 
 
 def test_unlabelled_reply_gets_the_first_hint(monkeypatch):
-    client, _, _ = make(monkeypatch, classifier=FakeClassifier({}))   # everything → unclear
+    client, _, _ = make(monkeypatch, classifier=FakeClassifier({}))  # everything → unclear
     sid = begin(client)["sessionId"]
     body = client.post(f"/tutor/sessions/{sid}/turns", json={"text": "hmm"}, headers=h(n=4)).json()
     assert body["route"]["label"] == "unclear" and body["hintLevel"] == 1
@@ -177,9 +211,17 @@ def test_speech_leak_is_logged(monkeypatch):
     sid = begin(client)["sessionId"]
     for n, chip in enumerate(["part-survives", "scaled-by-cos"], 30):
         client.post(f"/tutor/sessions/{sid}/turns", json={"chip": chip}, headers=h(n=n))
-    ok = client.post(f"/tutor/sessions/{sid}/speech", json={"text": "Use that factor. What fraction?"}, headers=headers())
+    ok = client.post(
+        f"/tutor/sessions/{sid}/speech",
+        json={"text": "Use that factor. What fraction?"},
+        headers=headers(),
+    )
     assert ok.json() == {"leaks": []}
-    bad = client.post(f"/tutor/sessions/{sid}/speech", json={"text": "So it is HALF, 0.5. What fraction?"}, headers=headers())
+    bad = client.post(
+        f"/tutor/sessions/{sid}/speech",
+        json={"text": "So it is HALF, 0.5. What fraction?"},
+        headers=headers(),
+    )
     assert sorted(bad.json()["leaks"]) == ["0.5", "half"]
     leaks = [e.phrase for e in store.events("a", sid) if e.type == "speech_leak"]
     assert sorted(leaks) == ["0.5", "half"]
@@ -218,7 +260,11 @@ class _Ref:
 
     def stream(self):
         prefix = self.path + "/"
-        rows = [(p, d) for p, d in self.db.docs.items() if p.startswith(prefix) and "/" not in p[len(prefix):]]
+        rows = [
+            (p, d)
+            for p, d in self.db.docs.items()
+            if p.startswith(prefix) and "/" not in p[len(prefix) :]
+        ]
         return [_Snap(d) for _, d in sorted(rows, key=lambda r: r[1][self._order])]
 
 
@@ -266,11 +312,18 @@ def test_firestore_store_round_trip_and_guards(fstore):
     from kiki_api.tutor.session import Reply
 
     nxt = step(PHASE, state, Reply(mode="chip", text="x", label="part-survives"))
-    assert fstore.commit("u", "s1", state.version, nxt.state, nxt.events, "k1", {"v": 1}) == {"v": 1}
-    assert fstore.commit("u", "s1", state.version, nxt.state, nxt.events, "k1", {"v": 9}) == {"v": 1}  # replay
+    assert fstore.commit("u", "s1", state.version, nxt.state, nxt.events, "k1", {"v": 1}) == {
+        "v": 1
+    }
+    assert fstore.commit("u", "s1", state.version, nxt.state, nxt.events, "k1", {"v": 9}) == {
+        "v": 1
+    }  # replay
     with pytest.raises(Conflict):
-        fstore.commit("u", "s1", state.version, nxt.state, nxt.events, "k2", {"v": 2})                # stale
-    assert fstore.turn_response("u", "s1", "k1") == {"v": 1} and fstore.turn_response("u", "s1", "zz") is None
+        fstore.commit("u", "s1", state.version, nxt.state, nxt.events, "k2", {"v": 2})  # stale
+    assert (
+        fstore.turn_response("u", "s1", "k1") == {"v": 1}
+        and fstore.turn_response("u", "s1", "zz") is None
+    )
     assert len(fstore.events("u", "s1")) == len(first.events) + len(nxt.events)
     with pytest.raises(Missing):
         fstore.load("other", "s1")
@@ -287,7 +340,12 @@ class _Voice:
         self.calls += 1
         if self.fail:
             raise RuntimeError("quota")
-        return {"token": "auth_tokens/test", "model": "gemini-3.8-live", "expiresAt": "x", "prompt": "voice.v1"}
+        return {
+            "token": "auth_tokens/test",
+            "model": "gemini-3.8-live",
+            "expiresAt": "x",
+            "prompt": "voice.v1",
+        }
 
 
 def test_voice_token_is_owner_scoped_active_only_and_degrades_to_text():
@@ -299,12 +357,16 @@ def test_voice_token_is_owner_scoped_active_only_and_degrades_to_text():
     with pytest.raises(TutorError) as other:
         svc.voice_token("b", sid)
     assert other.value.status == 404
-    for i, c in enumerate(["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"]):
+    for i, c in enumerate(
+        ["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"]
+    ):
         svc.turn("a", sid, f"k-v-{i:04d}", None, c, "text")
     with pytest.raises(TutorError) as done:
         svc.voice_token("a", sid)
     assert done.value.status == 409
-    failing = TutorService(QUESTIONS, FakeClassifier(GOOD), MemoryTutorStore(), voice=_Voice(fail=True))
+    failing = TutorService(
+        QUESTIONS, FakeClassifier(GOOD), MemoryTutorStore(), voice=_Voice(fail=True)
+    )
     sid2 = failing.start("a", "ece-phase-error", "en", "k-voice-02")["sessionId"]
     with pytest.raises(TutorError) as down:
         failing.voice_token("a", sid2)

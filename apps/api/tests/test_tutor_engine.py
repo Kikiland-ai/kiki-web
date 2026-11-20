@@ -9,8 +9,11 @@ from kiki_api.tutor.engine import EngineError, allowed_labels, start, step
 from kiki_api.tutor.session import OFF_TOPIC, UNCLEAR, Reply
 
 ROOT = Path(__file__).resolve().parents[3]
-FILES = [p for p in sorted((ROOT / "data-model/tutor/questions").glob("*.json"))
-         if not p.name.endswith(".routing.json")]
+FILES = [
+    p
+    for p in sorted((ROOT / "data-model/tutor/questions").glob("*.json"))
+    if not p.name.endswith(".routing.json")
+]
 PHASE = ROOT / "data-model/tutor/questions/ece-phase-error.json"
 
 
@@ -108,14 +111,19 @@ def test_correct_chips_complete_in_five_turns_with_all_ok():
     assert set(levels.values()) == {"ok"}
     assert "result" in s.state.board and s.state.board[0] == "q"
     assert [e.stage for e in events if e.type == "stage_completed"] == [
-        "predict", "mechanism", "calculate", "extend", "articulate"]
+        "predict",
+        "mechanism",
+        "calculate",
+        "extend",
+        "articulate",
+    ]
 
 
 def test_one_reply_chains_ack_next_stage_intro_and_next_question():
     q = load()
     s = step(q, start(q, "en").state, chip("part-survives"))
     kinds = [seg.kind for seg in s.brief.segments]
-    assert kinds == ["ack", "intro", "probe"]           # reveal traces-60, mechanism intro, why-cos
+    assert kinds == ["ack", "intro", "probe"]  # reveal traces-60, mechanism intro, why-cos
     assert s.revealed[:3] == ["traces-60", "rx", "mix"]
     assert s.state.node == "why-cos"
 
@@ -131,14 +139,14 @@ def test_misconception_routes_through_show_node_and_logs_it():
 def test_hint_ladder_then_forced_advance():
     q = load()
     s = start(q, "en")
-    s = step(q, s.state, chip("part-survives"))       # to why-cos
+    s = step(q, s.state, chip("part-survives"))  # to why-cos
     rungs = []
     for _ in range(4):
         s = step(q, s.state, say(UNCLEAR))
         rungs += [e.rung for e in s.events if e.type == "hint_given"]
         assert s.state.node == "why-cos"
     assert rungs == ["question", "nudge", "worked_step", "answer"]
-    assert {"identity", "lpf-out", "gain-out"} <= set(s.state.board)   # ladder uncovered the steps
+    assert {"identity", "lpf-out", "gain-out"} <= set(s.state.board)  # ladder uncovered the steps
     s = step(q, s.state, say(UNCLEAR))
     ev = [e for e in s.events if e.type == "evidence"][0]
     assert (ev.basis, ev.level, ev.label) == ("forced", "not_yet", "scaled-by-cos")
@@ -156,7 +164,7 @@ def test_off_topic_restates_without_spending_a_hint():
 
 def test_invalid_label_is_treated_as_unclear():
     q = load()
-    s = step(q, start(q, "en").state, say("vanishes"))   # not a predict-60 label
+    s = step(q, start(q, "en").state, say("vanishes"))  # not a predict-60 label
     assert [e.label for e in s.events if e.type == "labelled"] == [UNCLEAR]
     assert [e.rung for e in s.events if e.type == "hint_given"] == ["question"]
 
@@ -164,11 +172,28 @@ def test_invalid_label_is_treated_as_unclear():
 def test_chips_earn_no_words_or_expression_evidence_but_free_text_does():
     q = load()
     s0 = start(q, "en")
-    c = step(q, s0.state, Reply(mode="chip", text="Part of it", label="part-survives",
-                                termsUsed=["phase error"], clarity=2))
+    c = step(
+        q,
+        s0.state,
+        Reply(
+            mode="chip",
+            text="Part of it",
+            label="part-survives",
+            termsUsed=["phase error"],
+            clarity=2,
+        ),
+    )
     assert {e.dim for e in c.events if e.type == "evidence"} == {"concept"}
-    t = step(q, s0.state, say("part-survives", "part of it, the phase error shrinks it",
-                              termsUsed=["Phase Error", "xyz"], clarity=1))
+    t = step(
+        q,
+        s0.state,
+        say(
+            "part-survives",
+            "part of it, the phase error shrinks it",
+            termsUsed=["Phase Error", "xyz"],
+            clarity=1,
+        ),
+    )
     ev = {e.basis: e for e in t.events if e.type == "evidence"}
     assert ev["terms"].termsUsed == ["T-AM-08-1"] and ev["terms"].dim == "words"
     assert ev["clarity"].level == "partial" and ev["clarity"].dim == "english"
@@ -218,7 +243,9 @@ def test_errors():
         start(q, "hi")
     s = start(q, "en")
     with pytest.raises(EngineError):
-        step(q, s.state.model_copy(update={"questionVersion": "2020-01-01.1"}), chip("part-survives"))
+        step(
+            q, s.state.model_copy(update={"questionVersion": "2020-01-01.1"}), chip("part-survives")
+        )
     done = s
     for label in ["part-survives", "scaled-by-cos", "half", "vanishes", "clear-explanation"]:
         done = step(q, done.state, chip(label))

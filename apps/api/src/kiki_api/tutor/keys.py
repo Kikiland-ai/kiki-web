@@ -15,10 +15,10 @@ from dataclasses import dataclass
 
 logger = logging.getLogger("kiki_api.tutor")
 
-BILLING_COOLDOWN_S = 3600     # 402: prepayment credits depleted / billing
-AUTH_COOLDOWN_S = 900         # 401/403: bad or restricted key
-RATE_COOLDOWN_S = 60          # 429 without advice
-SERVER_COOLDOWN_S = 10        # 5xx
+BILLING_COOLDOWN_S = 3600  # 402: prepayment credits depleted / billing
+AUTH_COOLDOWN_S = 900  # 401/403: bad or restricted key
+RATE_COOLDOWN_S = 60  # 429 without advice
+SERVER_COOLDOWN_S = 10  # 5xx
 
 
 @dataclass
@@ -40,7 +40,9 @@ def parse_keys(raw: str) -> list[KeyEntry]:
             if isinstance(item, str):
                 out.append(KeyEntry(i, item.strip(), f"key-{i}"))
             elif isinstance(item, dict) and isinstance(item.get("key"), str):
-                out.append(KeyEntry(i, item["key"].strip(), str(item.get("quota_pool") or f"key-{i}")))
+                out.append(
+                    KeyEntry(i, item["key"].strip(), str(item.get("quota_pool") or f"key-{i}"))
+                )
             else:
                 raise ValueError(f"KIKI_GEMINI_API_KEYS entry {i} has no key")
         if any(not e.key for e in out):
@@ -108,7 +110,8 @@ class KeyPool:
         return sorted({e.pool for e in self.entries})
 
     def order(self) -> list[KeyEntry]:
-        """Keys to try for one call: round-robin from the next key, warm pools first, one key per pool."""
+        """Keys to try for one call: round-robin from the next key, warm pools first, one key per
+        pool."""
         with self._lock:
             n = len(self.entries)
             start = self._next
@@ -122,7 +125,7 @@ class KeyPool:
             seen.add(e.pool)
             (cold if self._cool_until.get(e.pool, 0) > now else warm).append(e)
         cold.sort(key=lambda e: self._cool_until.get(e.pool, 0))
-        return warm + cold          # all pools cooling: still try, soonest-ready first
+        return warm + cold  # all pools cooling: still try, soonest-ready first
 
     def healthy(self) -> KeyEntry:
         """The key to mint long-lived things (voice tokens) with: most recently successful, warm."""
@@ -151,10 +154,18 @@ class KeyPool:
         elif status is not None and status >= 500:
             wait = SERVER_COOLDOWN_S
         else:
-            return False             # timeouts, bad requests, parse errors: another key will not help
+            return False  # timeouts, bad requests, parse errors: another key will not help
         with self._lock:
-            self._cool_until[entry.pool] = max(self._cool_until.get(entry.pool, 0), self.clock() + wait)
-        logger.warning("Gemini key %d (pool %s) cooling down %ds after HTTP %s", entry.index, entry.pool, int(wait), status)
+            self._cool_until[entry.pool] = max(
+                self._cool_until.get(entry.pool, 0), self.clock() + wait
+            )
+        logger.warning(
+            "Gemini key %d (pool %s) cooling down %ds after HTTP %s",
+            entry.index,
+            entry.pool,
+            int(wait),
+            status,
+        )
         return True
 
 

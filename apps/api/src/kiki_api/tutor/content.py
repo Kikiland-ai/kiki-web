@@ -213,19 +213,19 @@ class Hint(Line):
 
 
 class Branch(Model):
-    id: Id                       # expect id, or a misconception id from the catalogue
-    desc: str = Field(min_length=3, max_length=300)   # English, for the classifier and reviewers
+    id: Id  # expect id, or a misconception id from the catalogue
+    desc: str = Field(min_length=3, max_length=300)  # English, for the classifier and reviewers
     metric: Id
     level: Level
-    next: str                    # node id in this stage, or EXIT
-    reveal: list[Id] = Field(default_factory=list, max_length=6)   # earned on taking the branch
-    ack: LText | None = None     # optional scripted acknowledgement
+    next: str  # node id in this stage, or EXIT
+    reveal: list[Id] = Field(default_factory=list, max_length=6)  # earned on taking the branch
+    ack: LText | None = None  # optional scripted acknowledgement
 
 
 class Chip(Model):
     label: LText
     text: str = Field(min_length=1, max_length=200)
-    route: Id                    # label it maps to; routes with no model call
+    route: Id  # label it maps to; routes with no model call
 
 
 class Node(Model):
@@ -233,7 +233,7 @@ class Node(Model):
     goal: str = Field(min_length=3, max_length=300)
     line: Line
     # probe only
-    expect: list[Branch] = Field(default_factory=list, max_length=4)   # ok branch first
+    expect: list[Branch] = Field(default_factory=list, max_length=4)  # ok branch first
     misconceptions: list[Branch] = Field(default_factory=list, max_length=4)
     hints: list[Hint] = Field(default_factory=list, max_length=4)
     chips: list[Chip] = Field(default_factory=list, max_length=4)
@@ -283,7 +283,7 @@ class Metric(Model):
 class Misconception(Model):
     id: Id
     desc: str = Field(min_length=3, max_length=300)
-    conceptIds: list[Id] = Field(min_length=1, max_length=3)   # what to revise if it fires
+    conceptIds: list[Id] = Field(min_length=1, max_length=3)  # what to revise if it fires
 
 
 class TargetTerm(Model):
@@ -321,15 +321,15 @@ class TutorQuestion(Model):
     conceptIds: list[Id] = Field(min_length=1, max_length=8)
     difficulty: Literal["easy", "medium", "hard"]
     title: LText
-    framing: LText                       # KiKi's spoken opening
+    framing: LText  # KiKi's spoken opening
     languages: list[Literal["en", "or"]] = Field(min_length=1)
-    speech: dict[str, SpeechMode]        # per language
+    speech: dict[str, SpeechMode]  # per language
     review: Review
     metrics: list[Metric] = Field(min_length=1, max_length=8)
     misconceptions: list[Misconception] = Field(default_factory=list, max_length=12)
     terms: list[TargetTerm] = Field(default_factory=list, max_length=16)
     board: dict[Id, BoardItem] = Field(min_length=1, max_length=40)
-    pinned: list[Id] = Field(min_length=1, max_length=3)   # shown at start (the question)
+    pinned: list[Id] = Field(min_length=1, max_length=3)  # shown at start (the question)
     stages: list[Stage] = Field(min_length=1, max_length=8)
     nextSteps: list[NextStep] = Field(default_factory=list, max_length=8)
     sources: list[SourceRef] = Field(default_factory=list, max_length=20)

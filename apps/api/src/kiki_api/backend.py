@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from .lab_preparation import LabPreparations
     from .learning import FirestoreLearning
     from .materials import MaterialLibrary
+    from .tutor.service import TutorService
 
 
 class BoundaryError(Exception):

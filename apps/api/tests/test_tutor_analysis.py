@@ -39,11 +39,20 @@ def test_combine():
 
 
 def test_clean_chip_session():
-    s, ev = run([chip(x) for x in ["part-survives", "scaled-by-cos", "half", "vanishes", "clear-explanation"]])
+    s, ev = run(
+        [
+            chip(x)
+            for x in ["part-survives", "scaled-by-cos", "half", "vanishes", "clear-explanation"]
+        ]
+    )
     rep = analyse(PHASE, ev)
     levels = {m["id"]: m["level"] for m in rep["metrics"]}
-    assert levels == {"conceptual-understanding": "ok", "calculation-accuracy": "ok",
-                      "terms": "n/a", "articulation": "ok"}
+    assert levels == {
+        "conceptual-understanding": "ok",
+        "calculation-accuracy": "ok",
+        "terms": "n/a",
+        "articulation": "ok",
+    }
     assert rep["revise"] == [] and rep["strengthen"] == [] and rep["completed"]
     assert [n["id"] for n in rep["next"]] == ["CP-DSB-11"]
     assert rep["sheet"] == s.state.board and rep["turns"] == 5 and rep["hints"] == 0
@@ -52,9 +61,14 @@ def test_clean_chip_session():
 def test_struggling_session_names_what_to_revise():
     replies = [
         text("part-survives", "part of it"),
-        text(UNCLEAR), text(UNCLEAR), text(UNCLEAR), text(UNCLEAR), text(UNCLEAR),   # forced at why-cos
+        text(UNCLEAR),
+        text(UNCLEAR),
+        text(UNCLEAR),
+        text(UNCLEAR),
+        text(UNCLEAR),  # forced at why-cos
         text("angle-unit-mixup", "-0.95 on my calculator"),
-        text(UNCLEAR), text("vanishes", "cos 90 is zero"),                           # one hint at 90
+        text(UNCLEAR),
+        text("vanishes", "cos 90 is zero"),  # one hint at 90
         text("partial-explanation", "phase error makes it smaller", clarity=1),
     ]
     _, ev = run(replies)
@@ -70,18 +84,24 @@ def test_struggling_session_names_what_to_revise():
     assert levels["conceptual-understanding"] == "partial"
     assert levels["calculation-accuracy"] == "partial"
     assert levels["articulation"] == "partial"
-    assert levels["terms"] == "not_yet"                 # free text, no course terms
+    assert levels["terms"] == "not_yet"  # free text, no course terms
     assert {n["id"] for n in rep["next"]} == {"CP-DSB-11", "C-AM-01"}
     quotes = next(m for m in rep["metrics"] if m["id"] == "calculation-accuracy")["quotes"]
     assert "-0.95 on my calculator" in quotes
 
 
 def test_terms_used_in_free_text_count_as_words_evidence():
-    replies = [text("part-survives", "x", termsUsed=["phase error", "local carrier"]),
-               text("scaled-by-cos", "y", termsUsed=["lowpass filter"])]
+    replies = [
+        text("part-survives", "x", termsUsed=["phase error", "local carrier"]),
+        text("scaled-by-cos", "y", termsUsed=["lowpass filter"]),
+    ]
     _, ev = run(replies)
     words = next(m for m in analyse(PHASE, ev)["metrics"] if m["id"] == "terms")
-    assert words["level"] == "ok" and set(words["termsUsed"]) == {"T-AM-08-1", "T-AM-06-2", "T-AM-07-1"}
+    assert words["level"] == "ok" and set(words["termsUsed"]) == {
+        "T-AM-08-1",
+        "T-AM-06-2",
+        "T-AM-07-1",
+    }
 
 
 def test_report_route_caches_summary_once_and_adds_titles():
@@ -92,7 +112,7 @@ def test_report_route_caches_summary_once_and_adds_titles():
     assert mid["completed"] is False and mid["summary"] is None and summ.calls == 0
     svc.turn("u", sid, "k-turn-01", None, "part-survives", "text")
     for i in range(5):
-        svc.turn("u", sid, f"k-unc-{i:02d}", "hmm", None, "text")          # forced at why-cos
+        svc.turn("u", sid, f"k-unc-{i:02d}", "hmm", None, "text")  # forced at why-cos
     for i, c in enumerate(["half", "vanishes", "partial-explanation"]):
         svc.turn("u", sid, f"k-chip-{i:02d}", None, c, "text")
     rep = svc.report("u", sid)
@@ -105,11 +125,22 @@ def test_report_route_caches_summary_once_and_adds_titles():
 
 def test_a_metric_quotes_the_step_that_judged_it_first():
     """Live run, 20 Nov: 'Explaining in English' quoted the first power answer (a clarity score)."""
-    replies = [text("part-survives", "part of it", clarity=2), text("scaled-by-cos"), text("half"), text("vanishes"),
-               text("clear-explanation", "Because the local carrier is out of phase the output is m(t) cos phi", clarity=2)]
+    replies = [
+        text("part-survives", "part of it", clarity=2),
+        text("scaled-by-cos"),
+        text("half"),
+        text("vanishes"),
+        text(
+            "clear-explanation",
+            "Because the local carrier is out of phase the output is m(t) cos phi",
+            clarity=2,
+        ),
+    ]
     _, ev = run(replies)
     art = next(m for m in analyse(PHASE, ev)["metrics"] if m["id"] == "articulation")
-    assert art["quotes"][0].startswith("Because the local carrier") and len(art["quotes"]) == len(set(art["quotes"]))
+    assert art["quotes"][0].startswith("Because the local carrier") and len(art["quotes"]) == len(
+        set(art["quotes"])
+    )
 
 
 def test_the_gemini_summary_never_changes_the_report():
@@ -134,7 +165,9 @@ def test_summary_failure_keeps_the_report():
     store = MemoryTutorStore()
     svc = TutorService(Q, FakeClassifier({}), store, FakeSummarizer(None))
     sid = svc.start("u", "ece-phase-error", "en", "k-start-2")["sessionId"]
-    for i, c in enumerate(["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"]):
+    for i, c in enumerate(
+        ["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"]
+    ):
         svc.turn("u", sid, f"k-c-{i:04d}", None, c, "text")
     rep = svc.report("u", sid)
     assert rep["summary"] is None and rep["metrics"]
@@ -142,14 +175,21 @@ def test_summary_failure_keeps_the_report():
 
 @pytest.mark.skipif(os.environ.get("KIKI_LIVE_GEMINI") != "1", reason="set KIKI_LIVE_GEMINI=1")
 def test_live_summary_uses_only_report_facts():
-    replies = [text("part-survives"), text("scaled-by-cos"), text("angle-unit-mixup", "-0.95"),
-               text("vanishes"), text("clear-explanation", clarity=2)]
+    replies = [
+        text("part-survives"),
+        text("scaled-by-cos"),
+        text("angle-unit-mixup", "-0.95"),
+        text("vanishes"),
+        text("clear-explanation", clarity=2),
+    ]
     _, ev = run(replies)
     rep = analyse(PHASE, ev)
     from kiki_api.tutor.keys import load_keys
 
-    out = GeminiSummarizer(load_keys(os.environ.get("KIKI_GEMINI_ENV_FILE")), os.environ.get("KIKI_TUTOR_CLASSIFIER_MODEL", "gemini-3.5-flash-lite")).summarise(
-        PHASE, rep, "en", {"C-AM-01": "Amplitude, frequency and phase"})
+    out = GeminiSummarizer(
+        load_keys(os.environ.get("KIKI_GEMINI_ENV_FILE")),
+        os.environ.get("KIKI_TUTOR_CLASSIFIER_MODEL", "gemini-3.5-flash-lite"),
+    ).summarise(PHASE, rep, "en", {"C-AM-01": "Amplitude, frequency and phase"})
     assert out and len(out) < 1200
     assert "wrong" not in out.lower()
     assert "Amplitude, frequency and phase" in out or "C-AM-01" in out or "angle" in out.lower()

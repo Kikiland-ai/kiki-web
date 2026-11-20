@@ -11,9 +11,7 @@ from pydantic import Field
 from .content import Dim, Level, Model, SpeechMode
 
 InputMode = Literal["text", "voice", "chip", "none"]
-Move = Literal[
-    "start", "advance", "branch", "hint", "forced", "restate", "stage-exit", "complete"
-]
+Move = Literal["start", "advance", "branch", "hint", "forced", "restate", "stage-exit", "complete"]
 EventType = Literal[
     "session_started",
     "stage_entered",
@@ -39,13 +37,13 @@ class TutorState(Model):
     lang: Literal["en", "or"]
     stageIndex: int = Field(ge=0)
     node: str
-    hintLevel: int = Field(ge=0, le=4)   # rungs already given at this node
+    hintLevel: int = Field(ge=0, le=4)  # rungs already given at this node
     turn: int = Field(ge=0)
     status: Literal["active", "completed"]
-    board: list[str]                     # revealed item ids, in reveal order
-    seq: int = Field(ge=0)               # next event sequence number
-    version: int = Field(ge=0)           # bumps on every write (optimistic concurrency)
-    voiceTokens: int = Field(default=0, ge=0)          # minted for this session (capped)
+    board: list[str]  # revealed item ids, in reveal order
+    seq: int = Field(ge=0)  # next event sequence number
+    version: int = Field(ge=0)  # bumps on every write (optimistic concurrency)
+    voiceTokens: int = Field(default=0, ge=0)  # minted for this session (capped)
     leakKeys: list[str] = Field(default_factory=list)  # speech leaks already logged this turn
 
 
@@ -58,7 +56,7 @@ class Reply(Model):
     confidence: float = Field(default=1.0, ge=0, le=1)
     quote: str | None = Field(default=None, max_length=400)
     termsUsed: list[str] = Field(default_factory=list, max_length=12)
-    clarity: int | None = Field(default=None, ge=0, le=2)   # expression quality, free text only
+    clarity: int | None = Field(default=None, ge=0, le=2)  # expression quality, free text only
 
 
 class Reveal(Model):
@@ -72,7 +70,7 @@ class Segment(Model):
     kind: Literal["framing", "ack", "intro", "show", "probe", "hint", "restate", "conclusion"]
     node: str | None = None
     say: str
-    reveals: list[Reveal] = Field(default_factory=list)   # anchors are relative to this segment
+    reveals: list[Reveal] = Field(default_factory=list)  # anchors are relative to this segment
     focus: list[str] = Field(default_factory=list)
 
 
