@@ -1,75 +1,26 @@
-## Approved preview publication and latest-main reconciliation
+## End-to-end suite green after the narration merges - 21 November 2026
 
-The approved Software Lab / Physical Lab names, peer cards and local preview
-bridge are published to PR #22 in 8665a2b. Incorporated main 90f7d59 in this clean
-kiki-web-physical-pr-sync checkout; the only conflict was this status record,
-resolved by preserving both physical-lab and narration-sync notes. Other local
-extension work in kiki-web-physical-labs remains untouched and excluded.
-Last completed: approved preview publication and main reconciliation.
-Exact next: review PR #22 with backend PR #14; no merge/deployment performed.
+Main `90f7d59` (PRs #18-#21, #23) passed CI, but CI runs no Playwright. Sample-mode e2e (all specs
+except live voice/Gemini and screenshot capture) was 108/120; 10 failures came from #23, 2 predated it.
+Fixed on `fix/e2e-after-narration-sync`:
 
----
+- 320 px overflow on every narrated canvas (C-AM-01..07, 09, 10): the stage figure grid's 260 px
+  minimum could not shrink beside the step rail. `CamCanvas.module.css`: `minmax(min(260px,100%),1fr)`.
+- 320 px overflow on the C-AM-08 narrated stage: the compact player row (play, scrubber, time, speed,
+  close) was wider than the column. `AudioPlayer.module.css`: below 360 px the scrubber takes its own
+  line and close/speed are 40 px. Checked by screenshot at 320 px.
+- Stale tests: `concept-media.spec.ts` expected "Words are not highlighted" (C-AM-08 step 1 is now
+  timed); `all-cam.spec.ts` treated the narration Position slider in the C-AM-08 stage as a scene
+  control (since #18); `lab-student-input.spec.ts` "Use current step" also matched #21's
+  "Use current step for confirmation" (now `exact`).
 
-## Software Lab / Physical Lab integrated preview — 21 November 2026
+Checks: Playwright 120/120 (chromium, 2 workers), tsc, eslint, Vitest 315/315, build.
+Not covered: live voice/Gemini specs, by-ear check of the found timings.
 
-User chose the names Software Lab and Physical Lab. Lab home now presents two
-peer cards with those headings, inside the existing Kiki Shell/navigation.
-Software preparation, model naming and saved sessions retain their current flow;
-theory references are collapsed below the choice cards. Physical Lab opens the
-DSB-SC entry and the embedded 3D workspace with its name-only floating guide,
-hover labels, backend traces and fullscreen.
-
-Preview: http://127.0.0.1:5202/labs. This full application preview uses the explicit
-fixture-only VITE_PHYSICAL_LAB_DEV_API=http://127.0.0.1:8092 bridge to the real
-local physical engine. The existing 5174 preview and unrelated local extension
-edits remain preserved. Connected-mode auth/composition is unchanged. The local
-acceptance server uses synthetic identity/temporary records; no college,
-Google/Firestore or production records are changed.
-
-Verified in native Chrome: sample sign-in/onboarding/enrollment, both named
-Lab cards, Open Physical Lab, creation/loading inside the Kiki Shell, and native
-fullscreen entry/exit with the actual apparatus and floating guide. TypeScript,
-ESLint and 28 focused physical-lab/service/navigation tests passed.
-User approved this preview. The four frontend/fixture files and this handoff are
-published to frontend PR #22. Backend PR #14 already contains the pipeline;
-no further backend changes are needed for these names/layout updates.
-Exact next: review the paired PRs, then explicitly enable/configure hosted
-acceptance. No merge or deployment included.
-
+Exact next: merge the fix PR on approval; add the Playwright sample suite to CI so layout
+regressions are caught before merge.
 
 ---
-
-## Physical lab UI in the existing Lab mode — 21 November 2026
-
-New codex/physical-lab-ui branch from main 08644eb, reconciled with main 17aa078 (landing PR #20 and simplified Lab mode PR #21). Followed the existing
-LabPreparation → service adapter → authenticated API → fixed LabUpstream pattern.
-The Lab home adds physical equipment practice alongside the original software
-experiment. React screen and renderer/hints/guide/fullscreen/plots live here;
-backend PR #14 retains pipeline/content/assets/rules/state/physics and has its
-student-facing preview removed. Names only in the floating guide; numbers stay
-on circuit markers and hover/focus hints. Sign-in return routing accepts pinned physical session URLs. Demo skips theory clicks while normal
-prerequisite policy remains in the backend.
-
-Checks: 319 web tests, 10 renderer checks, typecheck, lint and production build
-passed. Web API 275 passed / 8 opt-in skipped; Ruff passed. Live local web relay
-plus actual backend completed all nine steps, recovered 1000 Hz / 0.5 V peak,
-and reported theory unassessed. Chrome checked model/hints/fullscreen, rejected
-lead, progression and retry. Local synthetic acceptance is separate from a
-signed-in Firebase/hosted round trip. Disk pressure caused dependency install
-failure and backend SQLITE_IOERR_SHMSIZE reruns. After removing rebuildable
-caches, a fresh backend run passed all 222 tests (35 skips) and normal preparation
-smoke; no storage policy change was needed.
-
-Last completed: published frontend PR #22 (https://github.com/Kikiland-ai/kiki-web/pull/22) and updated backend PR #14 with the repository split.
-Backend clean-runner acceptance passed at https://github.com/Kikiland-ai/kiki-backend/actions/runs/44823028370.
-Exact next: review companion PR and backend #14, configure
-KIKI_PHYSICAL_LABS_ENABLED and the existing trusted upstream, then signed-in
-acceptance. No deployment or learner-data changes. See
-[implementation and acceptance](../../docs/plans/physical-lab-ui.md).
-
-
----
-
 
 ## Narration sync on every narrated clip - 21 November 2026
 
