@@ -14,6 +14,7 @@ from .backend import BoundaryError, Services, firebase_services
 from .config import Settings
 from .document_text import register_text_routes
 from .lab_execution_routes import ExecutionBodyLimit, register_lab_execution_routes
+from .lab_narration import register_lab_narration_routes
 from .lab_preparation import register_lab_preparation_routes
 from .learning_routes import register_learning_routes
 from .material_routes import UploadBodyLimit, register_material_routes
@@ -109,6 +110,7 @@ def create_app(settings: Settings, factory: Callable[[], Services] | None = None
     register_learning_routes(application, identity, backend, call)
     register_lab_preparation_routes(application, identity, backend, call)
     register_lab_execution_routes(application, identity, backend, call, settings)
+    register_lab_narration_routes(application, identity, backend, call)
     register_physical_lab_routes(application, identity, backend, call, settings)
     register_tutor_routes(application, identity, backend, call)
     return application

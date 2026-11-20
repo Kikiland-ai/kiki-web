@@ -2,6 +2,8 @@ import { z } from 'zod';
 import type { AuthService } from '../contracts/services';
 import { CaptureSessionSchema, ExecutionEnvelopeSchema, ExecutionRequirementsSchema, FrameReceiptSchema, FrameSkippedSchema, type FrameMetadata, type FrameChannel, type LabExecutionApi } from '../contracts/lab-execution';
 import { ServiceError } from './types';
+import { LabNarrationManifestSchema } from '../contracts/lab-narration';
+import { createLabNarrationApi } from './lab-narration-http';
 
 export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetcher: typeof fetch = fetch, Socket: typeof WebSocket = WebSocket): LabExecutionApi {
   const base = baseUrl.replace(/\/$/, '');
@@ -28,6 +30,7 @@ export function createLabExecutionApi(baseUrl: string, auth: AuthService, fetche
     return parsed.data.state;
   }
   return {
+    narration: createLabNarrationApi(id => `${base}/lab-preparations/${id}/narration`, LabNarrationManifestSchema, auth, fetcher),
     start: (id, s) => state(id, '', {}, s), get: (id, s) => state(id, '', undefined, s),
     recover: (id, s) => state(id, '', { recoverPending: true }, s),
     requirements: async (id, s) => {

@@ -1,5 +1,6 @@
-"""Web auth relay; experiment content, state and physics stay in kiki-backend."""
+"""Web auth relay and narration for the owned physical lab session."""
 
+import json
 from typing import Annotated
 
 import anyio
@@ -7,6 +8,13 @@ from fastapi import Depends, Header, Path, Request
 from fastapi.responses import JSONResponse, Response
 
 from .backend import BoundaryError
+from .lab_narration import (
+    MIME,
+    PRIVATE_HEADERS,
+    SHA256,
+    PhysicalLabNarrationIndex,
+    wav_response,
+)
 from .lab_upstream import MAX_JSON_BYTES, LabUpstream
 from .models import Identity
 
@@ -42,16 +50,20 @@ def register_physical_lab_routes(app, identity, backend, call, settings):
     user_dep = Annotated[Identity, Depends(identity)]
     session_id_type = Annotated[str, Path(pattern=r"^[a-f0-9]{32}$")]
 
-    async def relay(user, method, path, request=None, key=None):
+    async def authorized_services(uid):
         def access():
             services = backend()
             if services.learning is None:
                 raise BoundaryError(503, "Physical lab practice is unavailable.")
-            services.learning.access(user.uid)
+            services.learning.access(uid)
             if not settings.physical_labs_enabled:
                 raise BoundaryError(503, "Physical lab practice is not enabled yet.")
+            return services
 
-        await anyio.to_thread.run_sync(lambda: call(access))
+        return await anyio.to_thread.run_sync(lambda: call(access))
+
+    async def relay(user, method, path, request=None, key=None):
+        await authorized_services(user.uid)
         body = None
         if method == "POST":
             if request.headers.get("origin") not in settings.cors_origins:
@@ -110,6 +122,55 @@ def register_physical_lab_routes(app, identity, backend, call, settings):
     @app.get("/physical-labs/sessions/{session_id}")
     async def session(session_id: session_id_type, user: user_dep):
         return await relay(user, "GET", f"/sessions/{session_id}")
+
+    async def authorized_narration(session_id, uid):
+        services = await authorized_services(uid)
+        narration = services.physical_lab_narration
+        if narration is None:
+            raise BoundaryError(404, "Narration is unavailable for this lab.")
+        body, _ = await LabUpstream(settings).request(
+            "GET", f"/v1/physical-labs/sessions/{session_id}", uid
+        )
+        try:
+            state = json.loads(body)
+        except (ValueError, UnicodeError):
+            raise BoundaryError(503, "The physical lab response could not be read.") from None
+        if not isinstance(state, dict) or state.get("session_id") != session_id:
+            raise BoundaryError(503, "The physical lab response could not be read.")
+        index = narration.index
+        if (
+            state.get("experiment_id"),
+            state.get("pack_version"),
+            state.get("pack_sha256"),
+            state.get("mode"),
+        ) != (index["experimentId"], index["packVersion"], index["packSha256"], index["mode"]):
+            raise BoundaryError(404, "Narration is unavailable for this lab.")
+        return narration
+
+    narration_root = "/physical-labs/sessions/{session_id}/narration"
+
+    @app.get(narration_root, response_model=PhysicalLabNarrationIndex)
+    async def narration_manifest(session_id: session_id_type, user: user_dep, response: Response):
+        narration = await authorized_narration(session_id, user.uid)
+        response.headers.update(PRIVATE_HEADERS)
+        return narration.index
+
+    @app.get(
+        narration_root + "/{revision}/assets/{asset_id}",
+        response_class=Response,
+        responses={200: {"content": {MIME: {}}, "description": "Verified physical lab WAV"}},
+    )
+    async def narration_audio(
+        session_id: session_id_type,
+        revision: Annotated[str, Path(pattern=SHA256)],
+        asset_id: Annotated[str, Path(pattern=SHA256)],
+        user: user_dep,
+    ):
+        narration = await authorized_narration(session_id, user.uid)
+        content = await anyio.to_thread.run_sync(
+            lambda: call(lambda: narration.read(revision, asset_id))
+        )
+        return wav_response(content, asset_id)
 
     @app.get("/physical-labs/sessions/{session_id}/pack")
     async def pack(session_id: session_id_type, user: user_dep):

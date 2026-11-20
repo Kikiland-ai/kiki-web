@@ -7,7 +7,7 @@ import { ServiceError } from './types';
  * context (HTTPS or localhost); over a plain-HTTP LAN address only the size is checkable, and
  * the API has already verified the hash before sending.
  */
-export async function playableNarration(bytes: ArrayBuffer, rendition: NarrationRendition): Promise<LoadedMedia> {
+export async function playableNarration(bytes: ArrayBuffer, rendition: Pick<NarrationRendition, 'bytes' | 'audioSha256' | 'mimeType'>): Promise<LoadedMedia> {
   if (bytes.byteLength !== rendition.bytes) throw new ServiceError('The narration file is incomplete. Please retry.');
   const subtle = globalThis.crypto?.subtle;
   if (subtle) {

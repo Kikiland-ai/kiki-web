@@ -5,6 +5,7 @@ No Google, Firestore or model calls. CLI requires an explicit backend checkout.
 """
 
 import argparse
+import os
 import secrets
 import sys
 import tempfile
@@ -15,7 +16,9 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 
 from kiki_api.backend import BoundaryError, Services
+from kiki_api.concept_media import MemoryMediaAssets
 from kiki_api.config import Settings
+from kiki_api.lab_narration import MIME, LabNarration, physical_release, storage_prefix
 from kiki_api.lab_upstream import LabUpstream
 from kiki_api.main import create_app
 from kiki_api.models import Identity
@@ -24,6 +27,9 @@ from kiki_api.models import Identity
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend-root", required=True, type=Path)
+    parser.add_argument(
+        "--narration-dir", type=Path, default=os.getenv("KIKI_PHYSICAL_TEST_NARRATION_DIR")
+    )
     args = parser.parse_args()
     sys.path.insert(0, str(args.backend_root.resolve()))
     from prototypes.physical_labs.api import PhysicalBodyLimit, physical_lab_router
@@ -70,7 +76,22 @@ def main():
         engine.include_router(physical_lab_router(PreparationService(directory), owner, origin))
         transport = httpx.ASGITransport(app=engine)
         routes.LabUpstream = lambda _: LabUpstream(settings, transport=transport)
-        services = Services(Verifier(), None, learning=Access())
+        narration = None
+        if args.narration_dir:
+            index = physical_release()
+            assets = MemoryMediaAssets()
+            prefix = storage_prefix(index["revision"], index["experimentId"])
+            for clip in index["clips"].values():
+                asset = clip["assetId"]
+                relative = f"assets/{asset}.wav"
+                assets.put(
+                    f"{prefix}/{relative}",
+                    (args.narration_dir / relative).read_bytes(),
+                    MIME,
+                    asset,
+                )
+            narration = LabNarration(assets, index)
+        services = Services(Verifier(), None, learning=Access(), physical_lab_narration=narration)
         app = create_app(settings, lambda: services)
         uvicorn.run(app, host="127.0.0.1", port=8092)
 

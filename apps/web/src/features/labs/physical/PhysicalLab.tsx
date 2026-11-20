@@ -6,6 +6,7 @@ import {ActionLink,Alert,Button,KikiDots,LoadingNotice,PageTitle} from '../../..
 import {readableError,ServiceError} from '../../../services/types';
 import {ApparatusViewer,clampPanel,guidePosition} from './apparatus-viewer.mjs';
 import {componentHint,tooltipPosition} from './component-hints.mjs';
+import {usePhysicalNarration} from './use-physical-narration';
 import './physical-lab.css';
 
 export function PhysicalLab(){
@@ -47,6 +48,8 @@ function ExperimentWorkspace({api,initial,registerCleanup}:{api:PhysicalLabApi;i
   const canvas=useRef<HTMLCanvasElement>(null),workspace=useRef<HTMLDivElement>(null),viewport=useRef<HTMLDivElement>(null),guide=useRef<HTMLElement>(null),tip=useRef<HTMLDivElement>(null),viewer=useRef<ApparatusViewer|null>(null),buttons=useRef(new Map<string,HTMLButtonElement>());
   const current=useRef(session),selectedRef=useRef(selected),pendingRef=useRef(pending),pinned=useRef(false),drag=useRef<{x:number;y:number;left:number;top:number}|null>(null),queue=useRef(Promise.resolve()),aborted=useRef<AbortController|null>(null),pick=useRef<(p:PhysicalPart)=>void>(()=>{}),showMarkers=useRef(markers);
   const failedAction=useRef<PhysicalEvent|null>(null),blocked=useRef(false),observationRevision=useRef(-1),lastStep=useRef<string|null>(null);
+  const narration=usePhysicalNarration(api.narration,session,registerCleanup);
+  const narrationView=narration.view;
   const rule=session.activity.step?.rule;
   const refreshObservations=useCallback(async(s:PhysicalSession,signal:AbortSignal)=>{const value=await api.observations(s.session_id,signal);if(!signal.aborted&&s.revision>=observationRevision.current){observationRevision.current=s.revision;setObservation(value);}},[api]);
   useEffect(()=>{const controller=new AbortController();aborted.current=controller;const unregister=registerCleanup?.(()=>controller.abort());void refreshObservations(initial.session,controller.signal).catch(e=>{if(!controller.signal.aborted)setError(readableError(e));});return()=>{controller.abort();unregister?.();};},[initial.session,refreshObservations,registerCleanup]);
@@ -114,6 +117,14 @@ function ExperimentWorkspace({api,initial,registerCleanup}:{api:PhysicalLabApi;i
           <div className="physical-guide-body" hidden={collapsed}>
             <p className="eyebrow">{complete?'EXPERIMENT COMPLETE':`STEP ${session.activity.number} OF ${session.activity.total}`}</p><h2>{complete?'Your message has been recovered':session.activity.step?.instruction.en}</h2>
             {rule?.kind==='connect'&&<div className="physical-route"><strong>{label(pack,rule.target)}</strong><span>→</span><strong>{label(pack,rule.other)}</strong></div>}
+            {session.activity.step&&narrationView&&<div className="physical-narration">
+              <Button variant="secondary" disabled={narrationView.loading} onClick={narration.toggle}>
+                {narrationView.loading?'Loading narration…':!narrationView.enabled?'Enable Odia–English narration':narrationView.muted?'Unmute narration':'Mute narration'}
+              </Button>
+              {narrationView.replay&&!narrationView.muted&&<Button variant="secondary" onClick={narration.replay}>Replay narration</Button>}
+              {narrationView.playing&&<span role="status">Playing Odia–English narration</span>}
+              {narrationView.error&&<span role="status">{narrationView.error}</span>}
+            </div>}
             <p className="physical-feedback" role="status">{busy?'Kiki is checking this action…':complete?'All connections, the null setting and output readings were checked.':feedback}</p>
             {error&&<Alert>{error}{failed&&<><Button disabled={busy} onClick={()=>{const body=failedAction.current;if(body)void perform(body);}}>Retry last action</Button><Button variant="text" disabled={busy} onClick={async()=>{try{const s=await api.get(session.session_id,aborted.current!.signal);current.current=s;setSession(s);blocked.current=false;failedAction.current=null;setFailed(false);setError('');await refreshObservations(s,aborted.current!.signal);}catch(e){setError(readableError(e));}}}>Reload saved experiment</Button></>}</Alert>}
             {rule?.kind==='set'&&control&&<form className="physical-control" onSubmit={e=>{e.preventDefault();action({kind:'set',target:rule.target,value:setting,unit:rule.unit??undefined});}}><label htmlFor="physical-setting">{label(pack,rule.target)} {control.unit}</label>{typeof control.initial==='number'?<><input aria-label="Control dial" type="range" min={control.minimum??0} max={control.maximum??1} step="0.01" value={Number(setting)} onChange={e=>setSetting(Number(e.target.value))}/><input id="physical-setting" type="number" step="any" min={control.minimum??undefined} max={control.maximum??undefined} value={Number(setting)} onChange={e=>setSetting(Number(e.target.value))}/></>:<select id="physical-setting" value={String(setting)} onChange={e=>setSetting(typeof control.initial==='boolean'?e.target.value==='true':e.target.value)}>{(typeof control.initial==='boolean'?['false','true']:control.choices).map(v=><option key={v} value={v}>{v}</option>)}</select>}<Button disabled={busy||failed}>Apply setting</Button></form>}

@@ -2,6 +2,7 @@ import { test, expect, chromium, type Page } from '@playwright/test';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
+import { observeNarration } from '../narration-evidence';
 const root = 'http://127.0.0.1:5174';
 const shadow = (page: Page, selector: string) => page.locator('kiki-floating-guidance').locator(selector);
 test.beforeEach(async ({ request }) => { expect((await request.post('http://127.0.0.1:8002/__test/reset')).ok()).toBe(true); });
@@ -23,6 +24,49 @@ async function isolatedLab() {
   });
   return { reader, target, worker, close: async () => { await context.close(); await rm(profile, { recursive: true, force: true }); } };
 }
+
+test('plays the displayed narration once and routes replay and mute from the floating window', async ({ request }) => {
+  test.skip(!process.env.KIKI_LAB_TEST_NARRATION_DIR, 'Requires the verified lab narration bundle.');
+  const lab = await isolatedLab();
+  try {
+    const view = await observeNarration(lab.reader);
+    const manifestResponse = lab.reader.waitForResponse(r => r.url().endsWith('/narration'));
+    await lab.reader.getByRole('button', { name: 'Enable Odia–English narration', exact: true }).click();
+    const manifest = await (await manifestResponse).json();
+    expect(Object.keys(manifest.clips)).toHaveLength(40);
+    expect((await view()).starts).toHaveLength(0);
+    const firstClip = lab.reader.waitForResponse(r => r.url().endsWith(`/assets/${manifest.clips['CP-DSB-01/create'].assetId}`));
+    await lab.reader.getByRole('button', { name: 'Share your MATLAB tab', exact: true }).click();
+    await lab.target.bringToFront();
+    await expect(shadow(lab.target, '.now')).toContainText('Open a blank model');
+    expect((await firstClip).ok()).toBe(true);
+    await expect.poll(view).toMatchObject({ playing: true, starts: [1] });
+    await expect.poll(async () => (await view()).time).toBeGreaterThan(0);
+    expect((await view()).peak).toBeGreaterThan(0.02);
+
+    const secondClip = lab.reader.waitForResponse(r => r.url().endsWith(`/assets/${manifest.clips['CP-DSB-01/save'].assetId}`));
+    await request.post('http://127.0.0.1:8002/__test/mode/advance_action');
+    await expect(shadow(lab.target, '.now')).toContainText('Save the model', { timeout: 35000 });
+    expect((await secondClip).ok()).toBe(true);
+    await expect.poll(async () => (await view()).starts.length).toBe(2);
+    const [, second] = (await view()).starts;
+    expect(second).not.toBe((await view()).starts[0]);
+
+    await shadow(lab.target, '[data-action=narration_replay]').click();
+    await expect.poll(async () => (await view()).starts.length).toBe(3);
+    expect((await view()).starts[2]).toBe(second);
+    const mute = shadow(lab.target, '[data-action=narration_toggle]');
+    await expect(mute).toHaveText('Mute narration');
+    await mute.click();
+    await expect.poll(async () => (await view()).playing).toBe(false);
+    await expect(mute).toHaveText('Unmute narration');
+    await lab.reader.getByRole('button', { name: 'Stop sharing', exact: true }).click();
+    await expect(mute).toBeHidden();
+    expect((await view()).starts).toHaveLength(3);
+  } finally {
+    await lab.close();
+  }
+});
 
 test('floating Resume waits for the delayed final page Pause read', async () => {
   const lab = await isolatedLab(); let release = () => {};

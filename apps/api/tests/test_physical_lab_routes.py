@@ -1,5 +1,6 @@
 """Auth/relay tests only. Experiment execution remains upstream."""
 
+import hashlib
 from unittest.mock import Mock
 
 import httpx
@@ -8,7 +9,9 @@ from fastapi.testclient import TestClient
 from test_profiles import TestVerifier, headers
 
 from kiki_api.backend import Services
+from kiki_api.concept_media import MemoryMediaAssets
 from kiki_api.config import Settings
+from kiki_api.lab_narration import MIME, LabNarration, physical_release, storage_prefix
 from kiki_api.lab_upstream import LabUpstream
 from kiki_api.main import create_app
 
@@ -120,3 +123,66 @@ def test_disabled_is_explicit_and_does_not_contact_upstream(physical):
     with TestClient(create_app(settings, lambda: services)) as client:
         assert client.get("/physical-labs/sessions", headers=headers()).status_code == 503
     assert not calls
+
+
+def test_narration_requires_owned_session_exact_pack_and_allowlisted_wav(monkeypatch):
+    settings = Settings(
+        _env_file=None,
+        firebase_project_id="unit-test-project",
+        lab_execution_mode="local",
+        lab_backend_origin="http://127.0.0.1:8100",
+        lab_proxy_secret="unit-test-" + "x" * 32,
+        physical_labs_enabled=True,
+    )
+    clip = b"test-only WAV bytes"
+    asset_id = hashlib.sha256(clip).hexdigest()
+    index = {
+        **physical_release(),
+        "clips": {"message-wire": {"assetId": asset_id, "bytes": len(clip)}},
+    }
+    assets = MemoryMediaAssets()
+    prefix = storage_prefix(index["revision"], index["experimentId"])
+    assets.put(f"{prefix}/assets/{asset_id}.wav", clip, MIME, asset_id)
+    session = {
+        "session_id": SID,
+        "experiment_id": index["experimentId"],
+        "pack_version": index["packVersion"],
+        "pack_sha256": index["packSha256"],
+        "mode": index["mode"],
+    }
+
+    def handler(request):
+        assert request.url.path == f"/v1/physical-labs/sessions/{SID}"
+        return (
+            httpx.Response(200, json=session)
+            if request.headers["x-kiki-owner"] == "fb:a"
+            else httpx.Response(404)
+        )
+
+    upstream = LabUpstream(settings, transport=httpx.MockTransport(handler))
+    monkeypatch.setattr("kiki_api.physical_lab_routes.LabUpstream", lambda _: upstream)
+    services = Services(
+        TestVerifier(), Mock(), learning=Mock(), physical_lab_narration=LabNarration(assets, index)
+    )
+    with TestClient(create_app(settings, lambda: services)) as client:
+        root = f"/physical-labs/sessions/{SID}/narration"
+        path = f"{root}/{index['revision']}/assets/{asset_id}"
+        assert client.get(root).status_code == 401
+        assert client.get(root, headers=headers("b")).status_code == 404
+        assert client.get(path, headers=headers("b")).status_code == 404
+        assert client.get(root, headers=headers()).json() == index
+        response = client.get(path, headers=headers())
+        assert response.content == clip and response.headers["content-type"] == MIME
+        assert response.headers["cache-control"] == "private, no-store"
+        assert response.headers["etag"] == f'"{asset_id}"'
+        assert client.get(path.replace(asset_id, "0" * 64), headers=headers()).status_code == 404
+        assert (
+            client.get(path.replace(index["revision"], "0" * 64), headers=headers()).status_code
+            == 404
+        )
+        for field in ("pack_version", "pack_sha256", "mode"):
+            expected = session[field]
+            session[field] = "different"
+            assert client.get(root, headers=headers()).status_code == 404
+            assert client.get(path, headers=headers()).status_code == 404
+            session[field] = expected

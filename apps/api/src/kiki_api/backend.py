@@ -9,6 +9,7 @@ from .models import Enrollment, Identity, Preferences, Profile, new_profile, sav
 
 if TYPE_CHECKING:
     from .lab_execution import LabExecutions
+    from .lab_narration import LabNarration
     from .lab_preparation import LabPreparations
     from .learning import FirestoreLearning
     from .materials import MaterialLibrary
@@ -43,6 +44,8 @@ class Services:
     lab_preparations: "LabPreparations | None" = None
     lab_executions: "LabExecutions | None" = None
     tutor: "TutorService | None" = None
+    lab_narration: "LabNarration | None" = None
+    physical_lab_narration: "LabNarration | None" = None
 
 
 class FirebaseVerifier:
@@ -208,6 +211,7 @@ def firebase_services(settings: Settings) -> Services:
         else None
     )
     from .concept_media import BucketMediaAssets, ConceptMedia
+    from .lab_narration import LabNarration, physical_release
     from .lab_preparation import LabPreparations
     from .learning import FirestoreLearning
 
@@ -237,4 +241,8 @@ def firebase_services(settings: Settings) -> Services:
         preparations,
         executions,
         tutor,
+        LabNarration(media_assets) if media_assets is not None else None,
+        LabNarration(media_assets, physical_release())
+        if media_assets is not None and settings.physical_labs_enabled
+        else None,
     )

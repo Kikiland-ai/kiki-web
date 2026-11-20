@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import type {LabNarrationApi,PhysicalLabNarrationManifest} from './lab-narration';
 
 const Text=z.object({en:z.string(),or:z.string()});
 export const PhysicalPart=z.object({id:z.string(),label:z.string(),kind:z.enum(['body','input','output','control','display']),position:z.tuple([z.number(),z.number(),z.number()]),size:z.tuple([z.number(),z.number(),z.number()])}).passthrough();
@@ -14,6 +15,7 @@ export type PhysicalObservations=z.infer<typeof PhysicalObservations>;
 export const PhysicalSummary=z.object({mode:z.enum(['experiment_demo','guided_preparation']),session_id:z.string(),experiment_id:z.string(),stage:z.string(),updated_at:z.string()}).passthrough();
 export type PhysicalEvent={event_id:string;revision:number;kind:'connect'|'set'|'measure'|'select';target:string;other?:string;value?:number|string|boolean;unit?:string};
 export interface PhysicalLabApi {
+  readonly narration?:LabNarrationApi<PhysicalLabNarrationManifest>;
   sessions(signal?:AbortSignal):Promise<z.infer<typeof PhysicalSummary>[]>;
   create(experiment:string,language:'en'|'or',key:string,signal?:AbortSignal):Promise<PhysicalSession>;
   get(id:string,signal?:AbortSignal):Promise<PhysicalSession>;

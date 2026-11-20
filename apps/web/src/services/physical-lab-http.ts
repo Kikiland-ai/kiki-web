@@ -2,6 +2,8 @@ import {z} from 'zod';
 import type {AuthService} from '../contracts/services';
 import {PhysicalPack,PhysicalSession,PhysicalObservations,PhysicalSummary,type PhysicalLabApi} from '../contracts/physical-lab';
 import {ServiceError} from './types';
+import {PhysicalLabNarrationManifestSchema} from '../contracts/lab-narration';
+import {createLabNarrationApi} from './lab-narration-http';
 
 /** Uses the existing verified web API. No browser-owned upstream identity or secret. */
 export function createPhysicalLabApi(baseUrl:string,auth:AuthService,fetcher:typeof fetch=fetch):PhysicalLabApi {
@@ -14,6 +16,7 @@ export function createPhysicalLabApi(baseUrl:string,auth:AuthService,fetcher:typ
   }
   async function session(id:string,signal?:AbortSignal){const s=await call(`/sessions/${encodeURIComponent(id)}`,PhysicalSession,signal);if(s.session_id!==id)throw new ServiceError('The experiment belongs to another session.');return s;}
   return {
+    narration: createLabNarrationApi(id => `${base}/sessions/${id}/narration`, PhysicalLabNarrationManifestSchema, auth, fetcher),
     sessions:s=>call('/sessions',z.array(PhysicalSummary),s),
     create:(id,language,key,s)=>call('/sessions',PhysicalSession,s,{experiment_id:id,language,mode:'experiment_demo'},key),
     get:session,

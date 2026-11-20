@@ -1,3 +1,18 @@
+## Combined lab narration · 21 November 2026
+
+The Simulink route serves 40 recordings scoped to the learner’s saved lab
+preparation. The physical routes under `/physical-labs/sessions/{session_id}/narration`
+require an owned session matching the published experiment, mode, pack version,
+and pack SHA-256. The indexed nine assets and both manifests use the existing
+private media boundary. WAV reads verify byte count and SHA-256 before serving.
+
+The combined preview uses read-only Cloud Storage access to `kiki-web-bucket`
+for both modes. Its sample learner and lab state are isolated from hosted
+learner records. Connected use requires the existing `KIKI_MEDIA_BUCKET`,
+physical lab flag, and trusted unified lab upstream.
+
+The API suite passed 277 tests with eight opt-in skips. Both release indexes were verified in the built wheel.
+
 ## Physical lab web relay — 21 November 2026
 
 Added explicit /physical-labs route allowlist using existing verified Firebase
