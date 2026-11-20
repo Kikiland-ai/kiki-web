@@ -1,3 +1,17 @@
+## Extension status PR #25 published — 21 November 2026
+
+Published [web PR #25](https://github.com/Kikiland-ai/kiki-web/pull/25) from
+codex/lab-extension-status into main as akshitanitr. Implementation commit 3cea022
+is based on main 90f7d59; physical-lab PR #22 remains separate. Fresh isolated
+checks passed: 331 web tests, lint/typecheck/build, three Chrome cases and canonical
+extension packaging. The web PR includes a reviewable companion backend patch;
+no backend branch or PR was published. GitHub CI status is available on the PR.
+Last completed: commit, push and PR creation requested by the user.
+Exact next: review PR #25 and GitHub checks; native folder-permission, actual
+installed-extension and hosted acceptance remain manual. No merge/deployment.
+
+---
+
 ## Extension status PR preparation — 21 November 2026
 
 User authorized a web PR. Isolated codex/lab-extension-status from current
@@ -13,8 +27,7 @@ passed. Three Chrome cases against this branch on port 5198 passed; canonical
 0.1.4 release packaging passed. The 5198 test server stopped after tests. Native
 folder permission/installed-extension/Google/hosted acceptance remain manual.
 Last completed: isolated publication diff and fresh validation.
-Exact next: commit as akshitanitr, push codex/lab-extension-status and create the
-web PR into main; record its URL. No merge or deployment.
+Publication followed in PR #25; the newer entry above is current. No merge or deployment.
 
 ---
 
