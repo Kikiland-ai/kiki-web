@@ -29,6 +29,10 @@ export type AudioPlayerProps = {
   language?: string
   onLanguageChange?: (value: string) => void
   onClose: () => void
+  /** The clip's position in seconds, from the audio element's own clock (play, seek and scrub). */
+  onTimeChange?: (seconds: number) => void
+  /** A slim one-row bar for narration that plays behind the lesson (label kept, detail dropped). */
+  compact?: boolean
   /** Start straight away; only after the student pressed Listen, never on its own. */
   autoPlay?: boolean
   ref?: Ref<AudioPlayerHandle>
@@ -41,7 +45,7 @@ const clock = (s: number) => (Number.isFinite(s) && s > 0 ? `${Math.floor(s / 60
  * (never fixed timers), so position and speed stay true to the sound.
  * There is no text highlighting: clips have no sentence alignment yet.
  */
-export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label, detail, speed, onSpeedChange, languages, language, onLanguageChange, onClose, autoPlay, ref }: AudioPlayerProps) {
+export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label, detail, speed, onSpeedChange, languages, language, onLanguageChange, onClose, onTimeChange, compact = false, autoPlay, ref }: AudioPlayerProps) {
   const audio = useRef<HTMLAudioElement>(null)
   const started = useRef(false)
   const [playing, setPlaying] = useState(false)
@@ -90,6 +94,101 @@ export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label
 
   const playLabel = playing ? 'Pause narration' : ended ? 'Play narration again' : 'Play narration'
 
+  const scrubber = (
+    <input
+      type="range"
+      className={styles.scrub}
+      aria-label="Position"
+      min={0}
+      max={duration || 0}
+      step={0.1}
+      value={Math.min(current, duration || 0)}
+      aria-valuetext={`${clock(current)} of ${clock(duration)}`}
+      disabled={!src || !duration || failed}
+      onChange={(e) => {
+        const position = Number(e.currentTarget.value)
+        setCurrent(position)
+        onTimeChange?.(position)
+        if (audio.current) audio.current.currentTime = position
+      }}
+    />
+  )
+  const element = (
+    <audio
+      ref={audio}
+      src={src ?? undefined}
+      data-media-id={mediaId}
+      preload="metadata"
+      onPlay={() => { setPlaying(true); setEnded(false) }}
+      onPause={() => setPlaying(false)}
+      onEnded={() => { setPlaying(false); setEnded(true) }}
+      onTimeUpdate={(e) => { setCurrent(e.currentTarget.currentTime); onTimeChange?.(e.currentTarget.currentTime) }}
+      onLoadedMetadata={(e) => { setDuration(e.currentTarget.duration); e.currentTarget.playbackRate = speed }}
+      onDurationChange={(e) => setDuration(e.currentTarget.duration)}
+      onError={() => { setFailed(true); setPlaying(false) }}
+    />
+  )
+  const problems = (
+    <>
+      {!src && !loadError && <p role="status" className={styles.loading}>Loading narration…</p>}
+      {loadError && (
+        <p role="alert" className={styles.error}>
+          {loadError}
+          <button type="button" className={styles.retry} onClick={onRetryLoad}>
+            <RetryIcon size={18} />
+            Retry
+          </button>
+        </p>
+      )}
+      {failed && (
+        <p role="alert" className={styles.error}>
+          Couldn't play this audio.
+          <button type="button" className={styles.retry} onClick={retry}>
+            <RetryIcon size={18} />
+            Retry
+          </button>
+        </p>
+      )}
+    </>
+  )
+
+  if (compact) {
+    const nextSpeed = AUDIO_SPEEDS[(AUDIO_SPEEDS.indexOf(speed) + 1) % AUDIO_SPEEDS.length]
+    return (
+      <section className={`${styles.player} ${styles.compact}`} aria-label={`Listen: ${title}`}>
+        <div className={styles.controls}>
+          <button type="button" className={styles.play} aria-label={playLabel} onClick={toggle} disabled={failed || !src}>
+            {playing ? <PauseIcon size={20} /> : <PlayIcon size={20} />}
+          </button>
+          {scrubber}
+          <span className={styles.time} aria-hidden="true">
+            {clock(current)} / {clock(duration)}
+          </span>
+          <button type="button" className={styles.segment} aria-label={`Speed ${speed}×, change to ${nextSpeed}×`} onClick={() => onSpeedChange(nextSpeed)}>
+            {speed}×
+          </button>
+          <button type="button" className={styles.icon} aria-label="Close player" onClick={onClose}>
+            <CloseIcon size={20} />
+          </button>
+        </div>
+        <div className={styles.meta}>
+          <span className={styles.metaLabel}>{label}</span>
+          {languages && languages.length > 1 && (
+            <div role="group" aria-label="Narration language" className={styles.segments}>
+              {languages.map((l) => (
+                <button key={l.value} type="button" className={styles.segment} aria-pressed={language === l.value} onClick={() => onLanguageChange?.(l.value)}>
+                  {l.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {problems}
+        {element}
+      </section>
+    )
+  }
+
   return (
     <section className={styles.player} aria-label={`Listen: ${title}`}>
       <div className={styles.top}>
@@ -104,22 +203,7 @@ export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label
         <button type="button" className={styles.play} aria-label={playLabel} onClick={toggle} disabled={failed || !src}>
           {playing ? <PauseIcon size={22} /> : <PlayIcon size={22} />}
         </button>
-        <input
-          type="range"
-          className={styles.scrub}
-          aria-label="Position"
-          min={0}
-          max={duration || 0}
-          step={0.1}
-          value={Math.min(current, duration || 0)}
-          aria-valuetext={`${clock(current)} of ${clock(duration)}`}
-          disabled={!src || !duration || failed}
-          onChange={(e) => {
-            const position = Number(e.currentTarget.value)
-            setCurrent(position)
-            if (audio.current) audio.current.currentTime = position
-          }}
-        />
+        {scrubber}
         <span className={styles.time} aria-hidden="true">
           {clock(current)} / {clock(duration)}
         </span>
@@ -144,40 +228,8 @@ export function AudioPlayer({ src, loadError, onRetryLoad, mediaId, title, label
         )}
       </div>
 
-      {!src && !loadError && <p role="status" className={styles.loading}>Loading narration…</p>}
-      {loadError && (
-        <p role="alert" className={styles.error}>
-          {loadError}
-          <button type="button" className={styles.retry} onClick={onRetryLoad}>
-            <RetryIcon size={18} />
-            Retry
-          </button>
-        </p>
-      )}
-
-      {failed && (
-        <p role="alert" className={styles.error}>
-          Couldn't play this audio.
-          <button type="button" className={styles.retry} onClick={retry}>
-            <RetryIcon size={18} />
-            Retry
-          </button>
-        </p>
-      )}
-
-      <audio
-        ref={audio}
-        src={src ?? undefined}
-        data-media-id={mediaId}
-        preload="metadata"
-        onPlay={() => { setPlaying(true); setEnded(false) }}
-        onPause={() => setPlaying(false)}
-        onEnded={() => { setPlaying(false); setEnded(true) }}
-        onTimeUpdate={(e) => setCurrent(e.currentTarget.currentTime)}
-        onLoadedMetadata={(e) => { setDuration(e.currentTarget.duration); e.currentTarget.playbackRate = speed }}
-        onDurationChange={(e) => setDuration(e.currentTarget.duration)}
-        onError={() => { setFailed(true); setPlaying(false) }}
-      />
+      {problems}
+      {element}
     </section>
   )
 }
