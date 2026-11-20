@@ -5,7 +5,7 @@
 .phase { padding:8px 12px; border:1.5px solid var(--ink); border-radius:4px; background:var(--surface); font-size:12px; font-weight:600; }
 .phase[data-state='active'] { background:var(--lab-tint); }
 .status { color:var(--ink); font-size:15px; line-height:1.8; overflow-wrap:anywhere; margin:8px 0; }
-.boundary { font-size:13px; line-height:1.7; margin:12px 0 20px; max-width:85ch; }
+.setup code,.studentInput code { padding:1px 6px; border:1px solid var(--ink); border-radius:4px; background:var(--lab-tint); font-size:0.9em; overflow-wrap:anywhere; }
 .setup { list-style:decimal-leading-zero; padding-left:30px; margin:24px 0 0; }
 .setup li { padding:16px 0 16px 8px; border-top:1px solid var(--rule); }
 .setup li > span { display:grid; gap:6px; margin-bottom:12px; }

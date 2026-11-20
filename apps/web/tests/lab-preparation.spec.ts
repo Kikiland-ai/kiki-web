@@ -6,22 +6,26 @@ async function setup(page:Page){
   await page.getByRole('link',{name:'Add your subject',exact:true}).click();await page.getByLabel('Semester',{exact:true}).selectOption('3');await page.getByRole('button',{name:'Add subject',exact:true}).click();
   await page.getByRole('link',{name:'Lab mode',exact:true}).click();await expect(page.getByRole('heading',{name:'Lab mode',exact:true})).toBeVisible();
 }
-async function start(page:Page){await page.getByRole('button',{name:'Start lab preparation',exact:true}).click();await expect(page.getByRole('heading',{name:'Read the experiment checkpoints',exact:true})).toBeVisible();}
+async function start(page:Page){await page.getByRole('button',{name:'Start lab preparation',exact:true}).click();await expect(page.getByRole('heading',{name:'All 12 steps',exact:true})).toBeVisible();}
 async function save(page:Page){await page.getByRole('button',{name:'Save preparation',exact:true}).click();await expect(page.getByRole('status').filter({hasText:'Preparation saved'})).toBeVisible();}
 test('preparation saves notes and place, copies owner-only link, resumes after sign-in and grants no evidence',async({page,context})=>{
   await context.grantPermissions(['clipboard-read','clipboard-write']);await setup(page);
   await expect(page.getByText('0 of 7 passed',{exact:true})).toBeVisible();await start(page);
-  const url=page.url();await expect(page.getByText('Local preview: this address works on this computer. Phone/laptop continuation needs the app at a shared hosted address.',{exact:true})).toBeVisible();await expect(page.getByLabel('Session link',{exact:true})).toHaveValue(url);
+  const url=page.url();await page.getByText('Continue on another device',{exact:true}).click();await expect(page.getByText('Local preview: this address works on this computer. Phone/laptop continuation needs the app at a shared hosted address.',{exact:true})).toBeVisible();await expect(page.getByLabel('Session link',{exact:true})).toHaveValue(url);
   await expect(page.getByRole('link',{name:'Open MATLAB / Simulink Online',exact:true})).toHaveAttribute('href','https://matlab.mathworks.com/');
   await page.getByLabel('Your prediction',{exact:true}).fill('Expect sidebands at 1900 Hz and 2100 Hz.');
-  await page.getByLabel('Saved Simulink model reference (optional)',{exact:true}).fill('My first DSB-SC model');
+  await expect(page.getByRole('heading',{name:'Save your model as dsb_sc.slx',exact:true})).toBeVisible();
+  await page.getByLabel('Model name',{exact:true}).fill('My first DSB-SC model');
+  await expect(page.getByText(/Simulink can’t save this name/)).toBeVisible();await expect(page.getByRole('button',{name:'Save preparation',exact:true})).toBeDisabled();
+  await page.getByLabel('Model name',{exact:true}).fill('dsb_sc_first.slx');await expect(page.getByRole('heading',{name:'Save your model as dsb_sc_first.slx',exact:true})).toBeVisible();
   await page.getByLabel('Observation 1 · Your notes',{exact:true}).fill('Baseline not run yet.');
   await page.getByRole('button',{name:'Read checkpoint 3',exact:true}).click();
   await expect(page.getByRole('button',{name:'Copy session link',exact:true})).toBeDisabled();await save(page);
   await page.getByRole('button',{name:'Copy session link',exact:true}).click();await expect(page.getByText('Session link copied',{exact:true})).toBeVisible();expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe(url);
   await page.reload();await expect(page.getByLabel('Your prediction',{exact:true})).toHaveValue('Expect sidebands at 1900 Hz and 2100 Hz.');
-  await expect(page.getByText('Checkpoint 3 of 12 · Reading position only',{exact:true})).toBeVisible();
-  await expect(page.getByText('Manual preparation · Monitoring not connected',{exact:true})).toBeVisible();
+  await expect(page.getByLabel('Model name',{exact:true})).toHaveValue('dsb_sc_first.slx');
+  await expect(page.getByText('Step 3 of 12',{exact:true})).toBeVisible();
+  await expect(page.getByText('Screen guidance is off in this preview',{exact:true})).toBeVisible();
   await expect(page.getByText('Kiki is guiding',{exact:true})).toHaveCount(0);
   await page.getByRole('link',{name:'Learn',exact:true}).click();await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','0');
   await page.getByRole('link',{name:'Home',exact:true}).click();await page.getByRole('link',{name:'Resume lab preparation',exact:true}).click();await expect(page).toHaveURL(url);

@@ -10,7 +10,7 @@ type Draft = { text: string; kind: ResponseKind; confidence: string; note: strin
 const blank = (): Draft => ({ text: '', kind: 'observation', confidence: '', note: '', selected: [] });
 
 /** Drafts live only in this preparation's mounted UI. They are never auto-submitted. */
-export function LabStudentInput({ view, submitInput, retryRequirements, declareCondition }: { view: LabCaptureView; submitInput: LabCaptureController['submitInput']; retryRequirements(): void; declareCondition?: LabCaptureController['declareCondition'] }) {
+export function LabStudentInput({ view, submitInput, retryRequirements, declareCondition, modelName = 'dsb_sc' }: { view: LabCaptureView; modelName?: string; submitInput: LabCaptureController['submitInput']; retryRequirements(): void; declareCondition?: LabCaptureController['declareCondition'] }) {
   const state = view.state!;
   const scope = JSON.stringify(currentScope(state));
   const [draftScope, setDraftScope] = useState(scope);
@@ -51,13 +51,13 @@ export function LabStudentInput({ view, submitInput, retryRequirements, declareC
   }
   return <div className={styles.studentInput} aria-label="Your lab evidence">
     <h3>Your observations and confirmations</h3>
-    <p>Write what you did and observed. Student reports, explicit confirmations and screen inference remain separate from assessed proficiency.</p>
+    <p>Write what you see in your own words, then confirm the step.</p>
     {message && <p role="status">{message}</p>}
     {stale && <div role="alert"><p>The checkpoint or screen context changed. Your earlier draft is kept and will not be submitted to this step. Choose Use current step to open a separate draft for the current context; it does not copy or submit the earlier draft.</p><Button variant="secondary" disabled={submitting || view.inputBusy} onClick={useCurrentStep}>Use current step</Button></div>}
     {view.requirementsError && <div role="alert"><p>{view.requirementsError}</p><Button variant="secondary" onClick={retryRequirements}>Retry input instructions</Button></div>}
     {!checkpoint && !view.requirementsError && <p role="status">Loading this step’s input instructions…</p>}
     {checkpoint && <>
-      <p><strong>{checkpoint.id}</strong> · Expected condition: {checkpoint.condition.replaceAll('_', ' ')}. The server checks the current visit and evidence before recording a confirmation.</p>
+      <p><strong>{checkpoint.id}</strong> · Expected condition: {checkpoint.condition.replaceAll('_', ' ')}.</p>
       {state.workspace.condition !== checkpoint.condition && <div role="note"><p>The tracker currently records {state.workspace.condition.replaceAll('_', ' ')}. After you set up the intended condition in MATLAB, declare it here and obtain a new screen check. This records your intent; it does not change or verify your model.</p><Button variant="secondary" disabled={disabled || !declareCondition} onClick={() => {
         if (!declareCondition) return;
         setSubmitting(true); setMessage('');
@@ -73,11 +73,10 @@ export function LabStudentInput({ view, submitInput, retryRequirements, declareC
         </fieldset>
       </form>
       <form id="kiki-lab-confirmation" tabIndex={-1} aria-label="Current step confirmation" onSubmit={event => { event.preventDefault(); void submit(true); }}>
-        <p>Confirm the current step here after reviewing your model. This form records your selections and your own evidence note.</p>
-        {['CP-DSB-01', 'CP-DSB-12'].includes(checkpoint.id) && <p>Save your model in MATLAB first. Confirming here records your report of that save; it does not save the MATLAB model or verify the saved file.</p>}
+        {['CP-DSB-01', 'CP-DSB-12'].includes(checkpoint.id) && <p>Save your model in MATLAB first, as <code>{modelName}.slx</code>. Kiki can’t see saves, so confirming records your word; it does not save the MATLAB model or check the file.</p>}
         {stale && <div role="alert"><p>Your earlier draft is kept. Open a separate draft for this context before confirming. Your earlier selections and note will not be copied or submitted.</p><Button variant="secondary" disabled={submitting || view.inputBusy} onClick={useCurrentStep}>Use current step for confirmation</Button></div>}
         <fieldset disabled={disabled}><legend>Confirm evidence you reviewed</legend>
-          <p>Select only criteria you personally checked. Nothing is selected automatically.</p>
+          <p>Tick only what you checked yourself.</p>
           {checkpoint.criteria.map(c => {
             const criterion = criterionState(c.id);
             return <label className={styles.criterion} key={c.id}><input type="checkbox" checked={draft.selected.includes(c.id)} onChange={event => update({ selected: event.target.checked ? [...draft.selected, c.id] : draft.selected.filter(id => id !== c.id) })} /><span>{c.description}<small>{criterion?.state === 'satisfied' ? `Recorded · ${criterion.completion_basis?.replaceAll('_', ' ') ?? 'server evidence'}` : 'Not yet confirmed'}{c.responseKinds.length ? ` · This visit needs one of: ${c.responseKinds.join(', ')}` : ''}</small></span></label>;

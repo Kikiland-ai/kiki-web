@@ -16,6 +16,24 @@ from .learning import now
 from .learning_catalog import dump
 
 SAFE_ID = re.compile(r"^[a-zA-Z0-9_-]{1,128}$")
+# Simulink saves models only under valid MATLAB names: a letter, then letters, digits or _.
+MODEL_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,62}$")
+DEFAULT_MODEL_NAME = "dsb_sc"
+INVALID_MODEL_NAME = (
+    "Set a model name that Simulink can save: start with a letter and use only letters, "
+    "numbers and _ (for example dsb_sc)."
+)
+
+
+def model_name(project_ref):
+    """The Simulink model name the student saves, without .slx; blank means the default."""
+    name = project_ref.strip()
+    if name.lower().endswith(".slx"):
+        name = name[:-4]
+    name = name or DEFAULT_MODEL_NAME
+    if not MODEL_NAME.fullmatch(name):
+        raise BoundaryError(422, INVALID_MODEL_NAME, code="invalid_model_name")
+    return name
 
 
 def monitoring(state):
@@ -82,7 +100,7 @@ class LabExecutions:
                 contentVersion=prep.contentVersion,
                 createdAt=now(),
                 operationKey=str(uuid4()),
-                modelName=prep.projectRef[:160].strip() or "dsb_sc",
+                modelName=model_name(prep.projectRef),
             )
             transaction.create(ref, dump(link))
             return True, link, prep
