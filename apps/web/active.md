@@ -18,7 +18,8 @@ signed-in Firebase/hosted round trip. Disk pressure caused dependency install
 failure and later backend SQLITE_IOERR_SHMSIZE reruns; recorded in the handoff.
 
 Last completed: published frontend PR #22 (https://github.com/Kikiland-ai/kiki-web/pull/22) and updated backend PR #14 with the repository split.
-Exact next: review companion PR and backend #14, confirm backend CI, configure
+Backend clean-runner acceptance passed at https://github.com/Kikiland-ai/kiki-backend/actions/runs/44823028370.
+Exact next: review companion PR and backend #14, configure
 KIKI_PHYSICAL_LABS_ENABLED and the existing trusted upstream, then signed-in
 acceptance. No deployment or learner-data changes. See
 [implementation and acceptance](../../docs/plans/physical-lab-ui.md).
