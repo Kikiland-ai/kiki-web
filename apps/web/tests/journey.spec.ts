@@ -93,7 +93,7 @@ test('keyboard and reduced-motion logo remain usable', async ({ page }) => {
   await page.goto('/');
   const animation = await page.locator('.wordmark-animate .wordmark-roll').evaluate(el => getComputedStyle(el).animationName);
   expect(animation).toBe('none');
-  await page.getByRole('link', { name: 'Get started' }).focus();
+  await page.getByRole('link', { name: 'Student sign in' }).focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('button', { name: 'Sign in with Google' })).toBeDisabled();
   await page.getByRole('button', { name: 'Open sample student' }).focus();
