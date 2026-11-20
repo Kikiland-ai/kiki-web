@@ -1,3 +1,27 @@
+## End-to-end suite green after the narration merges - 21 November 2026
+
+Main `90f7d59` (PRs #18-#21, #23) passed CI, but CI runs no Playwright. Sample-mode e2e (all specs
+except live voice/Gemini and screenshot capture) was 108/120; 10 failures came from #23, 2 predated it.
+Fixed on `fix/e2e-after-narration-sync`:
+
+- 320 px overflow on every narrated canvas (C-AM-01..07, 09, 10): the stage figure grid's 260 px
+  minimum could not shrink beside the step rail. `CamCanvas.module.css`: `minmax(min(260px,100%),1fr)`.
+- 320 px overflow on the C-AM-08 narrated stage: the compact player row (play, scrubber, time, speed,
+  close) was wider than the column. `AudioPlayer.module.css`: below 360 px the scrubber takes its own
+  line and close/speed are 40 px. Checked by screenshot at 320 px.
+- Stale tests: `concept-media.spec.ts` expected "Words are not highlighted" (C-AM-08 step 1 is now
+  timed); `all-cam.spec.ts` treated the narration Position slider in the C-AM-08 stage as a scene
+  control (since #18); `lab-student-input.spec.ts` "Use current step" also matched #21's
+  "Use current step for confirmation" (now `exact`).
+
+Checks: Playwright 120/120 (chromium, 2 workers), tsc, eslint, Vitest 315/315, build.
+Not covered: live voice/Gemini specs, by-ear check of the found timings.
+
+Exact next: merge the fix PR on approval; add the Playwright sample suite to CI so layout
+regressions are caught before merge.
+
+---
+
 ## Narration sync on every narrated clip - 21 November 2026
 
 PR #18 synced only C-AM-08 steps 2 and 3 (hand-placed cues). Now all 26 sample clips are timed:

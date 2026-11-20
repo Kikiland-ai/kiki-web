@@ -137,3 +137,5 @@
 .meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--learning-space-1) var(--learning-space-2); padding-left: 4px; }
 .metaLabel { font: var(--learning-text-label); color: var(--learning-pencil); }
 @media (max-width: 600px) { .compact .metaLabel { font-size: 12px; } .compact .play { min-width: 36px; min-height: 36px; } .compact .segment { min-width: 40px; } }
+/* Narrowest phones: the scrubber takes its own line so every control keeps its tap target */
+@media (max-width: 359px) { .compact .controls { flex-wrap: wrap; gap: 2px; } .compact .scrub { order: 1; flex-basis: 100%; } .compact .time { margin-left: auto; } .compact .icon, .compact .segment { min-width: 40px; min-height: 40px; } }
