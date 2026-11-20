@@ -646,3 +646,17 @@ def test_cloud_ticket_cross_app_route_origin_owner_and_revocation(execution, mon
         for key, data in store.docs.items()
         if key.startswith("labStreamCapabilities/")
     )
+
+
+def test_model_name_is_normalised_and_invalid_names_never_reach_the_engine(execution):
+    client, _, _, upstream, store, path = execution
+    prep = f"learners/a/labPreparations/{path.split('/')[2]}"
+    store.docs[prep]["projectRef"] = "My first DSB-SC model"
+    refused = client.post(path, headers=headers(), json={})
+    assert refused.status_code == 422 and refused.json()["code"] == "invalid_model_name"
+    assert not [c for c in upstream.calls if c[1] == "/lab-sessions"]
+    assert not [k for k in store.docs if "/labExecutions/" in k]
+    store.docs[prep]["projectRef"] = " dsb_sc_aditya.slx "
+    linked(execution)
+    creates = [c for c in upstream.calls if c[1] == "/lab-sessions"]
+    assert len(creates) == 1 and creates[0][3]["model_name"] == "dsb_sc_aditya"

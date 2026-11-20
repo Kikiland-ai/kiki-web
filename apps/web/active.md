@@ -1,3 +1,23 @@
+## Lab mode simplified, model name made explicit (branch feat/lab-mode-simplify) - 21 November 2026
+
+Lab mode now leads with "Step 1 · Save your model as dsb_sc.slx" (Blank Model → Save, MATLAB Drive),
+then "Step 2 · Connect your MATLAB tab". The model name field replaces the optional "model reference"
+in the notes form. Blank means `dsb_sc` and a typed `.slx` is dropped. Names Simulink can't save
+are blocked, both in the web (`features/labs/model-name.ts`) and in the API before the engine
+session is created (`lab_execution.model_name`, 422 `invalid_model_name`). Sharing waits for a
+valid saved name. Once the engine follows a model, the card shows that name as fixed (read from
+`workspace.model_name`). The 12-step reader collapses during live guidance. The notes form became
+the "Lab notebook". Device link and sources are collapsed. Repeated "not assessed" copy is now one
+footnote, and CP01/CP12 confirmation names the file.
+Checks: vitest 262 passed, `tsc -b` and lint clean, API `test_lab_execution.py` 21 passed (1 new),
+Playwright `lab-preparation.spec.ts` 8 passed. Not run: `playwright.lab.config.ts` (needs the
+Kiki extension service worker, which timed out locally). `lab-student-input.spec.ts` fails with
+the same strict-mode error on `main` (pre-existing).
+Exact next: live CP01 run in connected mode. Save `dsb_sc.slx`, share, and check the card locks
+the name and the CP01 confirm text shows it.
+
+---
+
 ## Institutional landing page, storyline v3 with motion (local review) - 21 November 2026
 
 Revised after Arpan's review: product-first. Removed the problem (three walls), why-the-fixes-fail
