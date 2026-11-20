@@ -1,3 +1,32 @@
+## Software Lab / Physical Lab integrated preview — 21 November 2026
+
+User chose the names Software Lab and Physical Lab. Lab home now presents two
+peer cards with those headings, inside the existing Kiki Shell/navigation.
+Software preparation, model naming and saved sessions retain their current flow;
+theory references are collapsed below the choice cards. Physical Lab opens the
+DSB-SC entry and the embedded 3D workspace with its name-only floating guide,
+hover labels, backend traces and fullscreen.
+
+Preview: http://127.0.0.1:5202/labs. This full application preview uses the explicit
+fixture-only VITE_PHYSICAL_LAB_DEV_API=http://127.0.0.1:8092 bridge to the real
+local physical engine. The existing 5174 preview and unrelated local extension
+edits remain preserved. Connected-mode auth/composition is unchanged. The local
+acceptance server uses synthetic identity/temporary records; no college,
+Google/Firestore or production records are changed.
+
+Verified in native Chrome: sample sign-in/onboarding/enrollment, both named
+Lab cards, Open Physical Lab, creation/loading inside the Kiki Shell, and native
+fullscreen entry/exit with the actual apparatus and floating guide. TypeScript,
+ESLint and 28 focused physical-lab/service/navigation tests passed.
+User approved this preview. The four frontend/fixture files and this handoff are
+being published to frontend PR #22. Backend PR #14 already contains the pipeline;
+no further backend changes are needed for these names/layout updates.
+Exact next: review the paired PRs, then explicitly enable/configure hosted
+acceptance. No merge or deployment included.
+
+
+---
+
 ## Physical lab UI in the existing Lab mode — 21 November 2026
 
 New codex/physical-lab-ui branch from main 08644eb, reconciled with main 17aa078 (landing PR #20 and simplified Lab mode PR #21). Followed the existing

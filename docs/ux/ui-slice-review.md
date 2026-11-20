@@ -1,3 +1,18 @@
+## Current local Lab choice preview
+
+Open Lab mode to choose **Software Lab** or **Physical Lab**. Software Lab keeps
+the Simulink preparation path. Physical Lab opens the DSB-SC trainer: choose Start
+experiment or resume, hover components to identify them, and follow the floating
+guide. Fullscreen stays within this experiment workspace.
+
+Full Kiki local sample preview: http://127.0.0.1:5202/labs. If prompted, choose
+Open sample student. This local preview explicitly enables the fixture-only
+physical engine bridge; connected production still requires its authenticated
+backend configuration. No college records are used.
+
+
+---
+
 ## Physical equipment practice in Lab mode
 
 Open Lab mode → Open physical lab practice → Start experiment (or resume the

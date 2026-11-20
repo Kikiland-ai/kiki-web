@@ -10,7 +10,7 @@ import './physical-lab.css';
 
 export function PhysicalLab(){
   const {services,profile}=useSession(),{sessionId}=useParams(),navigate=useNavigate();
-  if(!services.physicalLabs)return <div className="page-stack"><PageTitle title="Physical lab practice"/><p>Open the connected Kiki app to practise with your college equipment.</p><ActionLink to="/labs">Back to Lab mode</ActionLink></div>;
+  if(!services.physicalLabs)return <div className="page-stack"><PageTitle title="Physical Lab"/><p>Open the connected Kiki app to practise with your college equipment.</p><ActionLink to="/labs">Back to Lab mode</ActionLink></div>;
   return <PhysicalExperiment key={`${profile?.id}:${sessionId||'new'}`} api={services.physicalLabs} sessionId={sessionId} language={profile?.supportLanguage==='or'?'or':'en'} onSession={id=>navigate(`/labs/physical/${id}`,{replace:true})} registerCleanup={services.auth.registerSignOutCleanup}/>;
 }
 
