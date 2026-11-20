@@ -65,6 +65,7 @@ export interface Services {
   media: MediaApi
   labPreparation: LabPreparationApi
   labExecution?: import('./lab-execution').LabExecutionApi
+  tutor?: import('./tutor').TutorApi
 }
 
 export interface LearningApi {

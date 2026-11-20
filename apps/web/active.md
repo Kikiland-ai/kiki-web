@@ -18,6 +18,194 @@ the name and the CP01 confirm text shows it.
 
 ---
 
+## Institutional landing page, storyline v3 with motion (local review) - 21 November 2026
+
+Revised after Arpan's review: product-first. Removed the problem (three walls), why-the-fixes-fail
+and insight sections (the hook and the student flip stay; Prove carries split marking). Learn now
+follows the student. Concept map rebuilt as six captioned, clickable steps with named parts and
+concepts (example chapter named). Lab replay rebuilt as a guided walk through real checkpoint 5:
+a spotlight on the screenshot (NOW card, Step details, the model, What I can see) with one plain
+sentence per phase, then trial progress to 6 of 12; play/pause/replay. All widgets step slowly
+(about 3 s) and play once instead of looping fast. Checks: tsc, ESLint, Vitest 260/260,
+check-landing no problems at 1920/1280/390.
+
+Second review fixes: the concept map is now six stacked layers (chapter, parts, concepts, learning
+order to the lab with side topics, what is inside every concept, checks), all visible from the
+start with their explanation beside them; they fill one at a time. Lab replay plays by itself
+(4.5 s per phase, loops, restarts on re-entry) with a phase tag on the spotlight and a timer on
+the current step. Dial button colours restored.
+
+Third review: header no longer sticky (lab section fits one screen); status pills, lab caption,
+lab controls and "your college sees" lines removed; student section is two columns. "Why you can
+trust it" rebuilt Minto-style: governing-thought headline, a top spine (Plan, Make, Check, Guide;
+auto-advances every 10 s, clickable), one full-sentence headline per stage and a distinct visual
+each (tree with the learning path to the lab, conveyor with the locked term, filter with three
+gates, cycle with a sweeping arc), joined by one thread: Carrier mismatch / "frequency mismatch".
+
+Branch `feature/landing-page`, still not committed or pushed; awaiting Arpan's local
+approval before it goes to the team. The page now follows storyline v3 (workspace
+`STORYLINE-landing-v3.md`) for every regional-language student; Odia and Analog
+Modulation appear only as the example. Five acts: problem (hero transformation of a
+real C-AM-08 sentence, student rows flipping to English, three walls, bridge chart),
+insight (one mark vs two marks toggle, labelled next build), learn / prove / do
+(narrated lesson + glossary + dial ends; split marks mock-up labelled next build; lab
+replay to checkpoint 6 of 12 from the real trial), trust (system tabs: concept map,
+lesson pipeline, review gates, lab reader; generation from a syllabus labelled
+roadmap), proof (count-up), then pilot, roadmap, data and consent, close. Hero stat
+chips, the separate demo band and outcomes band are removed.
+
+**New dependency:** `motion` 12.43.0 (exact), for the widgets in
+`src/features/landing/widgets.tsx`; real sample content is in `sample.ts`.
+`MotionConfig reducedMotion="user"`; with reduced motion every widget rests on its
+finished state and nothing loops.
+
+Checks: TypeScript, ESLint, Vitest 260/260; workspace `check-landing.mjs` (headline
+and in-page link updated for v3) at 1920/1280/390: axe 0, no overflow, CTAs, form,
+Odia switch, student path. Visual review of every section and all four system tabs.
+Next: Arpan reviews locally, then commit and PR on request.
+
+## Institutional landing page, local review (revision 2) - 20 November 2026
+
+Branch `feature/landing-page` (from main `5ecdd2e`), not committed or pushed. The
+public `/` route renders `src/features/landing/Landing.tsx`, written for colleges
+and state technical-education departments. Revision 2 follows a design critique:
+one conversion goal (Request a pilot) on every CTA, all pointing to a pilot request
+form; hook / line / sinker structure; outcome-led sections; proof from the Oct
+trials; a labelled roadmap from the pitch deck; four KiKi colours full-bleed
+(four-colour rule, hero and pilot washes, dark proof band) so they hold up on wide
+screens; a distinct CTA with a stepped four-colour shadow. Problem section cites
+AICTE's 2021 survey (44% want mother-tongue support) and the first-year uptake of
+regional-language B.Tech (255 of 1,230 seats), with sources. The form opens a
+prefilled email to `VITE_PILOT_CONTACT`; unset, it says it can't send (D8).
+Student entry is a quiet header/footer link (`/auth?returnTo=/concepts/C-AM-08`).
+English/Odia switch; Odia is a machine draft and labelled. `Wordmark` gains
+`role="img"` for valid ARIA. Screenshots cropped from the 18 Oct capture set.
+
+Checks: TypeScript, ESLint, production build; Vitest 260/260 (two unrelated files
+time out under parallel load and pass alone). Updated e2e specs pass against the
+local server (preferences once timed out on a slow reload and passed on rerun).
+Chrome at 1920, 1280 and 390 px: 4 CTAs all to the form, one above the fold at
+every size, no other in-page targets, images load, axe 0, no horizontal overflow,
+CTA lands on the form, unconfigured submit shows the notice, Odia switch and
+student path work.
+
+Open: pilot contact address (D8), native Odia review (D6), skip-onboarding route
+for students (D4, Akshita's onboarding code). Exact next: user review, then commit
+and PR on request.
+
+---
+
+---
+
+## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
+
+- Gemini calls rotate across `KIKI_GEMINI_API_KEYS` (kiki-backend's list of {key, quota_pool});
+  a failing pool cools down; voice tokens come from a healthy key. Key 0 (pool gareebi) is out of
+  prepayment credit; keys 1-3 work but `gemini-3.5-flash-lite` is intermittently 503/504 on them.
+- Local real run: `apps/api/scripts/tutor_dev_server.py --env-file <kiki-backend/.env>` (127.0.0.1:8090)
+  plus `VITE_TUTOR_DEV_API=http://127.0.0.1:8090 npm run dev` in apps/web.
+- Voice run 23:12-23:18 (`tests/tutor-voice-run.spec.ts`): the whole envelope-design question by
+  voice through the real screen; 7/7 spoken answers labelled correctly by Gemini; scorecard and
+  revision sheet; 150 s of KiKi audio. Artifacts: `Desktop/KiKi/tutor-voice-run/`.
+- Fixed from that run: provider outage now asks the student to repeat (no hint spent); summary no
+  longer strips quotes from the report; metric quotes come from the judging step; duplicate
+  submit_reply ignored.
+
+Checks: API 262 passed, 8 skipped; web 291 unit, typecheck, lint. Not pushed or deployed.
+
+---
+
+## Tutor mode: hardening, envelope-design question, canvas pass - 20 November 2026 (evening)
+
+Branch `feat/tutor-voice`, local commits only (not pushed or deployed).
+
+- Hardening: config fails fast without a key; tutor startup isolated (bad content disables only
+  the tutor); public `/tutor/health`; session ids include question and language; caps (8 voice
+  tokens, 3000 events, leak logs once per turn); voice/turn race re-applies the label on the fresh
+  state; one 1.5 s retry on 429. Web voice resumes after drops/go-away with a fresh token and the
+  Live handle (3 tries), checks availability before the mic prompt, and explains mic errors.
+- Plug-in kit: `apps/api/scripts/tutor_preflight.py`, `scripts/tutor_image_check.py`,
+  `apps/api/TUTOR_RUNBOOK.md`. Preflight on the current free key correctly reports NOT READY
+  (daily quota used; Live "prepayment credits are depleted").
+- New question `ece-am-envelope-design` (hard; offered on C-AM-03).
+- Canvas: finished stages fold to their results; compact question bar (sticky on desktop);
+  newest item scrolls into view; wipe then fading highlight; waveform traces fixed; equations
+  shrink to fit; vertical block diagrams on phones; conversation docked above the tab bar on
+  ≤860 px (portalled to body); report replaces the live board when done. Captures before and
+  after: `Desktop/KiKi/tutor-canvas-review/{before,after}` (spec `tests/tutor-canvas.capture.spec.ts`).
+
+Checks run: API 249 passed, 8 skipped; web 287 unit, lint, typecheck, build; Playwright tutor
+specs 3/3; full Playwright 115 passed, 3 failed in parallel: two pass serially (24/24), the
+third is `lab-student-input.spec.ts` (standalone lab harness, untouched by this work).
+
+Exact next: paid key → preflight READY → runbook steps; owner decides push/PR.
+
+---
+
+## Tutor mode (voice, staged decision graphs) built on feat/tutor-voice - 20 November 2026
+
+Branch `feat/tutor-voice` from `origin/main` 5ecdd2e, committed locally as adityathenerd; not
+pushed, merged or deployed. Tutor mode is off unless `KIKI_TUTOR_ENABLED=true` and a server-side
+`KIKI_GEMINI_API_KEY` are set, so existing behaviour is unchanged.
+
+What exists: `kiki-tutor-question/v1` content (question → stages → decision graphs → cumulative
+whiteboard) in `data-model/tutor/questions` (ece-phase-error, ece-dsb-receive-drift); validator;
+pure engine; Gemini label classifier (gemini-3.5-flash-lite); Firestore session store with an
+append-only event log; routes under `/tutor/*`; post-session report; locked Gemini Live voice
+tokens (gemini-3.8-live); web screen `/concepts/:conceptId/talk/:questionId` with whiteboard,
+chips/text, voice and scorecard; fixture mode replays views recorded from the Python engine.
+
+Checks actually run (unit doubles unless stated): API 230 passed, 8 skipped (live tests opt-in);
+web 283 unit tests, lint, typecheck, production build (fixture not in dist); Playwright 110 of 111
+(lab-student-input.spec.ts fails on a duplicate "Use current step" button; it loads a standalone
+lab harness none of this work touches; not re-run on a clean main). Live Google checks: routing
+26/26, 52/52 and 29/29 on real Gemini; live behaviour and summary tests; Live voice spike in
+English and Odia (briefs spoken verbatim, tool call 0.5-0.8 s, about 2.9 s end of speech to KiKi
+audio); token lock, single use and override refusal; real-browser mic → Live → tool → speech.
+Not yet run: Firestore against a real project, a signed-in connected walkthrough, Cloud Run.
+
+Known limits: the Gemini key in this environment is free tier (gemini-3.8-flash allows 20
+requests a day; latency is throttled). Odia audio needs a native listen
+(`Desktop/KiKi/tutor-voice-samples`). Stage intros have no Odia yet.
+
+Exact next: owner decides push/PR; paid Gemini key; enable on a preview API revision with
+Secret Manager; signed-in walkthrough by voice and text; native Odia review.
+
+---
+
+## Narrated lesson layout, local review - 20 November 2026
+
+Branch `feature/canvas-audio-sync` (from main `5ecdd2e`); merged to main as PR #18 on 21 November 2026.
+Revised after review: narration now plays behind the lesson instead of in front
+of it. Pressing Listen on C-AM-08 steps 2-3 switches to a narrated layout: the
+phase-recovery scene rises to the top of the step as a pinned "stage" with a slim
+one-row player (source label kept), the scope follows the narration (eases φ to
+0/60/90°, outlines what is described, one-line caption), and the placard text
+below highlights the sentence being read, with a reading edge that moves
+through it as the audio plays (spoken words in a stronger band, the rest
+lighter; even pace between hand-placed sentence starts, not word alignment,
+and labelled so), scrolling it into view only when it is hidden. Controls fold into "Explore it yourself"; touching them hands
+control to the student until "Follow the narration". Closing the player restores
+the reading layout. Cues (`narrationCues.ts`) are keyed to rendition ID and exact
+`audioSha256`, carry each sentence's opening words, and were placed by hand from
+pauses in the WAVs; the media contract stays `clip_duration_only` /
+`not_performed` and the UI says the cues are hand-placed.
+
+Checks: TypeScript, ESLint and production build pass; Vitest full suite with
+`--maxWorkers=4` (default 43-worker runs time out in unrelated files that pass
+alone). Tests cover cue anchors against the real Odia/English placard text,
+highlight marking with term chips, stage layout, follow/takeover and the compact
+player. Local sample browser check (Chrome, 1280 and 390 px), Odia concept clip
+seeked to 2/21/26/31/42 s: readings 1.00/0.50/0.00/0.00/1.00, scope and the
+highlighted sentence both on screen at every point, takeover works, axe 0
+violations, no horizontal overflow, closing restores the full scene. Cue times
+not yet checked by ear.
+
+Exact next: user reviews on the local server; adjust cue times or layout; then
+commit (identity to confirm) and push on request.
+
+---
+
 ## Canvas fix deployed and verified - 19 November 2026
 
 Application source `2b7f32d0f8e8189b9b30086b7394983e752aabb6` was committed

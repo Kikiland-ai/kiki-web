@@ -9,7 +9,7 @@ export { Icon } from './icons';
 export function KikiDots({ size = 40 }: { size?: number }) { return <img src={dots} alt="" width={size} height={size} />; }
 export function Wordmark({ animate = false }: { animate?: boolean }) {
   const [skip, setSkip] = useState(false);
-  return <div className="wordmark-wrap"><span className={`wordmark ${animate && !skip ? 'wordmark-animate' : ''}`} aria-label="Kiki"><span aria-hidden="true" className="wordmark-window"><span className="wordmark-roll"><span>କି</span><span>कि</span><span>கி</span><span>Ki</span></span></span><span aria-hidden="true">ki</span><span className="wordmark-dot" aria-hidden="true" /></span>{animate && !skip && <button className="skip-intro" onClick={() => setSkip(true)}>Skip animation</button>}</div>;
+  return <div className="wordmark-wrap"><span className={`wordmark ${animate && !skip ? 'wordmark-animate' : ''}`} role="img" aria-label="Kiki"><span aria-hidden="true" className="wordmark-window"><span className="wordmark-roll"><span>କି</span><span>कि</span><span>கி</span><span>Ki</span></span></span><span aria-hidden="true">ki</span><span className="wordmark-dot" aria-hidden="true" /></span>{animate && !skip && <button className="skip-intro" onClick={() => setSkip(true)}>Skip animation</button>}</div>;
 }
 export function Button({ variant = 'primary', className = '', ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'text' }) { return <button className={`button button-${variant} ${className}`} {...props} />; }
 export function ActionLink({ variant = 'primary', className = '', ...props }: LinkProps & { variant?: 'primary' | 'secondary' | 'text' }) { return <Link className={`button button-${variant} ${className}`} {...props} />; }

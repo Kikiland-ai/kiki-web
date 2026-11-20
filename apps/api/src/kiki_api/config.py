@@ -19,6 +19,14 @@ class Settings(BaseSettings):
     lab_backend_origin: str | None = None
     lab_proxy_secret: SecretStr | None = None
     environment: Literal["cloud", "emulator"] = "cloud"
+    # Tutor mode stays off until explicitly enabled with a server-side Gemini key.
+    tutor_enabled: bool = False
+    gemini_api_key: SecretStr | None = None
+    # Several keys, rotated by quota pool: a JSON list of {"key", "quota_pool"} (kiki-backend
+    # format)
+    gemini_api_keys: SecretStr | None = None
+    tutor_classifier_model: str = "gemini-3.5-flash-lite"
+    tutor_live_model: str = "gemini-3.8-live"
     cors_origins: list[str] = ["http://127.0.0.1:5174", "http://localhost:5174"]
 
     @model_validator(mode="after")
@@ -47,6 +55,31 @@ class Settings(BaseSettings):
         ):
             raise ValueError("Lab proxy secret must contain 32–256 characters")
         return self
+
+    @model_validator(mode="after")
+    def tutor_needs_key(self):
+        if self.tutor_enabled and not self.gemini_keys_raw():
+            raise ValueError("KIKI_TUTOR_ENABLED needs KIKI_GEMINI_API_KEYS or "
+            "KIKI_GEMINI_API_KEY (server-side, from Secret Manager)")
+        if self.gemini_api_keys:
+            from .tutor.keys import parse_keys
+
+            try:
+                parse_keys(self.gemini_api_keys.get_secret_value())
+            except (ValueError, TypeError) as exc:
+                raise ValueError(f"KIKI_GEMINI_API_KEYS is not a valid key list: {exc}") from None
+        for name in ("tutor_classifier_model", "tutor_live_model"):
+            value = getattr(self, name)
+            if not value or not all(c.isalnum() or c in "-." for c in value):
+                raise ValueError(f"{name} must be a plain Gemini model id")
+        return self
+
+    def gemini_keys_raw(self) -> str:
+        """The key list if set, else the single key; empty when neither is configured."""
+        for secret in (self.gemini_api_keys, self.gemini_api_key):
+            if secret and secret.get_secret_value().strip():
+                return secret.get_secret_value().strip()
+        return ""
 
     @field_validator("storage_bucket", "media_bucket")
     @classmethod

@@ -30,3 +30,50 @@
 .sources { font-size: 14px; overflow-wrap: anywhere; }
 .sources summary { min-height: var(--learning-tap-target); cursor: pointer; }
 @media (max-width: 600px) { .figure { padding: 12px; } }
+
+/* Narration follow: a strip that says what the narration is pointing at, and a calm highlight */
+.follow { display: grid; gap: 6px; padding: var(--learning-space-3) var(--learning-space-4); border: 1.5px solid var(--learning-ink); border-radius: var(--learning-radius-card); background: var(--learning-paper-sunken); }
+.follow p { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.follow button { justify-self: start; min-height: var(--learning-tap-target); padding: 0 var(--learning-space-3); border: 1.5px solid var(--learning-ink); border-radius: var(--learning-radius-pill); font: inherit; color: var(--learning-ink); background: var(--learning-paper); cursor: pointer; }
+.follow small { font-size: 13px; color: var(--learning-pencil); }
+.live { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--learning-green-ink); animation: livePulse 1.6s ease-in-out infinite; }
+@keyframes livePulse { 50% { opacity: 0.35; } }
+.cued { outline: 3px solid var(--learning-green-ink); outline-offset: 4px; border-radius: var(--learning-radius-card); transition: outline-color 200ms ease; }
+.aside { margin: 0; padding: var(--learning-space-2) var(--learning-space-3); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .live { animation: none; } .cued { transition: none; } }
+@media (max-width: 600px) { .sep { display: none; } .follow p > span:last-child { flex-basis: 100%; } }
+
+/* Stage: the narrated layout. Pinned at the top of the step so the visual stays with the text being read. */
+.stage { display: grid; gap: var(--learning-space-2); min-width: 0; padding: var(--learning-space-2); border: 1.5px solid var(--learning-ink); border-radius: var(--learning-radius-card); background: var(--learning-paper); box-shadow: 0 8px 24px rgb(0 0 0 / 0.10); color: var(--learning-ink); }
+.stage p { margin: 0; line-height: 1.5; }
+.stageFigure { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 34%); gap: var(--learning-space-3); align-items: stretch; margin: 0; }
+.stageFigure .trace { height: 100%; max-height: 160px; }
+.stagePanel { display: grid; align-content: center; gap: var(--learning-space-2); }
+.stagePhi { font-size: 22px; font-variant-numeric: tabular-nums; padding: 2px 6px; }
+.stage .reading { padding: var(--learning-space-2) var(--learning-space-3); }
+.stage .reading output { font-size: 26px; }
+.stage .explore summary { min-height: 36px; }
+.stage .follow { grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 4px 4px 4px var(--learning-space-3); border-width: 1px; }
+.stage .follow button { min-height: 36px; white-space: nowrap; }
+.explore summary { min-height: var(--learning-tap-target); display: flex; align-items: center; font-weight: 600; cursor: pointer; }
+.exploreBody { display: grid; gap: var(--learning-space-4); padding-top: var(--learning-space-2); max-height: 50vh; overflow: auto; }
+@media (max-width: 600px) {
+  .stage { gap: 6px; padding: 6px; }
+  .stageFigure { grid-template-columns: 1fr; gap: 6px; }
+  .stageFigure .trace { max-height: 104px; }
+  .stagePanel { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+  .stagePhi { font-size: 18px; padding: 0; }
+  .stage .reading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; padding: 2px 8px; border-left-width: 3px; }
+  .stage .reading > span:first-child { display: none; }
+  .stage .reading output { font-size: 18px; }
+  .stage .reading > span:last-child { font-size: 13px; line-height: 1.35; }
+  .stage .aside { display: none; }
+  .stage .follow { gap: 6px; padding: 2px 2px 2px 8px; }
+  .stage .follow p { font-size: 13px; line-height: 1.35; }
+  .stage .follow p { flex-wrap: nowrap; }
+  .stage .follow p > span:last-child { flex: 1 1 auto; flex-basis: auto; }
+  .stage .follow .live + strong, .stage .follow .sep { display: none; }
+  .stage .follow button { min-height: 32px; padding: 0 10px; font-size: 13px; }
+  .stage .explore summary { min-height: 32px; font-size: 14px; }
+}
+
