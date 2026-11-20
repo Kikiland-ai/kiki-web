@@ -352,6 +352,7 @@
 .readingNow { background: var(--learning-green-tint); text-decoration-color: color-mix(in srgb, var(--learning-green-ink) 35%, transparent); text-decoration-style: dotted; }
 .readingDone { background: color-mix(in srgb, var(--learning-green) 32%, var(--learning-green-tint)); text-decoration-color: var(--learning-green-ink); }
 .stageSlot { position: sticky; top: var(--learning-space-2); z-index: 2; scroll-margin-top: var(--learning-space-2); }
+.playerSlot { background: var(--learning-paper, #fff); border-radius: 12px; }
 .narratedNote { margin: 0; font: var(--learning-text-label); color: var(--learning-pencil); }
 @media (prefers-reduced-motion: reduce) { .readingNow, .readingDone { transition: none; } }
 
