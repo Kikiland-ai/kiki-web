@@ -1,3 +1,26 @@
+## Assisted extension folder setup — 21 November 2026
+
+Missing/outdated extension uses a puzzle piece, exclamation badge and desktop
+Install/Update label. Click it, then Prepare extension folder. Approve a new empty
+permanent folder or the existing Kiki folder; Kiki downloads/extracts the package.
+Use Copy extensions address to open Chrome's extension manager, then Load unpacked
+for first install or Reload for the existing extension. Return and press Reload
+Kiki. ZIP fallback remains for browsers without directory-picker support.
+Chrome still requires approval to load the extension; no unattended install.
+
+---
+
+## Lab extension status — 21 November 2026
+
+After sign-in, the icon just left of Lab mode replaces the language label. Green
+means up to date; red means not detected; yellow means an update or version check
+needs attention. Click for status and latest download/setup instructions. Existing
+unpacked installs update in their original folder, then Reload extension and Kiki;
+do not Load unpacked a second copy. Checks recur every five visible minutes and
+when returning to the tab. [Release details](../plans/lab-extension-status.md).
+
+---
+
 ## All-ten CAM local walkthrough — 18 October 2026
 
 Use the isolated `kiki-web-all-cam-2026-10-18/apps/web` checkout and `npm run dev -- --port 5187` for the explicitly labelled sample. The browser test server stops after tests; older preview addresses below refer to earlier checkouts. Connected trial services are unchanged.
