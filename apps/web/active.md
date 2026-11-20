@@ -1,3 +1,21 @@
+## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
+
+- Gemini calls rotate across `KIKI_GEMINI_API_KEYS` (kiki-backend's list of {key, quota_pool});
+  a failing pool cools down; voice tokens come from a healthy key. Key 0 (pool gareebi) is out of
+  prepayment credit; keys 1-3 work but `gemini-3.5-flash-lite` is intermittently 503/504 on them.
+- Local real run: `apps/api/scripts/tutor_dev_server.py --env-file <kiki-backend/.env>` (127.0.0.1:8090)
+  plus `VITE_TUTOR_DEV_API=http://127.0.0.1:8090 npm run dev` in apps/web.
+- Voice run 23:12-23:18 (`tests/tutor-voice-run.spec.ts`): the whole envelope-design question by
+  voice through the real screen; 7/7 spoken answers labelled correctly by Gemini; scorecard and
+  revision sheet; 150 s of KiKi audio. Artifacts: `Desktop/KiKi/tutor-voice-run/`.
+- Fixed from that run: provider outage now asks the student to repeat (no hint spent); summary no
+  longer strips quotes from the report; metric quotes come from the judging step; duplicate
+  submit_reply ignored.
+
+Checks: API 262 passed, 8 skipped; web 291 unit, typecheck, lint. Not pushed or deployed.
+
+---
+
 ## Tutor mode: hardening, envelope-design question, canvas pass - 20 November 2026 (evening)
 
 Branch `feat/tutor-voice`, local commits only (not pushed or deployed).
