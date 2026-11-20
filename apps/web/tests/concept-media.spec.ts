@@ -40,7 +40,7 @@ test('narration is a verified local copy, labelled, and freed when the lesson cl
   await page.getByRole('button',{name:'Listen',exact:true}).click();
   const player=page.getByRole('region',{name:/^Listen: /});
   await expect(player.getByText('Sample audio · machine voice, not reviewed',{exact:true})).toBeVisible();
-  await expect(player.getByText(/Words are not highlighted/)).toBeVisible();
+  await expect(player.getByText(/The sentence being spoken lights up/)).toBeVisible();
   await expect.poll(()=>page.evaluate(()=>document.querySelector('audio')?.currentTime??0)).toBeGreaterThan(0.2);
   const src=await page.locator('audio').getAttribute('src');
   expect(src).toMatch(/^blob:/);
