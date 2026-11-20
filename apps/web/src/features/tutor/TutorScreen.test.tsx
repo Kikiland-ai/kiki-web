@@ -107,8 +107,8 @@ it('explains when voice is unavailable and keeps text working', async () => {
 });
 
 it('renders the hard question with its figures', async () => {
-  open(undefined, 'ece-dsb-receive-drift');
+  open(undefined, 'ece-am-envelope-design');
   fireEvent.click(await screen.findByRole('button', { name: 'Start talking it through' }));
   await waitFor(() => expect(items().length).toBeGreaterThan(0));
-  expect(screen.getByRole('heading', { level: 1 }).textContent).toMatch(/DSB|drift|Receiv/i);
+  expect(screen.getByRole('heading', { level: 1 }).textContent).toMatch(/envelope detector/i);
 });

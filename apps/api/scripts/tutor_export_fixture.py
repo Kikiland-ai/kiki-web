@@ -123,7 +123,8 @@ def main(out: str):
             # exact per-path reports for the phase-error question; the hard question keeps
             # state-keyed reports and English only, to keep the fixture small
             "recordings": [record("ece-phase-error", "en", True), record("ece-phase-error", "or", True),
-                           record("ece-dsb-receive-drift", "en", False)]}
+                           record("ece-am-envelope-design", "en", False), record("ece-am-envelope-design", "or", False)]}
+    # ece-dsb-receive-drift is served by the real API only (kept out to hold the fixture near 2 MB)
     Path(out).write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     for r in data["recordings"]:
         print(r["questionId"], r["lang"], "states", len(r["views"]), "finished", len(r["reports"]),

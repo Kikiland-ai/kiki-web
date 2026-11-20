@@ -106,6 +106,9 @@ export interface TutorApi {
 
 /** Which tutor questions a concept page offers. */
 export const TUTOR_QUESTIONS: Record<string, { id: string; title: string; difficulty: string }[]> = {
+  'C-AM-03': [
+    { id: 'ece-am-envelope-design', title: 'Designing an AM envelope detector', difficulty: 'hard' },
+  ],
   'C-AM-08': [
     { id: 'ece-phase-error', title: 'Phase error in a coherent receiver', difficulty: 'medium' },
     { id: 'ece-dsb-receive-drift', title: 'Receiving DSB-SC: envelope, coherent detection and drift', difficulty: 'hard' },
