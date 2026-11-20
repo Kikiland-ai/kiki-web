@@ -103,6 +103,33 @@ def test_report_route_caches_summary_once_and_adds_titles():
     assert [i["id"] for i in rep["board"]] == rep["sheet"]
 
 
+def test_a_metric_quotes_the_step_that_judged_it_first():
+    """Live run, 20 Nov: 'Explaining in English' quoted the first power answer (a clarity score)."""
+    replies = [text("part-survives", "part of it", clarity=2), text("scaled-by-cos"), text("half"), text("vanishes"),
+               text("clear-explanation", "Because the local carrier is out of phase the output is m(t) cos phi", clarity=2)]
+    _, ev = run(replies)
+    art = next(m for m in analyse(PHASE, ev)["metrics"] if m["id"] == "articulation")
+    assert art["quotes"][0].startswith("Because the local carrier") and len(art["quotes"]) == len(set(art["quotes"]))
+
+
+def test_the_gemini_summary_never_changes_the_report():
+    """Regression (live run, 20 Nov): trimming quotes for the model removed them from the report."""
+    import copy
+
+    _, ev = run([text("part-survives", "part of it"), text("scaled-by-cos", "times cos phi")])
+    rep = analyse(PHASE, ev)
+    before = copy.deepcopy(rep)
+
+    class Models:
+        def generate_content(self, **kw):
+            return type("R", (), {"text": "Good work."})()
+
+    summ = GeminiSummarizer("k", "gemini-3.5-flash-lite")
+    summ.clients._clients[0] = type("C", (), {"models": Models()})()
+    assert summ.summarise(PHASE, rep, "en", {}) == "Good work."
+    assert rep == before and all("quotes" in m for m in rep["metrics"])
+
+
 def test_summary_failure_keeps_the_report():
     store = MemoryTutorStore()
     svc = TutorService(Q, FakeClassifier({}), store, FakeSummarizer(None))

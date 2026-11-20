@@ -174,6 +174,10 @@ class TutorService:
         else:
             labelled = self.classifier.classify(q, state, text or "", mode)
             reply, model_ms = labelled.reply, labelled.model_ms
+            if labelled.error:
+                # The model could not be reached. That says nothing about the student: ask them to say it
+                # again, and leave the session exactly where it was (no hint rung, no evidence, no events).
+                return self._retry_view(sid, q, state, model_ms, labelled.error)
         route = {"label": reply.label, "confidence": reply.confidence, "quote": reply.quote,
                  "termsUsed": reply.termsUsed}
         for attempt in range(3):
@@ -197,6 +201,25 @@ class TutorService:
                     raise TutorError(409, "Another reply changed this session. Reload to continue.") from None
                 state = fresh
         raise TutorError(409, "Another reply changed this session. Reload to continue.")
+
+    RETRY_LINE = {
+        "en": "Sorry, I couldn't process that just now. Could you say it again?",
+        "or": "କ୍ଷମା କରନ୍ତୁ, ମୁଁ ଏବେ ତାହା ବୁଝିପାରିଲି ନାହିଁ। ଆଉ ଥରେ କହିବେ କି?",
+    }
+
+    def _retry_view(self, sid, q, state, model_ms, error) -> dict:
+        from .session import Segment
+
+        node = q.stages[state.stageIndex].nodes[state.node]
+        logger.warning("Tutor turn not processed (%s); asked the student to repeat", error)
+        brief = Brief(
+            mode=q.speech.get(state.lang, "scripted"), lang=state.lang, goal=node.goal, expectsReply=True,
+            mustNotReveal=list(node.mustNotReveal),
+            segments=[Segment(kind="restate", node=state.node, say=f"{self.RETRY_LINE[state.lang]} {node.line.say.get(state.lang)}")],
+        )
+        view = self._view(sid, q, state, brief, [], {"label": "retry", "confidence": 0.0, "quote": None, "termsUsed": []}, model_ms)
+        view["retry"] = True
+        return view
 
     def speech(self, uid: str, sid: str, text: str) -> dict:
         """KiKi's spoken transcript for the last brief: log any forbidden phrase it said."""

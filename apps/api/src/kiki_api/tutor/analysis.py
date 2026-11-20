@@ -4,6 +4,7 @@ Deterministic first (every number traceable to events). A model summary may be a
 top, but it only rephrases this report; it never adds facts.
 """
 
+import copy
 import json
 import logging
 import time
@@ -68,9 +69,12 @@ def analyse(q: TutorQuestion, events: list[Event]) -> dict:
                 level = "ok" if len(terms) >= 3 or share >= 0.5 else "partial" if terms else "not_yet"
         else:
             level = combine([e.level for e in evs])
+        # quotes from the step that judged this metric first; incidental (clarity/terms) ones after
+        rank = {"branch": 0, "forced": 1, "clarity": 2, "terms": 3}
+        quoted = sorted((e for e in evs if e.quote), key=lambda e: (rank.get(e.basis or "", 9), e.seq))
         metric_rows.append({
             "id": m.id, "dim": m.dim, "level": level,
-            "quotes": [e.quote for e in evs if e.quote][:3],
+            "quotes": list(dict.fromkeys(e.quote for e in quoted))[:3],
             **({"termsUsed": terms} if m.dim == "words" else {}),
         })
     levels = {r["id"]: r["level"] for r in metric_rows}
@@ -147,7 +151,8 @@ class GeminiSummarizer:
     def summarise(self, q: TutorQuestion, report: dict, lang: str, concept_titles: dict[str, str]) -> str | None:
         from google.genai import types
 
-        slim = {k: report[k] for k in ("metrics", "stages", "revise", "strengthen", "next")}
+        # a deep copy: trimming what the model sees must never change the report the student gets
+        slim = copy.deepcopy({k: report[k] for k in ("metrics", "stages", "revise", "strengthen", "next")})
         for row in slim["metrics"]:
             row.pop("quotes", None)
         prompt = SUMMARY_PROMPT.format(

@@ -128,6 +128,34 @@ def test_runaway_sessions_stop_at_the_event_cap():
     assert long.value.status == 409
 
 
+# ---------------------------------------------------------------- provider outage
+
+
+class _DownClassifier:
+    def classify(self, q, state, text, mode="text"):
+        from kiki_api.tutor.classifier import Labelled
+        from kiki_api.tutor.session import Reply
+
+        return Labelled(Reply(mode=mode, text=text, label="unclear", confidence=0.0), 3000, "ClientError")
+
+
+def test_a_provider_outage_asks_to_repeat_and_changes_nothing():
+    store = MemoryTutorStore()
+    s = TutorService(Q, _DownClassifier(), store)
+    first = s.start("u", "ece-phase-error", "en", "outage-key-1")
+    sid, events_before = first["sessionId"], len(store.events("u", first["sessionId"]))
+    state_before = store.load("u", sid)[0]
+    view = s.turn("u", sid, "outage-turn-1", "part of it comes back", None, "voice")
+    assert view["retry"] is True and view["route"]["label"] == "retry"
+    assert view["node"] == "predict-60" and view["hintLevel"] == 0
+    assert view["brief"]["say"].startswith("Sorry, I couldn't process that just now.")
+    assert view["brief"]["segments"][0]["kind"] == "restate"
+    assert store.load("u", sid)[0] == state_before and len(store.events("u", sid)) == events_before
+    # the student can simply try again; the turn key was not burned
+    s.classifier = FakeClassifier({"part of it comes back": "part-survives"})
+    assert s.turn("u", sid, "outage-turn-1", "part of it comes back", None, "voice")["node"] == "why-cos"
+
+
 # ---------------------------------------------------------------- voice/turn race
 
 

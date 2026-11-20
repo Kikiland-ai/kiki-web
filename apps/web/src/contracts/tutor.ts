@@ -62,6 +62,7 @@ export const TurnView = z.object({
   board: z.array(BoardItem), revealed: z.array(z.string()),
   route: z.object({ label: z.string(), confidence: z.number(), quote: z.string().nullable().optional(), termsUsed: z.array(z.string()) }).nullable(),
   done: z.boolean(), timing: z.object({ modelMs: z.number() }),
+  retry: z.boolean().optional(),          // the model was unreachable: nothing moved, please say it again
 });
 export type TurnView = z.infer<typeof TurnView>;
 

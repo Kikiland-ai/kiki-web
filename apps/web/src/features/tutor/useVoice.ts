@@ -7,6 +7,14 @@ import { LiveVoice, type VoiceBrief } from './voice/live-client';
 export type VoiceStatus = 'off' | 'connecting' | 'kiki' | 'listening' | 'thinking' | 'reconnecting' | 'error';
 export const MAX_RESUMES = 3;
 
+/** Development builds only: a record of the voice run (KiKi's audio and both transcripts) for review. */
+type VoiceRecord = { audio: Int16Array[]; kiki: string[]; student: string[]; turns: number };
+function devRecord(): VoiceRecord | null {
+  if (!import.meta.env.DEV || typeof window === 'undefined') return null;
+  const w = window as unknown as { __kikiVoice?: VoiceRecord };
+  return (w.__kikiVoice ??= { audio: [], kiki: [], student: [], turns: 0 });
+}
+
 export function voiceBrief(v: TurnView): VoiceBrief {
   const b = v.brief;
   return { mode: b.mode, lang: b.lang, say: b.say, expectsReply: b.expectsReply,
@@ -47,6 +55,7 @@ export function useVoice(opts: {
   const resumes = useRef(0);
   const active = useRef(false);
   const resumeRef = useRef<() => Promise<void>>(async () => {});   // set below; Live callbacks call through it
+  const lastReply = useRef<{ key: string; at: number; brief: VoiceBrief } | null>(null);
   const optsRef = useRef(opts); optsRef.current = opts;
 
   const stop = useCallback(async (message = '') => {
@@ -67,18 +76,28 @@ export function useVoice(opts: {
         if (resuming) { setStatus('listening'); return; }     // a resumed session already has its context
         client.speak(voiceBrief(optsRef.current.view!)); setStatus('kiki');
       },
-      audio: (pcm) => { player.current?.play(pcm); setStatus('kiki'); },
+      audio: (pcm) => { devRecord()?.audio.push(pcm); player.current?.play(pcm); setStatus('kiki'); },
       kikiText: (t) => optsRef.current.onProgress(t.length),
       studentText: (t) => setCaption(t),
       reply: async (heard) => {
+        // Live occasionally calls submit_reply twice for one utterance: answer the repeat from the last brief
+        const key = heard.trim().toLowerCase();
+        if (lastReply.current && lastReply.current.key === key && Date.now() - lastReply.current.at < 6000) {
+          return lastReply.current.brief;
+        }
+        const rec = devRecord();
+        if (rec) { rec.student.push(heard); rec.turns += 1; }
         setStatus('thinking'); setCaption('');
         const next = await optsRef.current.onTurn(heard);
         const lang = optsRef.current.view?.lang ?? 'en';
         if (!next) return { mode: 'scripted', lang, say: lang === 'or' ? 'କ୍ଷମା କରନ୍ତୁ, ମୁଁ ଠିକ ଶୁଣିପାରିଲି ନାହିଁ। ଆଉ ଥରେ କହିବେ କି?' : 'Sorry, I could not hear that properly. Could you say it again?', expectsReply: true };
         if (next.done) window.setTimeout(() => void stop(), 12000);
-        return voiceBrief(next);
+        const brief = voiceBrief(next);
+        lastReply.current = { key, at: Date.now(), brief };
+        return brief;
       },
       turnDone: (said) => {
+        if (said) devRecord()?.kiki.push(said);
         optsRef.current.onProgress(Number.MAX_SAFE_INTEGER, true);
         const v = optsRef.current.view;
         if (said && v && !v.done) void api.speech(v.sessionId, said).catch(() => undefined);
