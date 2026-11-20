@@ -49,8 +49,7 @@ class Onboarding(WireModel):
 
     @model_validator(mode="after")
     def consistent_steps(self):
-        if self.step >= 2 and self.fluencySelfRatings is None:
-            raise ValueError("Confidence preferences are required for this step")
+        # Confidence ratings are optional; onboarding no longer asks for them.
         if self.step == 3 and self.easyLanguageAnswer is None:
             raise ValueError("Language preference is required for confirmation")
         if self.completedAt is not None and self.step != 3:

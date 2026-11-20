@@ -16,8 +16,9 @@ export const ProfileSchema = z.object({
   courseIds: z.array(z.string()),
 }).superRefine((profile, context) => {
   const onboarding = profile.onboarding;
-  if (onboarding.completedAt && (onboarding.step !== 3 || !onboarding.fluencySelfRatings || !onboarding.easyLanguageAnswer)) {
-    context.addIssue({ code: 'custom', message: 'Completed onboarding requires confirmed preferences and ratings.', path: ['onboarding'] });
+  // Confidence ratings are optional: onboarding asks for the starting balance only; Profile can add ratings later.
+  if (onboarding.completedAt && (onboarding.step !== 3 || !onboarding.easyLanguageAnswer)) {
+    context.addIssue({ code: 'custom', message: 'Completed onboarding requires a confirmed language preference.', path: ['onboarding'] });
   }
   if (onboarding.fluencySelfRatings && onboarding.fluencySelfRatings.support.language !== profile.supportLanguage) {
     context.addIssue({ code: 'custom', message: 'Rating language must match the learning language.', path: ['onboarding', 'fluencySelfRatings'] });
@@ -35,5 +36,5 @@ export function suggestedDial(answer: 'regional' | 'mixed' | 'english'): DialLev
 }
 
 export function onboardingComplete(profile: Profile): boolean {
-  return profile.onboarding.step === 3 && profile.onboarding.completedAt !== null && profile.onboarding.fluencySelfRatings !== null && profile.onboarding.easyLanguageAnswer !== null;
+  return profile.onboarding.step === 3 && profile.onboarding.completedAt !== null && profile.onboarding.easyLanguageAnswer !== null;
 }
