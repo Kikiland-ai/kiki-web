@@ -152,7 +152,8 @@
    "kind": "figure",
    "template": "block",
    "caption": {
-    "en": "Coherent DSB-SC receiver"
+    "en": "Coherent DSB-SC receiver",
+    "or": "Coherent DSB-SC Receiver"
    },
    "params": {
     "blocks": [
@@ -228,7 +229,8 @@
    "kind": "figure",
    "template": "waveform",
    "caption": {
-    "en": "Recovered message: aligned vs 60° phase error"
+    "en": "Recovered message: aligned vs 60° phase error",
+    "or": "Recovered message: aligned ବନାମ 60° Phase error"
    },
    "params": {
     "series": [
@@ -277,7 +279,8 @@
    "kind": "equation",
    "tex": "v(t)=m(t)\\cos\\omega_c t\\cdot\\cos(\\omega_c t+\\varphi)",
    "label": {
-    "en": "After the product"
+    "en": "After the product",
+    "or": "ଗୁଣନ ପରେ"
    }
   },
   "identity": {
@@ -285,7 +288,8 @@
    "kind": "step",
    "tex": "=\\tfrac12\\,m(t)\\left[\\cos\\varphi+\\cos(2\\omega_c t+\\varphi)\\right]",
    "note": {
-    "en": "cos A cos B = ½[cos(A−B) + cos(A+B)]"
+    "en": "cos A cos B = ½[cos(A−B) + cos(A+B)]",
+    "or": "cos A cos B = ½[cos(A−B) + cos(A+B)]"
    }
   },
   "lpf-out": {
@@ -293,7 +297,8 @@
    "kind": "step",
    "tex": "\\xrightarrow{\\text{LPF}}\\ \\tfrac12\\,m(t)\\cos\\varphi",
    "note": {
-    "en": "The 2ωc term is filtered out"
+    "en": "The 2ωc term is filtered out",
+    "or": "2ωc ଅଂଶଟି Filter ରେ ବାଦ ପଡ଼େ"
    }
   },
   "gain-out": {
@@ -305,7 +310,8 @@
    "id": "units",
    "kind": "note",
    "text": {
-    "en": "Angles: 60° = π/3 rad and 90° = π/2 rad (a quarter cycle)."
+    "en": "Angles: 60° = π/3 rad and 90° = π/2 rad (a quarter cycle).",
+    "or": "Angle: 60° = π/3 rad ଏବଂ 90° = π/2 rad (ଏକ ଚତୁର୍ଥାଂଶ Cycle)।"
    }
   },
   "cos60": {
@@ -318,7 +324,8 @@
    "kind": "figure",
    "template": "waveform",
    "caption": {
-    "en": "Recovered message at 0°, 60° and 90°"
+    "en": "Recovered message at 0°, 60° and 90°",
+    "or": "0°, 60° ଓ 90° ରେ Recovered message"
    },
    "params": {
     "series": [
@@ -380,7 +387,8 @@
    "kind": "step",
    "tex": "\\cos 90^\\circ=0\\ \\Rightarrow\\ 0",
    "note": {
-    "en": "Ideal output vanishes; a real filter can leave a little ripple"
+    "en": "Ideal output vanishes; a real filter can leave a little ripple",
+    "or": "Ideal output ଶୂନ ହୁଏ; ବାସ୍ତବ Filter ଟିକେ Ripple ରଖିପାରେ"
    }
   },
   "result": {
@@ -388,7 +396,8 @@
    "kind": "result",
    "tex": "y(t)=m(t)\\cos\\varphi:\\quad \\tfrac12\\ \\text{at}\\ 60^\\circ,\\quad 0\\ \\text{at}\\ 90^\\circ",
    "text": {
-    "en": "Phase error scales the recovered message by cos φ."
+    "en": "Phase error scales the recovered message by cos φ.",
+    "or": "Phase error, Recovered message କୁ cos φ ଗୁଣରେ ଛୋଟ କରେ।"
    }
   },
   "term-T-AM-08-1": {
@@ -429,14 +438,16 @@
   {
    "id": "predict",
    "title": {
-    "en": "Predict"
+    "en": "Predict",
+    "or": "ଅନୁମାନ"
    },
    "conceptIds": [
     "C-AM-08"
    ],
    "intro": {
     "say": {
-     "en": "Before any maths, let's predict."
+     "en": "Before any maths, let's predict.",
+     "or": "ହିସାବ କରିବା ଆଗରୁ, ଆସନ୍ତୁ ଅନୁମାନ କରିବା।"
     }
    },
    "start": "predict-60",
@@ -602,7 +613,8 @@
   {
    "id": "mechanism",
    "title": {
-    "en": "Mechanism"
+    "en": "Mechanism",
+    "or": "କାରଣ"
    },
    "conceptIds": [
     "C-AM-06",
@@ -610,7 +622,8 @@
    ],
    "intro": {
     "say": {
-     "en": "Now let's see why. Here is your receiver."
+     "en": "Now let's see why. Here is your receiver.",
+     "or": "ଏବେ ଦେଖିବା କାହିଁକି। ଏହା ହେଉଛି ଆପଣଙ୍କ Receiver।"
     },
     "reveal": [
      {
@@ -789,7 +802,8 @@
   {
    "id": "calculate",
    "title": {
-    "en": "Calculate"
+    "en": "Calculate",
+    "or": "ହିସାବ"
    },
    "conceptIds": [
     "C-AM-08",
@@ -797,7 +811,8 @@
    ],
    "intro": {
     "say": {
-     "en": "Let's put a number on it."
+     "en": "Let's put a number on it.",
+     "or": "ଏବେ ଏହାକୁ ଗୋଟିଏ ସଂଖ୍ୟାରେ କହିବା।"
     }
    },
    "start": "calc-60",
@@ -940,14 +955,16 @@
   {
    "id": "extend",
    "title": {
-    "en": "Extend to 90°"
+    "en": "Extend to 90°",
+    "or": "90° ପର୍ଯ୍ୟନ୍ତ"
    },
    "conceptIds": [
     "C-AM-08"
    ],
    "intro": {
     "say": {
-     "en": "One more angle."
+     "en": "One more angle.",
+     "or": "ଆଉ ଗୋଟିଏ Angle ଦେଖିବା।"
     }
    },
    "start": "predict-90",
@@ -1100,14 +1117,16 @@
   {
    "id": "articulate",
    "title": {
-    "en": "Say it in English"
+    "en": "Say it in English",
+    "or": "ଇଂରାଜୀରେ କହନ୍ତୁ"
    },
    "conceptIds": [
     "C-AM-08"
    ],
    "intro": {
     "say": {
-     "en": "These are the words your lab partner will use."
+     "en": "These are the words your lab partner will use.",
+     "or": "ଆପଣଙ୍କ Lab partner ଏହି Term ଗୁଡ଼ିକ ବ୍ୟବହାର କରିବେ।"
     },
     "reveal": [
      {
@@ -1247,14 +1266,16 @@
    "kind": "lab",
    "id": "CP-DSB-11",
    "why": {
-    "en": "Try the 90° receiver phase fault in the lab."
+    "en": "Try the 90° receiver phase fault in the lab.",
+    "or": "Lab ରେ 90° Receiver phase fault ଚେଷ୍ଟା କରନ୍ତୁ।"
    }
   },
   {
    "kind": "concept",
    "id": "C-AM-06",
    "why": {
-    "en": "Revisit coherent demodulation and recovery gain."
+    "en": "Revisit coherent demodulation and recovery gain.",
+    "or": "Coherent demodulation ଓ Recovery gain ପୁଣି ଦେଖନ୍ତୁ।"
    },
    "whenMetric": "conceptual-understanding",
    "whenLevel": "not_yet"
@@ -1263,7 +1284,8 @@
    "kind": "concept",
    "id": "C-AM-01",
    "why": {
-    "en": "Revisit angles and phase shifts in radians."
+    "en": "Revisit angles and phase shifts in radians.",
+    "or": "Radian ରେ Angle ଓ Phase shift ପୁଣି ଦେଖନ୍ତୁ।"
    },
    "whenMisconception": "angle-unit-mixup"
   }

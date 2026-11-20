@@ -24,7 +24,7 @@ def pct(values, p):
 
 def run(model, q, replies, runs, workers, thinking):
     key = os.environ.get("KIKI_GEMINI_API_KEY") or os.environ["GEMINI_API_KEY"]
-    clf = GeminiClassifier(key, model, thinking=thinking, retries_on_429=4)
+    clf = GeminiClassifier(key, model, thinking=thinking, retries_on_429=4, retry_sleep_s=5)
 
     def one(r):
         state = state_at(q, r["node"], "or" if r["lang"] == "or" else "en")

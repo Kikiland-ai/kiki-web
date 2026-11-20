@@ -10,7 +10,7 @@ import { useVoice } from './useVoice';
 import { Whiteboard } from './Whiteboard';
 import styles from './Tutor.module.css';
 
-const VOICE_LABEL = { off: '', connecting: 'Connecting voice…', kiki: 'KiKi is speaking', listening: 'Listening — answer out loud', thinking: 'KiKi is thinking…', error: '' } as const;
+const VOICE_LABEL = { off: '', connecting: 'Connecting voice…', kiki: 'KiKi is speaking', listening: 'Listening — answer out loud', thinking: 'KiKi is thinking…', reconnecting: 'Reconnecting voice…', error: '' } as const;
 
 export function TutorScreen() {
   const { conceptId = '', questionId = '' } = useParams();

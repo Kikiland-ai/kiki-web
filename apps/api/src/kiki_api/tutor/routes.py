@@ -48,6 +48,17 @@ def register_tutor_routes(app, identity, backend, call):
 
         return call(guarded)
 
+    @app.get("/tutor/health")
+    def health():
+        """Unauthenticated, secret-free: is tutor mode on, and if not, why."""
+        from .wiring import STATUS
+
+        try:
+            backend()
+        except BoundaryError:
+            return {"enabled": False, "reason": "backend unavailable"}
+        return dict(STATUS)
+
     @app.get("/tutor/questions/{question_id}")
     def question(question_id: str, user: user_dep):
         return run(lambda: service().question_view(question_id))

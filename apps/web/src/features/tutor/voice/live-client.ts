@@ -16,6 +16,7 @@ export interface LiveEvents {
   turnDone(kikiSaid: string): void
   interrupted(): void
   closed(reason: string, recoverable: boolean): void
+  goAway?(): void                              // the server will close soon: reconnect with the handle
 }
 
 /** The subset of Live server messages KiKi reads (verified against the service). */
@@ -108,6 +109,7 @@ export class LiveVoice {
     let m: ServerMessage;
     try { m = JSON.parse(text) as ServerMessage; } catch { return; }
     if (m.setupComplete) this.events.ready();
+    if (m.goAway) this.events.goAway?.();
     if (m.sessionResumptionUpdate?.resumable && m.sessionResumptionUpdate.newHandle) this.resumeHandle = m.sessionResumptionUpdate.newHandle;
     const sc = m.serverContent;
     if (sc) {

@@ -225,22 +225,9 @@ def firebase_services(settings: Settings) -> Services:
 
         executions = LabExecutions(preparations, LabUpstream(settings))
         preparations.execution_status = executions.status
-    tutor = None
-    if settings.tutor_enabled and settings.gemini_api_key:
-        from .tutor.analysis import GeminiSummarizer
-        from .tutor.classifier import GeminiClassifier
-        from .tutor.service import TutorService, load_questions
-        from .tutor.store import FirestoreTutorStore
-        from .tutor.voice import VoiceTokens
+    from .tutor.wiring import build_tutor
 
-        key = settings.gemini_api_key.get_secret_value()
-        tutor = TutorService(
-            load_questions(),
-            GeminiClassifier(key, settings.tutor_classifier_model),
-            FirestoreTutorStore(client),
-            GeminiSummarizer(key, settings.tutor_classifier_model),
-            voice=VoiceTokens(key, settings.tutor_live_model),
-        )
+    tutor = build_tutor(settings, client)
     return Services(
         FirebaseVerifier(app),
         profiles,

@@ -40,8 +40,14 @@ def load_questions(directory: Path = QUESTIONS_DIR) -> dict[str, TutorQuestion]:
     return out
 
 
-def session_id(uid: str, key: str) -> str:
-    return "ts-" + hashlib.sha256(f"{uid}:{key}".encode()).hexdigest()[:24]
+MAX_EVENTS = 3000          # a session is a few hundred events; beyond this something is looping
+MAX_VOICE_TOKENS = 8       # per session: a reconnect or two, not a token farm
+
+
+def session_id(uid: str, qid: str, lang: str, key: str) -> str:
+    """Derived from the learner, question, language and idempotency key: a retried start returns
+    the same session, and a reused key can never cross into another question's session."""
+    return "ts-" + hashlib.sha256(f"{uid}:{qid}:{lang}:{key}".encode()).hexdigest()[:24]
 
 
 def _norm(text: str) -> str:
@@ -128,7 +134,7 @@ class TutorService:
 
     def start(self, uid: str, qid: str, lang: str, key: str) -> dict:
         q = self._question(qid)
-        sid = session_id(uid, key)
+        sid = session_id(uid, qid, lang, key)
         try:
             first: Step = start(q, lang)
         except EngineError as exc:
@@ -156,6 +162,8 @@ class TutorService:
         q = self._question(state.questionId)
         if state.status != "active":
             raise TutorError(409, "This session is complete.")
+        if state.seq >= MAX_EVENTS:
+            raise TutorError(409, "This session has run very long. Start it again to continue.")
         node = q.stages[state.stageIndex].nodes[state.node]
         model_ms, route = 0, None
         if chip is not None:
@@ -168,15 +176,27 @@ class TutorService:
             reply, model_ms = labelled.reply, labelled.model_ms
         route = {"label": reply.label, "confidence": reply.confidence, "quote": reply.quote,
                  "termsUsed": reply.termsUsed}
-        try:
-            nxt = step(q, state, reply)
-        except EngineError as exc:
-            raise TutorError(409, str(exc)) from None
-        view = self._view(sid, q, nxt.state, nxt.brief, nxt.revealed, route, model_ms)
-        try:
-            return self.store.commit(uid, sid, state.version, nxt.state, nxt.events, key, view)
-        except Conflict:
-            raise TutorError(409, "Another reply changed this session. Reload to continue.") from None
+        for attempt in range(3):
+            try:
+                nxt = step(q, state, reply)
+            except EngineError as exc:
+                raise TutorError(409, str(exc)) from None
+            view = self._view(sid, q, nxt.state, nxt.brief, nxt.revealed, route, model_ms)
+            try:
+                return self.store.commit(uid, sid, state.version, nxt.state, nxt.events, key, view)
+            except Conflict:
+                # A speech-leak log or a voice token bumped the version. If the graph position is
+                # unchanged, the same label applies: re-run the pure engine on the fresh state.
+                fresh, _ = self._load(uid, sid)
+                same_place = (fresh.status, fresh.stageIndex, fresh.node, fresh.hintLevel, fresh.turn) == \
+                    (state.status, state.stageIndex, state.node, state.hintLevel, state.turn)
+                replay = self.store.turn_response(uid, sid, key)
+                if replay is not None:
+                    return replay
+                if not same_place or attempt == 2:
+                    raise TutorError(409, "Another reply changed this session. Reload to continue.") from None
+                state = fresh
+        raise TutorError(409, "Another reply changed this session. Reload to continue.")
 
     def speech(self, uid: str, sid: str, text: str) -> dict:
         """KiKi's spoken transcript for the last brief: log any forbidden phrase it said."""
@@ -187,12 +207,16 @@ class TutorService:
         node = q.stages[state.stageIndex].nodes[state.node]
         said = _norm(text)
         leaks = [p for p in node.mustNotReveal if _norm(p) in said]
-        if leaks:
+        # log each phrase once per turn, and never past the event cap (the endpoint can be called often)
+        fresh = [p for p in leaks if f"{state.turn}:{state.node}:{p}" not in state.leakKeys]
+        if fresh and state.seq + len(fresh) <= MAX_EVENTS:
             from .session import Event
 
             events = [Event(seq=state.seq + i, type="speech_leak", stage=q.stages[state.stageIndex].id,
-                            node=state.node, turn=state.turn, phrase=p) for i, p in enumerate(leaks)]
-            new = state.model_copy(update={"seq": state.seq + len(leaks), "version": state.version + 1})
+                            node=state.node, turn=state.turn, phrase=p) for i, p in enumerate(fresh)]
+            keys = (state.leakKeys + [f"{state.turn}:{state.node}:{p}" for p in fresh])[-50:]
+            new = state.model_copy(update={"seq": state.seq + len(fresh), "version": state.version + 1,
+                                           "leakKeys": keys})
             try:
                 self.store.append(uid, sid, state.version, new, events)
             except Conflict:
@@ -205,6 +229,14 @@ class TutorService:
             raise TutorError(409, "This session is complete.")
         if self.voice is None:
             raise TutorError(503, "Voice is not available. Continue by typing.")
+        if state.voiceTokens >= MAX_VOICE_TOKENS:
+            raise TutorError(429, "Voice has reconnected too many times in this session. Continue by typing, or start again.")
+        try:
+            self.store.append(uid, sid, state.version,
+                              state.model_copy(update={"voiceTokens": state.voiceTokens + 1,
+                                                       "version": state.version + 1}), [])
+        except Conflict:
+            raise TutorError(409, "This session just changed. Try voice again.") from None
         try:
             return self.voice.mint()
         except Exception as exc:  # noqa: BLE001 - text mode keeps working

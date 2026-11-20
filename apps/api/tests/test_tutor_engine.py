@@ -194,7 +194,14 @@ def test_odia_session_uses_odia_lines_where_present():
     probe = [seg for seg in s.brief.segments if seg.kind == "probe"][0]
     assert probe.say == q.stages[0].nodes["predict-60"].line.say.or_
     intro = [seg for seg in s.brief.segments if seg.kind == "intro"][0]
-    assert intro.say == q.stages[0].intro.say.en            # no Odia rendition yet: falls back
+    assert intro.say == q.stages[0].intro.say.or_
+
+
+def test_a_line_without_odia_falls_back_to_english():
+    from kiki_api.tutor.content import LText
+
+    assert LText(en="Only English").get("or") == "Only English"
+    assert LText.model_validate({"en": "E", "or": "ଓ"}).get("or") == "ଓ"
 
 
 def test_state_is_not_mutated():

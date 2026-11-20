@@ -78,11 +78,12 @@ def parse(raw: str | None, labels: list[str], text: str, mode: str) -> Reply:
 class GeminiClassifier:
     def __init__(
         self, api_key: str, model: str, timeout_ms: int = 12000, thinking: str | None = "minimal",
-        retries_on_429: int = 0,
+        retries_on_429: int = 0, retry_sleep_s: float = 1.5,
     ):
         from google import genai
 
         self.model, self.thinking, self.retries = model, thinking, retries_on_429
+        self.retry_sleep_s = retry_sleep_s
         self.client = genai.Client(api_key=api_key, http_options={"timeout": timeout_ms})
 
     def _config(self, labels):
@@ -113,7 +114,7 @@ class GeminiClassifier:
                 except Exception as exc:  # noqa: BLE001
                     if getattr(exc, "code", None) != 429 or attempt == self.retries:
                         raise
-                    time.sleep(min(30, 5 * (attempt + 1)))
+                    time.sleep(min(30, self.retry_sleep_s * (attempt + 1)))
             ms = int((time.perf_counter() - t0) * 1000)
             return Labelled(parse(res.text, labels, text, mode), ms)
         except Exception as exc:  # noqa: BLE001 - any provider failure degrades to unclear

@@ -53,6 +53,16 @@ class Settings(BaseSettings):
             raise ValueError("Lab proxy secret must contain 32–256 characters")
         return self
 
+    @model_validator(mode="after")
+    def tutor_needs_key(self):
+        if self.tutor_enabled and not (self.gemini_api_key and self.gemini_api_key.get_secret_value().strip()):
+            raise ValueError("KIKI_TUTOR_ENABLED needs KIKI_GEMINI_API_KEY (server-side, from Secret Manager)")
+        for name in ("tutor_classifier_model", "tutor_live_model"):
+            value = getattr(self, name)
+            if not value or not all(c.isalnum() or c in "-." for c in value):
+                raise ValueError(f"{name} must be a plain Gemini model id")
+        return self
+
     @field_validator("storage_bucket", "media_bucket")
     @classmethod
     def valid_bucket(cls, value):

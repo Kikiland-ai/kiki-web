@@ -45,6 +45,8 @@ class TutorState(Model):
     board: list[str]                     # revealed item ids, in reveal order
     seq: int = Field(ge=0)               # next event sequence number
     version: int = Field(ge=0)           # bumps on every write (optimistic concurrency)
+    voiceTokens: int = Field(default=0, ge=0)          # minted for this session (capped)
+    leakKeys: list[str] = Field(default_factory=list)  # speech leaks already logged this turn
 
 
 class Reply(Model):
