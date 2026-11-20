@@ -9,13 +9,8 @@ test('generic setup saves language and field; Aditya’s ECE example follows exp
   await expect(page.getByLabel('Field of study / branch', { exact: true })).toHaveValue('Electronics and Communication Engineering (ECE)');
   await page.getByLabel('Learning language', { exact: true }).fill('Hindi');
   await page.getByLabel('Field of study / branch', { exact: true }).fill('Computer Science and Engineering (CSE)');
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await expect(page.getByRole('slider', { name: /^Hindi confidence/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Save and continue' }).click();
   await expect(page.getByText('Hindi explanation + English terms', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await expect(page.getByText('Computer Science and Engineering (CSE)', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
   await expect(page.getByText(/Lessons for this combination are not available/)).toBeVisible();
   await page.reload();

@@ -2,8 +2,10 @@ import { test, expect, type Page } from '@playwright/test';
 import bank from '../src/fixtures/assessment-bank.json' with { type: 'json' };
 async function setup(page: Page) {
   await page.goto('/auth'); await page.getByRole('button',{name:'Open sample student'}).click();
-  for(let i=0;i<3;i++) await page.getByRole('button',{name:'Save and continue'}).click();
-  await page.getByRole('button',{name:'Go to my home'}).click();
+  await page.getByRole('button',{name:'Start learning'}).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('link',{name:'Add your subject',exact:true}).click(); await page.getByLabel('Semester',{exact:true}).selectOption('5');
   await page.getByRole('button',{name:'Add subject',exact:true}).click(); await page.goto('/practice');
   await expect(page.getByRole('heading',{name:'Check what you understand.'})).toBeVisible();
@@ -38,8 +40,9 @@ test('drafts survive language change, refresh, confirmed leave and resume; incom
 test('concept failure/revision/retry passes at 3/5 and preserves both attempts', async ({page})=>{
   await setup(page); await page.getByRole('link',{name:'Start concept check',exact:true}).first().click(); await finish(page,'AS-AM-01',2);
   await expect(page.getByRole('heading',{name:'Revisit, then try again.',exact:true})).toBeVisible();
-  await expect(page.getByRole('link',{name:'Retry this check',exact:true})).toHaveCount(0);
-  await page.getByRole('checkbox',{name:'I reviewed the feedback or revisited my notes.'}).check(); await page.getByRole('link',{name:'Retry this check',exact:true}).click();
+  await expect(page.getByRole('link',{name:'Revisit the lesson',exact:true})).toBeVisible();
+  await expect(page.getByRole('checkbox')).toHaveCount(0);
+  await page.getByRole('link',{name:'Retry this check',exact:true}).click();
   await finish(page,'AS-AM-01',3); await expect(page.getByRole('heading',{name:'Concept check passed.',exact:true})).toBeVisible();
   await page.getByRole('link',{name:'All concept checks',exact:true}).click(); await expect(page.getByText('Attempt 1 · 2/5 correct',{exact:true})).toBeVisible(); await expect(page.getByText('Attempt 2 · 3/5 correct',{exact:true})).toBeVisible();
   await page.getByRole('link',{name:'Home',exact:true}).click(); await expect(page.getByText('1/10 checks passed',{exact:true})).toBeVisible(); await expect(page.getByText('Not assessed',{exact:true})).toHaveCount(3);
@@ -48,7 +51,7 @@ test('chapter prerequisites are explicit and chapter retry passes only at 8/10',
   await setup(page); await expect(page.getByRole('button',{name:'Chapter test locked'})).toBeDisabled();
   await page.getByRole('button',{name:'Load chapter-ready preview'}).click(); await page.getByRole('link',{name:'Start chapter test',exact:true}).click(); await finish(page,'AS-AM-CHAPTER',7);
   await expect(page.getByRole('heading',{name:'Revisit, then try again.',exact:true})).toBeVisible();
-  await page.getByRole('checkbox',{name:'I reviewed the feedback or revisited my notes.'}).check(); await page.getByRole('link',{name:'Retry this check',exact:true}).click(); await finish(page,'AS-AM-CHAPTER',8);
+  await page.getByRole('link',{name:'Retry this check',exact:true}).click(); await finish(page,'AS-AM-CHAPTER',8);
   await expect(page.getByRole('heading',{name:'Chapter theory check passed.',exact:true})).toBeVisible();
 });
 for(const width of [320,360,390,430,768,1024,1280,1440]) {

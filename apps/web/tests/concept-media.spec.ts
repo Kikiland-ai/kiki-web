@@ -3,8 +3,10 @@ import { test, expect, type Page } from '@playwright/test';
 // 17 Oct: C-AM-08 media from the published manifest (sample mode serves the same package).
 async function openC08(page: Page, step = 0) {
   await page.goto('/auth'); await page.getByRole('button',{name:'Open sample student'}).click();
-  for(let i=0;i<3;i++) await page.getByRole('button',{name:'Save and continue'}).click();
-  await page.getByRole('button',{name:'Go to my home'}).click();
+  await page.getByRole('button',{name:'Start learning'}).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('link',{name:'Add your subject',exact:true}).click();
   await page.getByLabel('Semester',{exact:true}).selectOption('5'); await page.getByRole('button',{name:'Add subject',exact:true}).click();
   await page.getByRole('link',{name:'Learn',exact:true}).click();
@@ -40,7 +42,7 @@ test('narration is a verified local copy, labelled, and freed when the lesson cl
   await page.getByRole('button',{name:'Listen',exact:true}).click();
   const player=page.getByRole('region',{name:/^Listen: /});
   await expect(player.getByText('Sample audio · machine voice, not reviewed',{exact:true})).toBeVisible();
-  await expect(player.getByText(/Words are not highlighted/)).toBeVisible();
+  await expect(player.getByText(/The sentence being spoken lights up/)).toBeVisible();
   await expect.poll(()=>page.evaluate(()=>document.querySelector('audio')?.currentTime??0)).toBeGreaterThan(0.2);
   const src=await page.locator('audio').getAttribute('src');
   expect(src).toMatch(/^blob:/);

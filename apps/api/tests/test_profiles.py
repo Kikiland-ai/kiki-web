@@ -169,6 +169,24 @@ def test_step_resume_completion_return_and_protected_fields_are_preserved(harnes
     )
 
 
+def test_one_step_onboarding_completes_without_confidence_ratings(harness):
+    client, _, _ = harness
+    bootstrap(client)
+    body = preferences(complete=True)
+    body["onboarding"]["fluencySelfRatings"] = None
+    response = client.patch("/learners/me/profile", headers=headers(), json=body)
+    assert response.status_code == 200, response.text
+    saved = response.json()["profile"]["onboarding"]
+    assert saved["completedAt"] is not None
+    assert saved["fluencySelfRatings"] is None
+    missing_answer = preferences(complete=True)
+    missing_answer["onboarding"]["easyLanguageAnswer"] = None
+    assert (
+        client.patch("/learners/me/profile", headers=headers(), json=missing_answer).status_code
+        == 422
+    )
+
+
 @pytest.mark.parametrize(
     "change",
     [

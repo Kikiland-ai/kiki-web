@@ -360,3 +360,53 @@
 .talk { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px; min-width:0; }
 .talk > a { white-space:normal; max-width:100%; text-align:left; }
 .talkLabel { flex-basis:100%; font:var(--learning-text-label); color:var(--learning-pencil); }
+
+/* ── Journey pass (21 Nov): card above the fold, Next always in reach ── */
+/* Back/Next stay pinned to the bottom of the viewport while a long card scrolls */
+.actions { position:sticky; bottom:0; z-index:6; margin-inline:-4px; padding:12px 4px; background:var(--learning-paper); border-top:1.5px solid var(--learning-ink); box-shadow:0 -10px 18px -14px rgb(0 0 0 / .35); }
+.placard { scroll-margin-top:16px; }
+/* A framed mid-chapter sample from the landing page */
+.sampleFrame { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px; padding:14px 16px; border:1.5px solid var(--learning-ink); border-left:5px solid var(--learning-blue); border-radius:var(--learning-radius-card); background:var(--learning-paper); }
+.sampleFrame p { margin:0; max-width:60ch; font:var(--learning-text-label); line-height:1.7; }
+/* Under 1200px the steps are one row of four */
+@media (max-width:1199px) {
+  .steps { grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+  .marginLabel { display:none; }
+}
+/* Phones: slimmer header, steps as numbered pills, bar clears the fixed tab bar */
+@media (max-width:599px) {
+  .screen { gap:16px; }
+  .header { gap:6px; padding-bottom:14px; }
+  .title { font-size:26px; line-height:1.2; }
+  .titleOr { font-size:15px; line-height:1.6; }
+  .support { padding:8px 12px; border-top-width:3px; }
+  .supportLabel { display:none; }
+  .step { justify-content:center; padding:6px; min-height:44px; }
+  .stepLabel { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .actions { bottom:calc(68px + env(safe-area-inset-bottom)); }
+  .placard { scroll-margin-top:12px; }
+}
+/* Slimmer lesson header at every width: one-line title, compact dial, less air */
+.screen { gap:16px; }
+.header { padding-bottom:14px; gap:6px; }
+.title { font-size:clamp(26px,2.4vw,34px); line-height:1.2; max-width:none; }
+.titleOr { font-size:15px; line-height:1.6; }
+.support { padding:8px 14px; }
+.supportLabel { display:none; }
+@media (max-width:599px) { .title { font-size:24px; } }
+/* Phones: a one-line bar (Back · Next) and a lighter header so the card shows above the bar */
+@media (max-width:599px) {
+  .nextTitle { display:none; }
+  .actions { padding:8px 4px; }
+  .actions > * { min-height:48px; }
+  .badges { gap:6px; }
+  .badges > * { font-size:11px; padding:2px 8px; min-height:0; }
+  .support [class*='ends'] { display:none; }
+}
+/* Phones keep the four numbered pills (one row) so a student can jump straight to a step */
+/* Phones: no empty status row above the card; a lighter sample frame */
+@media (max-width:599px) {
+  .readingState:empty { display:none; }
+  .sampleFrame { padding:10px 12px; gap:8px; }
+  .sampleFrame > a { min-height:44px; padding-block:8px; }
+}

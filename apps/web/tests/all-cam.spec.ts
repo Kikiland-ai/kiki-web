@@ -3,8 +3,10 @@ import bank from '../src/fixtures/assessment-bank.json' with { type: 'json' };
 
 async function enroll(page: Page) {
   await page.goto('/auth'); await page.getByRole('button', { name: 'Open sample student' }).click();
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('link', { name: 'Add your subject', exact: true }).click();
   await page.getByLabel('Semester', { exact: true }).selectOption('5');
   await page.getByRole('button', { name: 'Add subject', exact: true }).click();
@@ -55,6 +57,8 @@ for (let n = 1; n <= 10; n++) test(`C-AM-${String(n).padStart(2, '0')}: four pla
       await expect(region).toBeVisible();
       if (n === 4) await expect(page.getByRole('region', { name: 'DSB-SC teaching diagrams' })).toHaveCount(0);
       for (const slider of await region.getByRole('slider').all()) {
+        // The narration player's Position slider sits in the stage too; only the scene's own controls reset
+        if (await slider.evaluate(el => Boolean(el.closest('[aria-label^="Listen: "]')))) continue;
         const initial = await slider.inputValue(), max = await slider.getAttribute('max');
         await slider.press('End'); await expect(slider).toHaveValue(max!);
         await region.getByRole('button', { name: n === 8 ? 'Reset to lesson example' : 'Reset model' }).click();

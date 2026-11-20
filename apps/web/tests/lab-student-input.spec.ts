@@ -22,7 +22,7 @@ test('synthetic lab input preserves a failed draft, requires explicit confirmati
   await page.getByRole('button', { name: 'Change screen context' }).click();
   await expect(page.getByRole('button', { name: 'Record response' })).toBeDisabled();
   await expect(page.getByLabel('Your own words')).toHaveValue('A draft for the old screen context.');
-  await page.getByRole('button', { name: 'Use current step' }).click();
+  await page.getByRole('button', { name: 'Use current step', exact: true }).click();
   await expect(page.getByLabel('Your own words')).toHaveValue('');
   await expect(page.getByTestId('submission-count')).toHaveText('Confirmed submissions: 2');
 });

@@ -5,27 +5,17 @@ async function sample(page: Page, path = '/auth') {
   await expect(page.getByRole('heading', { name: 'What language feels comfortable?' })).toBeVisible();
 }
 async function onboarding(page: Page) {
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('slider', { name: 'Odia confidence' }).fill('9');
-  await page.getByRole('slider', { name: 'English confidence' }).fill('3');
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await expect(page.getByText('9/10', { exact: true })).toBeVisible();
-  await expect(page.getByText('3/10', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
 }
-test('account-first onboarding resumes, subject saves, profile updates and sign-out protects records', async ({ page }) => {
+test('one-screen onboarding, subject saves, profile updates and sign-out protects records', async ({ page }) => {
   await sample(page);
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await expect(page.getByRole('heading', { name: 'How comfortable do you feel?' })).toBeFocused();
-  await page.reload();
-  await expect(page.getByRole('heading', { name: 'How comfortable do you feel?' })).toBeVisible();
-  await page.getByRole('slider', { name: 'Odia confidence' }).fill('9');
-  await page.getByRole('slider', { name: 'English confidence' }).fill('3');
-  await page.getByRole('button', { name: 'Save and continue' }).click();
+  await expect(page.getByRole('heading', { name: 'How much English feels easy?' })).toBeVisible();
+  await page.getByText(/Fine-tune your starting support/).click();
   await page.getByRole('slider', { name: 'Your starting support' }).fill('3');
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
   await expect(page.getByText('Not assessed', { exact: true })).toHaveCount(4);
   await page.getByRole('link', { name: 'Add your subject' }).click();
@@ -55,10 +45,10 @@ test('protected lab deep link survives sign-in and onboarding; no pointer claim'
 test('failed fixture save stays on the current step and offers retry', async ({ page }) => {
   await sample(page);
   await page.evaluate(() => { Storage.prototype.setItem = () => { throw new DOMException('Unavailable', 'QuotaExceededError'); }; });
-  await page.getByRole('button', { name: 'Save and continue' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page.getByRole('alert')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'What language feels comfortable?' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Save and continue' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Start learning' })).toBeEnabled();
 });
 test('an already signed-in student with incomplete onboarding keeps a new destination', async ({ page }) => {
   await sample(page);
@@ -70,21 +60,17 @@ test('an already signed-in student with incomplete onboarding keeps a new destin
 test('rotation and a reduced layout viewport retain preferences and reachable actions', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await sample(page);
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('slider', { name: 'Odia confidence' }).fill('9');
-  await page.getByRole('slider', { name: 'English confidence' }).fill('3');
+  await page.getByRole('radio', { name: /A mix of Odia and English/ }).check();
   await page.setViewportSize({ width: 844, height: 390 });
-  await expect(page.getByRole('slider', { name: 'Odia confidence' })).toHaveValue('9');
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await expect(page.getByRole('radio', { name: /A mix of Odia and English/ })).toBeChecked();
+  await page.getByRole('button', { name: 'Start learning' }).click();
   // Emulate the available layout width/height at 200% browser zoom.
   // CSS body zoom does not update media queries and is not equivalent to browser zoom.
   // A physical browser/OS text-zoom check remains a release gate.
   await page.setViewportSize({ width: 422, height: 195 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.getByRole('link', { name: 'Profile', exact: true }).click();
-  await expect(page.getByRole('slider', { name: 'English confidence' })).toHaveValue('3');
+  await expect(page.getByRole('slider', { name: /^Language support/ })).toHaveValue('3');
   await page.getByRole('button', { name: 'Save preferences' }).click();
   await expect(page.getByText('Preferences saved')).toBeVisible();
 });
@@ -98,11 +84,12 @@ test('keyboard and reduced-motion logo remain usable', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Sign in with Google' })).toBeDisabled();
   await page.getByRole('button', { name: 'Open sample student' }).focus();
   await page.keyboard.press('Enter');
-  await page.getByRole('button', { name: 'Save and continue' }).click();
-  const slider = page.getByRole('slider', { name: 'Odia confidence' });
+  await page.getByText(/Fine-tune your starting support/).focus();
+  await page.keyboard.press('Enter');
+  const slider = page.getByRole('slider', { name: 'Your starting support' });
   await slider.focus();
   await page.keyboard.press('End');
-  await expect(slider).toHaveValue('10');
+  await expect(slider).toHaveValue('5');
 });
 for (const width of [320, 360, 390, 430, 768, 1024, 1280, 1440]) {
   test(`journey is usable without page overflow at ${width}px`, async ({ page }) => {
@@ -113,6 +100,9 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1280, 1440]) {
     await sample(page);
     expect(await overflow()).toBe(false);
     await onboarding(page);
+    await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+    expect(await overflow()).toBe(false);
+    await page.getByRole('link', { name: 'Home', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Hello, Aditya.' })).toBeVisible();
     expect(await overflow()).toBe(false);
     await page.getByRole('link', { name: 'Lab mode', exact: true }).click();

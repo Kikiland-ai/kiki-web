@@ -23,7 +23,7 @@
 
 /* Narrated stage: the player on top, the graphs follow the voice, the controls fold away */
 .stage { display:grid; gap:10px; margin-block:0; padding:12px; border:1.5px solid var(--learning-ink); background:var(--learning-paper, var(--paper)); }
-.stageFigures { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+.stageFigures { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr)); gap:10px; }
 .stage figure { margin:0; padding:8px; }
 .stage figcaption { font-size:13px; line-height:1.4; }
 .stage svg { max-height:170px; }
