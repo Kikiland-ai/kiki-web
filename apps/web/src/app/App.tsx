@@ -17,6 +17,7 @@ import type { Services } from '../services/types';
 import { demoPathAvailable } from '../contracts/learning-preferences';
 import { StudyPath } from '../features/home/StudyPath';
 
+const PhysicalLab = lazy(() => import('../features/labs/physical/PhysicalLab').then(m => ({ default: m.PhysicalLab })));
 const LabHome = lazy(() => import('../features/labs/LabPreparation').then(m => ({ default: m.LabHome })));
 const LabTracker = lazy(() => import('../features/labs/LabPreparation').then(m => ({ default: m.LabTracker })));
 const ChapterMapScreen = lazy(() => import('../features/learning/ChapterMapScreen').then(m => ({ default: m.ChapterMapScreen })));
@@ -72,6 +73,8 @@ export function createAppRouter(services: Services) {
       <Route path="/talk" element={<Deferred><StudyRoute><TutorHub /></StudyRoute></Deferred>} />
       <Route path="/concepts/:conceptId/talk/:questionId" element={<Deferred><StudyRoute><TutorScreen /></StudyRoute></Deferred>} />
       <Route path="/labs" element={<Deferred><StudyRoute><LabHome /></StudyRoute></Deferred>} />
+      <Route path="/labs/physical" element={<Deferred><StudyRoute><PhysicalLab /></StudyRoute></Deferred>} />
+      <Route path="/labs/physical/:sessionId" element={<Deferred><StudyRoute><PhysicalLab /></StudyRoute></Deferred>} />
       <Route path="/labs/:sessionId" element={<Deferred><StudyRoute><LabTracker /></StudyRoute></Deferred>} />
       <Route path="/library" element={<Deferred><Library /></Deferred>} />
       <Route path="/library/:sourceId" element={<Deferred><SourceViewer /></Deferred>} />

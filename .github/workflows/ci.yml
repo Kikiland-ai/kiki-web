@@ -31,6 +31,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - run: node --test scripts/test-physical-lab.mjs
       # Production mode with no VITE_ settings: no secrets are needed to build.
       # Playwright suites need local servers and browsers and are not run here.
       - run: npm run build

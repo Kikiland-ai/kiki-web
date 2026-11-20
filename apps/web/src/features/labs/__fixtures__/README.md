@@ -12,3 +12,6 @@ The isolated browser acceptance executable additionally supplies controlled matc
 
 
 `lab-input-requirements.json` is a public authored-contract test projection from backend `f2dca8b806e4002411b5704e19f0f40681093298`, bound to the same definition hash as the execution receipt. Its source snapshots are `apps/api/tests/lab-input-definition.json` and `lab-input-policy.json` (the latter intentionally contains only schema, conditions, response kinds and prompts). The API test regenerates an independent ignored requirements receipt consumed by `check-python-learning.mjs`. Neither fixture nor the `/tests/lab-input/` synthetic UI harness is imported by the production entry. Browser tests for that harness make no backend/provider/auth/capture calls.
+
+
+`physical/` contains public pack/assets and synthetic session/observation snapshots recorded from the kiki-backend physical engine for frontend acceptance tests. They are never imported by connected production code and do not contain student evidence or answer keys. Rendering checks live in scripts/test-physical-lab.mjs.

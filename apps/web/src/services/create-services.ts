@@ -7,6 +7,7 @@ import { createLabPreparationApi } from './lab-preparation-http';
 import { createLearningApi } from './learning-http';
 import { createMediaApi } from './media-http';
 import { createLabExecutionApi } from './lab-execution-http';
+import { createPhysicalLabApi } from './physical-lab-http';
 import { connectionConfig } from './connection-config';
 
 export async function createServices(): Promise<Services> {
@@ -19,5 +20,5 @@ export async function createServices(): Promise<Services> {
   const auth = withResourceCleanup(await createFirebaseAuth(config));
   const { createAssessmentApi } = await import('./assessment-http');
   const { createTutorApi } = await import('./tutor-http');
-  return { mode: 'connected', tutor: createTutorApi(config.apiBaseUrl, auth), labExecution:createLabExecutionApi(config.apiBaseUrl,auth), labPreparation:createLabPreparationApi(config.apiBaseUrl,auth), learning: createLearningApi(config.apiBaseUrl, auth), media: createMediaApi(config.apiBaseUrl, auth), auth, api: createLearnerApi(config.apiBaseUrl, auth), intake: createIntakeApi(config.apiBaseUrl, auth), assessments: createAssessmentApi(config.apiBaseUrl, auth) };
+  return { mode: 'connected', physicalLabs:createPhysicalLabApi(config.apiBaseUrl,auth), tutor: createTutorApi(config.apiBaseUrl, auth), labExecution:createLabExecutionApi(config.apiBaseUrl,auth), labPreparation:createLabPreparationApi(config.apiBaseUrl,auth), learning: createLearningApi(config.apiBaseUrl, auth), media: createMediaApi(config.apiBaseUrl, auth), auth, api: createLearnerApi(config.apiBaseUrl, auth), intake: createIntakeApi(config.apiBaseUrl, auth), assessments: createAssessmentApi(config.apiBaseUrl, auth) };
 }

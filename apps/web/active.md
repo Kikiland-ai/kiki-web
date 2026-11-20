@@ -1,3 +1,30 @@
+## Physical lab UI in the existing Lab mode — 21 November 2026
+
+New codex/physical-lab-ui branch from main 08644eb. Followed the existing
+LabPreparation → service adapter → authenticated API → fixed LabUpstream pattern.
+The Lab home adds physical equipment practice alongside the original software
+experiment. React screen and renderer/hints/guide/fullscreen/plots live here;
+backend PR #14 retains pipeline/content/assets/rules/state/physics and has its
+student-facing preview removed. Names only in the floating guide; numbers stay
+on circuit markers and hover/focus hints. Demo skips theory clicks while normal
+prerequisite policy remains in the backend.
+
+Checks: 316 web tests, 10 renderer checks, typecheck, lint and production build
+passed. Web API 274 passed / 8 opt-in skipped; Ruff passed. Live local web relay
+plus actual backend completed all nine steps, recovered 1000 Hz / 0.5 V peak,
+and reported theory unassessed. Chrome checked model/hints/fullscreen, rejected
+lead, progression and retry. Local synthetic acceptance is separate from a
+signed-in Firebase/hosted round trip. Disk pressure caused dependency install
+failure and later backend SQLITE_IOERR_SHMSIZE reruns; recorded in the handoff.
+
+Last completed: frontend integration and boundary split prepared for paired PRs.
+Exact next: review companion PR and backend #14, confirm backend CI, configure
+KIKI_PHYSICAL_LABS_ENABLED and the existing trusted upstream, then signed-in
+acceptance. No deployment or learner-data changes. See
+[implementation and acceptance](../../docs/plans/physical-lab-ui.md).
+
+---
+
 ## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
 
 - Gemini calls rotate across `KIKI_GEMINI_API_KEYS` (kiki-backend's list of {key, quota_pool});

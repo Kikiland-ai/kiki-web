@@ -1,3 +1,21 @@
+## Physical lab web relay — 21 November 2026
+
+Added explicit /physical-labs route allowlist using existing verified Firebase
+identity, course enrollment and LabUpstream. Owner and proxy credentials remain
+server-side. KIKI_PHYSICAL_LABS_ENABLED defaults false; enabling requires the
+existing configured lab origin/mode/secret. Mutations enforce configured origin
+and 16000-byte request bound, creation forwards Idempotency-Key, upstream error
+statuses are preserved safely, and responses are private/no-store. The engine
+and SQLite data remain in kiki-backend, not this web API.
+
+Validation: 274 API tests passed, 8 opt-in skips; Ruff passed; OpenAPI regenerated.
+Local synthetic web relay → real sibling physical engine completed nine actions
+and returned 1000 Hz / 0.5 V peak. No Google/Firestore/provider calls. Exact next:
+paired PR review, correct upstream revision/configuration and signed-in hosted
+acceptance. See ../../docs/plans/physical-lab-ui.md. No rollout/IAM/data changes.
+
+---
+
 ## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
 
 - Gemini calls rotate across `KIKI_GEMINI_API_KEYS` (kiki-backend's list of {key, quota_pool});

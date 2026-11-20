@@ -1,3 +1,18 @@
+## Physical equipment practice in Lab mode
+
+Open Lab mode → Open physical lab practice → Start experiment (or resume the
+saved physical experiment). The DSB-SC trainer opens with a floating Kiki guide.
+Hover a numbered socket to identify it, then select the named output and input.
+Kiki checks the action and advances after a correct connection. The guide shows
+names only. Adjust the null control, observe the waveforms and record readings.
+The bottom-right control enters fullscreen; the guide can move or collapse.
+This demo assumes prerequisite theory and records virtual practice. The existing
+software lab preparation and screen-share path remain available alongside it.
+Connected use needs the physical backend relay enabled; the isolated local
+acceptance harness is described in docs/plans/physical-lab-ui.md.
+
+---
+
 ## All-ten CAM local walkthrough — 18 October 2026
 
 Use the isolated `kiki-web-all-cam-2026-10-18/apps/web` checkout and `npm run dev -- --port 5187` for the explicitly labelled sample. The browser test server stops after tests; older preview addresses below refer to earlier checkouts. Connected trial services are unchanged.

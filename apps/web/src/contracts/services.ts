@@ -64,6 +64,7 @@ export interface Services {
   learning: LearningApi
   media: MediaApi
   labPreparation: LabPreparationApi
+  physicalLabs?: import('./physical-lab').PhysicalLabApi
   labExecution?: import('./lab-execution').LabExecutionApi
   tutor?: import('./tutor').TutorApi
 }

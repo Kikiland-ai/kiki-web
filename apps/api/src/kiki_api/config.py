@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     # Private bucket holding published lesson media; unset keeps lessons text-only.
     media_bucket: str | None = None
     lab_execution_mode: Literal["disabled", "local", "cloud"] = "disabled"
+    physical_labs_enabled: bool = False
     lab_backend_origin: str | None = None
     lab_proxy_secret: SecretStr | None = None
     environment: Literal["cloud", "emulator"] = "cloud"
@@ -31,6 +32,8 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def lab_upstream(self):
+        if self.physical_labs_enabled and self.lab_execution_mode == "disabled":
+            raise ValueError("Physical labs need the configured authenticated lab upstream")
         if self.lab_execution_mode == "disabled":
             return self
         origin = urlparse(self.lab_backend_origin or "")
