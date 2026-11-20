@@ -119,8 +119,9 @@ def test_live_summary_uses_only_report_facts():
                text("vanishes"), text("clear-explanation", clarity=2)]
     _, ev = run(replies)
     rep = analyse(PHASE, ev)
-    key = os.environ.get("KIKI_GEMINI_API_KEY") or os.environ["GEMINI_API_KEY"]
-    out = GeminiSummarizer(key, os.environ.get("KIKI_TUTOR_CLASSIFIER_MODEL", "gemini-3.5-flash-lite")).summarise(
+    from kiki_api.tutor.keys import load_keys
+
+    out = GeminiSummarizer(load_keys(os.environ.get("KIKI_GEMINI_ENV_FILE")), os.environ.get("KIKI_TUTOR_CLASSIFIER_MODEL", "gemini-3.5-flash-lite")).summarise(
         PHASE, rep, "en", {"C-AM-01": "Amplitude, frequency and phase"})
     assert out and len(out) < 1200
     assert "wrong" not in out.lower()

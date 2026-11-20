@@ -81,9 +81,8 @@ class _Text:
 
 
 def _clf(models, retries=0):
-    c = GeminiClassifier.__new__(GeminiClassifier)
-    c.model, c.thinking, c.retries, c.retry_sleep_s = "gemini-3.5-flash-lite", None, retries, 0
-    c.client = type("C", (), {"models": models})()
+    c = GeminiClassifier("only-key", "gemini-3.5-flash-lite", thinking=None, retries_on_429=retries, retry_sleep_s=0)
+    c.clients._clients[0] = type("C", (), {"models": models})()     # inject a fake client for key 0
     return c
 
 
@@ -116,8 +115,9 @@ live = pytest.mark.skipif(not LIVE, reason="set KIKI_LIVE_GEMINI=1 to call Gemin
 
 
 def _live_clf():
-    key = os.environ.get("KIKI_GEMINI_API_KEY") or os.environ["GEMINI_API_KEY"]
-    return GeminiClassifier(key, MODEL, retries_on_429=4, retry_sleep_s=5)
+    from kiki_api.tutor.keys import load_keys
+
+    return GeminiClassifier(load_keys(os.environ.get("KIKI_GEMINI_ENV_FILE")), MODEL, retries_on_429=4, retry_sleep_s=5)
 
 
 @live

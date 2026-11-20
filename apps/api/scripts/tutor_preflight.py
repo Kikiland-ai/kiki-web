@@ -1,9 +1,11 @@
 """Tutor preflight: run once with the real key before switching tutor mode on.
 
-  KIKI_GEMINI_API_KEY=... uv run python scripts/tutor_preflight.py [--firestore] [--burst 8]
+  uv run python scripts/tutor_preflight.py --env-file <kiki-backend/.env> [--firestore] [--burst 8]
+  (or export KIKI_GEMINI_API_KEYS as a JSON list of {key, quota_pool})
 
 Checks, in order, and exits non-zero if any required check fails:
-  config      key present (never printed), model ids set
+  config      keys present (never printed), model ids set
+  keys        each key's status by index and quota pool (at least one pool must work)
   content     every question validates
   models      classifier supports generateContent; Live model supports bidiGenerateContent
   quota       a burst of parallel classifier calls with no 429 (free tier fails this)
@@ -34,11 +36,29 @@ def check(name, ok, detail=""):
 
 
 def main(a) -> int:
-    key = (os.environ.get("KIKI_GEMINI_API_KEY") or "").strip()
+    from kiki_api.tutor.keys import load_keys
+
     clf_model = os.environ.get("KIKI_TUTOR_CLASSIFIER_MODEL", "gemini-3.5-flash-lite")
     live_model = os.environ.get("KIKI_TUTOR_LIVE_MODEL", "gemini-3.8-live")
-    if not check("config", key, f"key {'present' if key else 'MISSING (set KIKI_GEMINI_API_KEY)'}; "
-                 f"classifier {clf_model}; live {live_model}"):
+    try:
+        pool = load_keys(a.env_file)
+    except SystemExit as exc:
+        check("config", False, str(exc))
+        return 1
+    check("config", True, f"{len(pool)} keys in {len(pool.pools)} quota pools; classifier {clf_model}; live {live_model}")
+
+    from google import genai
+
+    working = []
+    for entry in pool.entries:
+        try:
+            probe = genai.Client(api_key=entry.key)          # keep a reference: a collected client closes itself
+            probe.models.generate_content(model=clf_model, contents="ok")
+            working.append(entry)
+            print(f"      key[{entry.index}] pool {entry.pool}: OK")
+        except Exception as exc:  # noqa: BLE001
+            print(f"      key[{entry.index}] pool {entry.pool}: HTTP {getattr(exc, 'code', '?')} {str(exc).split('message')[-1][3:70]}")
+    if not check("keys", working, f"{len(working)}/{len(pool)} keys working"):
         return 1
 
     from kiki_api.tutor.analysis import GeminiSummarizer, analyse
@@ -53,9 +73,7 @@ def main(a) -> int:
         check("content", False, str(exc)[:200])
         return 1
 
-    from google import genai
-
-    client = genai.Client(api_key=key)
+    client = genai.Client(api_key=working[0].key)
     try:
         models = {m.name.replace("models/", ""): set(getattr(m, "supported_actions", []) or []) for m in client.models.list()}
         check("models", "generateContent" in models.get(clf_model, set()) and "bidiGenerateContent" in models.get(live_model, set()),
@@ -63,14 +81,14 @@ def main(a) -> int:
     except Exception as exc:  # noqa: BLE001
         check("models", False, f"{type(exc).__name__}: {str(exc)[:160]}")
 
-    clf = GeminiClassifier(key, clf_model, retries_on_429=0)
+    clf = GeminiClassifier(pool, clf_model, retries_on_429=0)
     phase = questions["ece-phase-error"]
 
     def one(_):
         return clf.classify(phase, state_at(phase, "calc-60"), "cos 60 is 0.5 so half")
 
-    with ThreadPoolExecutor(a.burst) as pool:
-        burst = list(pool.map(one, range(a.burst)))
+    with ThreadPoolExecutor(a.burst) as executor:
+        burst = list(executor.map(one, range(a.burst)))
     errors = [r.error for r in burst if r.error]
     check("quota", not errors, f"{a.burst} parallel calls, errors: {errors or 'none'}"
           + (" — looks like a free-tier or low quota" if any(e == "ClientError" for e in errors) else ""))
@@ -98,10 +116,10 @@ def main(a) -> int:
 
         s = step(phase, s.state, Reply(mode="chip", text="x", label=label))
         events += s.events
-    summary = GeminiSummarizer(key, clf_model).summarise(phase, analyse(phase, events), "en", {})
+    summary = GeminiSummarizer(pool, clf_model).summarise(phase, analyse(phase, events), "en", {})
     check("summary", bool(summary), (summary or "no summary")[:90])
 
-    asyncio.run(voice_check(key, live_model))
+    asyncio.run(voice_check(pool, live_model, clf_model))
 
     if a.firestore:
         firestore_check(questions)
@@ -111,14 +129,14 @@ def main(a) -> int:
     return 1 if failed else 0
 
 
-async def voice_check(key, live_model):
+async def voice_check(pool, live_model, clf_model):
     from google import genai
     from google.genai import types
 
     from kiki_api.tutor.voice import VoiceTokens
 
     try:
-        tok = VoiceTokens(key, live_model).mint()
+        tok = VoiceTokens(pool, live_model, probe_model=clf_model).mint()
         live = genai.Client(api_key=tok["token"], http_options={"api_version": "v1alpha"})
         say = "At 60 degrees, do you get all of the message back, part of it, or none?"
         t0 = time.perf_counter()
@@ -180,4 +198,5 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--firestore", action="store_true", help="also round-trip a throwaway session in Firestore (needs ADC)")
     ap.add_argument("--burst", type=int, default=8)
+    ap.add_argument("--env-file", help="read GEMINI_API_KEYS from this file (kiki-backend .env format)")
     sys.exit(main(ap.parse_args()))

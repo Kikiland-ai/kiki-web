@@ -1,7 +1,8 @@
 # Tutor mode runbook: switch it on with a paid Gemini key
 
-Tutor mode ships **off**. It turns on only when the API has `KIKI_TUTOR_ENABLED=true` and a
-server-side `KIKI_GEMINI_API_KEY`. Nothing else in the API changes, and a tutor failure at
+Tutor mode ships **off**. It turns on only when the API has `KIKI_TUTOR_ENABLED=true` and server-side
+Gemini keys: `KIKI_GEMINI_API_KEYS` (preferred: a JSON list of `{"key", "quota_pool"}`, the kiki-backend
+format; calls rotate across keys and a failing quota pool cools down) or a single `KIKI_GEMINI_API_KEY`. Nothing else in the API changes, and a tutor failure at
 startup disables only the tutor (profiles, lessons and labs keep working).
 
 Placeholders: `<PROJECT>` (kiki-512012), `<REGION>` (the region `kiki-api` runs in),
@@ -19,21 +20,22 @@ project. Nothing here needs the key to appear on a command line or in shell hist
 
 ```sh
 cd apps/api
-read -rs KIKI_GEMINI_API_KEY && export KIKI_GEMINI_API_KEY   # paste, Enter; not echoed
-PYTHONUTF8=1 uv run python scripts/tutor_preflight.py
+PYTHONUTF8=1 uv run python scripts/tutor_preflight.py --env-file <path to kiki-backend/.env>   # GEMINI_API_KEYS
+# or: read -rs KIKI_GEMINI_API_KEYS && export KIKI_GEMINI_API_KEYS   (paste the JSON list; not echoed)
 # with application default credentials for the project, also check Firestore:
 KIKI_FIREBASE_PROJECT_ID=<PROJECT> PYTHONUTF8=1 uv run python scripts/tutor_preflight.py --firestore
 PYTHONUTF8=1 uv run python scripts/tutor_image_check.py    # the image carries every tutor file
 ```
 
-Expect `RESULT: READY`. Each line says what failed and why (quota, model access, voice).
+Expect `RESULT: READY`. The `keys` line shows each key's status by index and quota pool (never the key);
+at least one pool must work. Each other line says what failed and why (quota, model access, voice).
 The Firestore check writes one throwaway session under `learners/preflight-*` and deletes it.
 
 ## 3. Store the key in Secret Manager
 
 ```sh
 gcloud secrets create kiki-gemini-api-key --project <PROJECT> --replication-policy automatic
-printf '%s' "$KIKI_GEMINI_API_KEY" | gcloud secrets versions add kiki-gemini-api-key --project <PROJECT> --data-file=-
+printf '%s' "$KIKI_GEMINI_API_KEYS" | gcloud secrets versions add kiki-gemini-api-key --project <PROJECT> --data-file=-   # the JSON list
 gcloud run services describe kiki-api --project <PROJECT> --region <REGION> --format 'value(spec.template.spec.serviceAccountName)'   # → <SA>
 gcloud secrets add-iam-policy-binding kiki-gemini-api-key --project <PROJECT> \
   --member serviceAccount:<SA> --role roles/secretmanager.secretAccessor
@@ -47,7 +49,7 @@ Build the image as usual (`cloudbuild.api.yaml`), then:
 gcloud run deploy kiki-api --project <PROJECT> --region <REGION> --image <IMAGE> \
   --no-traffic --tag tutor \
   --update-env-vars KIKI_TUTOR_ENABLED=true \
-  --update-secrets KIKI_GEMINI_API_KEY=kiki-gemini-api-key:latest
+  --update-secrets KIKI_GEMINI_API_KEYS=kiki-gemini-api-key:latest
 curl https://tutor---<service-url-host>/tutor/health
 # → {"enabled": true, "reason": "ok", "questions": [...], "classifierModel": "...", "liveModel": "..."}
 ```
@@ -92,7 +94,8 @@ Student text is never logged. The key is read from the environment only.
 
 | Limit | Value | Where |
 |---|---|---|
-| Classifier timeout / retries on 429 | 12 s / 1 retry after 1.5 s, then a hint | `tutor/classifier.py` |
+| Key rotation | round-robin; 402 cools the quota pool 1 h, 401/403 15 min, 429 the advised delay, 5xx 10 s | `tutor/keys.py` |
+| Classifier timeout / retries | 12 s; every pool tried per call, then 1 more pass on 429/5xx after 1.5 s, then a hint | `tutor/classifier.py` |
 | Voice tokens per session | 8 (each single-use, 30 min, config locked server-side) | `tutor/service.py` |
 | Events per session | 3000 | `tutor/service.py` |
 | Reply length | 2000 characters | `tutor/routes.py` |

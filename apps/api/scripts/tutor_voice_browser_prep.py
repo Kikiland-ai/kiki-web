@@ -17,8 +17,17 @@ from google.genai import types
 from kiki_api.tutor.voice import VoiceTokens
 
 
+def working_key(env_file=None):
+    """A key from the pool whose quota pool answers right now (probed once), and the pool."""
+    from kiki_api.tutor.keys import Clients, load_keys
+
+    pool = load_keys(env_file or os.environ.get("KIKI_GEMINI_ENV_FILE"))
+    Clients(pool).call(lambda c: c.models.generate_content(model="gemini-3.5-flash-lite", contents="ok"))
+    return pool.healthy().key, pool
+
+
 def main(out: str, text: str):
-    key = os.environ.get("KIKI_GEMINI_API_KEY") or os.environ["GEMINI_API_KEY"]
+    key, pool = working_key()
     d = Path(out)
     d.mkdir(parents=True, exist_ok=True)
     client = genai.Client(api_key=key)          # keep a reference: a collected client closes itself
@@ -29,7 +38,7 @@ def main(out: str, text: str):
     with wave.open(str(d / "student.wav"), "wb") as w:
         w.setnchannels(1), w.setsampwidth(2), w.setframerate(24000)
         w.writeframes(bytes(int(24000 * 1.5) * 2) + pcm + bytes(24000 * 4 * 2))
-    (d / "token.json").write_text(json.dumps(VoiceTokens(key, "gemini-3.8-live").mint()), encoding="utf-8")
+    (d / "token.json").write_text(json.dumps(VoiceTokens(pool, "gemini-3.8-live").mint()), encoding="utf-8")
     print("wrote", d / "student.wav", "and token.json")
 
 

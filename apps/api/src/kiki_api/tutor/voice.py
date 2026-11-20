@@ -37,16 +37,35 @@ def live_config() -> dict:
 
 
 class VoiceTokens:
-    def __init__(self, api_key: str, model: str):
-        from google import genai
+    def __init__(self, keys, model: str, probe_model: str = "gemini-3.5-flash-lite"):
+        from .keys import Clients, KeyPool
 
-        self.model = model
-        self.client = genai.Client(api_key=api_key, http_options={"api_version": "v1alpha"})
+        self.model, self.probe_model = model, probe_model
+        self.pool = keys if isinstance(keys, KeyPool) else KeyPool.from_config(keys)
+        self.clients = Clients(self.pool, http_options={"api_version": "v1alpha"})
+        self._probe = Clients(self.pool)
 
     def mint(self) -> dict:
+        """Mint from the most recently healthy key: a token from a project without credit only
+        fails later, when the browser connects, so prefer a key known to be working. If nothing
+        has succeeded yet, one tiny call finds a working pool first."""
+        if not self.pool.has_success():
+            self._probe.call(lambda c: c.models.generate_content(model=self.probe_model, contents="ok"))
+        entry = self.pool.healthy()
+        try:
+            out = self._mint(self.clients.get(entry))
+        except Exception as exc:  # noqa: BLE001
+            if not self.pool.failed(entry, exc):
+                raise
+            out = self.clients.call(self._mint)      # rotate through the remaining pools
+            return out
+        self.pool.ok(entry)
+        return out
+
+    def _mint(self, client) -> dict:
         now = dt.datetime.now(tz=dt.timezone.utc)
         expires = now + dt.timedelta(minutes=30)
-        token = self.client.auth_tokens.create(config={
+        token = client.auth_tokens.create(config={
             "uses": 1,
             "expire_time": expires,
             "new_session_expire_time": now + dt.timedelta(minutes=1),

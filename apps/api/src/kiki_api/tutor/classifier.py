@@ -77,14 +77,15 @@ def parse(raw: str | None, labels: list[str], text: str, mode: str) -> Reply:
 
 class GeminiClassifier:
     def __init__(
-        self, api_key: str, model: str, timeout_ms: int = 12000, thinking: str | None = "minimal",
+        self, keys: "KeyPool | str", model: str, timeout_ms: int = 12000, thinking: str | None = "minimal",
         retries_on_429: int = 0, retry_sleep_s: float = 1.5,
     ):
-        from google import genai
+        from .keys import Clients, KeyPool
 
         self.model, self.thinking, self.retries = model, thinking, retries_on_429
         self.retry_sleep_s = retry_sleep_s
-        self.client = genai.Client(api_key=api_key, http_options={"timeout": timeout_ms})
+        pool = keys if isinstance(keys, KeyPool) else KeyPool.from_config(keys)
+        self.clients = Clients(pool, http_options={"timeout": timeout_ms})
 
     def _config(self, labels):
         from google.genai import types
@@ -104,15 +105,17 @@ class GeminiClassifier:
         prompt, labels = build_prompt(q, state, text)
         t0 = time.perf_counter()
         try:
+            config = self._config(labels)
             for attempt in range(self.retries + 1):
                 t0 = time.perf_counter()
                 try:
-                    res = self.client.models.generate_content(
-                        model=self.model, contents=prompt, config=self._config(labels)
-                    )
+                    # tries each quota pool in turn; a 402/429/401/5xx moves on to the next pool
+                    res = self.clients.call(lambda c: c.models.generate_content(
+                        model=self.model, contents=prompt, config=config))
                     break
                 except Exception as exc:  # noqa: BLE001
-                    if getattr(exc, "code", None) != 429 or attempt == self.retries:
+                    # every pool was busy: rate limits and overload (429/500/503/504) are worth one more pass
+                    if getattr(exc, "code", None) not in (429, 500, 503, 504) or attempt == self.retries:
                         raise
                     time.sleep(min(30, self.retry_sleep_s * (attempt + 1)))
             ms = int((time.perf_counter() - t0) * 1000)

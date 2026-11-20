@@ -54,6 +54,15 @@ def similarity(a: str, b: str) -> float:
     return round(difflib.SequenceMatcher(None, norm(a), norm(b)).ratio(), 3)
 
 
+def working_key(env_file=None):
+    """A key from the pool whose quota pool answers right now (probed once), and the pool."""
+    from kiki_api.tutor.keys import Clients, load_keys
+
+    pool = load_keys(env_file or os.environ.get("KIKI_GEMINI_ENV_FILE"))
+    Clients(pool).call(lambda c: c.models.generate_content(model="gemini-3.5-flash-lite", contents="ok"))
+    return pool.healthy().key, pool
+
+
 async def tts_pcm16k(client, text: str) -> bytes:
     """Student speech for --audio: Gemini TTS at 24 kHz, decimated to 16 kHz PCM."""
     res = client.models.generate_content(
@@ -70,9 +79,9 @@ async def tts_pcm16k(client, text: str) -> bytes:
 
 
 async def main(a):
-    key = os.environ.get("KIKI_GEMINI_API_KEY") or os.environ["GEMINI_API_KEY"]
+    key, pool = working_key()
     client = genai.Client(api_key=key)
-    svc = TutorService(load_questions(), GeminiClassifier(key, a.classifier, retries_on_429=3),
+    svc = TutorService(load_questions(), GeminiClassifier(pool, a.classifier, retries_on_429=3),
                        MemoryTutorStore(), None)
     view = svc.start("spike", a.question, a.lang, "spike-start-1")
     sid = view["sessionId"]

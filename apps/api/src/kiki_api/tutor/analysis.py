@@ -137,11 +137,12 @@ Report: {report}
 
 
 class GeminiSummarizer:
-    def __init__(self, api_key: str, model: str, timeout_ms: int = 15000):
-        from google import genai
+    def __init__(self, keys, model: str, timeout_ms: int = 15000):
+        from .keys import Clients, KeyPool
 
         self.model = model
-        self.client = genai.Client(api_key=api_key, http_options={"timeout": timeout_ms})
+        pool = keys if isinstance(keys, KeyPool) else KeyPool.from_config(keys)
+        self.clients = Clients(pool, http_options={"timeout": timeout_ms})
 
     def summarise(self, q: TutorQuestion, report: dict, lang: str, concept_titles: dict[str, str]) -> str | None:
         from google.genai import types
@@ -155,10 +156,8 @@ class GeminiSummarizer:
         )
         try:
             t0 = time.perf_counter()
-            res = self.client.models.generate_content(
-                model=self.model, contents=prompt,
-                config=types.GenerateContentConfig(temperature=0.3, max_output_tokens=300),
-            )
+            config = types.GenerateContentConfig(temperature=0.3, max_output_tokens=300)
+            res = self.clients.call(lambda c: c.models.generate_content(model=self.model, contents=prompt, config=config))
             logger.info("Tutor summary in %d ms", int((time.perf_counter() - t0) * 1000))
             text = (res.text or "").strip()
             return text[:1200] or None

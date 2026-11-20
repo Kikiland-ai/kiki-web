@@ -1,7 +1,7 @@
 """Routing eval on real Gemini: labelled replies → accuracy, confusions and latency per model.
 
 uv run python scripts/tutor_routing_eval.py <question.json> <routing.json> --models m1,m2 [--runs 1]
-Reads GEMINI_API_KEY (or KIKI_GEMINI_API_KEY) from the environment; never prints it.
+Keys: KIKI_GEMINI_API_KEYS / GEMINI_API_KEYS (JSON list) or --env-file; rotated by quota pool; never printed.
 """
 
 import argparse
@@ -23,8 +23,7 @@ def pct(values, p):
 
 
 def run(model, q, replies, runs, workers, thinking):
-    key = os.environ.get("KIKI_GEMINI_API_KEY") or os.environ["GEMINI_API_KEY"]
-    clf = GeminiClassifier(key, model, thinking=thinking, retries_on_429=4, retry_sleep_s=5)
+    clf = GeminiClassifier(POOL, model, thinking=thinking, retries_on_429=4, retry_sleep_s=5)
 
     def one(r):
         state = state_at(q, r["node"], "or" if r["lang"] == "or" else "en")
@@ -61,7 +60,12 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--thinking", default="minimal")
     ap.add_argument("--out")
+    ap.add_argument("--env-file")
     a = ap.parse_args()
+    global POOL
+    from kiki_api.tutor.keys import load_keys
+
+    POOL = load_keys(a.env_file)
     q = TutorQuestion.model_validate_json(Path(a.question).read_text(encoding="utf-8"))
     replies = json.loads(Path(a.routing).read_text(encoding="utf-8"))["replies"]
     report = [run(m, q, replies, a.runs, a.workers, a.thinking or None) for m in a.models.split(",")]

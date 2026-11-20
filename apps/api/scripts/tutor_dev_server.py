@@ -1,8 +1,8 @@
 """Local tutor API for development: the real tutor routes, engine and Gemini calls, on 127.0.0.1.
 
   cd apps/api
-  read -rs KIKI_GEMINI_API_KEY && export KIKI_GEMINI_API_KEY      # paste the key; not echoed
-  PYTHONUTF8=1 uv run python scripts/tutor_dev_server.py           # → http://127.0.0.1:8090
+  PYTHONUTF8=1 uv run python scripts/tutor_dev_server.py --env-file ../../../../kiki-backend/.env   # → http://127.0.0.1:8090
+  (or export KIKI_GEMINI_API_KEYS as a JSON list; calls rotate across keys by quota pool)
 
 Then run the web app with VITE_TUTOR_DEV_API=http://127.0.0.1:8090 (sample mode). Every tutor
 request is printed here: the endpoint, status and time, and for each reply the label Gemini chose,
@@ -50,16 +50,20 @@ class LocalVerifier:
 
 
 def main():
-    key = (os.environ.get("KIKI_GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY") or "").strip()
-    if not key:
-        sys.exit("Set KIKI_GEMINI_API_KEY (server-side Gemini key) first")
+    import argparse
+
+    from kiki_api.tutor.keys import load_keys
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--env-file", help="read GEMINI_API_KEYS from this file (kiki-backend .env format)")
+    pool = load_keys(ap.parse_args().env_file)
     clf_model = os.environ.get("KIKI_TUTOR_CLASSIFIER_MODEL", "gemini-3.5-flash-lite")
     live_model = os.environ.get("KIKI_TUTOR_LIVE_MODEL", "gemini-3.8-live")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s", datefmt="%H:%M:%S")
     log = logging.getLogger("tutor-dev")
 
-    tutor = TutorService(load_questions(), GeminiClassifier(key, clf_model, retries_on_429=1), MemoryTutorStore(),
-                         GeminiSummarizer(key, clf_model), voice=VoiceTokens(key, live_model))
+    tutor = TutorService(load_questions(), GeminiClassifier(pool, clf_model, retries_on_429=1), MemoryTutorStore(),
+                         GeminiSummarizer(pool, clf_model), voice=VoiceTokens(pool, live_model, probe_model=clf_model))
     services = Services(LocalVerifier(), Mock(), tutor=tutor)
     settings = Settings(_env_file=None, firebase_project_id="local-dev",
                         cors_origins=["http://127.0.0.1:5173", "http://localhost:5173"])
@@ -95,7 +99,7 @@ def main():
     STATUS.update(enabled=True, reason="local dev server", questions=sorted(tutor.questions),
                   classifierModel=clf_model, liveModel=live_model)
     log.info(f"Tutor dev API on http://127.0.0.1:{PORT}  classifier={clf_model} live={live_model} "
-             f"questions={sorted(tutor.questions)}")
+             f"questions={sorted(tutor.questions)} keys={len(pool)} quota pools={len(pool.pools)}")
     import uvicorn
 
     uvicorn.run(app, host="127.0.0.1", port=PORT, log_level="warning")
