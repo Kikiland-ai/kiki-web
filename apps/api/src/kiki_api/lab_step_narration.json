@@ -1,0 +1,169 @@
+{
+  "schema": "lab-narration/v1",
+  "experimentId": "PR-AM-DSB",
+  "procedureVersion": "dsb-beginner-procedure/v1",
+  "profileId": "odia7-english5",
+  "revision": "b85a4a5b3aaf4a946c619adf88c0d1a5a9c20abc21d2317963f73e435cf77294",
+  "clips": {
+    "CP-DSB-01/create": {
+      "assetId": "62ab397d6c99104b70fef2f042e707bbd19b44d8247df6aa684592afa77a3c06",
+      "bytes": 284188
+    },
+    "CP-DSB-01/save": {
+      "assetId": "ce31209c9630e69f76939bc40027625db6d6b7b787810cd0e3400d8a5d3825ed",
+      "bytes": 470428
+    },
+    "CP-DSB-02/message": {
+      "assetId": "f64ede1b684096b0c50f3785c70339c0c6144a2d2450ae0b73fcbc48cf39af69",
+      "bytes": 372508
+    },
+    "CP-DSB-02/carrier": {
+      "assetId": "229ed178c8e59daa58b4606b09e6865f439ddd548762a1a6e965cce2195edc5f",
+      "bytes": 376348
+    },
+    "CP-DSB-03/message-settings": {
+      "assetId": "88284c93766717b67df621a916486203d8da90d483725de09fdc7dc8eb3ab410",
+      "bytes": 562588
+    },
+    "CP-DSB-03/carrier-settings": {
+      "assetId": "5fa906d6e0e04d1340dcfef3cf599c3bbff1a2ed6d7dc69616708cf1e9dfc757",
+      "bytes": 564508
+    },
+    "CP-DSB-04/product": {
+      "assetId": "4217b42f0cb6ace6c133efaf8fd51053d75e7d2f777be3b1e61d327eafcaef2b",
+      "bytes": 349468
+    },
+    "CP-DSB-04/message-wire": {
+      "assetId": "055d31f59a56a23a20d612ec16da8429d0856c0d4ff349fccc18c633db144fa0",
+      "bytes": 382108
+    },
+    "CP-DSB-04/carrier-wire": {
+      "assetId": "73b11675bcf3a338687c75bc7604db702f63e991d33dfc82c9e60ee6988fa0d0",
+      "bytes": 289948
+    },
+    "CP-DSB-05/local-create": {
+      "assetId": "5647d69899db04cc83c08d0973fad2da854314c67b0565cc9e75c692d58a82a0",
+      "bytes": 410908
+    },
+    "CP-DSB-05/local-settings": {
+      "assetId": "7f585d9ec25eccfd5bd1d7e1c9a0c6780fef0d2739ce18320b4871b65c49991f",
+      "bytes": 810268
+    },
+    "CP-DSB-05/receiver-create": {
+      "assetId": "830a5c902b182592e13e2052bae4de306c2fe8bf58fd6d413fe66a7c18f02397",
+      "bytes": 393628
+    },
+    "CP-DSB-05/modulated-wire": {
+      "assetId": "705c524cc0ad801d572fad422c95495bf3695b3bd7fddec61bbff64d875d207a",
+      "bytes": 305308
+    },
+    "CP-DSB-05/local-wire": {
+      "assetId": "e80d67ce1105f6a55de103c407a14b426e5603c45936ae82cd3273a77276c676",
+      "bytes": 311068
+    },
+    "CP-DSB-06/filter-create": {
+      "assetId": "a5072d0a36e2988a8fe821e5d5d04ce17261adbc8adcc2838ff920fc531ffb8b",
+      "bytes": 291868
+    },
+    "CP-DSB-06/filter-settings": {
+      "assetId": "292b53530b9747e559577291f67fd9408cfe8367ab70b73e21b6345e69673c36",
+      "bytes": 439708
+    },
+    "CP-DSB-06/gain-create": {
+      "assetId": "a25928563f1353529d58c82dad4e30476d3ab64a988bf9d8d8b8561755d0ab54",
+      "bytes": 330268
+    },
+    "CP-DSB-06/gain-settings": {
+      "assetId": "1c67964a21edd7d4e82d2b10ce978593055d82e079e4f1bd509e2a6e3ea9d2dc",
+      "bytes": 186268
+    },
+    "CP-DSB-06/chain": {
+      "assetId": "9fa2b07a2b3d0fa7eb1e5ede3688371020b0df500e69b85dd27361e76cc5c065",
+      "bytes": 395548
+    },
+    "CP-DSB-07/input-scope": {
+      "assetId": "f849b35b73a797ad15e396f3d7af3c402ce5be91f1014b85c5742f7ed724d459",
+      "bytes": 286108
+    },
+    "CP-DSB-07/modulated-scope": {
+      "assetId": "3109f775405c6f28c577a739e52a606e2721dbecf7e04ca23145761140d76502",
+      "bytes": 328348
+    },
+    "CP-DSB-07/recovery-scope": {
+      "assetId": "344728145ca0e8e9d1543a59f7b28b03bc25e3074054e11e160c0844c0adffc1",
+      "bytes": 263068
+    },
+    "CP-DSB-07/scope-wires": {
+      "assetId": "46c421894c631e479eafb3cb9ecc15c26e2aa0bbda93175a6e4ebdbf093041db",
+      "bytes": 702748
+    },
+    "CP-DSB-08/stop-time": {
+      "assetId": "b4c96523f31243eb151ebc955f8bcb1d1c9c744d9170d4a4ed1d761c345ec160",
+      "bytes": 249628
+    },
+    "CP-DSB-08/solver": {
+      "assetId": "2c18401cace8cf07a7f336ca3db341af43031603a6412c34995a705e77d76a3e",
+      "bytes": 403228
+    },
+    "CP-DSB-08/max-step": {
+      "assetId": "8c6e2b7a2914c1e1ab2515cf2984e02ffdf9910b0dcafb22bf7e8a5b1e786efd",
+      "bytes": 389788
+    },
+    "CP-DSB-09/run": {
+      "assetId": "8de3826b4810719b94490b9862d046c4bb854c36725234654bdd7d75b485c0b3",
+      "bytes": 414748
+    },
+    "CP-DSB-10/open-scope": {
+      "assetId": "91431432240be8d54788a8efe849b8d4011662c43cf15d7aface4c1c6b4016e6",
+      "bytes": 311068
+    },
+    "CP-DSB-10/compare": {
+      "assetId": "2d230bd84979ef75be84cb2d6311bde43bee22aa221ddcd32d5aae6d2d5c6056",
+      "bytes": 382108
+    },
+    "CP-DSB-10/record": {
+      "assetId": "a525c49d107f14576cd8fde450a312f4eb3390c2f2931cb5cac17ebef629fe75",
+      "bytes": 357148
+    },
+    "CP-DSB-11/phase": {
+      "assetId": "81d4fa65ff71ce1d55f9a15d4f9c5ec7e39812a34724af9a8e49d6d359871b64",
+      "bytes": 353308
+    },
+    "CP-DSB-11/carrier-check": {
+      "assetId": "0710420d51d1e25ca89fe6e96043bb546def74650388000ebb817592bceeccaa",
+      "bytes": 372508
+    },
+    "CP-DSB-11/run": {
+      "assetId": "d1cc553793a75f6867be323a6a2c4ddc1bd934cc33b269b3339258a933554a7b",
+      "bytes": 449308
+    },
+    "CP-DSB-11/inspect": {
+      "assetId": "8b26bce8cf88245164555bfb3ac4aa2cca012b007f230523c93c70c0916f4ef9",
+      "bytes": 384028
+    },
+    "CP-DSB-11/report": {
+      "assetId": "38043c634facc0184ba63f2461466213f3a5177005c7073fb61d530e1657b0fd",
+      "bytes": 410908
+    },
+    "CP-DSB-12/restore": {
+      "assetId": "e10550b4731f744dec5c812283230c8396fa0ba43e0cef081bb83dd077eefa19",
+      "bytes": 324508
+    },
+    "CP-DSB-12/rerun": {
+      "assetId": "19b1dcd889c11c937ed86122856700e5bd29cac3632c3c30164d0a92f3395868",
+      "bytes": 545308
+    },
+    "CP-DSB-12/recovery": {
+      "assetId": "a6a975329fcee4da8d04c9b53d9b20313d5206406c8129b6902cce739d385c85",
+      "bytes": 385948
+    },
+    "CP-DSB-12/save": {
+      "assetId": "756dbdc7ecc64ca044b0e4398d66820754047134799ed49cee9b40d4e96bee04",
+      "bytes": 334108
+    },
+    "CP-DSB-12/explain": {
+      "assetId": "214d72504918b99a3deae7d6812a3f4ca0dd486940242114e946732cadcaffe6",
+      "bytes": 307228
+    }
+  }
+}

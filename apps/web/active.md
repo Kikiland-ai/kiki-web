@@ -1,3 +1,25 @@
+## Combined lab narration · 21 November 2026
+
+The `feature/combined-lab-narration` worktree combines web PR #22 with the
+Simulink extension narration. In physical practice, opt in from the experiment
+guide. The committed step determines which WAV plays. Replay and Mute live in
+the guide. Playback stops on completion, navigation, and sign-out. In Simulink,
+the acknowledged floating-window step triggers the same player. Both release
+indexes refer to verified WAVs in KiKi’s private media bucket.
+
+The isolated local preview opens KiKi Lab mode with a sample learner, the real
+physical experiment engine, and a controlled Simulink tab bound to extension
+0.1.4. The preview server uses Cloud Storage credentials to read both published
+narration releases. It rejects a configuration that also supplies disk WAVs.
+The ordinary connected build uses normal Firebase authentication and the
+existing media bucket and trusted lab upstream settings.
+
+Verification covered all nine physical step transitions, two consecutive
+Simulink steps, Replay, Mute, and stopping playback. The combined preview
+decoded hosted WAVs for both guides. Frontend tests, build, and lint passed.
+
+---
+
 ## Approved extension logo — 21 November 2026
 
 User approved the capital K + green dot preview and authorized inclusion in PR #25.

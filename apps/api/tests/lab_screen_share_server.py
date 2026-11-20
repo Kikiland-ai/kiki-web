@@ -1,5 +1,5 @@
 # ruff: noqa: E402
-"""Isolated local acceptance only. No Firebase credentials or external provider calls.
+"""Isolated local acceptance with optional read-only hosted narration.
 
 Run with apps/api/.venv Python and KIKI_BACKEND_CHECKOUT pointing to the approved
 backend branch. Test verifier/store exist only in this executable, never app startup.
@@ -23,15 +23,19 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.testclient import TestClient
+from google.cloud import storage
 from prototypes.backend.app import create_app as upstream_app
 from prototypes.json_stream.analysis import JsonStreamingAnalyzer
 from prototypes.lab_tracking.procedure import PROCEDURES
 from test_learning import Store, transactional
 from test_profiles import preferences
 
+from kiki_api import physical_lab_routes
 from kiki_api.backend import BoundaryError, FirestoreProfiles, Services
+from kiki_api.concept_media import BucketMediaAssets, MemoryMediaAssets
 from kiki_api.config import Settings
 from kiki_api.lab_execution import LabExecutions
+from kiki_api.lab_narration import MIME, LabNarration, physical_release, release, storage_prefix
 from kiki_api.lab_preparation import LabPreparations
 from kiki_api.lab_upstream import LabUpstream
 from kiki_api.learning import FirestoreLearning
@@ -41,6 +45,18 @@ from kiki_api.models import Identity
 
 secret = secrets.token_urlsafe(40)
 lock = threading.RLock()
+physical_audio_dir = os.environ.get("KIKI_PHYSICAL_TEST_NARRATION_DIR")
+simulink_audio_dir = os.environ.get("KIKI_LAB_TEST_NARRATION_DIR")
+media_bucket = os.environ.get("KIKI_LAB_PREVIEW_MEDIA_BUCKET")
+if media_bucket and (physical_audio_dir or simulink_audio_dir):
+    raise RuntimeError("Hosted media and on-disk test recordings are mutually exclusive.")
+hosted_assets = (
+    BucketMediaAssets(storage.Client(project="kiki-512012").bucket(media_bucket))
+    if media_bucket
+    else None
+)
+if hosted_assets:
+    print(f"Preview narration uses read-only hosted media at gs://{media_bucket}/", flush=True)
 
 
 def serial(function):
@@ -149,6 +165,7 @@ settings = Settings(
     lab_execution_mode="local",
     lab_backend_origin="http://127.0.0.1:8100",
     lab_proxy_secret=secret,
+    physical_labs_enabled=bool(physical_audio_dir or hosted_assets),
 )
 store = Store()
 catalog = build_catalog(
@@ -180,12 +197,33 @@ class IsolatedUpstream(LabUpstream):
 
 executions = LabExecutions(preparations, IsolatedUpstream(settings))
 preparations.execution_status = executions.status
+
+
+def preview_narration(asset_directory, index):
+    if hosted_assets is not None:
+        return LabNarration(hosted_assets, index)
+    if not asset_directory:
+        return None
+    assets = MemoryMediaAssets()
+    for clip in index["clips"].values():
+        asset_id = clip["assetId"]
+        relative = f"assets/{asset_id}.wav"
+        path = f"{storage_prefix(index['revision'], index['experimentId'])}/{relative}"
+        assets.put(path, (Path(asset_directory) / relative).read_bytes(), MIME, asset_id)
+    return LabNarration(assets, index)
+
+
+if settings.physical_labs_enabled:
+    # This test-only server sends both routes through its isolated upstream.
+    physical_lab_routes.LabUpstream = IsolatedUpstream
 services = Services(
     verifier,
     profiles,
     learning=learning,
     lab_preparations=preparations,
     lab_executions=executions,
+    lab_narration=preview_narration(simulink_audio_dir, release()),
+    physical_lab_narration=preview_narration(physical_audio_dir, physical_release()),
 )
 api = create_app(settings, lambda: services)
 headers = {"Authorization": "Bearer isolated-lab-test-token"}
@@ -237,14 +275,33 @@ target = FastAPI()
 
 @target.get("/", response_class=HTMLResponse)
 def page():
+    control = ""
+    if settings.physical_labs_enabled:
+        control = (
+            '<button id="blank" type="button">Open blank model (preview)</button>'
+            '<p id="status" role="status"></p>'
+            "<script>document.querySelector('#blank').onclick=async function(){"
+            "const response=await fetch('/preview/blank-model',{method:'POST'});"
+            "if(response.ok){this.disabled=true;document.querySelector('#status').textContent="
+            "'Blank model opened. KiKi will read the next step.'}};</script>"
+        )
     return (
         "<!doctype html><title>Kiki target fixture</title><style>"
         "body{background:#e5f5e0;font:24px monospace;padding:40px}main{width:300px}"
         "#pulse{width:80px;height:80px;background:#247a47}</style><main>"
-        "<h1>Controlled lab target</h1><p>No real model or assessed work.</p>"
-        '<div id="pulse"></div></main><script>setInterval(()=>document.querySelector("#pulse")'
+        "<h1>Simulink preview</h1><p>Use this sample tab to listen to the first two steps.</p>"
+        f'{control}<div id="pulse"></div></main>'
+        '<script>setInterval(()=>document.querySelector("#pulse")'
         ".textContent=String(Date.now()),2100)</script>"
     )
+
+
+@target.post("/preview/blank-model")
+def blank_model():
+    if not settings.physical_labs_enabled:
+        raise BoundaryError(404, "This control is available only in the combined preview.")
+    metrics["mode"] = "advance_action"
+    return {"opened": True}
 
 
 # Reject a dirty port instead of accidentally testing an unrelated local server.

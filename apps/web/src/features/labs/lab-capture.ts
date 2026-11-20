@@ -5,6 +5,7 @@ import { readableError, ServiceError } from '../../services/types';
 import { startAnalysisStream } from './analysis-stream';
 import { createFloatingPublisher, type CaptureTrack, type FloatingPublisher } from './floating-bridge';
 import { acceptedFrom, currentScope, observationAge, projectSnapshot, type AcceptedObservation } from './floating-guidance';
+import { LabNarrationPlayer } from './lab-narration';
 
 export type ConnectionPhase = 'loading' | 'ready' | 'connecting' | 'active' | 'paused' | 'disconnected' | 'completed' | 'unavailable';
 export interface LabCaptureView {
@@ -13,6 +14,7 @@ export interface LabCaptureView {
   reading: boolean; retryAfterMs: number; snapshot: ReturnType<typeof projectSnapshot> | null;
   recovering: boolean; canRecover: boolean;
   inputBusy: boolean; requirements: ExecutionRequirements | null; requirementsError: string;
+  narration?: ReturnType<LabNarrationPlayer['view']>;
 }
 export class LabCaptureController {
   private phase: ConnectionPhase = 'loading';
@@ -23,6 +25,7 @@ export class LabCaptureController {
   private stream: MediaStream | null = null;
   private channel: FrameChannel | null = null;
   private publisher: FloatingPublisher;
+  private narration?: LabNarrationPlayer;
   private video: HTMLVideoElement | null = null;
   private canvas: HTMLCanvasElement | null = null;
   private timer = 0;
@@ -52,22 +55,25 @@ export class LabCaptureController {
   private listeners = new Set<(view: LabCaptureView) => void>();
 
   constructor(private prepId: string, private api: LabExecutionApi, auth: AuthService) {
+    if (api.narration) this.narration = new LabNarrationPlayer(prepId, api.narration, () => this.emit());
     this.publisher = createFloatingPublisher({ targetOrigins: api.targetOrigins, onChange: () => {
       if (this.disposed) return;
       const extension = this.publisher.status();
       if (this.stream && (!extension.bound || extension.superseded)) this.stop('Kiki lost its MATLAB tab. Show Kiki there and share again.');
       this.emit();
-    }, onCommand: command => this.command(command) });
-    this.publisher.source(() => this.state ? { state: this.projectionState()!, accepted: this.accepted, ageMs: observationAge(this.accepted), reading: this.reading, retryAfterMs: Math.max(0, this.retryAt - Date.now()) } : null);
+    }, onCommand: command => this.command(command),
+    onDisplayed: state => { if (this.phase === 'active') this.narration?.shown(state); },
+    onNarrationControl: command => { if (command === 'narration_replay') this.replayNarration(); else this.toggleNarration(); } });
+    this.publisher.source(() => this.state ? { state: this.projectionState()!, accepted: this.accepted, ageMs: observationAge(this.accepted), reading: this.reading, retryAfterMs: Math.max(0, this.retryAt - Date.now()), narration: this.narration?.overlay() } : null);
     this.unregister = auth.registerSignOutCleanup(() => {
-      this.stop('Sign in again to reconnect your lab.'); this.lifetime.abort(); this.publisher.dispose();
+      this.stop('Sign in again to reconnect your lab.'); this.narration?.dispose(); this.lifetime.abort(); this.publisher.dispose();
     });
     window.addEventListener('pagehide', this.pagehide);
     this.heartbeat = window.setInterval(() => {
       void this.channel?.command('heartbeat').catch(() => this.stop('The lab connection ended. Share your MATLAB tab again.')); this.emit();
     }, 4000);
   }
-  private pagehide = () => { this.stop('Lab mode closed. Share your MATLAB tab again to reconnect.'); this.publisher.dispose(); };
+  private pagehide = () => { this.stop('Lab mode closed. Share your MATLAB tab again to reconnect.'); this.narration?.dispose(); this.publisher.dispose(); };
   private projectionState() {
     // A saved server state is not proof that this browser is still sharing.
     return this.state ? { ...this.state, runtime: { ...this.state.runtime, capture_active: Boolean(this.stream && ['active', 'paused'].includes(this.phase)) } } : null;
@@ -76,9 +82,16 @@ export class LabCaptureController {
   view(): LabCaptureView {
     const retryAfterMs = Math.max(0, this.retryAt - Date.now());
     return { phase: this.phase, reason: this.reason, state: this.state, extension: this.publisher.status(), preview: this.preview, reading: this.reading, retryAfterMs, recovering: this.loadBusy, canRecover: this.canRecover, inputBusy: this.inputBusy, requirements: this.requirements, requirementsError: this.requirementsError,
+      narration: this.narration?.view(),
       snapshot: this.state ? projectSnapshot(this.projectionState()!, { accepted: this.accepted, ageMs: observationAge(this.accepted), reading: this.reading, retryAfterMs, blockedReason: this.publisher.blockedReason() }) : null };
   }
-  private emit() { if (!this.disposed) { const view = this.view(); this.listeners.forEach(listener => listener(view)); this.publisher.changed(); } }
+  private emit() {
+    if (this.disposed) return;
+    this.narration?.sync(this.phase === 'active' && this.state?.status === 'active' && this.publisher.status().bound ? this.state : null);
+    const view = this.view(); this.listeners.forEach(listener => listener(view)); this.publisher.changed();
+  }
+  toggleNarration() { void this.narration?.toggle(); }
+  replayNarration() { this.narration?.replay(); }
   private adopt(state: LabExecutionState) {
     if (this.disposed || this.lifetime.signal.aborted || (this.state && (state.lab_session_id !== this.state.lab_session_id || state.revision < this.state.revision))) return;
     // Compact committed decisions omit immutable definition metadata and response history.
@@ -345,7 +358,7 @@ export class LabCaptureController {
   }
   dispose() {
     if (this.disposed) return;
-    this.stop('Lab mode closed.'); this.disposed = true; this.lifetime.abort();
+    this.stop('Lab mode closed.'); this.narration?.dispose(); this.disposed = true; this.lifetime.abort();
     clearInterval(this.heartbeat); window.removeEventListener('pagehide', this.pagehide); this.publisher.dispose(); this.unregister(); this.listeners.clear();
   }
 }

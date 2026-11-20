@@ -5,6 +5,7 @@ import globals from 'globals';
 export default tseslint.config(
   { ignores: ['dist', 'node_modules', 'test-results', 'playwright-report', 'test-artifacts'] },
   js.configs.recommended, ...tseslint.configs.recommended,
+  { files: ['src/features/labs/physical/*.mjs'], languageOptions: { globals: globals.browser } },
   { files: ['scripts/**/*.mjs'], languageOptions: { globals: globals.node } },
   { files: ['**/*.{ts,tsx}'], languageOptions: { globals: { ...globals.browser, ...globals.node } },
     plugins: { 'react-hooks': hooks }, rules: { 'react-hooks/rules-of-hooks': 'error', 'react-hooks/exhaustive-deps': 'error' } },

@@ -26,7 +26,7 @@ it('extracts the actual release into the chosen folder and writes manifest last'
   expect(picker).toHaveBeenCalledWith({ mode: 'readwrite', id: 'kiki-lab-extension' });
   expect([...files.keys()].sort()).toEqual(Object.keys(unzipSync(release)).sort());
   expect(folder.getFileHandle.mock.calls.at(-1)?.[0]).toBe('manifest.json');
-  expect(JSON.parse(strFromU8(files.get('manifest.json')!)).version).toBe('0.1.5');
+  expect(JSON.parse(strFromU8(files.get('manifest.json')!)).version).toBe('0.1.6');
 });
 it('updates in the same selected Kiki folder and leaves Finder metadata alone', async () => {
   const { files, picker } = setup({ ...unzipSync(release), '.DS_Store': strToU8('finder') });

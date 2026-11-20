@@ -2,6 +2,7 @@
  * Python names and decisions stay authoritative; no inference or grading here.
  */
 import type { ExecutionCandidate, LabExecutionState } from '../../contracts/lab-execution';
+import type { NarrationOverlay } from './lab-narration';
 
 export const FG_SCHEMA = 'floating-guidance/v0.1';
 export const FG_LIMITS = { text: 600, short: 160, list: 8, settings: 12, facts: 3, uncertainties: 2, message_chars: 24000 };
@@ -19,6 +20,13 @@ export function currentScope(state: LabExecutionState) {
   return { lab_session_id: state.lab_session_id, checkpoint_id: state.queue.current_checkpoint_id, visit_id: step?.current_visit_id ?? state.current_visit_id ?? null,
     workspace_id: state.workspace.id, capture_epoch: state.workspace.capture_epoch, view_revision: state.workspace.view_revision,
     parameter_revision: state.workspace.parameter_revision, condition: state.workspace.condition };
+}
+export function narrationStepKey(state: LabExecutionState | null) {
+  const action = state?.guidance.current_action;
+  return state && action ? JSON.stringify([
+    state.lab_session_id, state.experiment_id, state.guidance.procedure_version,
+    state.queue.current_checkpoint_id, currentScope(state)?.visit_id, action.id, action.verification_only === true,
+  ]) : null;
 }
 function actionView(action: NonNullable<LabExecutionState['guidance']['current_action']>, checkpointId: string | null) {
   return { action_id: text(action.id, FG_LIMITS.short), checkpoint_id: checkpointId, title: text(action.title), where: text(action.where), how: texts(action.how),
@@ -59,13 +67,14 @@ export function screenContext(state: LabExecutionState, accepted: AcceptedObserv
     visible: facts('match'), check: facts('mismatch'), uncertainties: texts(accepted.uncertainties, FG_LIMITS.uncertainties, 220),
     context_matches: matches, age_ms: age, fresh_for_ms: fresh ? OBSERVATION_FRESH_MS - age : 0, accepted_at: accepted.accepted_at };
 }
-export type ProjectionInput = { state: LabExecutionState; accepted?: AcceptedObservation | null; ageMs?: number | null; reading?: boolean; retryAfterMs?: number | null; blockedReason?: string | null };
-export function projectSnapshot(state: LabExecutionState, { accepted = null, ageMs = null, reading = false, retryAfterMs = null, blockedReason = null }: Omit<ProjectionInput, 'state'> = {}) {
+export type ProjectionInput = { state: LabExecutionState; accepted?: AcceptedObservation | null; ageMs?: number | null; reading?: boolean; retryAfterMs?: number | null; blockedReason?: string | null; narration?: NarrationOverlay };
+export function projectSnapshot(state: LabExecutionState, { accepted = null, ageMs = null, reading = false, retryAfterMs = null, blockedReason = null, narration }: Omit<ProjectionInput, 'state'> = {}) {
   const guide = state.guidance, cp = state.queue.current_checkpoint_id;
   const now = state.status === 'completed' ? null : guide.current_action ? actionView(guide.current_action, cp) : { action_id: null, checkpoint_id: cp, title: text(guide.instruction), where: null, how: [], settings: [], expected_result: null, already_done_help: null, verification_only: false };
   const next = state.status === 'completed' ? null : guide.next_action ? { ...actionView(guide.next_action, cp), crosses_stage: false }
     : guide.next_instruction ? { action_id: null, checkpoint_id: state.queue.upcoming_checkpoint_ids[0] ?? null, title: text(guide.next_instruction), crosses_stage: true } : null;
   return { context: currentScope(state), lab_revision: state.revision, lab: { status: state.status, guidance_state: guide.state },
+    ...(narration ? { narration } : {}),
     instructions: { basis: 'authoritative_tracker', procedure_version: text(guide.procedure_version, 80), now, next, why: text(guide.reason), already_tracked: text(guide.already_tracked) },
     screen_context: screenContext(state, accepted, { ageMs, blockedReason }), runtime: { capture_active: state.runtime.capture_active, analysis_status: state.runtime.analysis_status,
       reading, retry_after_ms: retryAfterMs && retryAfterMs > 0 ? Math.round(retryAfterMs) : null },

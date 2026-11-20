@@ -8,6 +8,7 @@ import { createFixtureLearning } from './learning';
 import { createFixtureMedia } from './media';
 import { createFixtureTutor } from './tutor';
 import { createTutorApi } from '../services/tutor-http';
+import { createPhysicalLabApi } from '../services/physical-lab-http';
 
 const SESSION = 'kiki:fixture:session:v1';
 const PROFILE = 'kiki:fixture:profile:v1';
@@ -38,7 +39,10 @@ export function createFixtureServices(): Services {
   const tutor = devApi
     ? createTutorApi(devApi, { getIdToken: async () => { requireUid(); return 'local-dev'; } } as unknown as Parameters<typeof createTutorApi>[1])
     : createFixtureTutor(requireUid);
-  return { tutor, labPreparation:createFixtureLabPreparation(requireUid,learning), mode: 'fixture', learning, media: createFixtureMedia(requireUid), intake: createFixtureIntake(requireUid), assessments, auth: withResourceCleanup({
+  // Explicit local-only preview; this fixture module is excluded from production.
+  const physicalPreview = import.meta.env.VITE_PHYSICAL_LAB_DEV_API as string | undefined;
+  const physicalLabs = physicalPreview ? createPhysicalLabApi(physicalPreview, { getIdToken: async () => { requireUid(); return 'physical-preview'; } } as unknown as Parameters<typeof createPhysicalLabApi>[1]) : undefined;
+  return { tutor, physicalLabs, labPreparation:createFixtureLabPreparation(requireUid,learning), mode: 'fixture', learning, media: createFixtureMedia(requireUid), intake: createFixtureIntake(requireUid), assessments, auth: withResourceCleanup({
     subscribe: (listener) => { listeners.add(listener); queueMicrotask(() => { if (listeners.has(listener)) listener(current()); }); return () => { listeners.delete(listener); }; },
     signIn: async () => { sessionStorage.setItem(SESSION, identity.uid); listeners.forEach(l => l(identity)); },
     signOut: async () => { sessionStorage.removeItem(SESSION); listeners.forEach(l => l(null)); },

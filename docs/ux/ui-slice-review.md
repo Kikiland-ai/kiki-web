@@ -1,3 +1,33 @@
+## Current local Lab choice preview
+
+Open Lab mode to choose **Software Lab** or **Physical Lab**. Software Lab keeps
+the Simulink preparation path. Physical Lab opens the DSB-SC trainer: choose Start
+experiment or resume, hover components to identify them, and follow the floating
+guide. Fullscreen stays within this experiment workspace.
+
+Full Kiki local sample preview: http://127.0.0.1:5202/labs. If prompted, choose
+Open sample student. This local preview explicitly enables the fixture-only
+physical engine bridge; connected production still requires its authenticated
+backend configuration. No college records are used.
+
+
+---
+
+## Physical equipment practice in Lab mode
+
+Open Lab mode → Open physical lab practice → Start experiment (or resume the
+saved physical experiment). The DSB-SC trainer opens with a floating Kiki guide.
+Hover a numbered socket to identify it, then select the named output and input.
+Kiki checks the action and advances after a correct connection. The guide shows
+names only. Adjust the null control, observe the waveforms and record readings.
+The bottom-right control enters fullscreen; the guide can move or collapse.
+This demo assumes prerequisite theory and records virtual practice. The existing
+software lab preparation and screen-share path remain available alongside it.
+Connected use needs the physical backend relay enabled; the isolated local
+acceptance harness is described in docs/plans/physical-lab-ui.md.
+
+---
+
 ## Assisted extension folder setup — 21 November 2026
 
 Missing/outdated extension uses a puzzle piece, exclamation badge and desktop

@@ -73,3 +73,11 @@
   .main :global(.form-actions) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
   .main :global(.form-actions .button) { padding:10px 8px; white-space:normal; text-align:center; font-size:13px; }
 }
+
+.modeChoices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:stretch; }
+.modeChoices h2 { font-size:clamp(25px,3vw,34px); margin:12px 0; }
+.modeChoices h3 { font-size:19px; margin-top:22px; line-height:1.5; }
+.modeChoices p { line-height:1.7; }
+.modeChoices :global(.card) { display:flex; flex-direction:column; align-items:flex-start; }
+.modeChoices :global(.button) { margin-top:auto; }
+@media(max-width:760px) { .modeChoices { grid-template-columns:1fr; } }

@@ -1,0 +1,47 @@
+{
+  "schema": "physical-lab-narration/v1",
+  "experimentId": "dsb-sc-trainer",
+  "packVersion": "1.2.0",
+  "packSha256": "2d2354593c440b2e02d5b8860ef5c267e552ba2831c11404016f5cfda374706e",
+  "mode": "experiment_demo",
+  "profileId": "odia7-english5",
+  "revision": "96620b14baa14dbd0ea003eae7c5645b86741610375286b3b0ddcdf13ffe7636",
+  "clips": {
+    "message-wire": {
+      "assetId": "923445f29b1cd74226162805e2aa49ba3542af89f8e9f5e759abb4926ffb9b5d",
+      "bytes": 234268
+    },
+    "carrier-wire": {
+      "assetId": "44a074c141eb1f51c9937b1af466a0fe7045406f6895a0b24cdb5e0a2f38d1ed",
+      "bytes": 272668
+    },
+    "probe-tx": {
+      "assetId": "63b114fd52506f0739e8dc585775a19fbd2dc1085414b6bf659d4a2c0c4d8331",
+      "bytes": 412828
+    },
+    "null": {
+      "assetId": "cb28c0334f85fc51997c0ecbbb35880db01d4644ee99cb6fafd8d37fe3396edb",
+      "bytes": 222748
+    },
+    "receiver-wire": {
+      "assetId": "fc8de8f99529565ef4ff101edcffa800f99d318732395a45f26c71aed152ee45",
+      "bytes": 380188
+    },
+    "reference-wire": {
+      "assetId": "ee160c9cfa7f472cdd05d8dca8e62471d11d949851ec5d4901f893c00efb1fc8",
+      "bytes": 284188
+    },
+    "probe-rx": {
+      "assetId": "c52106581593177ed1df198edd7f6f4c9e992d48e0243e7d880099ef77326520",
+      "bytes": 240028
+    },
+    "frequency": {
+      "assetId": "8f56705577edfceff8d865b6a561de37a3cab7832e8a32e3c067c8e8dfa58d89",
+      "bytes": 261148
+    },
+    "amplitude": {
+      "assetId": "45b7003576d56852c98910f75b24efdc98e644ff5abdabd70caf9bb2bca2d609",
+      "bytes": 312988
+    }
+  }
+}

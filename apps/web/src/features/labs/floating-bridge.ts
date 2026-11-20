@@ -1,5 +1,7 @@
 /** Reader bridge for the unchanged floating-guidance/v0.1 extension protocol. */
-import { FG_LIMITS, FG_SCHEMA, contentKey, currentScope, projectSnapshot, type ProjectionInput } from './floating-guidance';
+import { FG_LIMITS, FG_SCHEMA, contentKey, currentScope, narrationStepKey, projectSnapshot, type ProjectionInput } from './floating-guidance';
+import type { LabExecutionState } from '../../contracts/lab-execution';
+import type { NarrationControl } from './lab-narration';
 
 type Rect = { x: number; y: number; w: number; h: number };
 export type CaptureTrack = MediaStreamTrack & { getCaptureHandle?: () => { handle?: string; origin?: string } | null };
@@ -10,7 +12,11 @@ const CHANNEL = 'kiki-floating-guidance';
 // an old hello reply must not resolve a new controller's first hello.
 let nextBridgeId = 0;
 let currentPublisher: symbol | null = null;
-export function createFloatingPublisher({ onCommand, onChange = () => {}, targetOrigins = ['https://matlab.mathworks.com'] }: { onCommand(command: 'pause' | 'resume'): Promise<void>; onChange?(): void; targetOrigins?: readonly string[] }) {
+export function createFloatingPublisher({ onCommand, onChange = () => {}, onDisplayed, onNarrationControl, targetOrigins = ['https://matlab.mathworks.com'] }: {
+  onCommand(command: 'pause' | 'resume'): Promise<void>; onChange?(): void;
+  onDisplayed?(state: LabExecutionState): void; onNarrationControl?(command: NarrationControl): void;
+  targetOrigins?: readonly string[];
+}) {
   const ownership = Symbol(); currentPublisher = ownership;
   const streamId = crypto.randomUUID();
   let present = false, generation: number | null = null, binding: Binding | null = null, superseded = false, disposed = false;
@@ -48,8 +54,15 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
     const message = { schema: FG_SCHEMA, type: 'replace_snapshot', stream_id: streamId, generation, sequence: ++sequence, issued_at: new Date().toISOString(), body };
     if (JSON.stringify(message).length > FG_LIMITS.message_chars) return;
     lastKey = key; lastSentAt = now;
+    const targetEpoch = bindingEpoch;
     const result = await post({ type: 'reader_snapshot', message });
-    if (disposed || generation !== message.generation) return;
+    if (disposed || currentPublisher !== ownership || generation !== message.generation || targetEpoch !== bindingEpoch) return;
+    const displayed = result.result as Record<string, unknown> | undefined;
+    const latest = source()?.state;
+    if (onDisplayed && result.ok && input.state.status === 'active' && input.state.runtime.capture_active
+      && displayed?.result === 'displayed' && displayed.sequence === message.sequence
+      && displayed.generation === message.generation && displayed.action_id === body.instructions.now?.action_id
+      && latest && narrationStepKey(latest) === narrationStepKey(input.state)) onDisplayed(latest);
     if (!result.ok) {
       lastKey = null;
       if (['stale_stream_or_generation', 'not_current_controller'].includes(String(result.error))) {
@@ -60,6 +73,17 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, target
   }
   async function command(message: Record<string, unknown>) {
     if (disposed || superseded || currentPublisher !== ownership || generation === null) return;
+    if (message.command === 'narration_toggle' || message.command === 'narration_replay') {
+      const input = source();
+      const state = input?.state;
+      if (!binding || !input?.narration || !state || !state.runtime.capture_active || state.status !== 'active'
+        || message.command_version !== 1 || message.stream_id !== streamId || message.generation !== generation
+        || message.action_id !== (state.guidance.current_action?.id ?? null)
+        || message.verification_only !== (state.guidance.current_action?.verification_only === true)
+        || message.visit_id !== (currentScope(state)?.visit_id ?? null)) return;
+      onNarrationControl?.(message.command);
+      return;
+    }
     if (message.command === 'focus_confirmation') {
       const state = source()?.state;
       if (!state || message.command_version !== 1 || message.stream_id !== streamId || message.generation !== generation || message.lab_revision !== state.revision || JSON.stringify(message.context) !== JSON.stringify(currentScope(state))) return;

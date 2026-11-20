@@ -21,6 +21,7 @@ export function LabConnection({ preparationId, api, auth, modelName, modelNameRe
   if (!view) return <LoadingNotice>Opening lab connection…</LoadingNotice>;
   const active = view.phase === 'active', paused = view.phase === 'paused';
   const now = view.snapshot?.instructions.now, next = view.snapshot?.instructions.next;
+  const narration = view.narration;
   const phase = ({ loading: 'Checking connection', ready: 'Ready to share', connecting: 'Connecting', active: 'Sharing active', paused: 'Paused', disconnected: 'Disconnected', completed: 'Completed', unavailable: 'Connection unavailable' })[view.phase];
   return <section className={styles.panel} aria-label="Lab connection">
     <div className={styles.heading}><div><span className="eyebrow">STEP 2 · CONNECT YOUR MATLAB TAB</span><h2>Let Kiki see your model.</h2></div><span className={styles.phase} data-state={view.phase}>{phase}</span></div>
@@ -32,6 +33,14 @@ export function LabConnection({ preparationId, api, auth, modelName, modelNameRe
     </ol>}
     {view.phase === 'unavailable' && <Button variant="secondary" disabled={view.recovering} onClick={() => void controller.current?.load(true)}>{view.recovering ? 'Checking saved lab…' : view.canRecover ? 'Recover saved lab' : 'Retry connection'}<Icon name="refresh" /></Button>}
     {(active || paused) && <div className={styles.actions}><Button onClick={() => { void controller.current?.command(paused ? 'resume' : 'pause').catch(() => undefined); }}>{paused ? 'Resume sharing' : 'Pause sharing'}<Icon name={paused ? 'play_arrow' : 'pause'} /></Button><Button variant="secondary" onClick={() => controller.current?.stop()}>Stop sharing<Icon name="stop" /></Button><span>{view.reading ? 'Reading a safe frame…' : view.retryAfterMs > 0 ? `Next read in about ${Math.ceil(view.retryAfterMs / 1000)} seconds` : 'Only the selected tab is shared.'}</span></div>}
+    {narration && view.phase !== 'completed' && <div className={styles.actions}>
+      <Button variant="secondary" disabled={narration.loading} onClick={() => controller.current?.toggleNarration()}>
+        {narration.loading ? 'Loading narration…' : !narration.enabled ? 'Enable Odia–English narration' : narration.muted ? 'Unmute narration' : 'Mute narration'}
+      </Button>
+      {narration.replay && !narration.muted && <Button variant="secondary" onClick={() => controller.current?.replayNarration()}>Replay narration</Button>}
+      {narration.playing && <span role="status">Playing Odia–English narration</span>}
+      {narration.error && <span role="status">{narration.error}</span>}
+    </div>}
     {view.state && <div className={styles.guidance}>
       <div><span className="eyebrow">NOW · {view.state.queue.current_checkpoint_id ?? 'COMPLETE'}</span><h3 data-testid="execution-now">{now?.title ?? 'This guided lab is complete.'}</h3>{now?.where && <p>{now.where}</p>}{now?.how.length ? <ul>{now.how.map((line, i) => <li key={i}>{line}</li>)}</ul> : null}{now?.settings.length ? <dl>{now.settings.map((setting, i) => <div key={i}><dt>{setting.field}</dt><dd>{setting.value}</dd></div>)}</dl> : null}{now?.expected_result && <p><strong>Look for: </strong>{now.expected_result}</p>}</div>
       <aside><span className="eyebrow">COMING NEXT</span><p data-testid="execution-next">{next?.title ?? 'No further action in this guide.'}</p>{view.snapshot?.instructions.why && <p>{view.snapshot.instructions.why}</p>}<small>{view.state.queue.done_checkpoint_ids.length} of 12 steps done</small>{view.snapshot?.screen_context.summary && <div className={styles.observation}><strong>{view.snapshot.screen_context.status === 'fresh' ? 'Current screen read' : 'Earlier screen read'}</strong><p>{view.snapshot.screen_context.summary}</p></div>}</aside>

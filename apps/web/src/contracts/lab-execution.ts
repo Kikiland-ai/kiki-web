@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { LabNarrationApi } from './lab-narration';
 
 const Id = z.string().min(1).max(128);
 const Text = z.string().max(4000);
@@ -117,6 +118,7 @@ export interface FrameChannel {
 export type ContextCommand = { revision: number; action: 'pause' | 'resume' | 'view_changed' | 'parameters_changed' | 'condition' | 'revisit'; view_revision?: number; checkpoint_id?: string; condition?: 'baseline' | 'phase_fault' | 'restored_baseline' };
 export interface LabExecutionApi {
   readonly targetOrigins?: readonly string[];
+  readonly narration?: LabNarrationApi;
   start(prepId: string, signal?: AbortSignal): Promise<LabExecutionState>;
   recover(prepId: string, signal?: AbortSignal): Promise<LabExecutionState>;
   get(prepId: string, signal?: AbortSignal): Promise<LabExecutionState>;

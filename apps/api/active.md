@@ -1,3 +1,36 @@
+## Combined lab narration · 21 November 2026
+
+The Simulink route serves 40 recordings scoped to the learner’s saved lab
+preparation. The physical routes under `/physical-labs/sessions/{session_id}/narration`
+require an owned session matching the published experiment, mode, pack version,
+and pack SHA-256. The indexed nine assets and both manifests use the existing
+private media boundary. WAV reads verify byte count and SHA-256 before serving.
+
+The combined preview uses read-only Cloud Storage access to `kiki-web-bucket`
+for both modes. Its sample learner and lab state are isolated from hosted
+learner records. Connected use requires the existing `KIKI_MEDIA_BUCKET`,
+physical lab flag, and trusted unified lab upstream.
+
+The API suite passed 277 tests with eight opt-in skips. Both release indexes were verified in the built wheel.
+
+## Physical lab web relay — 21 November 2026
+
+Added explicit /physical-labs route allowlist using existing verified Firebase
+identity, course enrollment and LabUpstream. Owner and proxy credentials remain
+server-side. KIKI_PHYSICAL_LABS_ENABLED defaults false; enabling requires the
+existing configured lab origin/mode/secret. Mutations enforce configured origin
+and 16000-byte request bound, creation forwards Idempotency-Key, upstream error
+statuses are preserved safely, and responses are private/no-store. The engine
+and SQLite data remain in kiki-backend, not this web API.
+
+Validation: 275 API tests passed after integrating main 17aa078, 8 opt-in skips; Ruff passed; OpenAPI regenerated.
+Local synthetic web relay → real sibling physical engine completed nine actions
+and returned 1000 Hz / 0.5 V peak. No Google/Firestore/provider calls. Exact next:
+paired PR review, correct upstream revision/configuration and signed-in hosted
+acceptance. See ../../docs/plans/physical-lab-ui.md. No rollout/IAM/data changes.
+
+---
+
 ## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
 
 - Gemini calls rotate across `KIKI_GEMINI_API_KEYS` (kiki-backend's list of {key, quota_pool});
