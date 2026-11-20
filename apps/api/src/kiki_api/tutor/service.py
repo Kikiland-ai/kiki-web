@@ -48,9 +48,44 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
+LEDGER = Path(__file__).resolve().parents[5] / "data-model/ledgers/electronics/analog-modulation.json"
+
+
+def load_concept_titles(path: Path = LEDGER) -> dict[str, str]:
+    try:
+        import json
+
+        return {c["id"]: c["title"] for c in json.loads(path.read_text(encoding="utf-8"))["concepts"]}
+    except (OSError, ValueError, KeyError):
+        return {}
+
+
 class TutorService:
-    def __init__(self, questions: dict[str, TutorQuestion], classifier: Classifier, store: TutorStore):
+    def __init__(self, questions: dict[str, TutorQuestion], classifier: Classifier, store: TutorStore,
+                 summarizer=None, concept_titles: dict[str, str] | None = None):
         self.questions, self.classifier, self.store = questions, classifier, store
+        self.summarizer = summarizer
+        self.titles = load_concept_titles() if concept_titles is None else concept_titles
+
+    def report(self, uid: str, sid: str) -> dict:
+        state, _ = self._load(uid, sid)
+        q = self._question(state.questionId)
+        cached = self.store.get_report(uid, sid) if state.status == "completed" else None
+        if cached:
+            return cached
+        from .analysis import analyse
+
+        rep = analyse(q, self.store.events(uid, sid))
+        for row in rep["revise"] + rep["strengthen"]:
+            row["title"] = self.titles.get(row["concept"], row["concept"])
+        rep["board"] = [q.board[i].model_dump(by_alias=True, exclude_none=True) for i in rep["sheet"]]
+        rep["summary"] = None
+        if state.status == "completed":
+            if self.summarizer:
+                titles = {r["concept"]: r["title"] for r in rep["revise"] + rep["strengthen"]}
+                rep["summary"] = self.summarizer.summarise(q, rep, state.lang, titles)
+            self.store.put_report(uid, sid, rep)
+        return rep
 
     # ---------------------------------------------------------------- views
 

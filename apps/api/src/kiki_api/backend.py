@@ -227,14 +227,17 @@ def firebase_services(settings: Settings) -> Services:
         preparations.execution_status = executions.status
     tutor = None
     if settings.tutor_enabled and settings.gemini_api_key:
+        from .tutor.analysis import GeminiSummarizer
         from .tutor.classifier import GeminiClassifier
         from .tutor.service import TutorService, load_questions
         from .tutor.store import FirestoreTutorStore
 
+        key = settings.gemini_api_key.get_secret_value()
         tutor = TutorService(
             load_questions(),
-            GeminiClassifier(settings.gemini_api_key.get_secret_value(), settings.tutor_classifier_model),
+            GeminiClassifier(key, settings.tutor_classifier_model),
             FirestoreTutorStore(client),
+            GeminiSummarizer(key, settings.tutor_classifier_model),
         )
     return Services(
         FirebaseVerifier(app),

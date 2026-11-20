@@ -30,6 +30,8 @@ class TutorStore(Protocol):
     ) -> dict: ...
     def append(self, uid: str, sid: str, expected_version: int, state: TutorState, events: list[Event]) -> None: ...
     def events(self, uid: str, sid: str) -> list[Event]: ...
+    def get_report(self, uid: str, sid: str) -> dict | None: ...
+    def put_report(self, uid: str, sid: str, report: dict) -> None: ...
 
 
 def _dump(model) -> dict:
@@ -116,6 +118,15 @@ class FirestoreTutorStore:
         docs = self._session(uid, sid).collection("events").order_by("seq").stream()
         return [Event.model_validate(d.to_dict()) for d in docs]
 
+    def get_report(self, uid, sid):
+        snap = self._session(uid, sid).get()
+        if not snap.exists:
+            raise Missing(sid)
+        return snap.to_dict().get("report")
+
+    def put_report(self, uid, sid, report):
+        self._session(uid, sid).update({"report": report})
+
 
 class MemoryTutorStore:
     """In-process store with the same semantics. For tests and local fixture mode only."""
@@ -163,3 +174,9 @@ class MemoryTutorStore:
 
     def events(self, uid, sid):
         return list(self._get(uid, sid)["events"])
+
+    def get_report(self, uid, sid):
+        return self._get(uid, sid).get("report")
+
+    def put_report(self, uid, sid, report):
+        self._get(uid, sid)["report"] = report
