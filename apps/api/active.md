@@ -1,3 +1,34 @@
+## Tutor mode (voice, staged decision graphs) built on feat/tutor-voice - 20 November 2026
+
+Branch `feat/tutor-voice` from `origin/main` 5ecdd2e, committed locally as adityathenerd; not
+pushed, merged or deployed. Tutor mode is off unless `KIKI_TUTOR_ENABLED=true` and a server-side
+`KIKI_GEMINI_API_KEY` are set, so existing behaviour is unchanged.
+
+What exists: `kiki-tutor-question/v1` content (question → stages → decision graphs → cumulative
+whiteboard) in `data-model/tutor/questions` (ece-phase-error, ece-dsb-receive-drift); validator;
+pure engine; Gemini label classifier (gemini-3.5-flash-lite); Firestore session store with an
+append-only event log; routes under `/tutor/*`; post-session report; locked Gemini Live voice
+tokens (gemini-3.8-live); web screen `/concepts/:conceptId/talk/:questionId` with whiteboard,
+chips/text, voice and scorecard; fixture mode replays views recorded from the Python engine.
+
+Checks actually run (unit doubles unless stated): API 230 passed, 8 skipped (live tests opt-in);
+web 283 unit tests, lint, typecheck, production build (fixture not in dist); Playwright 110 of 111
+(lab-student-input.spec.ts fails on a duplicate "Use current step" button; it loads a standalone
+lab harness none of this work touches; not re-run on a clean main). Live Google checks: routing
+26/26, 52/52 and 29/29 on real Gemini; live behaviour and summary tests; Live voice spike in
+English and Odia (briefs spoken verbatim, tool call 0.5-0.8 s, about 2.9 s end of speech to KiKi
+audio); token lock, single use and override refusal; real-browser mic → Live → tool → speech.
+Not yet run: Firestore against a real project, a signed-in connected walkthrough, Cloud Run.
+
+Known limits: the Gemini key in this environment is free tier (gemini-3.8-flash allows 20
+requests a day; latency is throttled). Odia audio needs a native listen
+(`Desktop/KiKi/tutor-voice-samples`). Stage intros have no Odia yet.
+
+Exact next: owner decides push/PR; paid Gemini key; enable on a preview API revision with
+Secret Manager; signed-in walkthrough by voice and text; native Odia review.
+
+---
+
 ## Hosted MATLAB trial completed - 18 October 2026
 
 This is the current continuation record; the earlier trial-pending notes below
