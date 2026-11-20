@@ -210,3 +210,26 @@ input[type='range'] { width: 100%; margin: 4px 0; height: 48px; accent-color: va
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }.wordmark-roll { transform: translateY(-75%) !important; }.skip-intro { display: none; }
 }
+
+/* Header extension health remains available at every viewport width. */
+.extension-status { position: relative; }
+.extension-status-button { position: relative; display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-width: 44px; padding: 0 12px; height: 44px; border: 1px solid currentColor; border-radius: 50%; background: var(--paper); cursor: pointer; color: var(--muted); }
+.extension-current { color: #17643a; background: #e9f7ed; }
+.extension-missing { color: #a52626; background: #fff0ee; }
+.extension-outdated, .extension-unknown { color: #805900; background: #fff5cd; }
+.extension-status-panel { position: absolute; top: calc(100% + 12px); right: 0; width: min(370px, calc(100vw - 40px)); padding: 20px; background: var(--paper, white); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 10px 32px #17243d24; z-index: 100; font-size: 13px; line-height: 1.6; }
+.extension-status-panel p, .extension-status-panel ol { margin-block: 12px; }
+.extension-status-panel ol { padding-left: 20px; }
+.extension-status-panel .button { min-height: 44px; }
+@media (max-width: 600px) { .extension-status-panel { position: fixed; top: 80px; left: 20px; right: 20px; width: auto; max-height: calc(100dvh - 100px); overflow-y: auto; } }
+
+.extension-missing, .extension-outdated { border-width: 2px; border-radius: 12px; font-weight: 700; }
+.extension-alert-badge { position: absolute; right: -5px; top: -7px; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: currentColor; font-size: 0; box-shadow: 0 0 0 2px white; }
+.extension-alert-badge::after { content: '!'; font-size: 12px; color: white; font-weight: 800; }
+.extension-missing, .extension-outdated { animation: extension-attention 1.4s ease-out 3; }
+@keyframes extension-attention { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 40% { box-shadow: 0 0 0 5px currentColor; } }
+.extension-setup-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
+.extension-status-panel { max-height: calc(100dvh - 110px); overflow-y: auto; }
+.extension-status-panel > .button { margin-bottom: 8px; }
+@media (max-width: 600px) { .extension-action-label { display: none; } .extension-status-button { padding: 0; width: 44px; } }
+@media (prefers-reduced-motion: reduce) { .extension-missing, .extension-outdated { animation: none; } }

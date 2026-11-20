@@ -12,6 +12,7 @@ const paths: Record<string, ReactNode> = {
   play_arrow: <path d="m8 4 12 8-12 8Z" />,
   stop: <rect x="5" y="5" width="14" height="14" />,
   screen_share: <><rect x="2" y="3" width="20" height="15" rx="2" /><path d="M8 22h8M12 18v4M8 11l4-4 4 4M12 7v8" /></>,
+  extension: <path d="M10 5H4v5H3a2 2 0 0 0 0 4h1v6h6v-1a2 2 0 0 1 4 0v1h6v-6h-1a2 2 0 0 1 0-4h1V5h-6V4a2 2 0 0 0-4 0Z" />,
   info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7h.01" /></>,
   refresh: <path d="M20 6v5h-5M20 11a8 8 0 1 0-2 7" />,
   lock: <><rect x="5" y="10" width="14" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" /></>,

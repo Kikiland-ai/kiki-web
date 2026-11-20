@@ -29,8 +29,9 @@ test('generic setup saves language and field; Aditya’s ECE example follows exp
   await page.getByRole('button', { name: 'Add subject', exact: true }).click();
   await page.getByRole('link', { name: 'Home', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Continue learning', exact: true })).toBeVisible();
-  await expect(page.locator('.language-tag')).toHaveText('Odia + English terms');
+  // The header language tag became the Lab extension status (#25); the saved language shows on Profile
   await page.getByRole('link', { name: 'Profile', exact: true }).click();
+  await expect(page.getByLabel('Learning language', { exact: true })).toHaveValue('Odia');
   for (const width of [320, 390, 768, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
@@ -49,7 +50,8 @@ test('generic setup saves language and field; Aditya’s ECE example follows exp
   await expect(page.getByText('Preferences saved', { exact: true })).toBeVisible();
   await page.goto('/concepts/C-AM-04');
   await expect(page.getByText('English explanations and technical terms.', { exact: true })).toBeVisible();
-  await expect(page.locator('.language-tag')).toHaveText('English explanations');
+  // The header shows the Lab extension status in place of the language tag (#25)
+  await expect(page.locator('.language-tag')).toHaveCount(0);
 });
 test('legacy sample keeps its enrollment and identity while its display name becomes Aditya', async ({ page }) => {
   await page.goto('/');
