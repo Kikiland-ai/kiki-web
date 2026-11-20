@@ -1,4 +1,4 @@
-const supported = /^\/(home|profile|learn|library(?:\/[A-Za-z0-9_-]+)?|practice|words|labs|subjects(?:\/[A-Za-z0-9_-]+(?:\/material)?)?|chapters\/[A-Za-z0-9_-]+|concepts\/[A-Za-z0-9_-]+|intake\/[A-Za-z0-9_-]+|labs\/[A-Za-z0-9_-]+|hardware\/[A-Za-z0-9_-]+|assessments\/[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+)(?:\?.*)?$/;
+const supported = /^\/(home|profile|learn|library(?:\/[A-Za-z0-9_-]+)?|practice|words|labs|subjects(?:\/[A-Za-z0-9_-]+(?:\/material)?)?|chapters\/[A-Za-z0-9_-]+|concepts\/[A-Za-z0-9_-]+(?:\/talk\/[A-Za-z0-9_-]+)?|intake\/[A-Za-z0-9_-]+|labs\/[A-Za-z0-9_-]+|hardware\/[A-Za-z0-9_-]+|assessments\/[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+)(?:\?.*)?$/;
 export function safeReturn(value: string | null | undefined): string {
   if (!value || value.includes('\\') || value.includes('%') || value.startsWith('//') || !supported.test(value)) return '/home';
   return value;

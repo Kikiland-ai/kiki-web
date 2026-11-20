@@ -41,6 +41,17 @@ for (const width of [1280, 390]) {
   });
 }
 
+test('a tutor link opened signed out survives sign-in and onboarding', async ({ page }) => {
+  const link = '/concepts/C-AM-03/talk/ece-am-envelope-design';
+  await page.goto(link);
+  await expect(page).toHaveURL(/\/auth\?returnTo=%2Fconcepts%2FC-AM-03%2Ftalk%2Fece-am-envelope-design$/);
+  await page.getByRole('button', { name: 'Open sample student' }).click();
+  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
+  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await expect(page).toHaveURL(new RegExp(`${link}$`));
+  await expect(page.getByRole('button', { name: 'Start talking it through' })).toBeVisible();
+});
+
 test('Odia session shows Odia lines with the machine-draft label', async ({ page }) => {
   await sampleStudent(page);
   await page.goto('/concepts/C-AM-08/talk/ece-phase-error');
