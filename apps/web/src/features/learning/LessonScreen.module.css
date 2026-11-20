@@ -354,3 +354,8 @@
 .stageSlot { position: sticky; top: var(--learning-space-2); z-index: 2; scroll-margin-top: var(--learning-space-2); }
 .narratedNote { margin: 0; font: var(--learning-text-label); color: var(--learning-pencil); }
 @media (prefers-reduced-motion: reduce) { .readingNow, .readingDone { transition: none; } }
+
+/* tutor entry: own wrapping row so long question titles never widen the page */
+.talk { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px; min-width:0; }
+.talk > a { white-space:normal; max-width:100%; text-align:left; }
+.talkLabel { flex-basis:100%; font:var(--learning-text-label); color:var(--learning-pencil); }

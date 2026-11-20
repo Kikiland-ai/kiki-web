@@ -33,6 +33,8 @@ const paths: Record<string, ReactNode> = {
   account_tree: <><rect x="9" y="2" width="6" height="5" /><rect x="2" y="17" width="6" height="5" /><rect x="16" y="17" width="6" height="5" /><path d="M12 7v5H5v5m7-5h7v5" /></>,
   translate: <><path d="M2 5h11M7 2v3m3 0c-1 5-3 8-7 10m1-7c1 3 4 6 7 7M13 21l4-10 4 10m-6-4h4" /></>,
   language: <><circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><path d="M3 12h18" /></>,
+  category: <><rect x="3" y="3" width="7.5" height="7.5" rx="1.5" /><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" /><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" /><circle cx="17.25" cy="17.25" r="3.75" /></>,
+  forum: <><path d="M4 4h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" /><path d="M7 9h6M7 12h4" /></>,
 };
 export function Icon({ name, className = '' }: { name: string; className?: string }) {
   return <svg className={`material-symbols-rounded ${className}`} aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" focusable="false">{paths[name] ?? paths.info}</svg>;

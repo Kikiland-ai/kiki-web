@@ -1,0 +1,2356 @@
+{
+ "schema": "kiki-tutor-question/v1",
+ "id": "ece-am-envelope-design",
+ "version": "2026-11-20.1",
+ "courseId": "CRS-AC-ECE",
+ "conceptIds": [
+  "C-AM-03",
+  "C-AM-04",
+  "C-AM-07",
+  "C-AM-01"
+ ],
+ "difficulty": "hard",
+ "title": {
+  "en": "Designing an AM envelope detector",
+  "or": "AM Envelope detector ର Design"
+ },
+ "framing": {
+  "en": "A 1 MHz AM wave carries a 5 kHz tone at μ = 0.6. We'll budget its power, design the diode detector's RC, then see what changes at μ = 0.9.",
+  "or": "ଏକ 1 MHz AM wave μ = 0.6 ରେ ଗୋଟିଏ 5 kHz tone ବହନ କରେ। ଆମେ ଏହାର Power ହିସାବ କରିବା, Diode detector ର RC design କରିବା, ତାପରେ μ = 0.9 ରେ କଣ ବଦଳେ ଦେଖିବା।"
+ },
+ "languages": [
+  "en",
+  "or"
+ ],
+ "speech": {
+  "en": "scripted",
+  "or": "scripted"
+ },
+ "review": {
+  "content": "draft",
+  "languages": {
+   "en": "draft",
+   "or": "draft"
+  }
+ },
+ "metrics": [
+  {
+   "id": "conceptual-understanding",
+   "label": {
+    "en": "Conceptual understanding",
+    "or": "ଧାରଣା ବୁଝିବା"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "calculation-accuracy",
+   "label": {
+    "en": "Calculation accuracy",
+    "or": "ହିସାବର ସଠିକତା"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "design-judgement",
+   "label": {
+    "en": "Design judgement",
+    "or": "Design ବିଚାର"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "terms",
+   "label": {
+    "en": "Technical terms",
+    "or": "Technical term ବ୍ୟବହାର"
+   },
+   "dim": "words"
+  },
+  {
+   "id": "articulation",
+   "label": {
+    "en": "Explaining in English",
+    "or": "ଇଂରାଜୀରେ ବୁଝାଇବା"
+   },
+   "dim": "english"
+  }
+ ],
+ "misconceptions": [
+  {
+   "id": "sideband-no-half",
+   "desc": "Takes total sideband power as μ²Pc instead of μ²Pc/2 (forgets that each sideband line is only μAc/2 tall).",
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-04"
+   ]
+  },
+  {
+   "id": "mu-not-squared",
+   "desc": "Uses μ instead of μ² in AM power or efficiency (power is proportional to amplitude squared).",
+   "conceptIds": [
+    "C-AM-03"
+   ]
+  },
+  {
+   "id": "eta-equals-mu",
+   "desc": "Confuses the modulation index μ (envelope depth) with the power efficiency η.",
+   "conceptIds": [
+    "C-AM-03"
+   ]
+  },
+  {
+   "id": "rc-carrier-only",
+   "desc": "Chooses the detector RC only from the carrier (ripple) side: bigger is smoother and better; ignores the message/μ-dependent upper limit (diagonal clipping).",
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-07"
+   ]
+  },
+  {
+   "id": "M-AM-01",
+   "desc": "Uses a frequency in Hz where an angular frequency in rad/s is required (ledger M-AM-01), here fm for ωm in the clipping limit.",
+   "conceptIds": [
+    "C-AM-01"
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "id": "T-AM-03-1",
+   "term": "amplitude modulation",
+   "alsoAccept": [
+    "AM",
+    "conventional AM"
+   ]
+  },
+  {
+   "id": "T-AM-03-3",
+   "term": "modulation index",
+   "alsoAccept": [
+    "modulation depth",
+    "mu",
+    "depth of modulation"
+   ]
+  },
+  {
+   "id": "T-AM-02-2",
+   "term": "carrier",
+   "alsoAccept": [
+    "carrier wave"
+   ]
+  },
+  {
+   "id": "T-AM-04-2",
+   "term": "sideband",
+   "alsoAccept": [
+    "sidebands",
+    "upper sideband",
+    "lower sideband"
+   ]
+  },
+  {
+   "id": "T-AM-03-2",
+   "term": "envelope",
+   "alsoAccept": [
+    "envelope detector"
+   ]
+  },
+  {
+   "id": "T-AM-07-1",
+   "term": "lowpass filter",
+   "alsoAccept": [
+    "low-pass filter",
+    "LPF"
+   ]
+  }
+ ],
+ "board": {
+  "q": {
+   "id": "q",
+   "kind": "question",
+   "text": {
+    "en": "s(t) = 10[1 + 0.6cos(2π·5×10³t)]cos(2π·10⁶t) V feeds a diode envelope detector whose load is R = 10 kΩ in parallel with C. (a) Find the carrier, sideband and total power, and the efficiency η. (b) Between which limits must RC lie, and why? (c) Find the largest RC for which the output still follows the envelope, and choose C. (d) If μ is raised to 0.9, does your detector still work? What must change, and what does η gain?",
+    "or": "s(t) = 10[1 + 0.6cos(2π·5×10³t)]cos(2π·10⁶t) V ଏକ Diode envelope detector କୁ ଯାଏ, ଯାହାର Load R = 10 kΩ ସହ C parallel ରେ ଅଛି। (a) Carrier, Sideband ଓ ମୋଟ Power ଏବଂ Efficiency η ବାହାର କରନ୍ତୁ। (b) RC କେଉଁ ସୀମା ମଝିରେ ରହିବା ଦରକାର, ଏବଂ କାହିଁକି? (c) Output Envelope କୁ ଅନୁସରଣ କରୁଥିବା ସବୁଠାରୁ ବଡ଼ RC ବାହାର କରି C ବାଛନ୍ତୁ। (d) μ କୁ 0.9 କଲେ Detector କାମ କରିବ କି? କଣ ବଦଳାଇବାକୁ ପଡ଼ିବ, ଏବଂ η କେତେ ବଢ଼େ?"
+   },
+   "given": [
+    {
+     "en": "Carrier fc = 1 MHz, amplitude Ac = 10 V; single-tone message fm = 5 kHz; modulation index μ = 0.6.",
+     "or": "Carrier fc = 1 MHz, Amplitude Ac = 10 V; ଗୋଟିଏ Tone message fm = 5 kHz; Modulation index μ = 0.6।"
+    },
+    {
+     "en": "Ideal diode; detector load R = 10 kΩ with capacitor C across it.",
+     "or": "Ideal diode; Detector load R = 10 kΩ, ତା ସହ Capacitor C parallel ରେ।"
+    },
+    {
+     "en": "Powers are normalised to a 1 Ω load.",
+     "or": "Power 1 Ω load ପାଇଁ normalised।"
+    }
+   ]
+  },
+  "fig-spec": {
+   "id": "fig-spec",
+   "kind": "figure",
+   "template": "spectrum",
+   "caption": {
+    "en": "Spectrum of s(t): carrier 10 V at 1 MHz, sidebands μAc/2 = 3 V at ±5 kHz",
+    "or": "s(t) ର Spectrum: 1 MHz ରେ 10 V Carrier, ±5 kHz ରେ μAc/2 = 3 V Sideband"
+   },
+   "params": {
+    "lines": [
+     {
+      "f": 995,
+      "a": 3,
+      "label": {
+       "en": "LSB 995 kHz"
+      },
+      "style": "sideband"
+     },
+     {
+      "f": 1000,
+      "a": 10,
+      "label": {
+       "en": "Carrier 1000 kHz"
+      },
+      "style": "carrier"
+     },
+     {
+      "f": 1005,
+      "a": 3,
+      "label": {
+       "en": "USB 1005 kHz"
+      },
+      "style": "sideband"
+     }
+    ],
+    "fRange": [
+     990,
+     1010
+    ],
+    "unit": "kHz"
+   }
+  },
+  "eq-power": {
+   "id": "eq-power",
+   "kind": "equation",
+   "tex": "P_c=\\frac{A_c^2}{2},\\qquad P_{SB}=\\frac{\\mu^2}{2}P_c,\\qquad P_t=P_c\\left(1+\\frac{\\mu^2}{2}\\right)",
+   "label": {
+    "en": "AM power (1 Ω): each sideband carries μ²Pc/4",
+    "or": "AM power (1 Ω): ପ୍ରତି Sideband μ²Pc/4 ବହନ କରେ"
+   }
+  },
+  "step-pc": {
+   "id": "step-pc",
+   "kind": "step",
+   "tex": "P_c=\\frac{10^2}{2}=50\\ \\text{W}",
+   "note": {
+    "en": "Carrier power alone.",
+    "or": "କେବଳ Carrier power।"
+   }
+  },
+  "step-psb": {
+   "id": "step-psb",
+   "kind": "step",
+   "tex": "P_{SB}=2\\times\\frac{(\\mu A_c/2)^2}{2}=2\\times\\frac{3^2}{2}=\\frac{0.36}{2}\\times 50=9\\ \\text{W}",
+   "note": {
+    "en": "Two sidebands of 3 V each: 4.5 W each.",
+    "or": "ପ୍ରତ୍ୟେକ 3 V ର ଦୁଇଟି Sideband: ପ୍ରତ୍ୟେକ 4.5 W।"
+   }
+  },
+  "res-power": {
+   "id": "res-power",
+   "kind": "result",
+   "tex": "P_t=50+9=59\\ \\text{W}",
+   "text": {
+    "en": "Carrier 50 W, sidebands 9 W, total 59 W.",
+    "or": "Carrier 50 W, Sideband 9 W, ମୋଟ 59 W।"
+   }
+  },
+  "eq-eta": {
+   "id": "eq-eta",
+   "kind": "equation",
+   "tex": "\\eta=\\frac{P_{SB}}{P_t}=\\frac{\\mu^2}{2+\\mu^2}",
+   "label": {
+    "en": "Power efficiency of AM",
+    "or": "AM ର Power efficiency"
+   }
+  },
+  "step-eta": {
+   "id": "step-eta",
+   "kind": "step",
+   "tex": "\\eta=\\frac{9}{59}=\\frac{0.36}{2.36}=0.153",
+   "note": {
+    "en": "μ = 0.6 is the depth of the envelope swing, not the power share.",
+    "or": "μ = 0.6 Envelope ର ଗଭୀରତା, Power ର ଅଂଶ ନୁହେଁ।"
+   }
+  },
+  "res-eta": {
+   "id": "res-eta",
+   "kind": "result",
+   "tex": "\\eta\\approx 15.3\\%",
+   "text": {
+    "en": "About 85% of the transmitted power is carrier.",
+    "or": "ପ୍ରାୟ 85% Power Carrier ରେ ଯାଏ।"
+   }
+  },
+  "fig-block": {
+   "id": "fig-block",
+   "kind": "figure",
+   "template": "block",
+   "caption": {
+    "en": "Diode envelope detector: C charges on carrier peaks, R discharges it between peaks",
+    "or": "Diode envelope detector: Carrier peak ରେ C Charge ହୁଏ, ମଝିରେ R ଦେଇ Discharge ହୁଏ"
+   },
+   "params": {
+    "blocks": [
+     {
+      "id": "src",
+      "label": {
+       "en": "AM input s(t)",
+       "or": "AM input s(t)"
+      },
+      "kind": "source"
+     },
+     {
+      "id": "det",
+      "label": {
+       "en": "Diode + R‖C (R = 10 kΩ)",
+       "or": "Diode + R‖C (R = 10 kΩ)"
+      },
+      "kind": "filter"
+     },
+     {
+      "id": "dcb",
+      "label": {
+       "en": "DC-blocking capacitor",
+       "or": "DC-blocking capacitor"
+      },
+      "kind": "filter"
+     },
+     {
+      "id": "out",
+      "label": {
+       "en": "Recovered message",
+       "or": "ଫେରିଥିବା Message"
+      },
+      "kind": "output"
+     }
+    ],
+    "edges": [
+     {
+      "from": "src",
+      "to": "det"
+     },
+     {
+      "from": "det",
+      "to": "dcb",
+      "label": "≈ 10 + 6cos(ωm t)"
+     },
+     {
+      "from": "dcb",
+      "to": "out",
+      "label": "≈ 6cos(ωm t)"
+     }
+    ]
+   }
+  },
+  "fig-wave": {
+   "id": "fig-wave",
+   "kind": "figure",
+   "template": "waveform",
+   "caption": {
+    "en": "AM wave at μ = 0.6: the envelope swings from 4 V to 16 V (carrier drawn at 20× the tone, not 200×)",
+    "or": "μ = 0.6 ରେ AM wave: Envelope 4 V ରୁ 16 V ମଧ୍ୟରେ (Carrier ସ୍ପଷ୍ଟତା ପାଇଁ Tone ର 200× ବଦଳରେ 20× ଦେଖାଯାଇଛି)"
+   },
+   "params": {
+    "series": [
+     {
+      "label": {
+       "en": "s(t)"
+      },
+      "tones": [
+       {
+        "a": 10,
+        "f": 100
+       },
+       {
+        "a": 3,
+        "f": 95
+       },
+       {
+        "a": 3,
+        "f": 105
+       }
+      ],
+      "style": "signal"
+     },
+     {
+      "label": {
+       "en": "envelope",
+       "or": "Envelope"
+      },
+      "tones": [
+       {
+        "a": 10,
+        "f": 0
+       },
+       {
+        "a": 6,
+        "f": 5
+       }
+      ],
+      "style": "envelope"
+     },
+     {
+      "label": {
+       "en": "−envelope",
+       "or": "−Envelope"
+      },
+      "tones": [
+       {
+        "a": -10,
+        "f": 0
+       },
+       {
+        "a": -6,
+        "f": 5
+       }
+      ],
+      "style": "envelope"
+     }
+    ],
+    "t": [
+     0,
+     0.4
+    ],
+    "yRange": [
+     -17,
+     17
+    ],
+    "xLabel": {
+     "en": "time (ms)",
+     "or": "ସମୟ (ms)"
+    },
+    "yLabel": {
+     "en": "volts",
+     "or": "Volt"
+    }
+   }
+  },
+  "step-window": {
+   "id": "step-window",
+   "kind": "step",
+   "tex": "T_c=\\frac{1}{f_c}=1\\ \\mu\\text{s},\\qquad T_m=\\frac{1}{f_m}=200\\ \\mu\\text{s}",
+   "note": {
+    "en": "The two time scales RC must sit between.",
+    "or": "RC ଏହି ଦୁଇ ସମୟ ମଝିରେ ରହିବା ଦରକାର।"
+   }
+  },
+  "res-window": {
+   "id": "res-window",
+   "kind": "result",
+   "tex": "1\\ \\mu\\text{s}\\ll RC\\ll 200\\ \\mu\\text{s}",
+   "text": {
+    "en": "RC much longer than a carrier period, much shorter than a message period.",
+    "or": "RC, Carrier period ଠାରୁ ବହୁତ ବଡ଼ ଓ Message period ଠାରୁ ବହୁତ ଛୋଟ।"
+   }
+  },
+  "note-window-why": {
+   "id": "note-window-why",
+   "kind": "note",
+   "text": {
+    "en": "RC too small: C empties between carrier peaks, so carrier ripple leaks out. RC too large: C cannot discharge as fast as the envelope falls, so the output lags in a straight line (diagonal clipping).",
+    "or": "RC ବହୁତ ଛୋଟ: Carrier peak ମଝିରେ C ଖାଲି ହୁଏ, Carrier ripple ବାହାରେ। RC ବହୁତ ବଡ଼: Envelope ଖସିବା ପରି ଶୀଘ୍ର C Discharge ହୋଇପାରେ ନାହିଁ, Output ସିଧା ରେଖାରେ ପଛରେ ରହେ (Diagonal clipping)।"
+   }
+  },
+  "eq-clip": {
+   "id": "eq-clip",
+   "kind": "equation",
+   "tex": "RC\\le\\frac{\\sqrt{1-\\mu^2}}{\\mu\\,\\omega_m},\\qquad \\omega_m=2\\pi f_m",
+   "label": {
+    "en": "No diagonal clipping (ωm in rad/s)",
+    "or": "Diagonal clipping ନ ହେବା ସର୍ତ୍ତ (ωm rad/s ରେ)"
+   }
+  },
+  "note-slope": {
+   "id": "note-slope",
+   "kind": "note",
+   "text": {
+    "en": "Why: the capacitor's voltage can fall at most at rate E/RC. It must beat the envelope's fall |dE/dt| = Acμωm·sin(ωm t) at every instant; the worst instant is cos(ωm t) = −μ.",
+    "or": "କାରଣ: Capacitor voltage ସର୍ବାଧିକ E/RC ହାରରେ ଖସେ। ଏହା ପ୍ରତି ମୁହୂର୍ତ୍ତରେ Envelope ର ଖସିବା |dE/dt| ଠାରୁ ଅଧିକ ହେବା ଦରକାର; ସବୁଠାରୁ ଖରାପ ମୁହୂର୍ତ୍ତ cos(ωm t) = −μ।"
+   }
+  },
+  "step-wm": {
+   "id": "step-wm",
+   "kind": "step",
+   "tex": "\\omega_m=2\\pi\\times 5000=31\\,416\\ \\text{rad/s}",
+   "note": {
+    "en": "Angular frequency, not Hz.",
+    "or": "Angular frequency, Hz ନୁହେଁ।"
+   }
+  },
+  "step-clip": {
+   "id": "step-clip",
+   "kind": "step",
+   "tex": "RC_{\\max}=\\frac{\\sqrt{1-0.36}}{0.6\\times 31\\,416}=\\frac{0.8}{18\\,850}=42.4\\ \\mu\\text{s}",
+   "note": {
+    "en": "Well inside the loose 200 µs bound.",
+    "or": "ଢିଲା 200 µs ସୀମା ଭିତରେ।"
+   }
+  },
+  "res-clip": {
+   "id": "res-clip",
+   "kind": "result",
+   "tex": "RC_{\\max}\\approx 42.4\\ \\mu\\text{s}\\ \\Rightarrow\\ C_{\\max}=\\frac{42.4\\ \\mu\\text{s}}{10\\ \\text{k}\\Omega}\\approx 4.24\\ \\text{nF}",
+   "text": {
+    "en": "At μ = 0.6, C must not exceed about 4.2 nF.",
+    "or": "μ = 0.6 ରେ C ପ୍ରାୟ 4.2 nF ରୁ ଅଧିକ ହେବା ଉଚିତ ନୁହେଁ।"
+   }
+  },
+  "step-choose": {
+   "id": "step-choose",
+   "kind": "step",
+   "tex": "C=2.2\\ \\text{nF}\\Rightarrow RC=22\\ \\mu\\text{s}:\\quad 22\\,T_c\\ (\\approx 4\\%\\ \\text{droop per carrier cycle}),\\quad 22<42.4\\ \\mu\\text{s}",
+   "note": {
+    "en": "A standard value with margin on both sides; any C from about 1 to 4 nF is defensible.",
+    "or": "ଦୁଇ ପାଖରେ Margin ଥିବା ଏକ Standard value; ପ୍ରାୟ 1 ରୁ 4 nF ଯେକୌଣସି C ଯୁକ୍ତିସଙ୍ଗତ।"
+   }
+  },
+  "res-choose": {
+   "id": "res-choose",
+   "kind": "result",
+   "tex": "C=2.2\\ \\text{nF}\\ (RC=22\\ \\mu\\text{s})",
+   "text": {
+    "en": "Chosen: 2.2 nF across 10 kΩ.",
+    "or": "ବଛାଗଲା: 10 kΩ ସହ 2.2 nF।"
+   }
+  },
+  "note-47": {
+   "id": "note-47",
+   "kind": "note",
+   "text": {
+    "en": "C = 4.7 nF gives RC = 47 µs > 42.4 µs: in simulation the output overshoots the falling envelope by about 0.18 V. 10 nF (100 µs) overshoots by about 3 V.",
+    "or": "C = 4.7 nF ରେ RC = 47 µs > 42.4 µs: Simulation ରେ Output ଖସୁଥିବା Envelope ଠାରୁ ପ୍ରାୟ 0.18 V ଉପରେ ରହେ। 10 nF (100 µs) ରେ ପ୍ରାୟ 3 V।"
+   }
+  },
+  "fig-wave-mu": {
+   "id": "fig-wave-mu",
+   "kind": "figure",
+   "template": "waveform",
+   "caption": {
+    "en": "Envelopes at μ = 0.6 and μ = 0.9: the deeper one falls faster and dips to 1 V",
+    "or": "μ = 0.6 ଓ μ = 0.9 ରେ Envelope: ଗଭୀରଟି ଶୀଘ୍ର ଖସେ ଓ 1 V ପର୍ଯ୍ୟନ୍ତ ତଳକୁ ଯାଏ"
+   },
+   "params": {
+    "series": [
+     {
+      "label": {
+       "en": "μ = 0.6"
+      },
+      "tones": [
+       {
+        "a": 10,
+        "f": 0
+       },
+       {
+        "a": 6,
+        "f": 5
+       }
+      ],
+      "style": "reference"
+     },
+     {
+      "label": {
+       "en": "μ = 0.9"
+      },
+      "tones": [
+       {
+        "a": 10,
+        "f": 0
+       },
+       {
+        "a": 9,
+        "f": 5
+       }
+      ],
+      "style": "envelope"
+     }
+    ],
+    "t": [
+     0,
+     0.4
+    ],
+    "yRange": [
+     0,
+     20
+    ],
+    "xLabel": {
+     "en": "time (ms)",
+     "or": "ସମୟ (ms)"
+    },
+    "yLabel": {
+     "en": "volts",
+     "or": "Volt"
+    }
+   }
+  },
+  "step-mu09": {
+   "id": "step-mu09",
+   "kind": "step",
+   "tex": "RC_{\\max}(0.9)=\\frac{\\sqrt{1-0.81}}{0.9\\times 31\\,416}=\\frac{0.436}{28\\,274}=15.4\\ \\mu\\text{s}<22\\ \\mu\\text{s}",
+   "note": {
+    "en": "The 2.2 nF detector now clips diagonally.",
+    "or": "2.2 nF Detector ଏବେ Diagonal clipping କରେ।"
+   }
+  },
+  "res-mu09": {
+   "id": "res-mu09",
+   "kind": "result",
+   "tex": "C\\le\\frac{15.4\\ \\mu\\text{s}}{10\\ \\text{k}\\Omega}=1.54\\ \\text{nF}\\ \\Rightarrow\\ C=1.5\\ \\text{nF}\\ (RC=15\\ \\mu\\text{s}=15\\,T_c)",
+   "text": {
+    "en": "Swap to 1.5 nF; it works at μ = 0.6 too.",
+    "or": "1.5 nF କୁ ବଦଳାନ୍ତୁ; ଏହା μ = 0.6 ରେ ମଧ୍ୟ କାମ କରେ।"
+   }
+  },
+  "step-eta09": {
+   "id": "step-eta09",
+   "kind": "step",
+   "tex": "\\eta(0.9)=\\frac{0.81}{2.81}=28.8\\%\\quad(P_{SB}=20.25\\ \\text{W of}\\ 70.25\\ \\text{W})",
+   "note": {
+    "en": "Efficiency nearly doubles, from 15.3%.",
+    "or": "Efficiency 15.3% ରୁ ପ୍ରାୟ ଦୁଇଗୁଣ ହୁଏ।"
+   }
+  },
+  "note-mu1": {
+   "id": "note-mu1",
+   "kind": "note",
+   "text": {
+    "en": "As μ → 1 the limit √(1−μ²)/(μωm) → 0 (only 4.5 µs at μ = 0.99) while RC must stay ≫ 1 µs: the window closes. And η can never pass 1/3.",
+    "or": "μ → 1 ହେଲେ ସୀମା √(1−μ²)/(μωm) → 0 (μ = 0.99 ରେ କେବଳ 4.5 µs), କିନ୍ତୁ RC ≫ 1 µs ରହିବା ଦରକାର: Window ବନ୍ଦ ହୁଏ। ଏବଂ η କେବେ 1/3 ପାର କରେ ନାହିଁ।"
+   }
+  },
+  "res-final": {
+   "id": "res-final",
+   "kind": "result",
+   "tex": "\\frac{1}{f_c}\\ll RC\\le\\frac{\\sqrt{1-\\mu^2}}{\\mu\\,\\omega_m}",
+   "text": {
+    "en": "η = 15.3%; RC limit 42.4 µs at μ = 0.6 and 15.4 µs at μ = 0.9; C = 1.5 nF with 10 kΩ serves both. Near μ = 1 no RC satisfies both bounds.",
+    "or": "η = 15.3%; μ = 0.6 ରେ RC ସୀମା 42.4 µs, μ = 0.9 ରେ 15.4 µs; 10 kΩ ସହ C = 1.5 nF ଦୁଇଟିରେ ଚଳେ। μ = 1 ପାଖରେ କୌଣସି RC ଦୁଇ ସୀମା ପୂରଣ କରେ ନାହିଁ।"
+   }
+  },
+  "term-T-AM-03-1": {
+   "id": "term-T-AM-03-1",
+   "kind": "term",
+   "termId": "T-AM-03-1"
+  },
+  "term-T-AM-03-3": {
+   "id": "term-T-AM-03-3",
+   "kind": "term",
+   "termId": "T-AM-03-3"
+  },
+  "term-T-AM-02-2": {
+   "id": "term-T-AM-02-2",
+   "kind": "term",
+   "termId": "T-AM-02-2"
+  },
+  "term-T-AM-04-2": {
+   "id": "term-T-AM-04-2",
+   "kind": "term",
+   "termId": "T-AM-04-2"
+  },
+  "term-T-AM-03-2": {
+   "id": "term-T-AM-03-2",
+   "kind": "term",
+   "termId": "T-AM-03-2"
+  },
+  "term-T-AM-07-1": {
+   "id": "term-T-AM-07-1",
+   "kind": "term",
+   "termId": "T-AM-07-1"
+  }
+ },
+ "pinned": [
+  "q"
+ ],
+ "stages": [
+  {
+   "id": "power",
+   "title": {
+    "en": "Power budget",
+    "or": "Power ହିସାବ"
+   },
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-04"
+   ],
+   "intro": {
+    "say": {
+     "en": "First, the transmitter's power budget for this amplitude modulation wave.",
+     "or": "ପ୍ରଥମେ, ଏହି Amplitude modulation wave ର Transmitter power ହିସାବ।"
+    },
+    "reveal": [
+     {
+      "item": "term-T-AM-03-1",
+      "on": "say:amplitude modulation"
+     },
+     {
+      "item": "term-T-AM-03-3",
+      "on": "speech-end"
+     },
+     {
+      "item": "term-T-AM-02-2",
+      "on": "speech-end"
+     }
+    ]
+   },
+   "start": "p-power",
+   "nodes": {
+    "p-power": {
+     "kind": "probe",
+     "goal": "Student finds Pc = Ac²/2 = 50 W, sideband power μ²Pc/2 = 9 W (4.5 W each) and total 59 W.",
+     "line": {
+      "say": {
+       "en": "Into 1 Ω, how much power sits in the carrier, how much in the two sidebands, and what is the total?",
+       "or": "1 Ω ରେ Carrier ରେ କେତେ Power, ଦୁଇଟି Sideband ରେ କେତେ, ଏବଂ ମୋଟ କେତେ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "pt-59",
+       "desc": "Pc = Ac²/2 = 50 W; sidebands μ²Pc/2 = 9 W in total (4.5 W each); total 59 W, i.e. Pc(1 + μ²/2).",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "p-eff",
+       "reveal": [
+        "step-pc",
+        "step-psb",
+        "res-power",
+        "term-T-AM-04-2"
+       ],
+       "ack": {
+        "en": "Yes: 50 W of carrier, 9 W of sidebands, 59 W in all.",
+        "or": "ହଁ: Carrier 50 W, Sideband 9 W, ମୋଟ 59 W।"
+       }
+      },
+      {
+       "id": "carrier-right-only",
+       "desc": "Gets Pc = 50 W but omits the sideband and total power, or gets them wrong in a way that is not a catalogued slip (not 18/68 W, not 15/65 W).",
+       "metric": "calculation-accuracy",
+       "level": "partial",
+       "next": "show-psb",
+       "reveal": [
+        "step-pc",
+        "step-psb",
+        "res-power",
+        "term-T-AM-04-2"
+       ],
+       "ack": {
+        "en": "The carrier is right. Now the sidebands.",
+        "or": "Carrier ଠିକ୍। ଏବେ Sideband ଗୁଡ଼ିକ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "sideband-no-half",
+       "desc": "Takes total sideband power as μ²Pc = 18 W (total 68 W), dropping the factor ½.",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-half",
+       "reveal": [
+        "step-pc",
+        "step-psb",
+        "res-power",
+        "term-T-AM-04-2"
+       ],
+       "ack": {
+        "en": "Not yet. Check how tall each sideband line is.",
+        "or": "ଏବେ ନୁହେଁ। ପ୍ରତି Sideband line କେତେ ଉଚ୍ଚ ଦେଖନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "mu-not-squared",
+       "desc": "Uses μ instead of μ²: sideband power μPc/2 = 15 W, total 65 W.",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-squared",
+       "reveal": [
+        "step-pc",
+        "step-psb",
+        "res-power",
+        "term-T-AM-04-2"
+       ],
+       "ack": {
+        "en": "Not yet. Power goes with amplitude squared.",
+        "or": "ଏବେ ନୁହେଁ। Power, Amplitude ର Square ସହ ଯାଏ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "What spectral lines does this wave contain, and how tall is each?",
+        "or": "ଏହି Wave ରେ କେଉଁ Spectral line ଅଛି, ଏବଂ ପ୍ରତ୍ୟେକ କେତେ ଉଚ୍ଚ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Each sideband has amplitude μAc/2, and a cosine of peak A delivers A²/2 into 1 Ω.",
+        "or": "ପ୍ରତି Sideband ର Amplitude μAc/2, ଏବଂ Peak A ର Cosine 1 Ω ରେ A²/2 Power ଦିଏ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "The carrier is 10 V and each sideband is 3 V. Square, halve and add.",
+        "or": "Carrier 10 V ଓ ପ୍ରତି Sideband 3 V। Square କରି, ଅଧା କରି, ଯୋଡ଼ନ୍ତୁ।"
+       },
+       "reveal": [
+        {
+         "item": "fig-spec",
+         "on": "enter"
+        },
+        {
+         "item": "eq-power",
+         "on": "enter"
+        }
+       ],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "Pc = 50 W, each sideband 4.5 W, so 9 W of sidebands and 59 W in total.",
+        "or": "Pc = 50 W, ପ୍ରତି Sideband 4.5 W, ତେଣୁ Sideband 9 W ଓ ମୋଟ 59 W।"
+       },
+       "reveal": [
+        {
+         "item": "step-pc",
+         "on": "speech-end"
+        },
+        {
+         "item": "step-psb",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-power",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "59 W total",
+        "or": "ମୋଟ 59 W"
+       },
+       "text": "Carrier 50 W, sidebands 9 W, total 59 W.",
+       "route": "pt-59"
+      },
+      {
+       "label": {
+        "en": "68 W total",
+        "or": "ମୋଟ 68 W"
+       },
+       "text": "Sidebands are mu squared times 50, so 18 W; total 68 W.",
+       "route": "sideband-no-half"
+      },
+      {
+       "label": {
+        "en": "65 W total",
+        "or": "ମୋଟ 65 W"
+       },
+       "text": "Sidebands are 0.6 times 50 over 2, so 15 W; total 65 W.",
+       "route": "mu-not-squared"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-pc",
+      "step-psb",
+      "res-power"
+     ],
+     "mustNotReveal": [
+      "59",
+      "9 W",
+      "4.5",
+      "50 W",
+      "18 W"
+     ]
+    },
+    "show-psb": {
+     "kind": "show",
+     "goal": "Each sideband is μAc/2 = 3 V, so 4.5 W each, 9 W together, 59 W total.",
+     "line": {
+      "say": {
+       "en": "Each sideband is μAc/2 = 3 V, so 3²/2 = 4.5 W. Two of them make 9 W, and 59 W in total.",
+       "or": "ପ୍ରତି Sideband μAc/2 = 3 V, ତେଣୁ 3²/2 = 4.5 W। ଦୁଇଟି ମିଶି 9 W, ମୋଟ 59 W।"
+      },
+      "reveal": [
+       {
+        "item": "eq-power",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "step-psb"
+      ]
+     },
+     "next": "p-eff"
+    },
+    "show-half": {
+     "kind": "show",
+     "goal": "Counter sideband-no-half: each line is μAc/2 tall, carrying μ²Pc/4; both give μ²Pc/2 = 9 W, not 18 W.",
+     "line": {
+      "say": {
+       "en": "Each sideband line is only μAc/2 = 3 V tall, so it carries μ²Pc/4. Both together give 9 W, not 18 W.",
+       "or": "ପ୍ରତି Sideband line କେବଳ μAc/2 = 3 V ଉଚ୍ଚ, ତେଣୁ μ²Pc/4 ବହନ କରେ। ଦୁଇଟି ମିଶି 9 W, 18 W ନୁହେଁ।"
+      },
+      "reveal": [
+       {
+        "item": "fig-spec",
+        "on": "enter"
+       },
+       {
+        "item": "eq-power",
+        "on": "speech-end"
+       }
+      ],
+      "focus": [
+       "step-psb"
+      ]
+     },
+     "next": "p-eff"
+    },
+    "show-squared": {
+     "kind": "show",
+     "goal": "Counter mu-not-squared: power scales with amplitude squared, so μ enters as μ² = 0.36.",
+     "line": {
+      "say": {
+       "en": "Power follows amplitude squared, so μ enters as μ² = 0.36. That gives 9 W of sidebands, not 15 W.",
+       "or": "Power, Amplitude ର Square ଅନୁସରଣ କରେ, ତେଣୁ μ, μ² = 0.36 ଭାବେ ଆସେ। ତେଣୁ Sideband 9 W, 15 W ନୁହେଁ।"
+      },
+      "reveal": [
+       {
+        "item": "eq-power",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "step-psb"
+      ]
+     },
+     "next": "p-eff"
+    },
+    "p-eff": {
+     "kind": "probe",
+     "goal": "Student computes η = P_SB/P_t = 9/59 ≈ 15.3% (= μ²/(2+μ²)).",
+     "line": {
+      "say": {
+       "en": "Only the sidebands carry the tone. What is the power efficiency η of this wave?",
+       "or": "କେବଳ Sideband ଗୁଡ଼ିକ Tone ବହନ କରନ୍ତି। ଏହି Wave ର Power efficiency η କେତେ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "eta-15",
+       "desc": "η = P_SB/P_t = 9/59 ≈ 15.3% (equivalently μ²/(2+μ²) = 0.36/2.36); 15% counts.",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "eq-eta",
+        "step-eta",
+        "res-eta"
+       ],
+       "ack": {
+        "en": "Right: about 15%, so 85% of the power is carrier.",
+        "or": "ଠିକ୍: ପ୍ରାୟ 15%, ଅର୍ଥାତ୍ 85% Power Carrier ରେ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "eta-equals-mu",
+       "desc": "Says η = 60% (or 0.6), taking the modulation index itself as the efficiency.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-eta-not-mu",
+       "reveal": [
+        "eq-eta",
+        "step-eta",
+        "res-eta"
+       ],
+       "ack": {
+        "en": "Not yet. μ measures depth, not power share.",
+        "or": "ଏବେ ନୁହେଁ। μ ଗଭୀରତା ମାପେ, Power ର ଅଂଶ ନୁହେଁ।"
+       }
+      },
+      {
+       "id": "sideband-no-half",
+       "desc": "Gets η ≈ 26.5% from 18/68 or μ²/(1+μ²), dropping the ½ in sideband power.",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-eta-recheck",
+       "reveal": [
+        "eq-eta",
+        "step-eta",
+        "res-eta"
+       ],
+       "ack": {
+        "en": "Not yet. Recheck the sideband power you divided.",
+        "or": "ଏବେ ନୁହେଁ। ଭାଗ କରିଥିବା Sideband power ପୁଣି ଦେଖନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "mu-not-squared",
+       "desc": "Gets η ≈ 23% from 15/65 or μ/(2+μ), using μ instead of μ².",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-eta-recheck",
+       "reveal": [
+        "eq-eta",
+        "step-eta",
+        "res-eta"
+       ],
+       "ack": {
+        "en": "Not yet. The index enters squared.",
+        "or": "ଏବେ ନୁହେଁ। Index ଟି Square ହୋଇ ଆସେ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "Efficiency is useful power over total power. Which power is useful here?",
+        "or": "Efficiency = ଉପଯୋଗୀ Power ÷ ମୋଟ Power। ଏଠାରେ କେଉଁ Power ଉପଯୋଗୀ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Divide the sideband power by the total you just found.",
+        "or": "Sideband power କୁ ଆପଣ ବାହାର କରିଥିବା ମୋଟ Power ରେ ଭାଗ କରନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "In general η = μ²/(2+μ²). Put μ = 0.6 in.",
+        "or": "ସାଧାରଣତଃ η = μ²/(2+μ²)। μ = 0.6 ବସାନ୍ତୁ।"
+       },
+       "reveal": [
+        {
+         "item": "eq-eta",
+         "on": "enter"
+        }
+       ],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "η = 9/59 = 0.36/2.36, about 15.3%.",
+        "or": "η = 9/59 = 0.36/2.36, ପ୍ରାୟ 15.3%।"
+       },
+       "reveal": [
+        {
+         "item": "step-eta",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-eta",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "About 15%",
+        "or": "ପ୍ରାୟ 15%"
+       },
+       "text": "About 15 percent, 9 out of 59 watts.",
+       "route": "eta-15"
+      },
+      {
+       "label": {
+        "en": "60%",
+        "or": "60%"
+       },
+       "text": "60 percent, because mu is 0.6.",
+       "route": "eta-equals-mu"
+      },
+      {
+       "label": {
+        "en": "About 26%",
+        "or": "ପ୍ରାୟ 26%"
+       },
+       "text": "18 over 68, about 26 percent.",
+       "route": "sideband-no-half"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-eta",
+      "res-eta"
+     ],
+     "mustNotReveal": [
+      "15",
+      "0.153",
+      "9/59",
+      "2.36",
+      "85%"
+     ]
+    },
+    "show-eta-not-mu": {
+     "kind": "show",
+     "goal": "Counter eta-equals-mu: μ is envelope depth; η is the sideband share of power, 9/59 ≈ 15%.",
+     "line": {
+      "say": {
+       "en": "μ = 0.6 says how deep the envelope swings. Efficiency is 9 W out of 59 W, about 15%.",
+       "or": "μ = 0.6 Envelope କେତେ ଗଭୀର ଦୋହଲେ ତାହା କହେ। Efficiency ହେଉଛି 59 W ରୁ 9 W, ପ୍ରାୟ 15%।"
+      },
+      "reveal": [],
+      "focus": [
+       "res-eta",
+       "eq-eta"
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-eta-recheck": {
+     "kind": "show",
+     "goal": "With the correct 9 W, η = 9/59 ≈ 15%; even μ = 1 caps η at 1/3.",
+     "line": {
+      "say": {
+       "en": "With the right 9 W of sidebands, η = 9/59, about 15%. Even at μ = 1 it cannot pass one third.",
+       "or": "ଠିକ୍ 9 W Sideband ସହ η = 9/59, ପ୍ରାୟ 15%। μ = 1 ରେ ମଧ୍ୟ ଏହା ଏକ-ତୃତୀୟାଂଶ ପାର କରେ ନାହିଁ।"
+      },
+      "reveal": [],
+      "focus": [
+       "step-eta"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "window",
+   "title": {
+    "en": "The RC window",
+    "or": "RC window"
+   },
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-07"
+   ],
+   "intro": {
+    "say": {
+     "en": "At the receiver, the diode charges C on each carrier peak, and R discharges it between peaks.",
+     "or": "Receiver ରେ Diode ପ୍ରତି Carrier peak ରେ C କୁ Charge କରେ, ଏବଂ ଦୁଇ Peak ମଝିରେ R ତାକୁ Discharge କରେ।"
+    },
+    "reveal": [
+     {
+      "item": "fig-block",
+      "on": "enter"
+     },
+     {
+      "item": "fig-wave",
+      "on": "speech-end"
+     },
+     {
+      "item": "term-T-AM-03-2",
+      "on": "speech-end"
+     }
+    ]
+   },
+   "start": "p-window",
+   "nodes": {
+    "p-window": {
+     "kind": "probe",
+     "goal": "Student states 1/fc = 1 µs ≪ RC ≪ 1/fm = 200 µs and gives both reasons: ripple if too small, failure to follow the falling envelope (diagonal clipping) if too large.",
+     "line": {
+      "say": {
+       "en": "Compare RC with the carrier period and the message period. Between which two times must it sit, and what goes wrong outside each end?",
+       "or": "RC କୁ Carrier period ଓ Message period ସହ ତୁଳନା କରନ୍ତୁ। ଏହା କେଉଁ ଦୁଇ ସମୟ ମଝିରେ ରହିବ, ଏବଂ ଦୁଇ ପାଖରେ ବାହାରେ କଣ ଭୁଲ ହୁଏ?"
+      },
+      "reveal": [],
+      "focus": [
+       "fig-block"
+      ]
+     },
+     "expect": [
+      {
+       "id": "window-both",
+       "desc": "1/fc = 1 µs ≪ RC ≪ 1/fm = 200 µs, with both reasons: too small and C discharges between carrier peaks (carrier ripple); too large and C cannot discharge as fast as the envelope falls (diagonal / negative-peak clipping).",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "step-window",
+        "res-window",
+        "note-window-why"
+       ],
+       "ack": {
+        "en": "Yes: 1 µs ≪ RC ≪ 200 µs, ripple below, lag above.",
+        "or": "ହଁ: 1 µs ≪ RC ≪ 200 µs, ତଳେ Ripple, ଉପରେ Lag।"
+       }
+      },
+      {
+       "id": "window-no-why",
+       "desc": "Gives the limits (1 µs and 200 µs, or 1/fc and 1/fm) but not both physical reasons, or gives wrong reasons.",
+       "metric": "conceptual-understanding",
+       "level": "partial",
+       "next": "show-window-why",
+       "reveal": [
+        "step-window",
+        "res-window",
+        "note-window-why"
+       ],
+       "ack": {
+        "en": "The limits are right. Now say why each one matters.",
+        "or": "ସୀମା ଠିକ୍। ଏବେ ପ୍ରତ୍ୟେକ କାହିଁକି ଦରକାର କୁହନ୍ତୁ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "rc-carrier-only",
+       "desc": "Constrains RC only from the carrier side: a bigger RC is always better or smoother; no upper limit from the message.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-too-big",
+       "reveal": [
+        "step-window",
+        "res-window",
+        "note-window-why"
+       ],
+       "ack": {
+        "en": "Not yet. A smoother output can also be a slower one.",
+        "or": "ଏବେ ନୁହେଁ। ଅଧିକ Smooth Output ଧୀର ମଧ୍ୟ ହୋଇପାରେ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "During one carrier cycle, what should the capacitor do? And over one message cycle?",
+        "or": "ଗୋଟିଏ Carrier cycle ରେ Capacitor କଣ କରିବା ଉଚିତ? ଏବଂ ଗୋଟିଏ Message cycle ରେ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Between carrier peaks C should barely discharge. Over a message cycle it must still follow the envelope down.",
+        "or": "Carrier peak ମଝିରେ C ପ୍ରାୟ Discharge ହେବା ଉଚିତ ନୁହେଁ। Message cycle ରେ ଏହା Envelope ସହ ତଳକୁ ଆସିବା ଦରକାର।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "The carrier period is 1/fc and the message period is 1/fm. Work both out in microseconds.",
+        "or": "Carrier period 1/fc ଓ Message period 1/fm। ଦୁଇଟିକୁ Microsecond ରେ ବାହାର କରନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "1 µs ≪ RC ≪ 200 µs. Too small gives carrier ripple; too large and C cannot follow the falling envelope, which is diagonal clipping.",
+        "or": "1 µs ≪ RC ≪ 200 µs। ବହୁତ ଛୋଟ ହେଲେ Carrier ripple; ବହୁତ ବଡ଼ ହେଲେ C ଖସୁଥିବା Envelope କୁ ଅନୁସରଣ କରିପାରେ ନାହିଁ, ଏହା Diagonal clipping।"
+       },
+       "reveal": [
+        {
+         "item": "step-window",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-window",
+         "on": "speech-end"
+        },
+        {
+         "item": "note-window-why",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "1 µs ≪ RC ≪ 200 µs",
+        "or": "1 µs ≪ RC ≪ 200 µs"
+       },
+       "text": "RC between 1 microsecond and 200 microseconds: smaller lets carrier ripple through, bigger can't follow the envelope.",
+       "route": "window-both"
+      },
+      {
+       "label": {
+        "en": "As large as possible",
+        "or": "ଯେତେ ବଡ଼ ସମ୍ଭବ"
+       },
+       "text": "Make RC as large as possible so the output is smooth.",
+       "route": "rc-carrier-only"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-window",
+      "res-window",
+      "note-window-why"
+     ],
+     "mustNotReveal": [
+      "1 µs",
+      "200 µs",
+      "ripple",
+      "diagonal clipping",
+      "clipping"
+     ]
+    },
+    "show-window-why": {
+     "kind": "show",
+     "goal": "Both reasons: below 1 µs the carrier leaks as ripple; near 200 µs C cannot follow the falling envelope.",
+     "line": {
+      "say": {
+       "en": "Below 1 µs, C empties between carrier peaks and the carrier leaks out as ripple. Near 200 µs, C empties too slowly to follow the envelope down.",
+       "or": "1 µs ତଳେ Carrier peak ମଝିରେ C ଖାଲି ହୁଏ, Carrier ripple ଭାବେ ବାହାରେ। 200 µs ପାଖରେ C ଏତେ ଧୀରେ ଖାଲି ହୁଏ ଯେ Envelope ସହ ତଳକୁ ଆସିପାରେ ନାହିଁ।"
+      },
+      "reveal": [
+       {
+        "item": "term-T-AM-07-1",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "note-window-why"
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-too-big": {
+     "kind": "show",
+     "goal": "Counter rc-carrier-only: the output can only fall at rate v/RC; a huge RC lags the falling envelope in a straight diagonal line.",
+     "line": {
+      "say": {
+       "en": "A huge RC is smooth, but its voltage can only fall at rate v/RC. When the envelope falls faster, the output lags behind in a straight line.",
+       "or": "ବହୁତ ବଡ଼ RC Smooth, କିନ୍ତୁ ଏହାର Voltage କେବଳ v/RC ହାରରେ ଖସେ। Envelope ଅଧିକ ଶୀଘ୍ର ଖସିଲେ Output ସିଧା ରେଖାରେ ପଛରେ ରହେ।"
+      },
+      "reveal": [
+       {
+        "item": "term-T-AM-07-1",
+        "on": "enter"
+       }
+      ],
+      "focus": [
+       "note-window-why",
+       "fig-wave"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "clipping",
+   "title": {
+    "en": "The clipping limit",
+    "or": "Clipping ସୀମା"
+   },
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-01"
+   ],
+   "intro": {
+    "say": {
+     "en": "'Much less than the message period' is vague. The falling envelope sets a sharp upper limit, and it depends on μ.",
+     "or": "'Message period ଠାରୁ ବହୁତ କମ' ଅସ୍ପଷ୍ଟ। ଖସୁଥିବା Envelope ଏକ ସ୍ପଷ୍ଟ ଉପର ସୀମା ଦିଏ, ଯାହା μ ଉପରେ ନିର୍ଭର କରେ।"
+    },
+    "reveal": []
+   },
+   "start": "p-clip",
+   "nodes": {
+    "p-clip": {
+     "kind": "probe",
+     "goal": "Student recalls RC ≤ √(1−μ²)/(μωm), uses ωm = 2π·5000 = 31 416 rad/s, and gets RC_max ≈ 42.4 µs (C_max ≈ 4.24 nF).",
+     "line": {
+      "say": {
+       "en": "At μ = 0.6, what is the largest RC for which the capacitor still follows the falling envelope? Give it in microseconds.",
+       "or": "μ = 0.6 ରେ, Capacitor ଖସୁଥିବା Envelope କୁ ଅନୁସରଣ କରିପାରୁଥିବା ସବୁଠାରୁ ବଡ଼ RC କେତେ? Microsecond ରେ କୁହନ୍ତୁ।"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "rcmax-42",
+       "desc": "RC_max = √(1−μ²)/(μωm) = 0.8/(0.6 × 31 416) ≈ 42 µs (C_max ≈ 4.2 nF with 10 kΩ). The same value in other units (0.0424 ms) counts.",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "p-choose",
+       "reveal": [
+        "eq-clip",
+        "note-slope",
+        "step-wm",
+        "step-clip",
+        "res-clip"
+       ],
+       "ack": {
+        "en": "Exactly: about 42 µs, so C up to about 4.2 nF.",
+        "or": "ଠିକ୍: ପ୍ରାୟ 42 µs, ତେଣୁ C ପ୍ରାୟ 4.2 nF ପର୍ଯ୍ୟନ୍ତ।"
+       }
+      },
+      {
+       "id": "formula-slip",
+       "desc": "Uses the slope condition but a slip spoils the number: drops the square root (≈ 34 µs), omits √(1−μ²) (1/(μωm) ≈ 53 µs), or gives 42.4 in the wrong unit (ms or s).",
+       "metric": "calculation-accuracy",
+       "level": "partial",
+       "next": "show-clip-formula",
+       "reveal": [
+        "eq-clip",
+        "note-slope",
+        "step-wm",
+        "step-clip",
+        "res-clip"
+       ],
+       "ack": {
+        "en": "Close. Recheck the formula and the unit.",
+        "or": "ପାଖାପାଖି। Formula ଓ Unit ପୁଣି ଦେଖନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "just-period",
+       "desc": "Gives the upper limit as the message period 1/fm = 200 µs (or a fixed fraction of it), with no dependence on μ.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-clip-formula",
+       "reveal": [
+        "eq-clip",
+        "note-slope",
+        "step-wm",
+        "step-clip",
+        "res-clip"
+       ],
+       "ack": {
+        "en": "Not yet. That is the loose bound; we need the sharp one.",
+        "or": "ଏବେ ନୁହେଁ। ତାହା ଢିଲା ସୀମା; ଆମକୁ ସ୍ପଷ୍ଟ ସୀମା ଦରକାର।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "M-AM-01",
+       "desc": "Uses fm = 5000 Hz in place of ωm = 2π·5000 rad/s, getting about 267 µs (C ≈ 27 nF).",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-rad",
+       "reveal": [
+        "eq-clip",
+        "note-slope",
+        "step-wm",
+        "step-clip",
+        "res-clip"
+       ],
+       "ack": {
+        "en": "Not yet. Does the formula want Hz or rad/s?",
+        "or": "ଏବେ ନୁହେଁ। Formula ରେ Hz ନା rad/s ଦରକାର?"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "The capacitor's voltage falls at rate v/RC. When is the envelope falling fastest compared with its own size?",
+        "or": "Capacitor voltage v/RC ହାରରେ ଖସେ। Envelope ନିଜ ଆକାର ତୁଳନାରେ କେବେ ସବୁଠାରୁ ଶୀଘ୍ର ଖସେ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Require the decay rate E/RC to beat the envelope's slope |dE/dt| at every instant, then take the worst instant.",
+        "or": "ପ୍ରତି ମୁହୂର୍ତ୍ତରେ Decay rate E/RC, Envelope slope |dE/dt| ଠାରୁ ଅଧିକ ହେବା ଦରକାର; ତାପରେ ସବୁଠାରୁ ଖରାପ ମୁହୂର୍ତ୍ତ ନିଅନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "The worst case gives RC ≤ √(1−μ²)/(μωm), with ωm in rad/s.",
+        "or": "ସବୁଠାରୁ ଖରାପ ମୁହୂର୍ତ୍ତରୁ RC ≤ √(1−μ²)/(μωm) ମିଳେ, ωm rad/s ରେ।"
+       },
+       "reveal": [
+        {
+         "item": "eq-clip",
+         "on": "enter"
+        },
+        {
+         "item": "note-slope",
+         "on": "enter"
+        },
+        {
+         "item": "step-wm",
+         "on": "enter"
+        }
+       ],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "√(1 − 0.36) = 0.8, and 0.8/(0.6 × 31 416) is about 42 µs. With R = 10 kΩ, C can be at most about 4.2 nF.",
+        "or": "√(1 − 0.36) = 0.8, ଏବଂ 0.8/(0.6 × 31 416) ପ୍ରାୟ 42 µs। R = 10 kΩ ସହ C ସର୍ବାଧିକ ପ୍ରାୟ 4.2 nF।"
+       },
+       "reveal": [
+        {
+         "item": "step-clip",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-clip",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "About 42 µs",
+        "or": "ପ୍ରାୟ 42 µs"
+       },
+       "text": "About 42 microseconds.",
+       "route": "rcmax-42"
+      },
+      {
+       "label": {
+        "en": "200 µs",
+        "or": "200 µs"
+       },
+       "text": "200 microseconds, one message period.",
+       "route": "just-period"
+      },
+      {
+       "label": {
+        "en": "About 267 µs",
+        "or": "ପ୍ରାୟ 267 µs"
+       },
+       "text": "0.8 over 0.6 times 5000, about 267 microseconds.",
+       "route": "M-AM-01"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-clip",
+      "res-clip"
+     ],
+     "mustNotReveal": [
+      "42",
+      "4.2",
+      "0.8",
+      "31 416",
+      "31416",
+      "√(1−μ²)",
+      "267"
+     ]
+    },
+    "show-clip-formula": {
+     "kind": "show",
+     "goal": "The sharp bound comes from the slope test at cos ωm t = −μ: √(1−μ²)/(μωm) ≈ 42 µs, far below 200 µs.",
+     "line": {
+      "say": {
+       "en": "The sharp limit comes from the slope test at the worst instant, where cos ωm t = −μ. It gives about 42 µs, far below 200 µs.",
+       "or": "ସ୍ପଷ୍ଟ ସୀମା ସବୁଠାରୁ ଖରାପ ମୁହୂର୍ତ୍ତ cos ωm t = −μ ରେ Slope test ରୁ ଆସେ। ଏହା ପ୍ରାୟ 42 µs, 200 µs ଠାରୁ ବହୁତ କମ।"
+      },
+      "reveal": [],
+      "focus": [
+       "eq-clip",
+       "note-slope"
+      ]
+     },
+     "next": "p-choose"
+    },
+    "show-rad": {
+     "kind": "show",
+     "goal": "Counter M-AM-01: ωm = 2π·5000 ≈ 31 416 rad/s; using Hz inflates the limit by 2π to ≈ 267 µs.",
+     "line": {
+      "say": {
+       "en": "ωm is 2π × 5000, about 31 416 rad/s, not 5000. Using Hz makes the limit 2π times too big, about 267 µs.",
+       "or": "ωm = 2π × 5000, ପ୍ରାୟ 31 416 rad/s, 5000 ନୁହେଁ। Hz ବ୍ୟବହାର କଲେ ସୀମା 2π ଗୁଣ ବଡ଼ ହୁଏ, ପ୍ରାୟ 267 µs।"
+      },
+      "reveal": [],
+      "focus": [
+       "step-wm",
+       "step-clip"
+      ]
+     },
+     "next": "p-choose"
+    },
+    "p-choose": {
+     "kind": "probe",
+     "goal": "Student picks C inside both limits with margin (about 1–4.2 nF, e.g. 2.2 nF → RC = 22 µs) and justifies it by both bounds.",
+     "line": {
+      "say": {
+       "en": "R is 10 kΩ. Which capacitor would you actually fit, and why that value?",
+       "or": "R = 10 kΩ। ଆପଣ ପ୍ରକୃତରେ କେଉଁ Capacitor ଲଗାଇବେ, ଏବଂ କାହିଁକି ସେହି Value?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "c-in-window",
+       "desc": "A C between about 1 nF and 4.2 nF (e.g. 2.2 nF or 3.3 nF), justified by both bounds: RC well above 1 µs for low ripple and below the 42 µs clipping limit with margin.",
+       "metric": "design-judgement",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "step-choose",
+        "res-choose"
+       ],
+       "ack": {
+        "en": "Good: inside both limits, with margin. The board uses 2.2 nF.",
+        "or": "ଭଲ: ଦୁଇ ସୀମା ଭିତରେ, Margin ସହ। Board ରେ 2.2 nF ନିଆଯାଇଛି।"
+       }
+      },
+      {
+       "id": "c-above-limit",
+       "desc": "Picks a C above 4.24 nF, such as the standard 4.7 nF or 10 nF, so RC exceeds 42 µs and the output clips diagonally.",
+       "metric": "design-judgement",
+       "level": "not_yet",
+       "next": "show-47",
+       "reveal": [
+        "step-choose",
+        "res-choose"
+       ],
+       "ack": {
+        "en": "Not yet. Compare its RC with 42 µs.",
+        "or": "ଏବେ ନୁହେଁ। ଏହାର RC କୁ 42 µs ସହ ତୁଳନା କରନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "c-too-small",
+       "desc": "Picks a very small C (about 0.5 nF or less, RC ≤ 5 µs): no clipping, but RC is only a few carrier periods, so carrier ripple is large.",
+       "metric": "design-judgement",
+       "level": "partial",
+       "next": "show-ripple",
+       "reveal": [
+        "step-choose",
+        "res-choose"
+       ],
+       "ack": {
+        "en": "Safe from clipping. Now check the carrier side.",
+        "or": "Clipping ରୁ ସୁରକ୍ଷିତ। ଏବେ Carrier ପାଖ ଦେଖନ୍ତୁ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "rc-carrier-only",
+       "desc": "Picks a large C (e.g. 100 nF or more) to make the output as smooth as possible, ignoring the clipping limit.",
+       "metric": "design-judgement",
+       "level": "not_yet",
+       "next": "show-too-big-c",
+       "reveal": [
+        "step-choose",
+        "res-choose"
+       ],
+       "ack": {
+        "en": "Not yet. Smooth, but far past the limit.",
+        "or": "ଏବେ ନୁହେଁ। Smooth, କିନ୍ତୁ ସୀମାଠାରୁ ବହୁତ ବାହାରେ।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "Your C must satisfy two limits at once. What are they, written as capacitances?",
+        "or": "ଆପଣଙ୍କ C ଏକାସାଙ୍ଗରେ ଦୁଇ ସୀମା ପୂରଣ କରିବା ଦରକାର। Capacitance ଭାବେ ସେଗୁଡ଼ିକ କଣ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "RC ≫ 1 µs means C ≫ 0.1 nF, and the clipping limit caps C near 4.2 nF.",
+        "or": "RC ≫ 1 µs ଅର୍ଥ C ≫ 0.1 nF, ଏବଂ Clipping ସୀମା C କୁ ପ୍ରାୟ 4.2 nF ରେ ଅଟକାଏ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "Pick a standard value well inside, not at the edge, because parts have tolerance.",
+        "or": "ସୀମା ଧାରରେ ନୁହେଁ, ଭିତରେ ଏକ Standard value ବାଛନ୍ତୁ, କାରଣ Part ଗୁଡ଼ିକର Tolerance ଥାଏ।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "Fit 2.2 nF: RC = 22 µs, about 22 carrier periods and about half the 42 µs limit.",
+        "or": "2.2 nF ଲଗାନ୍ତୁ: RC = 22 µs, ପ୍ରାୟ 22 Carrier period ଓ 42 µs ସୀମାର ପ୍ରାୟ ଅଧା।"
+       },
+       "reveal": [
+        {
+         "item": "step-choose",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-choose",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "2.2 nF",
+        "or": "2.2 nF"
+       },
+       "text": "2.2 nF, so RC is 22 microseconds, inside both limits.",
+       "route": "c-in-window"
+      },
+      {
+       "label": {
+        "en": "4.7 nF",
+        "or": "4.7 nF"
+       },
+       "text": "4.7 nF, the standard value nearest the limit.",
+       "route": "c-above-limit"
+      },
+      {
+       "label": {
+        "en": "100 nF, smoothest",
+        "or": "100 nF, ସବୁଠାରୁ Smooth"
+       },
+       "text": "100 nF, for the smoothest output.",
+       "route": "rc-carrier-only"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-choose",
+      "res-choose"
+     ],
+     "mustNotReveal": [
+      "2.2 nF",
+      "22 µs",
+      "3.3 nF"
+     ]
+    },
+    "show-47": {
+     "kind": "show",
+     "goal": "4.7 nF → RC = 47 µs > 42.4 µs: clips on the steepest falls; step down a standard value.",
+     "line": {
+      "say": {
+       "en": "4.7 nF gives RC = 47 µs, above the 42 µs limit, so the output lags on the steepest falls. Step down to the next standard value.",
+       "or": "4.7 nF ରେ RC = 47 µs, 42 µs ସୀମାଠାରୁ ଅଧିକ, ତେଣୁ ସବୁଠାରୁ ଢାଲୁ ଖସିବାରେ Output ପଛରେ ରହେ। ପରବର୍ତ୍ତୀ ଛୋଟ Standard value ନିଅନ୍ତୁ।"
+      },
+      "reveal": [
+       {
+        "item": "note-47",
+        "on": "speech-end"
+       }
+      ],
+      "focus": [
+       "res-clip"
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-ripple": {
+     "kind": "show",
+     "goal": "RC near 1 µs: C loses much of its charge every carrier cycle, so ripple is large; move C up to a few nF.",
+     "line": {
+      "say": {
+       "en": "With RC near 1 µs, C loses much of its charge in every carrier cycle, so the carrier leaks out as ripple. Move C up to a few nF.",
+       "or": "RC 1 µs ପାଖରେ ଥିଲେ ପ୍ରତି Carrier cycle ରେ C ର ଅନେକ Charge ଚାଲିଯାଏ, Carrier ripple ଭାବେ ବାହାରେ। C କୁ କିଛି nF କୁ ବଢ଼ାନ୍ତୁ।"
+      },
+      "reveal": [],
+      "focus": [
+       "note-window-why",
+       "step-choose"
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-too-big-c": {
+     "kind": "show",
+     "goal": "Counter rc-carrier-only: 100 nF → RC = 1 ms, about 24× the clipping limit; the output barely follows the 5 kHz tone.",
+     "line": {
+      "say": {
+       "en": "100 nF gives RC = 1 ms, about 24 times the clipping limit. The output would barely follow the 5 kHz tone.",
+       "or": "100 nF ରେ RC = 1 ms, Clipping ସୀମାର ପ୍ରାୟ 24 ଗୁଣ। Output 5 kHz tone କୁ ପ୍ରାୟ ଅନୁସରଣ କରିପାରିବ ନାହିଁ।"
+      },
+      "reveal": [
+       {
+        "item": "note-47",
+        "on": "speech-end"
+       }
+      ],
+      "focus": [
+       "res-clip"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "deeper",
+   "title": {
+    "en": "Pushing μ to 0.9",
+    "or": "μ କୁ 0.9 କୁ ବଢ଼ାଇବା"
+   },
+   "conceptIds": [
+    "C-AM-03",
+    "C-AM-01"
+   ],
+   "intro": {
+    "say": {
+     "en": "To raise efficiency, the transmitter pushes μ to 0.9. Say you fitted 2.2 nF, so RC = 22 µs.",
+     "or": "Efficiency ବଢ଼ାଇବା ପାଇଁ Transmitter μ କୁ 0.9 କରେ। ଧରନ୍ତୁ ଆପଣ 2.2 nF ଲଗାଇଛନ୍ତି, ତେଣୁ RC = 22 µs।"
+    },
+    "reveal": [
+     {
+      "item": "fig-wave-mu",
+      "on": "enter"
+     }
+    ]
+   },
+   "start": "p-mu09",
+   "nodes": {
+    "p-mu09": {
+     "kind": "probe",
+     "goal": "Student recomputes the limit at μ = 0.9: √0.19/(0.9 × 31 416) ≈ 15.4 µs < 22 µs, so the 2.2 nF detector clips; C must drop to ≤ 1.54 nF, e.g. 1.5 nF.",
+     "line": {
+      "say": {
+       "en": "Does that detector still follow the envelope at μ = 0.9? If not, what C would you fit now?",
+       "or": "μ = 0.9 ରେ ସେହି Detector Envelope କୁ ଅନୁସରଣ କରିବ କି? ନ କଲେ, ଏବେ କେଉଁ C ଲଗାଇବେ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "clips-fix",
+       "desc": "Limit falls to √(1−0.81)/(0.9 × 31 416) ≈ 15.4 µs < 22 µs, so it now clips; reduce C to ≤ 1.54 nF, e.g. 1.5 nF (RC = 15 µs, still 15 carrier periods).",
+       "metric": "design-judgement",
+       "level": "ok",
+       "next": "show-eta09",
+       "reveal": [
+        "step-mu09",
+        "res-mu09"
+       ],
+       "ack": {
+        "en": "Yes: the limit drops to about 15 µs, so swap to 1.5 nF.",
+        "or": "ହଁ: ସୀମା ପ୍ରାୟ 15 µs କୁ ଖସେ, ତେଣୁ 1.5 nF କୁ ବଦଳାନ୍ତୁ।"
+       }
+      },
+      {
+       "id": "clips-no-number",
+       "desc": "Says the detector now clips because the deeper envelope falls faster, but gives no new limit or new C.",
+       "metric": "design-judgement",
+       "level": "partial",
+       "next": "show-mu09-numbers",
+       "reveal": [
+        "step-mu09",
+        "res-mu09"
+       ],
+       "ack": {
+        "en": "Right instinct. Now put a number on it.",
+        "or": "ଠିକ୍ ଅନୁମାନ। ଏବେ ଏହାକୁ ସଂଖ୍ୟାରେ କୁହନ୍ତୁ।"
+       }
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "rc-carrier-only",
+       "desc": "Says nothing changes: RC depends only on fc and fm, not on μ.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-mu-matters",
+       "reveal": [
+        "step-mu09",
+        "res-mu09"
+       ],
+       "ack": {
+        "en": "Not yet. The limit has μ in it.",
+        "or": "ଏବେ ନୁହେଁ। ସୀମାରେ μ ଅଛି।"
+       }
+      },
+      {
+       "id": "M-AM-01",
+       "desc": "Uses fm in Hz: limit ≈ 97 µs, so concludes the 22 µs detector is still fine.",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-rad-09",
+       "reveal": [
+        "step-mu09",
+        "res-mu09"
+       ],
+       "ack": {
+        "en": "Not yet. Hz again, where rad/s belongs.",
+        "or": "ଏବେ ନୁହେଁ। rad/s ଜାଗାରେ ପୁଣି Hz।"
+       }
+      }
+     ],
+     "hints": [
+      {
+       "say": {
+        "en": "What does the clipping limit become when μ = 0.9?",
+        "or": "μ = 0.9 ହେଲେ Clipping ସୀମା କେତେ ହୁଏ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Reuse the same limit formula with μ = 0.9, then compare it with 22 µs.",
+        "or": "ସେହି ସୀମା Formula ରେ μ = 0.9 ବସାନ୍ତୁ, ତାପରେ 22 µs ସହ ତୁଳନା କରନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "√(1 − 0.81) is about 0.436, and μωm is about 28 274 rad/s.",
+        "or": "√(1 − 0.81) ପ୍ରାୟ 0.436, ଏବଂ μωm ପ୍ରାୟ 28 274 rad/s।"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "The limit is about 15.4 µs, below 22 µs, so it clips. Fit 1.5 nF, giving RC = 15 µs.",
+        "or": "ସୀମା ପ୍ରାୟ 15.4 µs, 22 µs ଠାରୁ କମ, ତେଣୁ Clipping ହୁଏ। 1.5 nF ଲଗାନ୍ତୁ, RC = 15 µs।"
+       },
+       "reveal": [
+        {
+         "item": "step-mu09",
+         "on": "speech-end"
+        },
+        {
+         "item": "res-mu09",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "It clips: use 1.5 nF",
+        "or": "Clipping: 1.5 nF ଲଗାନ୍ତୁ"
+       },
+       "text": "It clips now; the limit is about 15 microseconds, so use 1.5 nF.",
+       "route": "clips-fix"
+      },
+      {
+       "label": {
+        "en": "Nothing changes",
+        "or": "କିଛି ବଦଳେ ନାହିଁ"
+       },
+       "text": "Nothing changes; RC only depends on fc and fm.",
+       "route": "rc-carrier-only"
+      },
+      {
+       "label": {
+        "en": "Still fine (≈ 97 µs)",
+        "or": "ଠିକ୍ ଅଛି (≈ 97 µs)"
+       },
+       "text": "The limit is about 97 microseconds, so 22 is still fine.",
+       "route": "M-AM-01"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "step-mu09",
+      "res-mu09"
+     ],
+     "mustNotReveal": [
+      "15.4",
+      "1.5 nF",
+      "1.54",
+      "15 µs",
+      "it clips"
+     ]
+    },
+    "show-mu09-numbers": {
+     "kind": "show",
+     "goal": "Quantify: limit 0.436/28 274 ≈ 15.4 µs < 22 µs, so C ≤ 1.54 nF → 1.5 nF.",
+     "line": {
+      "say": {
+       "en": "The limit becomes 0.436/(0.9 × 31 416), about 15.4 µs, under your 22 µs. So C must drop to 1.5 nF.",
+       "or": "ସୀମା 0.436/(0.9 × 31 416), ପ୍ରାୟ 15.4 µs, ଆପଣଙ୍କ 22 µs ଠାରୁ କମ। ତେଣୁ C କୁ 1.5 nF କୁ କମାଇବାକୁ ପଡ଼ିବ।"
+      },
+      "reveal": [],
+      "focus": [
+       "step-mu09"
+      ]
+     },
+     "next": "show-eta09"
+    },
+    "show-mu-matters": {
+     "kind": "show",
+     "goal": "Counter rc-carrier-only: μ is in the limit; a deeper envelope falls faster, so the limit drops to ≈ 15 µs.",
+     "line": {
+      "say": {
+       "en": "μ sits inside the limit: a deeper envelope falls faster and closer to zero. At 0.9 the limit is about 15 µs, under your 22 µs.",
+       "or": "ସୀମା ଭିତରେ μ ଅଛି: ଗଭୀର Envelope ଶୀଘ୍ର ଓ ଶୂନ୍ୟ ପାଖକୁ ଖସେ। 0.9 ରେ ସୀମା ପ୍ରାୟ 15 µs, ଆପଣଙ୍କ 22 µs ଠାରୁ କମ।"
+      },
+      "reveal": [],
+      "focus": [
+       "fig-wave-mu",
+       "eq-clip"
+      ]
+     },
+     "next": "show-eta09"
+    },
+    "show-rad-09": {
+     "kind": "show",
+     "goal": "Counter M-AM-01 again: with ωm in rad/s the limit is ≈ 15 µs, not ≈ 97 µs.",
+     "line": {
+      "say": {
+       "en": "With ωm in rad/s the limit is about 15 µs, not 97 µs. So 22 µs is now too slow.",
+       "or": "ωm rad/s ରେ ନେଲେ ସୀମା ପ୍ରାୟ 15 µs, 97 µs ନୁହେଁ। ତେଣୁ 22 µs ଏବେ ବହୁତ ଧୀର।"
+      },
+      "reveal": [],
+      "focus": [
+       "step-wm",
+       "step-mu09"
+      ]
+     },
+     "next": "show-eta09"
+    },
+    "show-eta09": {
+     "kind": "show",
+     "goal": "What μ = 0.9 bought: η rises from 15.3% to 28.8%, but the RC window shrank; as μ → 1 it closes.",
+     "line": {
+      "say": {
+       "en": "What did we buy? η rises from about 15% to about 29%, but the RC window has shrunk.",
+       "or": "ଆମେ କଣ ପାଇଲୁ? η ପ୍ରାୟ 15% ରୁ ପ୍ରାୟ 29% କୁ ବଢ଼େ, କିନ୍ତୁ RC window ଛୋଟ ହୋଇଗଲା।"
+      },
+      "reveal": [
+       {
+        "item": "step-eta09",
+        "on": "enter"
+       },
+       {
+        "item": "note-mu1",
+        "on": "speech-end"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "explain",
+   "title": {
+    "en": "Say it in English",
+    "or": "ଇଂରାଜୀରେ କୁହନ୍ତୁ"
+   },
+   "conceptIds": [
+    "C-AM-03"
+   ],
+   "intro": {
+    "say": {
+     "en": "Last step: put the trade-off in your own words.",
+     "or": "ଶେଷ ପଦକ୍ଷେପ: ଏହି Trade-off କୁ ନିଜ ଭାଷାରେ କୁହନ୍ତୁ।"
+    },
+    "reveal": []
+   },
+   "start": "p-explain",
+   "nodes": {
+    "p-explain": {
+     "kind": "probe",
+     "goal": "Student explains in English that the clipping limit √(1−μ²)/(μωm) shrinks to zero as μ → 1 while RC must stay ≫ 1/fc, so the RC window closes (and η only reaches 1/3).",
+     "line": {
+      "say": {
+       "en": "In one or two English sentences: why can't you push μ to 1 and keep this simple detector?",
+       "or": "ଏକ ବା ଦୁଇଟି ଇଂରାଜୀ ବାକ୍ୟରେ: μ କୁ 1 ପର୍ଯ୍ୟନ୍ତ ବଢ଼ାଇ ଏହି ସରଳ Detector କାହିଁକି ରଖିପାରିବେ ନାହିଁ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "tradeoff",
+       "desc": "Explains the mechanism: as μ → 1 the largest allowed RC (√(1−μ²)/(μωm)) shrinks towards zero, while RC must stay much larger than 1/fc to hold the carrier peaks, so no RC satisfies both and the output distorts. May add that η only reaches 33%.",
+       "metric": "articulation",
+       "level": "ok",
+       "next": "conclusion",
+       "reveal": [
+        "res-final"
+       ],
+       "ack": {
+        "en": "Clear: the window closes as μ approaches 1.",
+        "or": "ସ୍ପଷ୍ଟ: μ 1 ପାଖକୁ ଗଲେ Window ବନ୍ଦ ହୁଏ।"
+       }
+      },
+      {
+       "id": "vague-tradeoff",
+       "desc": "Says a higher μ causes more distortion or clipping without the mechanism (the RC limit shrinking against the carrier bound).",
+       "metric": "articulation",
+       "level": "partial",
+       "next": "conclusion",
+       "reveal": [
+        "res-final"
+       ],
+       "ack": {
+        "en": "True. Add why: what happens to the RC limit?",
+        "or": "ଠିକ୍। କାହିଁକି ଯୋଡ଼ନ୍ତୁ: RC ସୀମାର କଣ ହୁଏ?"
+       }
+      }
+     ],
+     "misconceptions": [],
+     "hints": [
+      {
+       "say": {
+        "en": "What happens to the clipping limit as μ approaches 1?",
+        "or": "μ, 1 ପାଖକୁ ଗଲେ Clipping ସୀମାର କଣ ହୁଏ?"
+       },
+       "reveal": [],
+       "rung": "question"
+      },
+      {
+       "say": {
+        "en": "Use the words modulation index, envelope and time constant.",
+        "or": "Modulation index, Envelope ଓ Time constant ଶବ୍ଦ ବ୍ୟବହାର କରନ୍ତୁ।"
+       },
+       "reveal": [],
+       "rung": "nudge"
+      },
+      {
+       "say": {
+        "en": "Start with: 'As the modulation index approaches 1, the largest allowed RC…'",
+        "or": "ଏହିପରି ଆରମ୍ଭ କରନ୍ତୁ: 'As the modulation index approaches 1, the largest allowed RC…'"
+       },
+       "reveal": [],
+       "rung": "worked_step"
+      },
+      {
+       "say": {
+        "en": "As μ approaches 1 the largest allowed RC shrinks to zero, but RC must stay much larger than 1/fc. The window closes, and η would only reach 33% anyway.",
+        "or": "μ, 1 ପାଖକୁ ଗଲେ ସବୁଠାରୁ ବଡ଼ ଅନୁମତ RC ଶୂନ୍ୟ ଆଡ଼କୁ ଯାଏ, କିନ୍ତୁ RC, 1/fc ଠାରୁ ବହୁତ ବଡ଼ ରହିବା ଦରକାର। Window ବନ୍ଦ ହୁଏ, ଏବଂ η କେବଳ 33% ପର୍ଯ୍ୟନ୍ତ ପହଞ୍ଚେ।"
+       },
+       "reveal": [
+        {
+         "item": "res-final",
+         "on": "speech-end"
+        }
+       ],
+       "rung": "answer"
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "The RC window closes",
+        "or": "RC window ବନ୍ଦ ହୁଏ"
+       },
+       "text": "As mu goes to 1 the clipping limit on RC goes to zero, but RC must stay much bigger than the carrier period.",
+       "route": "tradeoff"
+      },
+      {
+       "label": {
+        "en": "More distortion",
+        "or": "ଅଧିକ Distortion"
+       },
+       "text": "A higher mu just gives more distortion.",
+       "route": "vague-tradeoff"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "res-final"
+     ],
+     "mustNotReveal": [
+      "shrinks to zero",
+      "goes to zero",
+      "window closes",
+      "33%"
+     ]
+    },
+    "conclusion": {
+     "kind": "conclusion",
+     "goal": "Wrap up: design RC for the deepest μ expected; 1.5 nF with 10 kΩ serves μ = 0.6 and 0.9; efficiency and detector simplicity trade against each other.",
+     "line": {
+      "say": {
+       "en": "Design the detector for the deepest μ you expect: 1.5 nF with 10 kΩ works at both 0.6 and 0.9. Deeper modulation buys efficiency but squeezes the RC window.",
+       "or": "ସବୁଠାରୁ ଗଭୀର μ ପାଇଁ Detector design କରନ୍ତୁ: 10 kΩ ସହ 1.5 nF, 0.6 ଓ 0.9 ଦୁଇଟିରେ କାମ କରେ। ଗଭୀର Modulation Efficiency ଦିଏ, କିନ୍ତୁ RC window କୁ ଛୋଟ କରେ।"
+      },
+      "reveal": [],
+      "focus": [
+       "res-final",
+       "res-mu09"
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  }
+ ],
+ "nextSteps": [
+  {
+   "kind": "concept",
+   "id": "C-AM-03",
+   "why": {
+    "en": "Revisit AM power: each sideband line is μAc/2 tall and carries μ²Pc/4.",
+    "or": "AM power ପୁଣି ଦେଖନ୍ତୁ: ପ୍ରତି Sideband line μAc/2 ଉଚ୍ଚ ଓ μ²Pc/4 ବହନ କରେ।"
+   },
+   "whenMisconception": "sideband-no-half"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-03",
+   "why": {
+    "en": "Revisit why power follows amplitude squared, so μ enters as μ².",
+    "or": "Power କାହିଁକି Amplitude ର Square ଅନୁସରଣ କରେ, ପୁଣି ଦେଖନ୍ତୁ।"
+   },
+   "whenMisconception": "mu-not-squared"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-03",
+   "why": {
+    "en": "Revisit μ as envelope depth, μ = (Emax − Emin)/(Emax + Emin), versus η as power share.",
+    "or": "μ = (Emax − Emin)/(Emax + Emin) Envelope ଗଭୀରତା, η Power ଅଂଶ: ପୁଣି ଦେଖନ୍ତୁ।"
+   },
+   "whenMisconception": "eta-equals-mu"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-01",
+   "why": {
+    "en": "Revisit Hz versus rad/s: ω = 2πf.",
+    "or": "Hz ଓ rad/s ପୁଣି ଦେଖନ୍ତୁ: ω = 2πf।"
+   },
+   "whenMisconception": "M-AM-01"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-07",
+   "why": {
+    "en": "Revisit the RC load as a lowpass stage: it must pass the message and reject the carrier.",
+    "or": "RC load କୁ Lowpass stage ଭାବେ ପୁଣି ଦେଖନ୍ତୁ: Message ରଖି Carrier ରୋକିବା ଦରକାର।"
+   },
+   "whenMisconception": "rc-carrier-only"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-03",
+   "why": {
+    "en": "Revisit the two RC bounds and where each comes from before redesigning.",
+    "or": "ପୁଣି Design କରିବା ଆଗରୁ ଦୁଇ RC ସୀମା ଓ ସେଗୁଡ଼ିକର କାରଣ ପୁଣି ଦେଖନ୍ତୁ।"
+   },
+   "whenMetric": "design-judgement",
+   "whenLevel": "not_yet"
+  },
+  {
+   "kind": "question",
+   "id": "ece-dsb-receive-drift",
+   "why": {
+    "en": "Next: why DSB-SC cannot use this detector at all, and what a coherent receiver needs.",
+    "or": "ପରେ: DSB-SC ଏହି Detector କାହିଁକି ବ୍ୟବହାର କରିପାରେ ନାହିଁ, ଏବଂ Coherent receiver କୁ କଣ ଦରକାର।"
+   },
+   "whenMetric": "conceptual-understanding",
+   "whenLevel": "ok"
+  }
+ ],
+ "sources": [
+  {
+   "id": "haykin-moher-2e-ch3",
+   "title": "S. Haykin, M. Moher, Introduction to Analog and Digital Communications, 2nd ed., Wiley, 2007",
+   "locator": "Ch. 3 Amplitude Modulation (chapter-level): AM power, envelope detector and the condition 1/fc ≪ R_l C ≪ 1/W. Section/page not checked."
+  },
+  {
+   "id": "lathi-ding-4e-ch4",
+   "title": "B. P. Lathi, Z. Ding, Modern Digital and Analog Communication Systems, 4th ed., Oxford University Press, 2009",
+   "locator": "Ch. 4 Amplitude Modulations and Demodulations (chapter-level): AM sideband power and efficiency μ²/(2+μ²), envelope detector RC choice. Section/page not checked."
+  },
+  {
+   "id": "wiki-envelope-detector",
+   "title": "Wikipedia: Envelope detector",
+   "locator": "https://en.wikipedia.org/wiki/Envelope_detector (1/f_carrier ≪ τ ≪ 1/f_max; RC small enough to track quickly-falling envelope slopes, else negative-peak clipping). Read while authoring."
+  },
+  {
+   "id": "eeeguide-diode-detector",
+   "title": "EEEGuide: Linear Diode Detector or Envelope Detector",
+   "locator": "https://www.eeeguide.com/?p=52904 (RC large vs one carrier cycle; too large gives diagonal clipping on the decreasing portion). Read while authoring; formulas there are images."
+  },
+  {
+   "id": "stanford-ee133-peakdetect",
+   "title": "Stanford EE133 lecture notes: peak detector (optimum RC, diagonal clipping)",
+   "locator": "https://web.stanford.edu/class/ee133/handouts/lecturenotes2002/old/lecture4_peakdetector.pdf (derives the optimum RC against diagonal clipping by minimising a slope inequality over ωm t). Seen only through search-result excerpts; the PDF was unreachable, so the exact printed form was not verified."
+  },
+  {
+   "id": "C-AM-03",
+   "title": "Ledger concept: Conventional AM, envelope and modulation index",
+   "locator": "kiki-web/data-model/ledgers/electronics/analog-modulation.json"
+  }
+ ]
+}

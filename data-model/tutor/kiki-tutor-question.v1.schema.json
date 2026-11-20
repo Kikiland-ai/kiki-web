@@ -1,0 +1,1487 @@
+{
+ "$defs": {
+  "Block": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "label": {
+     "$ref": "#/$defs/LText"
+    },
+    "kind": {
+     "enum": [
+      "source",
+      "multiplier",
+      "filter",
+      "gain",
+      "adder",
+      "oscillator",
+      "output"
+     ],
+     "title": "Kind",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "label",
+    "kind"
+   ],
+   "title": "Block",
+   "type": "object"
+  },
+  "BlockEdge": {
+   "additionalProperties": false,
+   "properties": {
+    "from": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "From",
+     "type": "string"
+    },
+    "to": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "To",
+     "type": "string"
+    },
+    "label": {
+     "anyOf": [
+      {
+       "maxLength": 40,
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Label"
+    }
+   },
+   "required": [
+    "from",
+    "to"
+   ],
+   "title": "BlockEdge",
+   "type": "object"
+  },
+  "BlockFigure": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "figure",
+     "title": "Kind",
+     "type": "string"
+    },
+    "template": {
+     "const": "block",
+     "title": "Template",
+     "type": "string"
+    },
+    "params": {
+     "$ref": "#/$defs/BlockParams"
+    },
+    "caption": {
+     "$ref": "#/$defs/LText"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "template",
+    "params",
+    "caption"
+   ],
+   "title": "BlockFigure",
+   "type": "object"
+  },
+  "BlockParams": {
+   "additionalProperties": false,
+   "properties": {
+    "blocks": {
+     "items": {
+      "$ref": "#/$defs/Block"
+     },
+     "maxItems": 10,
+     "minItems": 2,
+     "title": "Blocks",
+     "type": "array"
+    },
+    "edges": {
+     "items": {
+      "$ref": "#/$defs/BlockEdge"
+     },
+     "maxItems": 14,
+     "minItems": 1,
+     "title": "Edges",
+     "type": "array"
+    }
+   },
+   "required": [
+    "blocks",
+    "edges"
+   ],
+   "title": "BlockParams",
+   "type": "object"
+  },
+  "Branch": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "desc": {
+     "maxLength": 300,
+     "minLength": 3,
+     "title": "Desc",
+     "type": "string"
+    },
+    "metric": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Metric",
+     "type": "string"
+    },
+    "level": {
+     "enum": [
+      "ok",
+      "partial",
+      "not_yet"
+     ],
+     "title": "Level",
+     "type": "string"
+    },
+    "next": {
+     "title": "Next",
+     "type": "string"
+    },
+    "reveal": {
+     "items": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+      "type": "string"
+     },
+     "maxItems": 6,
+     "title": "Reveal",
+     "type": "array"
+    },
+    "ack": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "id",
+    "desc",
+    "metric",
+    "level",
+    "next"
+   ],
+   "title": "Branch",
+   "type": "object"
+  },
+  "Chip": {
+   "additionalProperties": false,
+   "properties": {
+    "label": {
+     "$ref": "#/$defs/LText"
+    },
+    "text": {
+     "maxLength": 200,
+     "minLength": 1,
+     "title": "Text",
+     "type": "string"
+    },
+    "route": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Route",
+     "type": "string"
+    }
+   },
+   "required": [
+    "label",
+    "text",
+    "route"
+   ],
+   "title": "Chip",
+   "type": "object"
+  },
+  "EquationItem": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "equation",
+     "title": "Kind",
+     "type": "string"
+    },
+    "tex": {
+     "maxLength": 400,
+     "minLength": 1,
+     "title": "Tex",
+     "type": "string"
+    },
+    "label": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "tex"
+   ],
+   "title": "EquationItem",
+   "type": "object"
+  },
+  "Hint": {
+   "additionalProperties": false,
+   "properties": {
+    "say": {
+     "$ref": "#/$defs/LText"
+    },
+    "reveal": {
+     "items": {
+      "$ref": "#/$defs/Reveal"
+     },
+     "maxItems": 6,
+     "title": "Reveal",
+     "type": "array"
+    },
+    "focus": {
+     "items": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+      "type": "string"
+     },
+     "maxItems": 4,
+     "title": "Focus",
+     "type": "array"
+    },
+    "rung": {
+     "enum": [
+      "question",
+      "nudge",
+      "worked_step",
+      "answer"
+     ],
+     "title": "Rung",
+     "type": "string"
+    }
+   },
+   "required": [
+    "say",
+    "rung"
+   ],
+   "title": "Hint",
+   "type": "object"
+  },
+  "LText": {
+   "additionalProperties": false,
+   "description": "Learner-facing text. English is the source; other languages are optional renditions.",
+   "properties": {
+    "en": {
+     "maxLength": 600,
+     "minLength": 1,
+     "title": "En",
+     "type": "string"
+    },
+    "or": {
+     "anyOf": [
+      {
+       "maxLength": 600,
+       "minLength": 1,
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Or"
+    }
+   },
+   "required": [
+    "en"
+   ],
+   "title": "LText",
+   "type": "object"
+  },
+  "Line": {
+   "additionalProperties": false,
+   "description": "Something KiKi says, with what it uncovers on the board while saying it.",
+   "properties": {
+    "say": {
+     "$ref": "#/$defs/LText"
+    },
+    "reveal": {
+     "items": {
+      "$ref": "#/$defs/Reveal"
+     },
+     "maxItems": 6,
+     "title": "Reveal",
+     "type": "array"
+    },
+    "focus": {
+     "items": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+      "type": "string"
+     },
+     "maxItems": 4,
+     "title": "Focus",
+     "type": "array"
+    }
+   },
+   "required": [
+    "say"
+   ],
+   "title": "Line",
+   "type": "object"
+  },
+  "Metric": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "label": {
+     "$ref": "#/$defs/LText"
+    },
+    "dim": {
+     "enum": [
+      "concept",
+      "words",
+      "english",
+      "lab"
+     ],
+     "title": "Dim",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "label",
+    "dim"
+   ],
+   "title": "Metric",
+   "type": "object"
+  },
+  "Misconception": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "desc": {
+     "maxLength": 300,
+     "minLength": 3,
+     "title": "Desc",
+     "type": "string"
+    },
+    "conceptIds": {
+     "items": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+      "type": "string"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "title": "Conceptids",
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "desc",
+    "conceptIds"
+   ],
+   "title": "Misconception",
+   "type": "object"
+  },
+  "NextStep": {
+   "additionalProperties": false,
+   "properties": {
+    "kind": {
+     "enum": [
+      "concept",
+      "lab",
+      "question"
+     ],
+     "title": "Kind",
+     "type": "string"
+    },
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "why": {
+     "$ref": "#/$defs/LText"
+    },
+    "whenMetric": {
+     "anyOf": [
+      {
+       "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Whenmetric"
+    },
+    "whenLevel": {
+     "anyOf": [
+      {
+       "enum": [
+        "ok",
+        "partial",
+        "not_yet"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Whenlevel"
+    },
+    "whenMisconception": {
+     "anyOf": [
+      {
+       "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Whenmisconception"
+    }
+   },
+   "required": [
+    "kind",
+    "id",
+    "why"
+   ],
+   "title": "NextStep",
+   "type": "object"
+  },
+  "Node": {
+   "additionalProperties": false,
+   "properties": {
+    "kind": {
+     "enum": [
+      "probe",
+      "show",
+      "conclusion"
+     ],
+     "title": "Kind",
+     "type": "string"
+    },
+    "goal": {
+     "maxLength": 300,
+     "minLength": 3,
+     "title": "Goal",
+     "type": "string"
+    },
+    "line": {
+     "$ref": "#/$defs/Line"
+    },
+    "expect": {
+     "items": {
+      "$ref": "#/$defs/Branch"
+     },
+     "maxItems": 4,
+     "title": "Expect",
+     "type": "array"
+    },
+    "misconceptions": {
+     "items": {
+      "$ref": "#/$defs/Branch"
+     },
+     "maxItems": 4,
+     "title": "Misconceptions",
+     "type": "array"
+    },
+    "hints": {
+     "items": {
+      "$ref": "#/$defs/Hint"
+     },
+     "maxItems": 4,
+     "title": "Hints",
+     "type": "array"
+    },
+    "chips": {
+     "items": {
+      "$ref": "#/$defs/Chip"
+     },
+     "maxItems": 4,
+     "title": "Chips",
+     "type": "array"
+    },
+    "answerItems": {
+     "items": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+      "type": "string"
+     },
+     "maxItems": 6,
+     "title": "Answeritems",
+     "type": "array"
+    },
+    "mustNotReveal": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 12,
+     "title": "Mustnotreveal",
+     "type": "array"
+    },
+    "next": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Next"
+    }
+   },
+   "required": [
+    "kind",
+    "goal",
+    "line"
+   ],
+   "title": "Node",
+   "type": "object"
+  },
+  "NoteItem": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "note",
+     "title": "Kind",
+     "type": "string"
+    },
+    "text": {
+     "$ref": "#/$defs/LText"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "text"
+   ],
+   "title": "NoteItem",
+   "type": "object"
+  },
+  "QuestionItem": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "question",
+     "title": "Kind",
+     "type": "string"
+    },
+    "text": {
+     "$ref": "#/$defs/LText"
+    },
+    "given": {
+     "items": {
+      "$ref": "#/$defs/LText"
+     },
+     "maxItems": 8,
+     "title": "Given",
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "text"
+   ],
+   "title": "QuestionItem",
+   "type": "object"
+  },
+  "ResultItem": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "result",
+     "title": "Kind",
+     "type": "string"
+    },
+    "tex": {
+     "anyOf": [
+      {
+       "maxLength": 400,
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Tex"
+    },
+    "text": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "id",
+    "kind"
+   ],
+   "title": "ResultItem",
+   "type": "object"
+  },
+  "Reveal": {
+   "additionalProperties": false,
+   "properties": {
+    "item": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Item",
+     "type": "string"
+    },
+    "on": {
+     "default": "enter",
+     "pattern": "^(enter|speech-end|say:.{2,60})$",
+     "title": "On",
+     "type": "string"
+    }
+   },
+   "required": [
+    "item"
+   ],
+   "title": "Reveal",
+   "type": "object"
+  },
+  "Review": {
+   "additionalProperties": false,
+   "properties": {
+    "content": {
+     "enum": [
+      "draft",
+      "reviewed"
+     ],
+     "title": "Content",
+     "type": "string"
+    },
+    "languages": {
+     "additionalProperties": {
+      "enum": [
+       "draft",
+       "reviewed"
+      ],
+      "type": "string"
+     },
+     "title": "Languages",
+     "type": "object"
+    }
+   },
+   "required": [
+    "content",
+    "languages"
+   ],
+   "title": "Review",
+   "type": "object"
+  },
+  "SourceRef": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "maxLength": 80,
+     "minLength": 1,
+     "title": "Id",
+     "type": "string"
+    },
+    "title": {
+     "maxLength": 200,
+     "minLength": 1,
+     "title": "Title",
+     "type": "string"
+    },
+    "locator": {
+     "anyOf": [
+      {
+       "maxLength": 300,
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Locator"
+    }
+   },
+   "required": [
+    "id",
+    "title"
+   ],
+   "title": "SourceRef",
+   "type": "object"
+  },
+  "SpectrumFigure": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "figure",
+     "title": "Kind",
+     "type": "string"
+    },
+    "template": {
+     "const": "spectrum",
+     "title": "Template",
+     "type": "string"
+    },
+    "params": {
+     "$ref": "#/$defs/SpectrumParams"
+    },
+    "caption": {
+     "$ref": "#/$defs/LText"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "template",
+    "params",
+    "caption"
+   ],
+   "title": "SpectrumFigure",
+   "type": "object"
+  },
+  "SpectrumLine": {
+   "additionalProperties": false,
+   "properties": {
+    "f": {
+     "title": "F",
+     "type": "number"
+    },
+    "a": {
+     "minimum": 0,
+     "title": "A",
+     "type": "number"
+    },
+    "label": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "style": {
+     "default": "sideband",
+     "enum": [
+      "carrier",
+      "sideband",
+      "message",
+      "muted"
+     ],
+     "title": "Style",
+     "type": "string"
+    }
+   },
+   "required": [
+    "f",
+    "a"
+   ],
+   "title": "SpectrumLine",
+   "type": "object"
+  },
+  "SpectrumParams": {
+   "additionalProperties": false,
+   "properties": {
+    "lines": {
+     "items": {
+      "$ref": "#/$defs/SpectrumLine"
+     },
+     "maxItems": 16,
+     "minItems": 1,
+     "title": "Lines",
+     "type": "array"
+    },
+    "fRange": {
+     "maxItems": 2,
+     "minItems": 2,
+     "prefixItems": [
+      {
+       "type": "number"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "title": "Frange",
+     "type": "array"
+    },
+    "unit": {
+     "default": "kHz",
+     "enum": [
+      "Hz",
+      "kHz",
+      "MHz"
+     ],
+     "title": "Unit",
+     "type": "string"
+    },
+    "bands": {
+     "items": {
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "number"
+       }
+      ],
+      "type": "array"
+     },
+     "maxItems": 4,
+     "title": "Bands",
+     "type": "array"
+    }
+   },
+   "required": [
+    "lines",
+    "fRange"
+   ],
+   "title": "SpectrumParams",
+   "type": "object"
+  },
+  "Stage": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "title": {
+     "$ref": "#/$defs/LText"
+    },
+    "conceptIds": {
+     "items": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+      "type": "string"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "title": "Conceptids",
+     "type": "array"
+    },
+    "intro": {
+     "$ref": "#/$defs/Line"
+    },
+    "start": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Start",
+     "type": "string"
+    },
+    "nodes": {
+     "maxProperties": 12,
+     "minProperties": 1,
+     "patternProperties": {
+      "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$": {
+       "$ref": "#/$defs/Node"
+      }
+     },
+     "title": "Nodes",
+     "type": "object"
+    }
+   },
+   "required": [
+    "id",
+    "title",
+    "conceptIds",
+    "intro",
+    "start",
+    "nodes"
+   ],
+   "title": "Stage",
+   "type": "object"
+  },
+  "StepItem": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "step",
+     "title": "Kind",
+     "type": "string"
+    },
+    "tex": {
+     "maxLength": 400,
+     "minLength": 1,
+     "title": "Tex",
+     "type": "string"
+    },
+    "note": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "tex"
+   ],
+   "title": "StepItem",
+   "type": "object"
+  },
+  "TargetTerm": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "term": {
+     "maxLength": 60,
+     "minLength": 2,
+     "title": "Term",
+     "type": "string"
+    },
+    "alsoAccept": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 4,
+     "title": "Alsoaccept",
+     "type": "array"
+    },
+    "meaning": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "id",
+    "term"
+   ],
+   "title": "TargetTerm",
+   "type": "object"
+  },
+  "TermItem": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "term",
+     "title": "Kind",
+     "type": "string"
+    },
+    "termId": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Termid",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "termId"
+   ],
+   "title": "TermItem",
+   "type": "object"
+  },
+  "Tone": {
+   "additionalProperties": false,
+   "description": "One cosine a\u00b7cos(2\u03c0 f t + \u03c6). Sums of tones draw DSB, AM, SSB and beat signals exactly.",
+   "properties": {
+    "a": {
+     "maximum": 10,
+     "minimum": -10,
+     "title": "A",
+     "type": "number"
+    },
+    "f": {
+     "maximum": 10000000.0,
+     "minimum": 0,
+     "title": "F",
+     "type": "number"
+    },
+    "phaseDeg": {
+     "default": 0,
+     "maximum": 360,
+     "minimum": -360,
+     "title": "Phasedeg",
+     "type": "number"
+    }
+   },
+   "required": [
+    "a",
+    "f"
+   ],
+   "title": "Tone",
+   "type": "object"
+  },
+  "WaveSeries": {
+   "additionalProperties": false,
+   "properties": {
+    "label": {
+     "$ref": "#/$defs/LText"
+    },
+    "tones": {
+     "items": {
+      "$ref": "#/$defs/Tone"
+     },
+     "maxItems": 12,
+     "minItems": 1,
+     "title": "Tones",
+     "type": "array"
+    },
+    "style": {
+     "default": "signal",
+     "enum": [
+      "reference",
+      "signal",
+      "envelope",
+      "muted"
+     ],
+     "title": "Style",
+     "type": "string"
+    }
+   },
+   "required": [
+    "label",
+    "tones"
+   ],
+   "title": "WaveSeries",
+   "type": "object"
+  },
+  "WaveformFigure": {
+   "additionalProperties": false,
+   "properties": {
+    "id": {
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+     "title": "Id",
+     "type": "string"
+    },
+    "kind": {
+     "const": "figure",
+     "title": "Kind",
+     "type": "string"
+    },
+    "template": {
+     "const": "waveform",
+     "title": "Template",
+     "type": "string"
+    },
+    "params": {
+     "$ref": "#/$defs/WaveformParams"
+    },
+    "caption": {
+     "$ref": "#/$defs/LText"
+    }
+   },
+   "required": [
+    "id",
+    "kind",
+    "template",
+    "params",
+    "caption"
+   ],
+   "title": "WaveformFigure",
+   "type": "object"
+  },
+  "WaveformParams": {
+   "additionalProperties": false,
+   "properties": {
+    "series": {
+     "items": {
+      "$ref": "#/$defs/WaveSeries"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "title": "Series",
+     "type": "array"
+    },
+    "t": {
+     "maxItems": 2,
+     "minItems": 2,
+     "prefixItems": [
+      {
+       "type": "number"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "title": "T",
+     "type": "array"
+    },
+    "yRange": {
+     "maxItems": 2,
+     "minItems": 2,
+     "prefixItems": [
+      {
+       "type": "number"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "title": "Yrange",
+     "type": "array"
+    },
+    "xLabel": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    },
+    "yLabel": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/LText"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null
+    }
+   },
+   "required": [
+    "series",
+    "t",
+    "yRange"
+   ],
+   "title": "WaveformParams",
+   "type": "object"
+  }
+ },
+ "additionalProperties": false,
+ "properties": {
+  "schema": {
+   "const": "kiki-tutor-question/v1",
+   "title": "Schema",
+   "type": "string"
+  },
+  "id": {
+   "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+   "title": "Id",
+   "type": "string"
+  },
+  "version": {
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}\\.\\d+$",
+   "title": "Version",
+   "type": "string"
+  },
+  "courseId": {
+   "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+   "title": "Courseid",
+   "type": "string"
+  },
+  "conceptIds": {
+   "items": {
+    "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+    "type": "string"
+   },
+   "maxItems": 8,
+   "minItems": 1,
+   "title": "Conceptids",
+   "type": "array"
+  },
+  "difficulty": {
+   "enum": [
+    "easy",
+    "medium",
+    "hard"
+   ],
+   "title": "Difficulty",
+   "type": "string"
+  },
+  "title": {
+   "$ref": "#/$defs/LText"
+  },
+  "framing": {
+   "$ref": "#/$defs/LText"
+  },
+  "languages": {
+   "items": {
+    "enum": [
+     "en",
+     "or"
+    ],
+    "type": "string"
+   },
+   "minItems": 1,
+   "title": "Languages",
+   "type": "array"
+  },
+  "speech": {
+   "additionalProperties": {
+    "enum": [
+     "scripted",
+     "guided"
+    ],
+    "type": "string"
+   },
+   "title": "Speech",
+   "type": "object"
+  },
+  "review": {
+   "$ref": "#/$defs/Review"
+  },
+  "metrics": {
+   "items": {
+    "$ref": "#/$defs/Metric"
+   },
+   "maxItems": 8,
+   "minItems": 1,
+   "title": "Metrics",
+   "type": "array"
+  },
+  "misconceptions": {
+   "items": {
+    "$ref": "#/$defs/Misconception"
+   },
+   "maxItems": 12,
+   "title": "Misconceptions",
+   "type": "array"
+  },
+  "terms": {
+   "items": {
+    "$ref": "#/$defs/TargetTerm"
+   },
+   "maxItems": 16,
+   "title": "Terms",
+   "type": "array"
+  },
+  "board": {
+   "maxProperties": 40,
+   "minProperties": 1,
+   "patternProperties": {
+    "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$": {
+     "discriminator": {
+      "mapping": {
+       "equation": "#/$defs/EquationItem",
+       "figure": {
+        "discriminator": {
+         "mapping": {
+          "block": "#/$defs/BlockFigure",
+          "spectrum": "#/$defs/SpectrumFigure",
+          "waveform": "#/$defs/WaveformFigure"
+         },
+         "propertyName": "template"
+        },
+        "oneOf": [
+         {
+          "$ref": "#/$defs/WaveformFigure"
+         },
+         {
+          "$ref": "#/$defs/SpectrumFigure"
+         },
+         {
+          "$ref": "#/$defs/BlockFigure"
+         }
+        ]
+       },
+       "note": "#/$defs/NoteItem",
+       "question": "#/$defs/QuestionItem",
+       "result": "#/$defs/ResultItem",
+       "step": "#/$defs/StepItem",
+       "term": "#/$defs/TermItem"
+      },
+      "propertyName": "kind"
+     },
+     "oneOf": [
+      {
+       "$ref": "#/$defs/QuestionItem"
+      },
+      {
+       "$ref": "#/$defs/EquationItem"
+      },
+      {
+       "$ref": "#/$defs/StepItem"
+      },
+      {
+       "$ref": "#/$defs/NoteItem"
+      },
+      {
+       "$ref": "#/$defs/TermItem"
+      },
+      {
+       "discriminator": {
+        "mapping": {
+         "block": "#/$defs/BlockFigure",
+         "spectrum": "#/$defs/SpectrumFigure",
+         "waveform": "#/$defs/WaveformFigure"
+        },
+        "propertyName": "template"
+       },
+       "oneOf": [
+        {
+         "$ref": "#/$defs/WaveformFigure"
+        },
+        {
+         "$ref": "#/$defs/SpectrumFigure"
+        },
+        {
+         "$ref": "#/$defs/BlockFigure"
+        }
+       ]
+      },
+      {
+       "$ref": "#/$defs/ResultItem"
+      }
+     ]
+    }
+   },
+   "title": "Board",
+   "type": "object"
+  },
+  "pinned": {
+   "items": {
+    "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$",
+    "type": "string"
+   },
+   "maxItems": 3,
+   "minItems": 1,
+   "title": "Pinned",
+   "type": "array"
+  },
+  "stages": {
+   "items": {
+    "$ref": "#/$defs/Stage"
+   },
+   "maxItems": 8,
+   "minItems": 1,
+   "title": "Stages",
+   "type": "array"
+  },
+  "nextSteps": {
+   "items": {
+    "$ref": "#/$defs/NextStep"
+   },
+   "maxItems": 8,
+   "title": "Nextsteps",
+   "type": "array"
+  },
+  "sources": {
+   "items": {
+    "$ref": "#/$defs/SourceRef"
+   },
+   "maxItems": 20,
+   "title": "Sources",
+   "type": "array"
+  }
+ },
+ "required": [
+  "schema",
+  "id",
+  "version",
+  "courseId",
+  "conceptIds",
+  "difficulty",
+  "title",
+  "framing",
+  "languages",
+  "speech",
+  "review",
+  "metrics",
+  "board",
+  "pinned",
+  "stages"
+ ],
+ "title": "TutorQuestion",
+ "type": "object"
+}

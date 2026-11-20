@@ -1,6 +1,82 @@
+## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
+
+- Gemini calls rotate across `KIKI_GEMINI_API_KEYS` (kiki-backend's list of {key, quota_pool});
+  a failing pool cools down; voice tokens come from a healthy key. Key 0 (pool gareebi) is out of
+  prepayment credit; keys 1-3 work but `gemini-3.5-flash-lite` is intermittently 503/504 on them.
+- Local real run: `apps/api/scripts/tutor_dev_server.py --env-file <kiki-backend/.env>` (127.0.0.1:8090)
+  plus `VITE_TUTOR_DEV_API=http://127.0.0.1:8090 npm run dev` in apps/web.
+- Voice run 23:12-23:18 (`tests/tutor-voice-run.spec.ts`): the whole envelope-design question by
+  voice through the real screen; 7/7 spoken answers labelled correctly by Gemini; scorecard and
+  revision sheet; 150 s of KiKi audio. Artifacts: `Desktop/KiKi/tutor-voice-run/`.
+- Fixed from that run: provider outage now asks the student to repeat (no hint spent); summary no
+  longer strips quotes from the report; metric quotes come from the judging step; duplicate
+  submit_reply ignored.
+
+Checks: API 262 passed, 8 skipped; web 291 unit, typecheck, lint. Not pushed or deployed.
+
+---
+
+## Tutor mode: hardening, envelope-design question, canvas pass - 20 November 2026 (evening)
+
+Branch `feat/tutor-voice`, local commits only (not pushed or deployed).
+
+- Hardening: config fails fast without a key; tutor startup isolated (bad content disables only
+  the tutor); public `/tutor/health`; session ids include question and language; caps (8 voice
+  tokens, 3000 events, leak logs once per turn); voice/turn race re-applies the label on the fresh
+  state; one 1.5 s retry on 429. Web voice resumes after drops/go-away with a fresh token and the
+  Live handle (3 tries), checks availability before the mic prompt, and explains mic errors.
+- Plug-in kit: `apps/api/scripts/tutor_preflight.py`, `scripts/tutor_image_check.py`,
+  `apps/api/TUTOR_RUNBOOK.md`. Preflight on the current free key correctly reports NOT READY
+  (daily quota used; Live "prepayment credits are depleted").
+- New question `ece-am-envelope-design` (hard; offered on C-AM-03).
+- Canvas: finished stages fold to their results; compact question bar (sticky on desktop);
+  newest item scrolls into view; wipe then fading highlight; waveform traces fixed; equations
+  shrink to fit; vertical block diagrams on phones; conversation docked above the tab bar on
+  ≤860 px (portalled to body); report replaces the live board when done. Captures before and
+  after: `Desktop/KiKi/tutor-canvas-review/{before,after}` (spec `tests/tutor-canvas.capture.spec.ts`).
+
+Checks run: API 249 passed, 8 skipped; web 287 unit, lint, typecheck, build; Playwright tutor
+specs 3/3; full Playwright 115 passed, 3 failed in parallel: two pass serially (24/24), the
+third is `lab-student-input.spec.ts` (standalone lab harness, untouched by this work).
+
+Exact next: paid key → preflight READY → runbook steps; owner decides push/PR.
+
+---
+
+## Tutor mode (voice, staged decision graphs) built on feat/tutor-voice - 20 November 2026
+
+Branch `feat/tutor-voice` from `origin/main` 5ecdd2e, committed locally as adityathenerd; not
+pushed, merged or deployed. Tutor mode is off unless `KIKI_TUTOR_ENABLED=true` and a server-side
+`KIKI_GEMINI_API_KEY` are set, so existing behaviour is unchanged.
+
+What exists: `kiki-tutor-question/v1` content (question → stages → decision graphs → cumulative
+whiteboard) in `data-model/tutor/questions` (ece-phase-error, ece-dsb-receive-drift); validator;
+pure engine; Gemini label classifier (gemini-3.5-flash-lite); Firestore session store with an
+append-only event log; routes under `/tutor/*`; post-session report; locked Gemini Live voice
+tokens (gemini-3.8-live); web screen `/concepts/:conceptId/talk/:questionId` with whiteboard,
+chips/text, voice and scorecard; fixture mode replays views recorded from the Python engine.
+
+Checks actually run (unit doubles unless stated): API 230 passed, 8 skipped (live tests opt-in);
+web 283 unit tests, lint, typecheck, production build (fixture not in dist); Playwright 110 of 111
+(lab-student-input.spec.ts fails on a duplicate "Use current step" button; it loads a standalone
+lab harness none of this work touches; not re-run on a clean main). Live Google checks: routing
+26/26, 52/52 and 29/29 on real Gemini; live behaviour and summary tests; Live voice spike in
+English and Odia (briefs spoken verbatim, tool call 0.5-0.8 s, about 2.9 s end of speech to KiKi
+audio); token lock, single use and override refusal; real-browser mic → Live → tool → speech.
+Not yet run: Firestore against a real project, a signed-in connected walkthrough, Cloud Run.
+
+Known limits: the Gemini key in this environment is free tier (gemini-3.8-flash allows 20
+requests a day; latency is throttled). Odia audio needs a native listen
+(`Desktop/KiKi/tutor-voice-samples`). Stage intros have no Odia yet.
+
+Exact next: owner decides push/PR; paid Gemini key; enable on a preview API revision with
+Secret Manager; signed-in walkthrough by voice and text; native Odia review.
+
+---
+
 ## Narrated lesson layout, local review - 20 November 2026
 
-Branch `feature/canvas-audio-sync` (from main `5ecdd2e`), not committed or pushed.
+Branch `feature/canvas-audio-sync` (from main `5ecdd2e`); merged to main as PR #18 on 21 November 2026.
 Revised after review: narration now plays behind the lesson instead of in front
 of it. Pressing Listen on C-AM-08 steps 2-3 switches to a narrated layout: the
 phase-recovery scene rises to the top of the step as a pinned "stage" with a slim

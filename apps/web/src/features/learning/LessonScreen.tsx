@@ -17,6 +17,7 @@ import { PhaseRecoveryScene } from './PhaseRecoveryScene'
 import { useMediaQuery } from './useMediaQuery'
 import { createPlaceSaver } from './placeSaver'
 import { useDialLevel } from './useDialLevel'
+import { TalkItThroughRow } from '../tutor/TalkItThroughRow'
 import styles from './LessonScreen.module.css'
 
 type Load =
@@ -401,6 +402,7 @@ export function LessonScreen() {
               </LinkButton>
             )}
           </div>
+          <TalkItThroughRow conceptId={conceptId} />
         </div>
       </div>
 

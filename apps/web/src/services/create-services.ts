@@ -18,5 +18,6 @@ export async function createServices(): Promise<Services> {
   const config = connectionConfig(import.meta.env, import.meta.env.DEV);
   const auth = withResourceCleanup(await createFirebaseAuth(config));
   const { createAssessmentApi } = await import('./assessment-http');
-  return { mode: 'connected', labExecution:createLabExecutionApi(config.apiBaseUrl,auth), labPreparation:createLabPreparationApi(config.apiBaseUrl,auth), learning: createLearningApi(config.apiBaseUrl, auth), media: createMediaApi(config.apiBaseUrl, auth), auth, api: createLearnerApi(config.apiBaseUrl, auth), intake: createIntakeApi(config.apiBaseUrl, auth), assessments: createAssessmentApi(config.apiBaseUrl, auth) };
+  const { createTutorApi } = await import('./tutor-http');
+  return { mode: 'connected', tutor: createTutorApi(config.apiBaseUrl, auth), labExecution:createLabExecutionApi(config.apiBaseUrl,auth), labPreparation:createLabPreparationApi(config.apiBaseUrl,auth), learning: createLearningApi(config.apiBaseUrl, auth), media: createMediaApi(config.apiBaseUrl, auth), auth, api: createLearnerApi(config.apiBaseUrl, auth), intake: createIntakeApi(config.apiBaseUrl, auth), assessments: createAssessmentApi(config.apiBaseUrl, auth) };
 }

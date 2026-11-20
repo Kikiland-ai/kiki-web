@@ -1,0 +1,1315 @@
+{
+ "schema": "kiki-tutor-question/v1",
+ "id": "ece-phase-error",
+ "version": "2026-11-20.1",
+ "courseId": "CRS-AC-ECE",
+ "conceptIds": [
+  "C-AM-08",
+  "C-AM-06",
+  "C-AM-01"
+ ],
+ "difficulty": "medium",
+ "title": {
+  "en": "Phase error in a coherent receiver",
+  "or": "Coherent receiver ରେ Phase error"
+ },
+ "framing": {
+  "en": "In your coherent receiver, the local carrier has the right frequency but is 60° out of phase with the transmitter's carrier. What fraction of the message amplitude do you recover, what happens at 90°, and why?",
+  "or": "ଆପଣଙ୍କ Coherent receiver ରେ Local carrier ର Frequency ଠିକ ଅଛି, କିନ୍ତୁ Transmitter carrier ଠାରୁ Phase ରେ 60° ତଫାତ ଅଛି। Message amplitude ର କେତେ ଅଂଶ ଫେରେ, 90° ରେ କଣ ହୁଏ, ଏବଂ କାହିଁକି?"
+ },
+ "languages": [
+  "en",
+  "or"
+ ],
+ "speech": {
+  "en": "scripted",
+  "or": "scripted"
+ },
+ "review": {
+  "content": "draft",
+  "languages": {
+   "en": "draft",
+   "or": "draft"
+  }
+ },
+ "metrics": [
+  {
+   "id": "conceptual-understanding",
+   "label": {
+    "en": "Conceptual understanding",
+    "or": "ଧାରଣା ବୁଝିବା"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "calculation-accuracy",
+   "label": {
+    "en": "Calculation accuracy",
+    "or": "ହିସାବର ସଠିକତା"
+   },
+   "dim": "concept"
+  },
+  {
+   "id": "terms",
+   "label": {
+    "en": "Technical terms",
+    "or": "Technical term ବ୍ୟବହାର"
+   },
+   "dim": "words"
+  },
+  {
+   "id": "articulation",
+   "label": {
+    "en": "Explaining in English",
+    "or": "ଇଂରାଜୀରେ ବୁଝାଇବା"
+   },
+   "dim": "english"
+  }
+ ],
+ "misconceptions": [
+  {
+   "id": "phase-does-not-matter",
+   "desc": "Believes only frequency matters; a phase error cancels or is removed by the filter.",
+   "conceptIds": [
+    "C-AM-06",
+    "C-AM-08"
+   ]
+  },
+  {
+   "id": "any-error-loses-all",
+   "desc": "Believes any phase error loses the whole message.",
+   "conceptIds": [
+    "C-AM-08"
+   ]
+  },
+  {
+   "id": "angle-unit-mixup",
+   "desc": "Mixes degrees and radians, or treats 90° as half a cycle.",
+   "conceptIds": [
+    "C-AM-01"
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "id": "T-AM-08-1",
+   "term": "phase error",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-06-2",
+   "term": "local oscillator",
+   "alsoAccept": [
+    "local carrier"
+   ]
+  },
+  {
+   "id": "T-AM-06-1",
+   "term": "coherent demodulation",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-07-1",
+   "term": "lowpass filter",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-06-3",
+   "term": "recovery gain",
+   "alsoAccept": []
+  },
+  {
+   "id": "T-AM-02-2",
+   "term": "carrier",
+   "alsoAccept": []
+  }
+ ],
+ "board": {
+  "q": {
+   "id": "q",
+   "kind": "question",
+   "text": {
+    "en": "What fraction of the aligned (φ = 0°) message amplitude do you recover at 60°? What happens at 90°, and why?",
+    "or": "60° ରେ aligned (φ = 0°) Message amplitude ର କେତେ ଅଂଶ ଫେରେ? 90° ରେ କଣ ହୁଏ, ଏବଂ କାହିଁକି?"
+   },
+   "given": [
+    {
+     "en": "Local carrier frequency equals the transmitter carrier frequency.",
+     "or": "Local carrier frequency ଓ Transmitter carrier frequency ସମାନ।"
+    },
+    {
+     "en": "Unit carrier amplitudes and an ideal lowpass filter.",
+     "or": "Unit Carrier amplitude ଓ ideal Lowpass filter।"
+    },
+    {
+     "en": "Relative phase error φ = 60°, then 90°.",
+     "or": "Relative Phase error φ = 60°, ତାପରେ 90°।"
+    }
+   ]
+  },
+  "rx": {
+   "id": "rx",
+   "kind": "figure",
+   "template": "block",
+   "caption": {
+    "en": "Coherent DSB-SC receiver",
+    "or": "Coherent DSB-SC Receiver"
+   },
+   "params": {
+    "blocks": [
+     {
+      "id": "in",
+      "label": {
+       "en": "Received s(t) = m(t) cos ωct"
+      },
+      "kind": "source"
+     },
+     {
+      "id": "lo",
+      "label": {
+       "en": "Local carrier cos(ωct + φ)"
+      },
+      "kind": "oscillator"
+     },
+     {
+      "id": "mul",
+      "label": {
+       "en": "Product"
+      },
+      "kind": "multiplier"
+     },
+     {
+      "id": "lpf",
+      "label": {
+       "en": "Lowpass filter"
+      },
+      "kind": "filter"
+     },
+     {
+      "id": "g",
+      "label": {
+       "en": "Recovery gain 2"
+      },
+      "kind": "gain"
+     },
+     {
+      "id": "out",
+      "label": {
+       "en": "Output"
+      },
+      "kind": "output"
+     }
+    ],
+    "edges": [
+     {
+      "from": "in",
+      "to": "mul"
+     },
+     {
+      "from": "lo",
+      "to": "mul"
+     },
+     {
+      "from": "mul",
+      "to": "lpf"
+     },
+     {
+      "from": "lpf",
+      "to": "g"
+     },
+     {
+      "from": "g",
+      "to": "out"
+     }
+    ]
+   }
+  },
+  "traces-60": {
+   "id": "traces-60",
+   "kind": "figure",
+   "template": "waveform",
+   "caption": {
+    "en": "Recovered message: aligned vs 60° phase error",
+    "or": "Recovered message: aligned ବନାମ 60° Phase error"
+   },
+   "params": {
+    "series": [
+     {
+      "label": {
+       "en": "φ = 0°"
+      },
+      "tones": [
+       {
+        "a": 1,
+        "f": 1,
+        "phaseDeg": 0
+       }
+      ],
+      "style": "reference"
+     },
+     {
+      "label": {
+       "en": "φ = 60°"
+      },
+      "tones": [
+       {
+        "a": 0.5,
+        "f": 1,
+        "phaseDeg": 0
+       }
+      ],
+      "style": "signal"
+     }
+    ],
+    "t": [
+     0,
+     2
+    ],
+    "yRange": [
+     -1.1,
+     1.1
+    ],
+    "xLabel": {
+     "en": "message periods"
+    }
+   }
+  },
+  "mix": {
+   "id": "mix",
+   "kind": "equation",
+   "tex": "v(t)=m(t)\\cos\\omega_c t\\cdot\\cos(\\omega_c t+\\varphi)",
+   "label": {
+    "en": "After the product",
+    "or": "ଗୁଣନ ପରେ"
+   }
+  },
+  "identity": {
+   "id": "identity",
+   "kind": "step",
+   "tex": "=\\tfrac12\\,m(t)\\left[\\cos\\varphi+\\cos(2\\omega_c t+\\varphi)\\right]",
+   "note": {
+    "en": "cos A cos B = ½[cos(A−B) + cos(A+B)]",
+    "or": "cos A cos B = ½[cos(A−B) + cos(A+B)]"
+   }
+  },
+  "lpf-out": {
+   "id": "lpf-out",
+   "kind": "step",
+   "tex": "\\xrightarrow{\\text{LPF}}\\ \\tfrac12\\,m(t)\\cos\\varphi",
+   "note": {
+    "en": "The 2ωc term is filtered out",
+    "or": "2ωc ଅଂଶଟି Filter ରେ ବାଦ ପଡ଼େ"
+   }
+  },
+  "gain-out": {
+   "id": "gain-out",
+   "kind": "step",
+   "tex": "\\xrightarrow{\\times 2}\\ m(t)\\cos\\varphi"
+  },
+  "units": {
+   "id": "units",
+   "kind": "note",
+   "text": {
+    "en": "Angles: 60° = π/3 rad and 90° = π/2 rad (a quarter cycle).",
+    "or": "Angle: 60° = π/3 rad ଏବଂ 90° = π/2 rad (ଏକ ଚତୁର୍ଥାଂଶ Cycle)।"
+   }
+  },
+  "cos60": {
+   "id": "cos60",
+   "kind": "step",
+   "tex": "\\cos 60^\\circ=\\tfrac12\\ \\Rightarrow\\ \\tfrac12\\,m(t)"
+  },
+  "traces-90": {
+   "id": "traces-90",
+   "kind": "figure",
+   "template": "waveform",
+   "caption": {
+    "en": "Recovered message at 0°, 60° and 90°",
+    "or": "0°, 60° ଓ 90° ରେ Recovered message"
+   },
+   "params": {
+    "series": [
+     {
+      "label": {
+       "en": "φ = 0°"
+      },
+      "tones": [
+       {
+        "a": 1,
+        "f": 1,
+        "phaseDeg": 0
+       }
+      ],
+      "style": "reference"
+     },
+     {
+      "label": {
+       "en": "φ = 60°"
+      },
+      "tones": [
+       {
+        "a": 0.5,
+        "f": 1,
+        "phaseDeg": 0
+       }
+      ],
+      "style": "muted"
+     },
+     {
+      "label": {
+       "en": "φ = 90°"
+      },
+      "tones": [
+       {
+        "a": 0,
+        "f": 1,
+        "phaseDeg": 0
+       }
+      ],
+      "style": "signal"
+     }
+    ],
+    "t": [
+     0,
+     2
+    ],
+    "yRange": [
+     -1.1,
+     1.1
+    ],
+    "xLabel": {
+     "en": "message periods"
+    }
+   }
+  },
+  "cos90": {
+   "id": "cos90",
+   "kind": "step",
+   "tex": "\\cos 90^\\circ=0\\ \\Rightarrow\\ 0",
+   "note": {
+    "en": "Ideal output vanishes; a real filter can leave a little ripple",
+    "or": "Ideal output ଶୂନ ହୁଏ; ବାସ୍ତବ Filter ଟିକେ Ripple ରଖିପାରେ"
+   }
+  },
+  "result": {
+   "id": "result",
+   "kind": "result",
+   "tex": "y(t)=m(t)\\cos\\varphi:\\quad \\tfrac12\\ \\text{at}\\ 60^\\circ,\\quad 0\\ \\text{at}\\ 90^\\circ",
+   "text": {
+    "en": "Phase error scales the recovered message by cos φ.",
+    "or": "Phase error, Recovered message କୁ cos φ ଗୁଣରେ ଛୋଟ କରେ।"
+   }
+  },
+  "term-T-AM-08-1": {
+   "id": "term-T-AM-08-1",
+   "kind": "term",
+   "termId": "T-AM-08-1"
+  },
+  "term-T-AM-06-2": {
+   "id": "term-T-AM-06-2",
+   "kind": "term",
+   "termId": "T-AM-06-2"
+  },
+  "term-T-AM-06-1": {
+   "id": "term-T-AM-06-1",
+   "kind": "term",
+   "termId": "T-AM-06-1"
+  },
+  "term-T-AM-07-1": {
+   "id": "term-T-AM-07-1",
+   "kind": "term",
+   "termId": "T-AM-07-1"
+  },
+  "term-T-AM-06-3": {
+   "id": "term-T-AM-06-3",
+   "kind": "term",
+   "termId": "T-AM-06-3"
+  },
+  "term-T-AM-02-2": {
+   "id": "term-T-AM-02-2",
+   "kind": "term",
+   "termId": "T-AM-02-2"
+  }
+ },
+ "pinned": [
+  "q"
+ ],
+ "stages": [
+  {
+   "id": "predict",
+   "title": {
+    "en": "Predict",
+    "or": "ଅନୁମାନ"
+   },
+   "conceptIds": [
+    "C-AM-08"
+   ],
+   "intro": {
+    "say": {
+     "en": "Before any maths, let's predict.",
+     "or": "ହିସାବ କରିବା ଆଗରୁ, ଆସନ୍ତୁ ଅନୁମାନ କରିବା।"
+    }
+   },
+   "start": "predict-60",
+   "nodes": {
+    "predict-60": {
+     "kind": "probe",
+     "goal": "Prediction before any maths: with matched frequency and a 60° phase error, part of the message comes back (smaller than with aligned carriers, but not zero).",
+     "line": {
+      "say": {
+       "en": "Let's start with a guess. At 60°, do you get all of the message back, part of it, or none?",
+       "or": "ପ୍ରଥମେ ଗୋଟିଏ ଅନୁମାନ କରନ୍ତୁ। 60° ରେ Message ସବୁ ଫେରେ, କିଛି ଅଂଶ ଫେରେ, ନା କିଛି ବି ଫେରେ ନାହିଁ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "part-survives",
+       "desc": "Says only part of the message comes back: smaller than with aligned carriers, but not zero. Reduced, weaker, less, partly or half all count.",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "traces-60"
+       ]
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "phase-does-not-matter",
+       "desc": "Says all of the message comes back, or that phase does not matter as long as the frequency matches.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-phase-matters",
+       "reveal": []
+      },
+      {
+       "id": "any-error-loses-all",
+       "desc": "Says nothing comes back at 60°: any phase error loses the whole message.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-part-survives",
+       "reveal": []
+      }
+     ],
+     "hints": [
+      {
+       "rung": "question",
+       "say": {
+        "en": "With the carriers lined up, you get the whole message. As their phases slip apart, does the output grow, shrink or stay the same?",
+        "or": "Carrier ଦୁଇଟି ମେଳିଥିଲେ ପୂରା Message ମିଳେ। Phase ଅଲଗା ହେବାକୁ ଲାଗିଲେ Output ବଢ଼େ, କମେ, ନା ସମାନ ରହେ?"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "nudge",
+       "say": {
+        "en": "Phase decides how well the two carriers line up. At 60° they line up only partly.",
+        "or": "Carrier ଦୁଇଟିର ମେଳ କେତେ ଭଲ, ତାହା Phase ସ୍ଥିର କରେ। 60° ରେ ମେଳ ଆଂଶିକ।"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "worked_step",
+       "say": {
+        "en": "The output is the message times a factor that depends on φ. At 0° that factor is 1; watch what happens at 60°.",
+        "or": "Output ହେଉଛି Message × ଏକ Factor, ଯାହା φ ଉପରେ ନିର୍ଭର କରେ। 0° ରେ ଏହି Factor 1; 60° ରେ ଏହା କଣ ହୁଏ ଦେଖନ୍ତୁ।"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "answer",
+       "say": {
+        "en": "Part of it. The recovered trace is smaller than the aligned one, but it is not zero.",
+        "or": "କିଛି ଅଂଶ ଫେରେ। Recovered trace aligned trace ଠାରୁ ଛୋଟ, କିନ୍ତୁ ଶୂନ୍ୟ ନୁହେଁ।"
+       },
+       "reveal": [
+        {
+         "item": "traces-60",
+         "on": "speech-end"
+        }
+       ]
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "All of it",
+        "or": "ସବୁ"
+       },
+       "text": "All of it, because the frequency matches.",
+       "route": "phase-does-not-matter"
+      },
+      {
+       "label": {
+        "en": "Part of it",
+        "or": "କିଛି ଅଂଶ"
+       },
+       "text": "Part of it. It gets smaller, but not zero.",
+       "route": "part-survives"
+      },
+      {
+       "label": {
+        "en": "None of it",
+        "or": "କିଛି ନାହିଁ"
+       },
+       "text": "None of it. Out of phase means the message is lost.",
+       "route": "any-error-loses-all"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "traces-60"
+     ],
+     "mustNotReveal": [
+      "half",
+      "0.5",
+      "smaller"
+     ]
+    },
+    "show-phase-matters": {
+     "kind": "show",
+     "goal": "Counter 'only frequency matters': the frequency stays matched, φ moves to 60°, and the recovered trace shrinks against the aligned trace.",
+     "line": {
+      "say": {
+       "en": "Here the frequency matches exactly, and only the phase moved to 60°. Look: the recovered trace is smaller than the aligned one.",
+       "or": "ଏଠାରେ Frequency ପୂରା ମେଳୁଛି, କେବଳ Phase 60° କୁ ଘୁଞ୍ଚିଛି। ଦେଖନ୍ତୁ: Recovered trace aligned trace ଠାରୁ ଛୋଟ।"
+      },
+      "reveal": [
+       {
+        "item": "traces-60",
+        "on": "enter"
+       }
+      ]
+     },
+     "next": "$exit"
+    },
+    "show-part-survives": {
+     "kind": "show",
+     "goal": "Counter 'any phase error loses everything': at 60° the recovered trace is smaller but clearly not zero.",
+     "line": {
+      "say": {
+       "en": "At 60° the recovered trace is smaller, but it is still there. Part of the message survives.",
+       "or": "60° ରେ Recovered trace ଛୋଟ ହୁଏ, କିନ୍ତୁ ଏବେ ବି ଅଛି। Message ର କିଛି ଅଂଶ ରହିଯାଏ।"
+      },
+      "reveal": [
+       {
+        "item": "traces-60",
+        "on": "enter"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "mechanism",
+   "title": {
+    "en": "Mechanism",
+    "or": "କାରଣ"
+   },
+   "conceptIds": [
+    "C-AM-06",
+    "C-AM-08"
+   ],
+   "intro": {
+    "say": {
+     "en": "Now let's see why. Here is your receiver.",
+     "or": "ଏବେ ଦେଖିବା କାହିଁକି। ଏହା ହେଉଛି ଆପଣଙ୍କ Receiver।"
+    },
+    "reveal": [
+     {
+      "item": "rx",
+      "on": "enter"
+     }
+    ]
+   },
+   "start": "why-cos",
+   "nodes": {
+    "why-cos": {
+     "kind": "probe",
+     "goal": "Mechanism: multiplying by the local carrier and lowpass filtering leaves m(t) scaled by cos φ (½ m(t) cos φ before the recovery gain of 2, m(t) cos φ after it).",
+     "line": {
+      "say": {
+       "en": "Your receiver multiplies by the local carrier, then lowpass filters. How does the phase error φ change m(t) at the output?",
+       "or": "Receiver ପ୍ରଥମେ Local carrier ସହିତ ଗୁଣନ କରେ, ତାପରେ Lowpass filter କରେ। Phase error φ ଯୋଗୁଁ Output ରେ m(t) କିପରି ବଦଳେ?"
+      },
+      "reveal": [
+       {
+        "item": "mix",
+        "on": "enter"
+       }
+      ]
+     },
+     "expect": [
+      {
+       "id": "scaled-by-cos",
+       "desc": "Says m(t) is multiplied or scaled by cos φ: the output is m(t) cos φ after the recovery gain, or ½ m(t) cos φ before it, or the amplitude follows cos φ.",
+       "metric": "conceptual-understanding",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "identity",
+        "lpf-out",
+        "gain-out"
+       ]
+      },
+      {
+       "id": "half-factor-only",
+       "desc": "Gives only the aligned-carrier result: the product leaves m(t)/2 and the gain of 2 restores m(t). No mention of φ or cos φ.",
+       "metric": "conceptual-understanding",
+       "level": "partial",
+       "next": "show-cos-factor",
+       "reveal": []
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "phase-does-not-matter",
+       "desc": "Says the phase error cancels in the product, or the lowpass filter or the gain removes it, so the output is still m(t).",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-cos-factor",
+       "reveal": []
+      }
+     ],
+     "hints": [
+      {
+       "rung": "question",
+       "say": {
+        "en": "Write the carriers as cos(ωt) and cos(ωt + φ). What do you get when you multiply them?",
+        "or": "Carrier ଦୁଇଟିକୁ cos(ωt) ଓ cos(ωt + φ) ଭାବରେ ଲେଖନ୍ତୁ। ଦୁହିଁଙ୍କୁ ଗୁଣନ କଲେ କଣ ମିଳେ?"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "nudge",
+       "say": {
+        "en": "Use cos A cos B = ½[cos(A − B) + cos(A + B)]. The lowpass filter keeps only the low-frequency part.",
+        "or": "cos A cos B = ½[cos(A − B) + cos(A + B)] ବ୍ୟବହାର କରନ୍ତୁ। Lowpass filter କେବଳ କମ Frequency ଅଂଶ ରଖେ।"
+       },
+       "reveal": [
+        {
+         "item": "identity",
+         "on": "speech-end"
+        }
+       ]
+      },
+      {
+       "rung": "worked_step",
+       "say": {
+        "en": "The low-frequency part is ½ m(t) cos φ. The recovery gain of 2 makes it m(t) cos φ.",
+        "or": "ସେହି କମ Frequency ଅଂଶଟି ହେଉଛି ½ m(t) cos φ। Recovery gain 2 ତାକୁ m(t) cos φ କରେ।"
+       },
+       "reveal": [
+        {
+         "item": "lpf-out",
+         "on": "speech-end"
+        }
+       ]
+      },
+      {
+       "rung": "answer",
+       "say": {
+        "en": "The phase error scales m(t) by cos φ. The output is m(t) cos φ.",
+        "or": "Phase error ଯୋଗୁଁ m(t) ର Amplitude cos φ ଗୁଣ ହୁଏ। Output ହେଉଛି m(t) cos φ।"
+       },
+       "reveal": [
+        {
+         "item": "gain-out",
+         "on": "speech-end"
+        }
+       ]
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "Scales it by cos φ",
+        "or": "cos φ ଗୁଣ ହୁଏ"
+       },
+       "text": "It scales m(t) by cos φ, so the output is m(t) cos φ.",
+       "route": "scaled-by-cos"
+      },
+      {
+       "label": {
+        "en": "Nothing, the filter removes it",
+        "or": "କିଛି ନୁହେଁ, Filter ହଟାଇଦିଏ"
+       },
+       "text": "Nothing changes. The lowpass filter removes the phase error, so I still get m(t).",
+       "route": "phase-does-not-matter"
+      },
+      {
+       "label": {
+        "en": "It gives m(t)/2",
+        "or": "m(t)/2 ମିଳେ"
+       },
+       "text": "The product gives m(t)/2, and the gain of 2 brings it back to m(t).",
+       "route": "half-factor-only"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "gain-out"
+     ],
+     "mustNotReveal": [
+      "cos φ",
+      "cos phi"
+     ]
+    },
+    "show-cos-factor": {
+     "kind": "show",
+     "goal": "Show where cos φ comes from: after the lowpass filter ½ m(t) cos φ is left, the recovery gain of 2 gives m(t) cos φ, and neither the filter nor the gain removes cos φ.",
+     "line": {
+      "say": {
+       "en": "After the lowpass filter, ½ m(t) cos φ is left, and the recovery gain of 2 makes it m(t) cos φ. Neither one removes the cos φ.",
+       "or": "Lowpass filter ପରେ ½ m(t) cos φ ରହେ, ଆଉ Recovery gain 2 ତାକୁ m(t) cos φ କରେ। Filter ବା Gain, କେଉଁଟି ବି cos φ କୁ ହଟାଏ ନାହିଁ।"
+      },
+      "reveal": [
+       {
+        "item": "identity",
+        "on": "enter"
+       },
+       {
+        "item": "lpf-out",
+        "on": "say:lowpass filter"
+       },
+       {
+        "item": "gain-out",
+        "on": "say:recovery gain"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "calculate",
+   "title": {
+    "en": "Calculate",
+    "or": "ହିସାବ"
+   },
+   "conceptIds": [
+    "C-AM-08",
+    "C-AM-01"
+   ],
+   "intro": {
+    "say": {
+     "en": "Let's put a number on it.",
+     "or": "ଏବେ ଏହାକୁ ଗୋଟିଏ ସଂଖ୍ୟାରେ କହିବା।"
+    }
+   },
+   "start": "calc-60",
+   "nodes": {
+    "calc-60": {
+     "kind": "probe",
+     "goal": "Calculation: cos 60° = 0.5, so the output is half of the aligned amplitude.",
+     "line": {
+      "say": {
+       "en": "Use that factor. At 60°, what fraction of the aligned amplitude comes out?",
+       "or": "ସେହି Factor ବ୍ୟବହାର କରନ୍ତୁ। 60° ରେ aligned Amplitude ର କେତେ ଅଂଶ Output ରେ ମିଳେ?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "half",
+       "desc": "Gives 0.5, one half or 50% of the aligned amplitude, from cos 60° = 0.5.",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "$exit",
+       "reveal": [
+        "cos60"
+       ]
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "angle-unit-mixup",
+       "desc": "Gives a value from treating 60 as radians, such as about −0.95 (calculator in radian mode), or otherwise mixes up degrees and radians.",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-angle-units",
+       "reveal": []
+      }
+     ],
+     "hints": [
+      {
+       "rung": "question",
+       "say": {
+        "en": "Which function of φ did we find? Put φ = 60° into it.",
+        "or": "ଆମେ φ ର କେଉଁ Function ପାଇଲେ? ସେଥିରେ φ = 60° ରଖନ୍ତୁ।"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "nudge",
+       "say": {
+        "en": "Keep your calculator in degree mode, or use 60° = π/3 rad. Cosine does not fall in a straight line with the angle.",
+        "or": "Calculator କୁ Degree mode ରେ ରଖନ୍ତୁ, କିମ୍ବା 60° = π/3 rad ନିଅନ୍ତୁ। Angle ବଢ଼ିଲେ Cosine ସିଧା ରେଖାରେ କମେ ନାହିଁ।"
+       },
+       "reveal": [
+        {
+         "item": "units",
+         "on": "speech-end"
+        }
+       ]
+      },
+      {
+       "rung": "worked_step",
+       "say": {
+        "en": "In degrees, cos 60° = cos(π/3) = 0.5. So the output is 0.5 × m(t).",
+        "or": "Degree ରେ cos 60° = cos(π/3) = 0.5। ତେଣୁ Output = 0.5 × m(t)।"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "answer",
+       "say": {
+        "en": "Half. At 60° you recover half of the aligned amplitude.",
+        "or": "ଅଧା। 60° ରେ aligned Amplitude ର ଅଧା ଫେରେ।"
+       },
+       "reveal": [
+        {
+         "item": "cos60",
+         "on": "speech-end"
+        }
+       ]
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "0.5, half",
+        "or": "0.5, ଅଧା"
+       },
+       "text": "cos 60° is 0.5, so half of the aligned amplitude.",
+       "route": "half"
+      },
+      {
+       "label": {
+        "en": "About −0.95",
+        "or": "ପ୍ରାୟ −0.95"
+       },
+       "text": "My calculator says cos 60 is about −0.95.",
+       "route": "angle-unit-mixup"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "cos60"
+     ],
+     "mustNotReveal": [
+      "0.5",
+      "half",
+      "50%",
+      "one half"
+     ]
+    },
+    "show-angle-units": {
+     "kind": "show",
+     "goal": "Fix the unit slip: 60° is π/3 rad, not 60 rad, and cos 60° = 0.5. Reveal the readout at 60°.",
+     "line": {
+      "say": {
+       "en": "Check the angle unit: 60° is π/3 radians, not 60 radians. So cos 60° = cos(π/3) = 0.5, and half comes out.",
+       "or": "Angle ର Unit ଦେଖନ୍ତୁ: 60° ମାନେ π/3 radian, 60 radian ନୁହେଁ। ତେଣୁ cos 60° = cos(π/3) = 0.5, ଆଉ ଅଧା ଫେରେ।"
+      },
+      "reveal": [
+       {
+        "item": "units",
+        "on": "enter"
+       },
+       {
+        "item": "cos60",
+        "on": "speech-end"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "extend",
+   "title": {
+    "en": "Extend to 90°",
+    "or": "90° ପର୍ଯ୍ୟନ୍ତ"
+   },
+   "conceptIds": [
+    "C-AM-08"
+   ],
+   "intro": {
+    "say": {
+     "en": "One more angle.",
+     "or": "ଆଉ ଗୋଟିଏ Angle ଦେଖିବା।"
+    }
+   },
+   "start": "predict-90",
+   "nodes": {
+    "predict-90": {
+     "kind": "probe",
+     "goal": "Extend: at φ = 90°, cos 90° = 0, so the ideal message component vanishes. The student says what comes out and why.",
+     "line": {
+      "say": {
+       "en": "Now make the phase error 90°. What comes out, and why?",
+       "or": "ଏବେ Phase error 90° କରନ୍ତୁ। Output ରେ କଣ ମିଳେ, ଆଉ କାହିଁକି?"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "vanishes",
+       "desc": "Says nothing comes out, or only a small residual ripple, because cos 90° = 0: the ideal message component vanishes.",
+       "metric": "calculation-accuracy",
+       "level": "ok",
+       "next": "show-90",
+       "reveal": []
+      }
+     ],
+     "misconceptions": [
+      {
+       "id": "angle-unit-mixup",
+       "desc": "Says the message flips or inverts because 90° is half a cycle (π), or gives cos of 90 radians (about −0.45).",
+       "metric": "calculation-accuracy",
+       "level": "not_yet",
+       "next": "show-90",
+       "reveal": []
+      },
+      {
+       "id": "phase-does-not-matter",
+       "desc": "Says the full message still comes out because the frequency matches.",
+       "metric": "conceptual-understanding",
+       "level": "not_yet",
+       "next": "show-90",
+       "reveal": []
+      }
+     ],
+     "hints": [
+      {
+       "rung": "question",
+       "say": {
+        "en": "Use the same factor. What is cos 90°?",
+        "or": "ସେହି Factor ବ୍ୟବହାର କରନ୍ତୁ। cos 90° କେତେ?"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "nudge",
+       "say": {
+        "en": "90° is a quarter cycle, π/2 rad, not a half cycle. Where is a cosine wave a quarter cycle along?",
+        "or": "90° ମାନେ quarter cycle, ଅର୍ଥାତ୍ π/2 rad; ଏହା half cycle ନୁହେଁ। Quarter cycle ପରେ Cosine wave କେଉଁଠି ଥାଏ?"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "worked_step",
+       "say": {
+        "en": "At 90°, cos 90° = 0, so the output is m(t) × 0.",
+        "or": "90° ରେ cos 90° = 0, ତେଣୁ Output = m(t) × 0।"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "answer",
+       "say": {
+        "en": "Nothing comes out: the ideal message component vanishes at 90°. A real lowpass filter can leave a little ripple.",
+        "or": "Output ରେ କିଛି ମିଳେ ନାହିଁ: 90° ରେ ideal Message ଅଂଶ ଶୂନ୍ୟ ହୁଏ। ବାସ୍ତବ Lowpass filter ପାଇଁ ଟିକିଏ Ripple ରହିପାରେ।"
+       },
+       "reveal": [
+        {
+         "item": "cos90",
+         "on": "speech-end"
+        }
+       ]
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "Nothing: cos 90° = 0",
+        "or": "କିଛି ନାହିଁ: cos 90° = 0"
+       },
+       "text": "Nothing comes out, because cos 90° is 0.",
+       "route": "vanishes"
+      },
+      {
+       "label": {
+        "en": "It flips upside down",
+        "or": "ଓଲଟା ହୋଇଯାଏ"
+       },
+       "text": "The message flips upside down, because 90° is half a cycle.",
+       "route": "angle-unit-mixup"
+      },
+      {
+       "label": {
+        "en": "Still the full message",
+        "or": "ପୂରା Message ମିଳେ"
+       },
+       "text": "I still get the full message, because the frequency matches.",
+       "route": "phase-does-not-matter"
+      },
+      {
+       "label": {
+        "en": "Not sure",
+        "or": "ନିଶ୍ଚିତ ନୁହେଁ"
+       },
+       "text": "I am not sure.",
+       "route": "unclear"
+      }
+     ],
+     "answerItems": [
+      "cos90",
+      "traces-90"
+     ],
+     "mustNotReveal": [
+      "vanishes",
+      "nothing comes out",
+      "cos 90° = 0",
+      "zero"
+     ]
+    },
+    "show-90": {
+     "kind": "show",
+     "goal": "Reveal 90°: the ideal recovered trace goes flat because cos 90° = 0. Name 90° as a quarter cycle (π/2 rad) and give the finite-filter residual caveat (ledger M-AM-08).",
+     "line": {
+      "say": {
+       "en": "At 90°, a quarter cycle, cos 90° = 0, so the ideal message vanishes. A real lowpass filter can still leave a little ripple.",
+       "or": "90° ରେ, ଅର୍ଥାତ୍ quarter cycle ରେ, cos 90° = 0, ତେଣୁ ideal Message ଶୂନ୍ୟ ହୁଏ। ବାସ୍ତବ Lowpass filter ପାଇଁ ତଥାପି ଟିକିଏ Ripple ରହିପାରେ।"
+      },
+      "reveal": [
+       {
+        "item": "traces-90",
+        "on": "enter"
+       },
+       {
+        "item": "cos90",
+        "on": "say:cos 90°"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  },
+  {
+   "id": "articulate",
+   "title": {
+    "en": "Say it in English",
+    "or": "ଇଂରାଜୀରେ କହନ୍ତୁ"
+   },
+   "conceptIds": [
+    "C-AM-08"
+   ],
+   "intro": {
+    "say": {
+     "en": "These are the words your lab partner will use.",
+     "or": "ଆପଣଙ୍କ Lab partner ଏହି Term ଗୁଡ଼ିକ ବ୍ୟବହାର କରିବେ।"
+    },
+    "reveal": [
+     {
+      "item": "term-T-AM-08-1",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-06-2",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-06-1",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-07-1",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-06-3",
+      "on": "enter"
+     },
+     {
+      "item": "term-T-AM-02-2",
+      "on": "enter"
+     }
+    ]
+   },
+   "start": "explain-english",
+   "nodes": {
+    "explain-english": {
+     "kind": "probe",
+     "goal": "Articulation: in English, in one or two sentences, the student explains why the output is m(t) cos φ and what that gives at 60° and 90°, using course terms (local carrier or local oscillator, lowpass filter, phase error).",
+     "line": {
+      "say": {
+       "en": "Last step: explain it to your lab partner in English, in one or two sentences. Try to use local carrier, lowpass filter and phase error.",
+       "or": "ଶେଷ ପଦକ୍ଷେପ: ଆପଣଙ୍କ Lab partner କୁ ଇଂରାଜୀରେ ଗୋଟିଏ ବା ଦୁଇଟି ବାକ୍ୟରେ ବୁଝାନ୍ତୁ। Local carrier, Lowpass filter ଓ Phase error ଶବ୍ଦ ବ୍ୟବହାର କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ।"
+      },
+      "reveal": []
+     },
+     "expect": [
+      {
+       "id": "clear-explanation",
+       "desc": "Explains in English: the out-of-phase local carrier leaves m(t) cos φ after the product and the lowpass filter, so 60° gives half and 90° gives nothing (ideally). Gives both the reason and the result, with at least two course terms.",
+       "metric": "articulation",
+       "level": "ok",
+       "next": "conclusion",
+       "reveal": []
+      },
+      {
+       "id": "partial-explanation",
+       "desc": "Explains only part: the result without the reason, or the reason without the result; or uses few course terms; or answers mostly in Odia with English terms.",
+       "metric": "articulation",
+       "level": "partial",
+       "next": "conclusion",
+       "reveal": []
+      }
+     ],
+     "misconceptions": [],
+     "hints": [
+      {
+       "rung": "question",
+       "say": {
+        "en": "Start with the cause: “The local carrier is 60° out of phase, so …”. What happens to the output?",
+        "or": "କାରଣରୁ ଆରମ୍ଭ କରନ୍ତୁ: “The local carrier is 60° out of phase, so …”। Output ରେ କଣ ହୁଏ?"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "nudge",
+       "say": {
+        "en": "Add the rule and the numbers: “… the output is m(t) times …, so at 60° … and at 90° …”.",
+        "or": "Rule ଓ ସଂଖ୍ୟା ଯୋଡ଼ନ୍ତୁ: “… the output is m(t) times …, so at 60° … and at 90° …”।"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "worked_step",
+       "say": {
+        "en": "Fill the blanks: “Because of the phase error, the receiver output is m(t) cos φ, so 60° gives ___ and 90° gives ___.”",
+        "or": "ଖାଲି ସ୍ଥାନ ପୂରଣ କରନ୍ତୁ: “Because of the phase error, the receiver output is m(t) cos φ, so 60° gives ___ and 90° gives ___.”"
+       },
+       "reveal": []
+      },
+      {
+       "rung": "answer",
+       "say": {
+        "en": "One way to say it: “Because the local carrier is out of phase, the receiver output is m(t) cos φ, so 60° gives half and 90° gives nothing.” Now say it in your own words.",
+        "or": "ଏହିପରି କହିପାରିବେ: “Because the local carrier is out of phase, the receiver output is m(t) cos φ, so 60° gives half and 90° gives nothing.” ଏବେ ନିଜ ଶବ୍ଦରେ ଇଂରାଜୀରେ କୁହନ୍ତୁ।"
+       },
+       "reveal": []
+      }
+     ],
+     "chips": [
+      {
+       "label": {
+        "en": "Give me a starter",
+        "or": "ଆରମ୍ଭ ବାକ୍ୟଟିଏ ଦିଅନ୍ତୁ"
+       },
+       "text": "Can you give me a sentence starter?",
+       "route": "unclear"
+      },
+      {
+       "label": {
+        "en": "Use a model sentence",
+        "or": "ନମୁନା ବାକ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ"
+       },
+       "text": "The local carrier is out of phase, so the output is m(t) cos φ: half at 60° and nothing at 90°.",
+       "route": "partial-explanation"
+      }
+     ],
+     "answerItems": [],
+     "mustNotReveal": []
+    },
+    "conclusion": {
+     "kind": "conclusion",
+     "goal": "Close with the model explanation, both results and the finite-filter caveat, then point to the lab's 90° phase-fault step (CP-DSB-11).",
+     "line": {
+      "say": {
+       "en": "Here is the whole idea: after the local carrier, the lowpass filter and the recovery gain, the output is m(t) cos φ. So 60° gives half the amplitude, and 90° gives none.",
+       "or": "ପୂରା କଥାଟି ଏହା: Local carrier ସହିତ ଗୁଣନ, Lowpass filter ଓ Recovery gain ପରେ Output ହେଉଛି m(t) cos φ। ତେଣୁ 60° ରେ ଅଧା Amplitude ମିଳେ, ଆଉ 90° ରେ କିଛି ମିଳେ ନାହିଁ।"
+      },
+      "reveal": [
+       {
+        "item": "result",
+        "on": "speech-end"
+       }
+      ]
+     },
+     "next": "$exit"
+    }
+   }
+  }
+ ],
+ "nextSteps": [
+  {
+   "kind": "lab",
+   "id": "CP-DSB-11",
+   "why": {
+    "en": "Try the 90° receiver phase fault in the lab.",
+    "or": "Lab ରେ 90° Receiver phase fault ଚେଷ୍ଟା କରନ୍ତୁ।"
+   }
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-06",
+   "why": {
+    "en": "Revisit coherent demodulation and recovery gain.",
+    "or": "Coherent demodulation ଓ Recovery gain ପୁଣି ଦେଖନ୍ତୁ।"
+   },
+   "whenMetric": "conceptual-understanding",
+   "whenLevel": "not_yet"
+  },
+  {
+   "kind": "concept",
+   "id": "C-AM-01",
+   "why": {
+    "en": "Revisit angles and phase shifts in radians.",
+    "or": "Radian ରେ Angle ଓ Phase shift ପୁଣି ଦେଖନ୍ତୁ।"
+   },
+   "whenMisconception": "angle-unit-mixup"
+  }
+ ],
+ "sources": [
+  {
+   "id": "C-AM-08",
+   "title": "Ledger concept: Carrier mismatch and debugging",
+   "locator": "Design-Thinking/data-model/ledgers/electronics/analog-modulation.json"
+  },
+  {
+   "id": "C-AM-06",
+   "title": "Ledger concept: Coherent demodulation and recovery gain",
+   "locator": "Design-Thinking/data-model/ledgers/electronics/analog-modulation.json"
+  },
+  {
+   "id": "SCENE-AM-08-phase-recovery",
+   "title": "Phase-recovery scene artifact (control phi, degrees)",
+   "locator": "kiki-web/apps/web/src/fixtures/concept-media-C-AM-08.json"
+  },
+  {
+   "id": "F-AM-PHASE",
+   "title": "DSB-SC lab phase fault: Local carrier Phase pi/2 to pi",
+   "locator": "kiki-backend/docs/architecture/examples/dsb-sc.demo-definition.json"
+  }
+ ]
+}
