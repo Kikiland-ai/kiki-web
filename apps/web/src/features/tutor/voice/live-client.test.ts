@@ -53,7 +53,7 @@ it('speaks briefs, streams audio and transcripts, and answers submit_reply with 
   await sock().server({ serverContent: { inputTranscription: { text: 'it' } } });
   expect(events.studentText).toHaveBeenLastCalledWith('part of it');
   await sock().server({ toolCall: { functionCalls: [{ id: 'call-1', name: 'submit_reply', args: { heard_text: 'part of it', lang: 'en' } }] } });
-  expect(events.reply).toHaveBeenCalledWith('part of it', 'en');
+  expect(events.reply).toHaveBeenCalledWith('part of it', 'en', 'part of it');
   expect(sock().sent.at(-1)).toEqual({ toolResponse: { functionResponses: [{ id: 'call-1', name: 'submit_reply',
     response: { brief: { mode: 'scripted', lang: 'en', say: 'next after part of it', expectsReply: true } } }] } });
 });

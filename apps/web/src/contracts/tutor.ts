@@ -105,6 +105,16 @@ export interface TutorApi {
   voiceToken(sessionId: string): Promise<VoiceToken>
 }
 
+/** Every tutor question, in the order the hub lists them. `conceptId` is the page that offers it. */
+export const TUTOR_CATALOG: { id: string; conceptId: string; title: string; difficulty: 'medium' | 'hard'; summary: string; concepts: string }[] = [
+  { id: 'ece-am-envelope-design', conceptId: 'C-AM-03', title: 'Designing an AM envelope detector', difficulty: 'hard',
+    summary: 'Power budget, the RC window, diagonal clipping, then pushing μ to 0.9.', concepts: 'Envelope and modulation index · power and efficiency' },
+  { id: 'ece-phase-error', conceptId: 'C-AM-08', title: 'Phase error in a coherent receiver', difficulty: 'medium',
+    summary: 'What survives a 60° phase error, why, and what happens at 90°.', concepts: 'Coherent demodulation · carrier mismatch' },
+  { id: 'ece-dsb-receive-drift', conceptId: 'C-AM-08', title: 'Receiving DSB-SC: envelope, coherent detection and drift', difficulty: 'hard',
+    summary: 'Sidebands, why an envelope detector fails, the LPF cutoff, and a drifting oscillator.', concepts: 'DSB-SC · coherent detection · frequency drift' },
+];
+
 /** Which tutor questions a concept page offers. */
 export const TUTOR_QUESTIONS: Record<string, { id: string; title: string; difficulty: string }[]> = {
   'C-AM-03': [

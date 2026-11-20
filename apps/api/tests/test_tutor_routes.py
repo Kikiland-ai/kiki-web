@@ -283,7 +283,7 @@ class _Voice:
     def __init__(self, fail=False):
         self.fail, self.calls = fail, 0
 
-    def mint(self):
+    def mint(self, lang="en"):
         self.calls += 1
         if self.fail:
             raise RuntimeError("quota")

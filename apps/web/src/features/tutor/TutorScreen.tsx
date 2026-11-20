@@ -30,6 +30,17 @@ export function TutorScreen() {
     onProgress: s.spokenProgress,
   });
   const logEnd = useRef<HTMLLIElement>(null);
+  const layoutRef = useRef<HTMLDivElement>(null);
+  const reportRef = useRef<HTMLDivElement>(null);
+  const hasView = !!s.view, hasReport = !!s.report;
+  // Once a session is open, bring the workspace to the top of the screen: the board and the
+  // conversation then scroll inside their own columns, and nothing needs the page to move.
+  useEffect(() => {
+    if (!started || !hasView || hasReport) return;
+    const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    layoutRef.current?.scrollIntoView?.({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+  }, [started, hasView, hasReport]);
+  useEffect(() => { if (hasReport) reportRef.current?.scrollIntoView?.({ block: 'start' }); }, [hasReport]);
   // narrow screens: the conversation docks to the bottom of the viewport. It is portalled to <body>
   // so no app-shell ancestor (transforms, containment) can turn `position: fixed` into page flow.
   const docked = useMediaQuery('(max-width: 860px)');
@@ -93,7 +104,7 @@ export function TutorScreen() {
           </div>
         </section>
       ) : done && s.report ? null : (
-        <div className={styles.layout}>
+        <div className={styles.layout} ref={layoutRef}>
           <Whiteboard items={view?.board ?? []} shown={s.shown} fresh={s.fresh} lang={lang}
             stages={question.stages} currentStage={done ? question.stages.length : stageIndex}
             focus={view?.brief.segments.flatMap(seg => seg.focus) ?? []} />
@@ -141,7 +152,7 @@ export function TutorScreen() {
           </section>)}
         </div>
       )}
-      {done && s.report && <Report report={s.report} question={question} lang={lang} onRestart={() => void s.start(true)} />}
+      {done && s.report && <div ref={reportRef} className={styles.reportAnchor}><Report report={s.report} question={question} lang={lang} onRestart={() => void s.start(true)} /></div>}
       {done && !s.report && !s.error && <LoadingState message="Preparing your scorecard…" />}
     </main>
   );

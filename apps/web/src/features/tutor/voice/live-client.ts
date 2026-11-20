@@ -12,7 +12,7 @@ export interface LiveEvents {
   audio(pcm24k: Int16Array): void
   kikiText(textSoFar: string): void            // cumulative transcript of KiKi's current turn
   studentText(textSoFar: string): void         // cumulative transcript of the student's speech
-  reply(heardText: string, lang: string): Promise<VoiceBrief>   // tutoring system decides
+  reply(heardText: string, lang: string, transcript: string): Promise<VoiceBrief>   // tutoring system decides
   turnDone(kikiSaid: string): void
   interrupted(): void
   closed(reason: string, recoverable: boolean): void
@@ -122,9 +122,10 @@ export class LiveVoice {
     for (const fc of m.toolCall?.functionCalls ?? []) {
       if (fc.name !== 'submit_reply') continue;
       const heard = String(fc.args?.heard_text ?? this.student).trim();
+      const transcript = this.student.trim();          // Live's speech-to-text, pinned to the session language
       this.student = '';
       this.kiki = '';
-      const brief = await this.events.reply(heard, String(fc.args?.lang ?? 'en'));
+      const brief = await this.events.reply(heard, String(fc.args?.lang ?? 'en'), transcript);
       this.send({ toolResponse: { functionResponses: [{ id: fc.id, name: fc.name, response: { brief } }] } });
     }
   }

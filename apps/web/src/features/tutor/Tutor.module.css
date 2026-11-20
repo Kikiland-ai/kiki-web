@@ -165,3 +165,34 @@
   .head, .layout, .metrics, .pointers, .stages, .summary, .sheetHead button, .report > button { display: none !important; }
   .sheet .sheetBoard { background-image: none; border: 0; }
 }
+
+/* ---------------------------------------------------------------- hub (/talk) */
+.hubLead { margin: 0; max-width: 70ch; color: var(--learning-pencil); }
+.hubList { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--learning-space-3); max-width: 880px; }
+.hubCard { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: var(--learning-space-3);
+  padding: var(--learning-space-4); border: 1px solid var(--learning-line); border-radius: var(--learning-radius-card);
+  background: var(--learning-paper); color: var(--learning-ink); text-decoration: none; box-shadow: var(--learning-key-edge-neutral); }
+.hubCard:hover { border-color: var(--learning-ink); }
+.hubCard:focus-visible { outline: 2px solid var(--learning-focus-ring); outline-offset: 2px; }
+.hubIcon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--learning-green-tint); color: var(--learning-green-ink); }
+.hubBody { display: grid; gap: 2px; min-width: 0; }
+.hubBody span { color: var(--learning-pencil); }
+.hubBody small { font: var(--learning-text-label); color: var(--learning-pencil); }
+@media (max-width: 599px) { .hubCard { grid-template-columns: auto minmax(0, 1fr); } .hubCard > :nth-child(n+3) { grid-column: 2; justify-self: start; } }
+
+/* ---------------------------------------------------------------- one-screen workspace (wider than 860 px)
+   The workspace fills the viewport once a session starts (the page scrolls it to the top); the board and the
+   conversation scroll inside their own columns, so the newest item and KiKi's latest line are always on screen. */
+.layout { scroll-margin-top: 12px; }
+@media (min-width: 861px) {
+  .layout { height: calc(100dvh - 24px); min-height: 520px; }
+  .board { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding-top: 0; }
+  .board .questionBar { top: 0; margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+  .board > div[aria-live] { padding-top: var(--learning-space-2); }
+  .talk { position: static; height: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .talk > * { flex: 0 0 auto; }
+  .talk .log { flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior: contain; }
+  .boardItem { scroll-margin: 132px 0 16px; }
+}
+
+.reportAnchor { scroll-margin-top: 12px; }

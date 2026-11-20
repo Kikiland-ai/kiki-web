@@ -107,6 +107,7 @@ export function Whiteboard({ items, shown, fresh, focus = [], lang, terms = {}, 
   const loose = rest.filter(i => !i.stage || !order.includes(i.stage));
   const [manual, setManual] = useState<Record<string, boolean>>({});
   const listRef = useRef<HTMLDivElement>(null);
+  const boardRef = useRef<HTMLElement>(null);
   const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // the newest revealed item comes into view (its stage is open because it is fresh)
@@ -114,7 +115,19 @@ export function Whiteboard({ items, shown, fresh, focus = [], lang, terms = {}, 
     if (sheet || !fresh?.size) return;
     const ids = [...fresh];
     const el = listRef.current?.querySelector<HTMLElement>(`[data-item="${CSS.escape(ids[ids.length - 1])}"]`);
-    el?.scrollIntoView?.({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+    const board = boardRef.current;
+    if (!el) return;
+    const behavior: ScrollBehavior = reduced ? 'auto' : 'smooth';
+    // Desktop: the board is its own scroll column, so move only the board (scrollIntoView would also
+    // nudge the page and push the workspace off the top). Phones: the page scrolls, so use the page.
+    if (board && board.scrollHeight > board.clientHeight && getComputedStyle(board).overflowY !== 'visible') {
+      const top = el.getBoundingClientRect().top - board.getBoundingClientRect().top + board.scrollTop;
+      const pinned = board.querySelector<HTMLElement>('[data-kind="question"]')?.offsetHeight ?? 0;
+      const target = Math.max(0, Math.min(top - pinned - 16, top + el.offsetHeight - board.clientHeight + 16));
+      if (target > board.scrollTop || top - pinned < board.scrollTop) board.scrollTo({ top: target, behavior });
+    } else {
+      el.scrollIntoView?.({ block: 'nearest', behavior });
+    }
   }, [fresh, sheet, reduced]);
 
   const isOpen = (g: { id: string; index: number; items: BoardItem[] }) =>
@@ -127,7 +140,7 @@ export function Whiteboard({ items, shown, fresh, focus = [], lang, terms = {}, 
   );
 
   return (
-    <section className={sheet ? styles.sheetBoard : styles.board} aria-label={label}>
+    <section ref={boardRef} className={sheet ? styles.sheetBoard : styles.board} aria-label={label}>
       {question && <QuestionBar item={question} lang={lang} started={groups.length > 0} sheet={sheet} />}
       <div ref={listRef} aria-live="polite">
         {groups.map(g => {

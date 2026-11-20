@@ -4,7 +4,7 @@ import { Icon, Wordmark } from '../ui/kit';
 import { useSession } from './Session';
 import { languageName } from '../contracts/learning-preferences';
 
-const tabs = [{ to: '/home', name: 'Home', icon: 'home' }, { to: '/subjects', name: 'Subjects', icon: 'auto_stories' }, { to: '/learn', name: 'Learn', icon: 'auto_stories' }, { to: '/practice', name: 'Checks', icon: 'quiz' }, { to: '/library', name: 'Library', icon: 'folder_open' }];
+const tabs = [{ to: '/home', name: 'Home', icon: 'home' }, { to: '/subjects', name: 'Subjects', icon: 'category' }, { to: '/learn', name: 'Learn', icon: 'auto_stories' }, { to: '/practice', name: 'Checks', icon: 'quiz' }, { to: '/library', name: 'Library', icon: 'folder_open' }];
 export function ModeNotice() { const { services } = useSession(); return services.mode === 'fixture' ? <div className="mode-notice" role="status"><span className="mode-dot" />Sample preview <span>· Saved in this browser only</span></div> : null; }
 export function Shell() {
   const { profile } = useSession();

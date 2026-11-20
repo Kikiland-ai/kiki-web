@@ -13,7 +13,7 @@ from pathlib import Path
 from .classifier import Classifier
 from .content import TutorQuestion
 from .engine import EngineError, Step, start, step
-from .session import Brief, Reply, TutorState
+from .session import UNCLEAR, Brief, Reply, TutorState
 from .store import Conflict, Missing, TutorStore
 from .validate import validate
 
@@ -48,6 +48,19 @@ def session_id(uid: str, qid: str, lang: str, key: str) -> str:
     """Derived from the learner, question, language and idempotency key: a retried start returns
     the same session, and a reused key can never cross into another question's session."""
     return "ts-" + hashlib.sha256(f"{uid}:{qid}:{lang}:{key}".encode()).hexdigest()[:24]
+
+
+# "I don't know" in the ways students say it: these are real answers (they earn a hint), not noise.
+DONT_KNOW = {"jaanini", "janini", "jani", "ଜାଣିନି", "ଜାଣେନି", "जानिनी", "जानिनि", "dunno", "idk", "pata", "maloom"}
+
+
+def is_voice_noise(text: str) -> bool:
+    """A voice turn that is one word with no digits, and not an 'I don't know': a filler or a mis-hearing."""
+    # split on spaces and punctuation, not on \W: Indic vowel signs are combining marks, not word breaks
+    words = [w for w in re.split(r"[\s.,!?;:।॥'\"()\-]+", text.lower()) if w]
+    if len(words) != 1 or any(ch.isdigit() for ch in text):
+        return len(words) == 0
+    return words[0] not in DONT_KNOW
 
 
 def _norm(text: str) -> str:
@@ -178,6 +191,9 @@ class TutorService:
                 # The model could not be reached. That says nothing about the student: ask them to say it
                 # again, and leave the session exactly where it was (no hint rung, no evidence, no events).
                 return self._retry_view(sid, q, state, model_ms, labelled.error)
+            if mode == "voice" and reply.label == UNCLEAR and is_voice_noise(text or ""):
+                # A filler sound or a one-word mis-hearing ("ah", "coche") is not an answer: keep listening.
+                return self._retry_view(sid, q, state, model_ms, None, listening=True)
         route = {"label": reply.label, "confidence": reply.confidence, "quote": reply.quote,
                  "termsUsed": reply.termsUsed}
         for attempt in range(3):
@@ -207,17 +223,27 @@ class TutorService:
         "or": "କ୍ଷମା କରନ୍ତୁ, ମୁଁ ଏବେ ତାହା ବୁଝିପାରିଲି ନାହିଁ। ଆଉ ଥରେ କହିବେ କି?",
     }
 
-    def _retry_view(self, sid, q, state, model_ms, error) -> dict:
+    LISTENING_LINE = {
+        "en": "Take your time. I'm listening.",
+        "or": "ଧୀରେ ଧୀରେ ଭାବନ୍ତୁ। ମୁଁ ଶୁଣୁଛି।",
+    }
+
+    def _retry_view(self, sid, q, state, model_ms, error, listening: bool = False) -> dict:
         from .session import Segment
 
         node = q.stages[state.stageIndex].nodes[state.node]
-        logger.warning("Tutor turn not processed (%s); asked the student to repeat", error)
+        if listening:
+            say = self.LISTENING_LINE[state.lang]
+        else:
+            logger.warning("Tutor turn not processed (%s); asked the student to repeat", error)
+            say = f"{self.RETRY_LINE[state.lang]} {node.line.say.get(state.lang)}"
         brief = Brief(
             mode=q.speech.get(state.lang, "scripted"), lang=state.lang, goal=node.goal, expectsReply=True,
             mustNotReveal=list(node.mustNotReveal),
-            segments=[Segment(kind="restate", node=state.node, say=f"{self.RETRY_LINE[state.lang]} {node.line.say.get(state.lang)}")],
+            segments=[Segment(kind="restate", node=state.node, say=say)],
         )
-        view = self._view(sid, q, state, brief, [], {"label": "retry", "confidence": 0.0, "quote": None, "termsUsed": []}, model_ms)
+        label = "listening" if listening else "retry"
+        view = self._view(sid, q, state, brief, [], {"label": label, "confidence": 0.0, "quote": None, "termsUsed": []}, model_ms)
         view["retry"] = True
         return view
 
@@ -261,7 +287,7 @@ class TutorService:
         except Conflict:
             raise TutorError(409, "This session just changed. Try voice again.") from None
         try:
-            return self.voice.mint()
+            return self.voice.mint(state.lang)
         except Exception as exc:  # noqa: BLE001 - text mode keeps working
             logger.warning("Voice token unavailable (%s)", type(exc).__name__)
             raise TutorError(503, "Voice is not available right now. Continue by typing.") from None

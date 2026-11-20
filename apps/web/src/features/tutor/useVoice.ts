@@ -79,7 +79,9 @@ export function useVoice(opts: {
       audio: (pcm) => { devRecord()?.audio.push(pcm); player.current?.play(pcm); setStatus('kiki'); },
       kikiText: (t) => optsRef.current.onProgress(t.length),
       studentText: (t) => setCaption(t),
-      reply: async (heard) => {
+      reply: async (modelHeard, _lang, transcript) => {
+        // send the pinned speech-to-text (Odia-only in Odia sessions); the model's own wording is the fallback
+        const heard = transcript || modelHeard;
         // Live occasionally calls submit_reply twice for one utterance: answer the repeat from the last brief
         const key = heard.trim().toLowerCase();
         if (lastReply.current && lastReply.current.key === key && Date.now() - lastReply.current.at < 6000) {

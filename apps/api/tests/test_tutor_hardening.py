@@ -82,7 +82,7 @@ def test_health_is_public_and_secret_free(monkeypatch):
 
 
 class _Voice:
-    def mint(self):
+    def mint(self, lang="en"):
         return {"token": "auth_tokens/t", "model": "gemini-3.8-live", "expiresAt": "x", "prompt": "voice.v1"}
 
 
@@ -154,6 +154,33 @@ def test_a_provider_outage_asks_to_repeat_and_changes_nothing():
     # the student can simply try again; the turn key was not burned
     s.classifier = FakeClassifier({"part of it comes back": "part-survives"})
     assert s.turn("u", sid, "outage-turn-1", "part of it comes back", None, "voice")["node"] == "why-cos"
+
+
+def test_voice_noise_keeps_listening_without_spending_a_hint():
+    """Live run, 20 Nov: 'Ah', 'coche', 'yani' each spent a hint rung."""
+    from kiki_api.tutor.service import is_voice_noise
+
+    assert all(is_voice_noise(t) for t in ["Ah", "coche", "yani", "ঠিক", "  ", "um."])
+    assert not any(is_voice_noise(t) for t in ["jaanini", "ଜାଣିନି", "I don't know", "9/59", "42", "not sure"])
+    store = MemoryTutorStore()
+    s = TutorService(Q, FakeClassifier({}), store)                       # everything → unclear
+    sid = s.start("u", "ece-phase-error", "en", "noise-key-01")["sessionId"]
+    before = len(store.events("u", sid))
+    view = s.turn("u", sid, "noise-turn-01", "coche", None, "voice")
+    assert view["route"]["label"] == "listening" and view["hintLevel"] == 0
+    assert view["brief"]["say"] == "Take your time. I'm listening." and len(store.events("u", sid)) == before
+    typed = s.turn("u", sid, "noise-turn-02", "coche", None, "text")     # typed text is never filtered
+    assert typed["hintLevel"] == 1
+    dont_know = s.turn("u", sid, "noise-turn-03", "jaanini", None, "voice")
+    assert dont_know["hintLevel"] == 2
+
+
+def test_voice_config_waits_through_thinking_pauses():
+    from kiki_api.tutor.voice import PROMPT_VERSION, VOICE_PROMPT, live_config
+
+    vad = live_config()["realtime_input_config"]["automatic_activity_detection"]
+    assert vad["silence_duration_ms"] >= 1000 and PROMPT_VERSION == "voice.v2"
+    assert "never speak Bengali" in VOICE_PROMPT and "filler" in VOICE_PROMPT
 
 
 # ---------------------------------------------------------------- voice/turn race

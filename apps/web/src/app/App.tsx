@@ -21,6 +21,7 @@ const LabHome = lazy(() => import('../features/labs/LabPreparation').then(m => (
 const LabTracker = lazy(() => import('../features/labs/LabPreparation').then(m => ({ default: m.LabTracker })));
 const ChapterMapScreen = lazy(() => import('../features/learning/ChapterMapScreen').then(m => ({ default: m.ChapterMapScreen })));
 const LessonScreen = lazy(() => import('../features/learning/LessonScreen').then(m => ({ default: m.LessonScreen })));
+const TutorHub = lazy(() => import('../features/tutor/TutorHub').then(m => ({ default: m.TutorHub })));
 const TutorScreen = lazy(() => import('../features/tutor/TutorScreen').then(m => ({ default: m.TutorScreen })));
 const AddMaterial = lazy(() => import('../features/intake/AddMaterial').then(m => ({ default: m.AddMaterial })));
 const MaterialRequest = lazy(() => import('../features/intake/Request').then(m => ({ default: m.MaterialRequest })));
@@ -68,6 +69,7 @@ export function createAppRouter(services: Services) {
       <Route path="/learn" element={<Navigate to={`/chapters/${COURSE.chapterId}`} replace />} />
       <Route path="/chapters/:planId" element={<Deferred><StudyRoute><ChapterMapScreen /></StudyRoute></Deferred>} />
       <Route path="/concepts/:conceptId" element={<Deferred><StudyRoute><LessonScreen /></StudyRoute></Deferred>} />
+      <Route path="/talk" element={<Deferred><StudyRoute><TutorHub /></StudyRoute></Deferred>} />
       <Route path="/concepts/:conceptId/talk/:questionId" element={<Deferred><StudyRoute><TutorScreen /></StudyRoute></Deferred>} />
       <Route path="/labs" element={<Deferred><StudyRoute><LabHome /></StudyRoute></Deferred>} />
       <Route path="/labs/:sessionId" element={<Deferred><StudyRoute><LabTracker /></StudyRoute></Deferred>} />

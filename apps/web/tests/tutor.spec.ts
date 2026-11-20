@@ -41,6 +41,22 @@ for (const width of [1280, 390]) {
   });
 }
 
+test('the tutor is reachable from Home, Subject and Checks through the /talk hub', async ({ page }) => {
+  await sampleStudent(page);
+  await page.goto('/home');
+  await page.getByRole('link', { name: /Talk it through with KiKi/ }).click();
+  await expect(page).toHaveURL(/\/talk$/);
+  await expect(page.getByRole('heading', { name: 'Talk it through with KiKi' })).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Questions to talk through' }).getByRole('link')).toHaveCount(3);
+  await page.getByRole('link', { name: /Designing an AM envelope detector/ }).click();
+  await expect(page).toHaveURL(/\/concepts\/C-AM-03\/talk\/ece-am-envelope-design$/);
+  await expect(page.getByRole('button', { name: 'Start talking it through' })).toBeVisible();
+  await page.goto('/subjects/CRS-AC-ECE');
+  await expect(page.getByRole('link', { name: 'Talk it through' })).toHaveAttribute('href', '/talk');
+  await page.goto('/practice');
+  await expect(page.getByRole('link', { name: /Choose a problem/ })).toHaveAttribute('href', '/talk');
+});
+
 test('a tutor link opened signed out survives sign-in and onboarding', async ({ page }) => {
   const link = '/concepts/C-AM-03/talk/ece-am-envelope-design';
   await page.goto(link);
