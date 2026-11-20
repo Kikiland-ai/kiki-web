@@ -110,7 +110,7 @@ export function TutorScreen() {
                 {!!view.chips.length && (
                   <div className={styles.chips} role="group" aria-label="Quick replies">
                     {view.chips.map(c => (
-                      <Button key={c.route} variant="secondary" disabled={s.busy || voiceOn}
+                      <Button key={c.route} data-route={c.route} variant="secondary" disabled={s.busy || voiceOn}
                         onClick={() => void s.send({ chip: c.route }, pickText(c.label, lang))}>
                         <span lang={lang === 'or' && c.label.or ? 'or' : 'en'}>{pickText(c.label, lang)}</span>
                       </Button>
