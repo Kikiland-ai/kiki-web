@@ -35,7 +35,7 @@ Open `http://127.0.0.1:5202/tests/physical-lab/index.html`. This explicitly labe
 
 ## Verification and remaining acceptance
 
-- Full web unit suite: 316 passed; TypeScript, ESLint and connected production build passed.
+- Full web unit suite: 317 passed; TypeScript, ESLint and connected production build passed.
 - Ten renderer/picking/hint/CRO checks moved from the backend and pass in frontend CI.
 - Full web API suite: 274 passed, 8 opt-in skips; Ruff passed.
 - Six React flow checks cover creation without theory clicks, guide names/hover labels, all nine recorded engine steps, exact event retry, pinned pack load and mismatch rejection. Three service checks cover auth/creation, conflicts and wrong session identity. Ten proxy cases cover auth, ownership, origin/body/path bounds, statuses and disabled configuration.

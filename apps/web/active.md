@@ -6,10 +6,10 @@ The Lab home adds physical equipment practice alongside the original software
 experiment. React screen and renderer/hints/guide/fullscreen/plots live here;
 backend PR #14 retains pipeline/content/assets/rules/state/physics and has its
 student-facing preview removed. Names only in the floating guide; numbers stay
-on circuit markers and hover/focus hints. Demo skips theory clicks while normal
+on circuit markers and hover/focus hints. Sign-in return routing accepts pinned physical session URLs. Demo skips theory clicks while normal
 prerequisite policy remains in the backend.
 
-Checks: 316 web tests, 10 renderer checks, typecheck, lint and production build
+Checks: 317 web tests, 10 renderer checks, typecheck, lint and production build
 passed. Web API 274 passed / 8 opt-in skipped; Ruff passed. Live local web relay
 plus actual backend completed all nine steps, recovered 1000 Hz / 0.5 V peak,
 and reported theory unassessed. Chrome checked model/hints/fullscreen, rejected
