@@ -1,4 +1,5 @@
 import { StateScreen } from '../../ui/kit'
+import { useTutorAvailable } from '../tutor/available'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptLesson } from '../../contracts/api'
@@ -39,6 +40,7 @@ type Media =
 export function LessonScreen() {
   const { conceptId = '' } = useParams()
   const { services, profile } = useSession()
+  const tutorOn = useTutorAvailable()
   const uid = profile?.id
   const placeSaver = useRef<ReturnType<typeof createPlaceSaver> | null>(null)
   const [saveError, setSaveError] = useState(''), [savingPosition, setSavingPosition] = useState(false), [positionSaved, setPositionSaved] = useState(false)
@@ -344,7 +346,7 @@ export function LessonScreen() {
               </LinkButton>
             )}
           </div>
-          {services.tutor && (TUTOR_QUESTIONS[conceptId] ?? []).length > 0 && (
+          {tutorOn && (TUTOR_QUESTIONS[conceptId] ?? []).length > 0 && (
             <nav className={styles.talk} aria-label="Talk it through with KiKi">
               <span className={styles.talkLabel}>TALK IT THROUGH WITH KIKI</span>
               {TUTOR_QUESTIONS[conceptId].map(q => (

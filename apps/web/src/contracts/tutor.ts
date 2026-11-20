@@ -88,6 +88,8 @@ export const Report = z.object({
 });
 export type Report = z.infer<typeof Report>;
 
+export const TutorHealth = z.object({ enabled: z.boolean() }).passthrough();
+
 export const SpeechResult = z.object({ leaks: z.array(z.string()) });
 
 export const VoiceToken = z.object({ token: z.string(), model: z.string(), expiresAt: z.string(), prompt: z.string() });
@@ -96,6 +98,7 @@ export type VoiceToken = z.infer<typeof VoiceToken>;
 export type TurnInput = { text: string; mode?: 'text' | 'voice' } | { chip: string };
 
 export interface TutorApi {
+  health(): Promise<{ enabled: boolean }>
   question(questionId: string, signal?: AbortSignal): Promise<QuestionView>
   start(questionId: string, lang: 'en' | 'or', key: string, signal?: AbortSignal): Promise<TurnView>
   get(sessionId: string, signal?: AbortSignal): Promise<TurnView>

@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 import type { AuthService } from '../contracts/services';
-import { QuestionView, Report, SpeechResult, TurnView, VoiceToken, type TutorApi } from '../contracts/tutor';
+import { QuestionView, Report, SpeechResult, TurnView, TutorHealth, VoiceToken, type TutorApi } from '../contracts/tutor';
 import { ServiceError } from './types';
 
 export function createTutorApi(baseUrl: string, auth: AuthService, fetcher: typeof fetch = fetch): TutorApi {
@@ -27,6 +27,7 @@ export function createTutorApi(baseUrl: string, auth: AuthService, fetcher: type
   }
   const id = encodeURIComponent;
   return {
+    health: () => request('/tutor/health', TutorHealth),
     question: (questionId, signal) => request(`/tutor/questions/${id(questionId)}`, QuestionView, 'GET', undefined, signal),
     start: (questionId, lang, key, signal) => request('/tutor/sessions', TurnView, 'POST', { questionId, lang }, signal, key),
     get: (sessionId, signal) => request(`/tutor/sessions/${id(sessionId)}`, TurnView, 'GET', undefined, signal),

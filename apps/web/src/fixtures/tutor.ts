@@ -49,6 +49,7 @@ function view(r: Recording, key: string, sessionId: string, restate = false) {
 export function createFixtureTutor(requireUid: () => string): TutorApi {
   const sid = (uid: string, qid: string, lang: string, key: string) => `fx-${uid}-${qid}-${lang}-${key}`.replace(/[^\w-]/g, '').slice(0, 120);
   return {
+    async health() { return { enabled: true }; },
     async question(qid) { requireUid(); return QuestionView.parse((await recording(qid, 'en')).question); },
     async start(qid, lang, key) {
       const uid = requireUid(), r = await recording(qid, lang), id = sid(uid, qid, lang, key);
