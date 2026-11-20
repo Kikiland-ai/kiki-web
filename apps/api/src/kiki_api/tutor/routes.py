@@ -64,6 +64,10 @@ def register_tutor_routes(app, identity, backend, call):
     def turn(session_id: str, body: TurnBody, user: user_dep, key: key_dep):
         return run(lambda: service().turn(user.uid, session_id, key, body.text, body.chip, body.mode))
 
+    @app.post("/tutor/sessions/{session_id}/voice-token")
+    def voice_token(session_id: str, user: user_dep):
+        return run(lambda: service().voice_token(user.uid, session_id))
+
     @app.get("/tutor/sessions/{session_id}/report")
     def report(session_id: str, user: user_dep):
         return run(lambda: service().report(user.uid, session_id))

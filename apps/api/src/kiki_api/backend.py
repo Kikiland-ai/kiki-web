@@ -231,6 +231,7 @@ def firebase_services(settings: Settings) -> Services:
         from .tutor.classifier import GeminiClassifier
         from .tutor.service import TutorService, load_questions
         from .tutor.store import FirestoreTutorStore
+        from .tutor.voice import VoiceTokens
 
         key = settings.gemini_api_key.get_secret_value()
         tutor = TutorService(
@@ -238,6 +239,7 @@ def firebase_services(settings: Settings) -> Services:
             GeminiClassifier(key, settings.tutor_classifier_model),
             FirestoreTutorStore(client),
             GeminiSummarizer(key, settings.tutor_classifier_model),
+            voice=VoiceTokens(key, settings.tutor_live_model),
         )
     return Services(
         FirebaseVerifier(app),

@@ -62,9 +62,9 @@ def load_concept_titles(path: Path = LEDGER) -> dict[str, str]:
 
 class TutorService:
     def __init__(self, questions: dict[str, TutorQuestion], classifier: Classifier, store: TutorStore,
-                 summarizer=None, concept_titles: dict[str, str] | None = None):
+                 summarizer=None, concept_titles: dict[str, str] | None = None, voice=None):
         self.questions, self.classifier, self.store = questions, classifier, store
-        self.summarizer = summarizer
+        self.summarizer, self.voice = summarizer, voice
         self.titles = load_concept_titles() if concept_titles is None else concept_titles
 
     def report(self, uid: str, sid: str) -> dict:
@@ -198,6 +198,18 @@ class TutorService:
             except Conflict:
                 logger.info("Speech leak log skipped: session moved on")
         return {"leaks": leaks}
+
+    def voice_token(self, uid: str, sid: str) -> dict:
+        state, _ = self._load(uid, sid)            # only for the learner's own, active session
+        if state.status != "active":
+            raise TutorError(409, "This session is complete.")
+        if self.voice is None:
+            raise TutorError(503, "Voice is not available. Continue by typing.")
+        try:
+            return self.voice.mint()
+        except Exception as exc:  # noqa: BLE001 - text mode keeps working
+            logger.warning("Voice token unavailable (%s)", type(exc).__name__)
+            raise TutorError(503, "Voice is not available right now. Continue by typing.") from None
 
     def events(self, uid: str, sid: str):
         self._load(uid, sid)

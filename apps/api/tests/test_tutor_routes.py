@@ -274,3 +274,45 @@ def test_firestore_store_round_trip_and_guards(fstore):
     assert len(fstore.events("u", "s1")) == len(first.events) + len(nxt.events)
     with pytest.raises(Missing):
         fstore.load("other", "s1")
+
+
+# ---------------------------------------------------------------- voice tokens
+
+
+class _Voice:
+    def __init__(self, fail=False):
+        self.fail, self.calls = fail, 0
+
+    def mint(self):
+        self.calls += 1
+        if self.fail:
+            raise RuntimeError("quota")
+        return {"token": "auth_tokens/test", "model": "gemini-3.8-live", "expiresAt": "x", "prompt": "voice.v1"}
+
+
+def test_voice_token_is_owner_scoped_active_only_and_degrades_to_text():
+    from kiki_api.tutor.service import TutorError
+
+    svc = TutorService(QUESTIONS, FakeClassifier(GOOD), MemoryTutorStore(), voice=_Voice())
+    sid = svc.start("a", "ece-phase-error", "en", "k-voice-01")["sessionId"]
+    assert svc.voice_token("a", sid)["model"] == "gemini-3.8-live"
+    with pytest.raises(TutorError) as other:
+        svc.voice_token("b", sid)
+    assert other.value.status == 404
+    for i, c in enumerate(["part-survives", "scaled-by-cos", "half", "vanishes", "partial-explanation"]):
+        svc.turn("a", sid, f"k-v-{i:04d}", None, c, "text")
+    with pytest.raises(TutorError) as done:
+        svc.voice_token("a", sid)
+    assert done.value.status == 409
+    failing = TutorService(QUESTIONS, FakeClassifier(GOOD), MemoryTutorStore(), voice=_Voice(fail=True))
+    sid2 = failing.start("a", "ece-phase-error", "en", "k-voice-02")["sessionId"]
+    with pytest.raises(TutorError) as down:
+        failing.voice_token("a", sid2)
+    assert down.value.status == 503 and "typing" in down.value.message
+
+
+def test_voice_token_route_without_voice_is_503(monkeypatch):
+    client, _, _ = make(monkeypatch)
+    sid = begin(client)["sessionId"]
+    r = client.post(f"/tutor/sessions/{sid}/voice-token", headers=headers())
+    assert r.status_code == 503 and "typing" in r.json()["detail"]
