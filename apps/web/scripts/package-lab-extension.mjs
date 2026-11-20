@@ -14,6 +14,16 @@ if (major === 0 && (minor < 1 || (minor === 1 && patch < 4))) throw new Error('A
 if (manifest.name !== 'Kiki windows' || manifest.content_scripts.some(s => s.matches.some(m => m.startsWith('http:')))) throw new Error('Expected release permissions.');
 const files = {};
 for (const name of await readdir(source)) files[name] = new Uint8Array(await readFile(join(source, name)));
+// The web distribution owns Kiki branding; keep upstream permissions intact.
+const icons = {};
+for (const size of [16, 32, 48, 128]) {
+  const filename = `icon-${size}.png`;
+  icons[size] = filename;
+  files[filename] = new Uint8Array(await readFile(new URL(`../assets/lab-extension/${filename}`, import.meta.url)));
+}
+manifest.icons = icons;
+manifest.action = { ...manifest.action, default_icon: icons };
+files['manifest.json'] = new TextEncoder().encode(JSON.stringify(manifest, null, 1) + '\n');
 const output = new URL('../public/lab-extension/', import.meta.url);
 await mkdir(output, { recursive: true });
 await writeFile(new URL('kiki-lab-extension.zip', output), zipSync(files));

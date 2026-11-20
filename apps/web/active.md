@@ -1,3 +1,23 @@
+## Approved extension logo — 21 November 2026
+
+User approved the capital K + green dot preview and authorized inclusion in PR #25.
+Added editable vector and transparent 16/32/48/128 PNGs in apps/web/assets/lab-extension.
+The web packager includes the approved assets, sets manifest.icons and
+action.default_icon, and preserves upstream permissions. Release is now 0.1.5;
+config announcement, runtime manifest and latest.json versions match. Updated the
+reviewable backend patch's canonical version bump; no backend PR was published.
+Folder preparation now accepts/writes the four icon files and can upgrade an
+existing iconless folder in place. The running 5174 preview download is synced.
+
+Checks: 18 focused status/setup tests, lint, typecheck and build passed; three
+Chrome cases passed against this updated branch. Added actual ZIP PNG header/size,
+manifest toolbar/manager mapping and iconless-folder update checks. Native Chrome
+installation remains manual. Last completed: approved logo packaged and verified.
+Approved for publication to PR #25. Exact next after push: review GitHub checks.
+No merge or deployment.
+
+---
+
 ## Extension status PR #25 published — 21 November 2026
 
 Published [web PR #25](https://github.com/Kikiland-ai/kiki-web/pull/25) from

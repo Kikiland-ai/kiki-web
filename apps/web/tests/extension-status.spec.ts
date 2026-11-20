@@ -6,7 +6,7 @@ for (const width of [390, 1280]) {
     await page.setViewportSize({ width, height: 850 });
     await page.addInitScript(() => {
       const fixture = window as Window & { fixtureVersion?: string };
-      fixture.fixtureVersion = '0.1.4';
+      fixture.fixtureVersion = '0.1.5';
       window.addEventListener('message', event => {
         const m = event.data;
         if (event.source === window && m?.channel === 'kiki-floating-guidance' && m.direction === 'page' && m.type === 'reader_status' && fixture.fixtureVersion) window.postMessage({ channel: m.channel, direction: 'extension', type: 'extension_status', request_id: m.request_id, version: fixture.fixtureVersion }, location.origin);
@@ -53,7 +53,7 @@ test('isolated browser without extension shows install action and serves the rel
   await page.getByRole('button', { name: 'Lab extension not detected — install or enable', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Download latest extension' })).toBeVisible();
   const latest = await page.request.get('/lab-extension/latest.json');
-  expect(await latest.json()).toEqual({ version: '0.1.4' });
+  expect(await latest.json()).toEqual({ version: '0.1.5' });
   const zip = await page.request.get('/lab-extension/kiki-lab-extension.zip');
   expect(zip.ok()).toBe(true);
   expect((await zip.body()).subarray(0, 2).toString()).toBe('PK');

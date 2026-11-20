@@ -42,7 +42,7 @@ index 7f788c6..cfa4644 100644
    if(message.type==='reader_hello'){
     if(typeof message.stream_id!=='string'||!/^[A-Za-z0-9-]{8,64}$/.test(message.stream_id))return;
 diff --git a/prototypes/floating_guidance/scripts/build-extension.mjs b/prototypes/floating_guidance/scripts/build-extension.mjs
-index 922daea..271e042 100644
+index 922daea..6589445 100644
 --- a/prototypes/floating_guidance/scripts/build-extension.mjs
 +++ b/prototypes/floating_guidance/scripts/build-extension.mjs
 @@ -6,7 +6,7 @@
@@ -50,7 +50,7 @@ index 922daea..271e042 100644
  import {mkdir,readFile,writeFile,copyFile,rm} from 'node:fs/promises';
  const source=new URL('../extension/',import.meta.url),out=new URL('../../../work/floating-guidance/',import.meta.url);
 -const VERSION='0.1.3';
-+const VERSION='0.1.4';
++const VERSION='0.1.5';
  const HOSTED_READERS=['https://kiki-512012.web.app','https://kiki-json-stream.woodsycarp256.chatgpt.site','https://kiki-screen-receiver.woodsycarp256.chatgpt.site'];
  const variants={
   release:{readers:HOSTED_READERS,targets:['https://matlab.mathworks.com'],dev:false},

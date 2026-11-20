@@ -113,3 +113,17 @@ is provided for review/reproduction; it does not publish a backend branch or PR.
 Apply it to the compatible kiki-backend source before rerunning the packaging
 command. The builder rejects releases older than 0.1.4. This web PR includes the
 working package, so deployment does not require a live backend API change.
+
+
+## Approved extension branding — 21 November
+
+User approved the K + green dot design. The source SVG and transparent 16/32/48/128
+PNGs are in apps/web/assets/lab-extension. The web packaging layer adds these
+assets and manifest.icons/action.default_icon to the canonical release; upstream
+host permissions and executable files remain unchanged. The current bundle is
+0.1.5, with matching backend config/manifest/release metadata, so iconless 0.1.4
+installs are reported outdated. The companion source patch includes this bump.
+The folder preparer accepts the four flat PNG files and updates iconless folders
+in place. The earlier 0.1.4 byte-for-byte canonical-package statement is historical;
+current web branding is a deliberate packaging overlay with its own reviewable
+source. Checks: 18 focused tests, lint/typecheck/build and three Chrome cases pass.

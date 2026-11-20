@@ -9,7 +9,7 @@ type Directory = {
 type FolderWindow = Window & { showDirectoryPicker?: (options: { mode: 'readwrite'; id: string }) => Promise<Directory> };
 const markerName = '.kiki-extension-setup.json';
 const markerContent = new TextEncoder().encode(JSON.stringify({ source: 'Kiki windows', schema: 1 }));
-const expectedFiles = ['manifest.json', 'config.js', 'core.js', 'ui.js', 'content.js', 'bridge.js', 'background.js', 'popup.html', 'popup.js'];
+const expectedFiles = ['manifest.json', 'config.js', 'core.js', 'ui.js', 'content.js', 'bridge.js', 'background.js', 'popup.html', 'popup.js', 'icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-128.png'];
 export function canPrepareExtension() { return typeof (window as FolderWindow).showDirectoryPicker === 'function'; }
 export async function prepareExtensionFolder(): Promise<void> {
   const picker = (window as FolderWindow).showDirectoryPicker;
