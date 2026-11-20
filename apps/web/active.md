@@ -25,6 +25,104 @@ Checks: tsc, ESLint, Vitest (narrationCues 3 new tests; the tutor suite times ou
 parallel load and passes alone), Chrome 1280/390 on the sample: C-AM-06 steps 1→4 follow at
 3/20/68/76 s, manual move holds, Follow resumes, axe 0; C-AM-01 card highlight and growing edge;
 C-AM-08 definition lights; C-AM-08 concept scene still 0.50 at 21 s.
+## Lab mode simplified, model name made explicit (branch feat/lab-mode-simplify) - 21 November 2026
+
+Lab mode now leads with "Step 1 · Save your model as dsb_sc.slx" (Blank Model → Save, MATLAB Drive),
+then "Step 2 · Connect your MATLAB tab". The model name field replaces the optional "model reference"
+in the notes form. Blank means `dsb_sc` and a typed `.slx` is dropped. Names Simulink can't save
+are blocked, both in the web (`features/labs/model-name.ts`) and in the API before the engine
+session is created (`lab_execution.model_name`, 422 `invalid_model_name`). Sharing waits for a
+valid saved name. Once the engine follows a model, the card shows that name as fixed (read from
+`workspace.model_name`). The 12-step reader collapses during live guidance. The notes form became
+the "Lab notebook". Device link and sources are collapsed. Repeated "not assessed" copy is now one
+footnote, and CP01/CP12 confirmation names the file.
+Checks: vitest 262 passed, `tsc -b` and lint clean, API `test_lab_execution.py` 21 passed (1 new),
+Playwright `lab-preparation.spec.ts` 8 passed. Not run: `playwright.lab.config.ts` (needs the
+Kiki extension service worker, which timed out locally). `lab-student-input.spec.ts` fails with
+the same strict-mode error on `main` (pre-existing).
+Exact next: live CP01 run in connected mode. Save `dsb_sc.slx`, share, and check the card locks
+the name and the CP01 confirm text shows it.
+
+---
+
+## Institutional landing page, storyline v3 with motion (local review) - 21 November 2026
+
+Revised after Arpan's review: product-first. Removed the problem (three walls), why-the-fixes-fail
+and insight sections (the hook and the student flip stay; Prove carries split marking). Learn now
+follows the student. Concept map rebuilt as six captioned, clickable steps with named parts and
+concepts (example chapter named). Lab replay rebuilt as a guided walk through real checkpoint 5:
+a spotlight on the screenshot (NOW card, Step details, the model, What I can see) with one plain
+sentence per phase, then trial progress to 6 of 12; play/pause/replay. All widgets step slowly
+(about 3 s) and play once instead of looping fast. Checks: tsc, ESLint, Vitest 260/260,
+check-landing no problems at 1920/1280/390.
+
+Second review fixes: the concept map is now six stacked layers (chapter, parts, concepts, learning
+order to the lab with side topics, what is inside every concept, checks), all visible from the
+start with their explanation beside them; they fill one at a time. Lab replay plays by itself
+(4.5 s per phase, loops, restarts on re-entry) with a phase tag on the spotlight and a timer on
+the current step. Dial button colours restored.
+
+Third review: header no longer sticky (lab section fits one screen); status pills, lab caption,
+lab controls and "your college sees" lines removed; student section is two columns. "Why you can
+trust it" rebuilt Minto-style: governing-thought headline, a top spine (Plan, Make, Check, Guide;
+auto-advances every 10 s, clickable), one full-sentence headline per stage and a distinct visual
+each (tree with the learning path to the lab, conveyor with the locked term, filter with three
+gates, cycle with a sweeping arc), joined by one thread: Carrier mismatch / "frequency mismatch".
+
+Branch `feature/landing-page`, still not committed or pushed; awaiting Arpan's local
+approval before it goes to the team. The page now follows storyline v3 (workspace
+`STORYLINE-landing-v3.md`) for every regional-language student; Odia and Analog
+Modulation appear only as the example. Five acts: problem (hero transformation of a
+real C-AM-08 sentence, student rows flipping to English, three walls, bridge chart),
+insight (one mark vs two marks toggle, labelled next build), learn / prove / do
+(narrated lesson + glossary + dial ends; split marks mock-up labelled next build; lab
+replay to checkpoint 6 of 12 from the real trial), trust (system tabs: concept map,
+lesson pipeline, review gates, lab reader; generation from a syllabus labelled
+roadmap), proof (count-up), then pilot, roadmap, data and consent, close. Hero stat
+chips, the separate demo band and outcomes band are removed.
+
+**New dependency:** `motion` 12.43.0 (exact), for the widgets in
+`src/features/landing/widgets.tsx`; real sample content is in `sample.ts`.
+`MotionConfig reducedMotion="user"`; with reduced motion every widget rests on its
+finished state and nothing loops.
+
+Checks: TypeScript, ESLint, Vitest 260/260; workspace `check-landing.mjs` (headline
+and in-page link updated for v3) at 1920/1280/390: axe 0, no overflow, CTAs, form,
+Odia switch, student path. Visual review of every section and all four system tabs.
+Next: Arpan reviews locally, then commit and PR on request.
+
+## Institutional landing page, local review (revision 2) - 20 November 2026
+
+Branch `feature/landing-page` (from main `5ecdd2e`), not committed or pushed. The
+public `/` route renders `src/features/landing/Landing.tsx`, written for colleges
+and state technical-education departments. Revision 2 follows a design critique:
+one conversion goal (Request a pilot) on every CTA, all pointing to a pilot request
+form; hook / line / sinker structure; outcome-led sections; proof from the Oct
+trials; a labelled roadmap from the pitch deck; four KiKi colours full-bleed
+(four-colour rule, hero and pilot washes, dark proof band) so they hold up on wide
+screens; a distinct CTA with a stepped four-colour shadow. Problem section cites
+AICTE's 2021 survey (44% want mother-tongue support) and the first-year uptake of
+regional-language B.Tech (255 of 1,230 seats), with sources. The form opens a
+prefilled email to `VITE_PILOT_CONTACT`; unset, it says it can't send (D8).
+Student entry is a quiet header/footer link (`/auth?returnTo=/concepts/C-AM-08`).
+English/Odia switch; Odia is a machine draft and labelled. `Wordmark` gains
+`role="img"` for valid ARIA. Screenshots cropped from the 18 Oct capture set.
+
+Checks: TypeScript, ESLint, production build; Vitest 260/260 (two unrelated files
+time out under parallel load and pass alone). Updated e2e specs pass against the
+local server (preferences once timed out on a slow reload and passed on rerun).
+Chrome at 1920, 1280 and 390 px: 4 CTAs all to the form, one above the fold at
+every size, no other in-page targets, images load, axe 0, no horizontal overflow,
+CTA lands on the form, unconfigured submit shows the notice, Odia switch and
+student path work.
+
+Open: pilot contact address (D8), native Odia review (D6), skip-onboarding route
+for students (D4, Akshita's onboarding code). Exact next: user review, then commit
+and PR on request.
+
+---
+
+---
 
 ## Tutor mode: key rotation and a full local voice run - 20 November 2026 (night)
 

@@ -20,8 +20,10 @@ function view(checkpoint = 'CP-DSB-01'): LabCaptureView {
   return { state, snapshot, requirements: ExecutionRequirementsSchema.parse(requirements), requirementsError: '', phase: 'active', reason: '', extension: { bound: true, present: true, superseded: false }, preview: null, reading: false, retryAfterMs: 0, recovering: false, canRecover: false, inputBusy: false };
 }
 it.each(['CP-DSB-01', 'CP-DSB-12'])('distinguishes a MATLAB save from a student confirmation at %s', checkpoint => {
-  render(<LabStudentInput view={view(checkpoint)} submitInput={vi.fn()} retryRequirements={() => {}} />);
-  expect(within(screen.getByRole('form', { name: 'Current step confirmation' })).getByText(/Save your model in MATLAB first/).textContent).toContain('does not save the MATLAB model or verify the saved file');
+  render(<LabStudentInput view={view(checkpoint)} modelName="dsb_sc_lab2" submitInput={vi.fn()} retryRequirements={() => {}} />);
+  const note = within(screen.getByRole('form', { name: 'Current step confirmation' })).getByText(/Save your model in MATLAB first/).textContent;
+  expect(note).toContain('dsb_sc_lab2.slx');
+  expect(note).toContain('does not save the MATLAB model or check the file');
   expect((screen.getAllByRole('checkbox') as HTMLInputElement[]).every(c => !c.checked)).toBe(true);
 });
 it('offers current-context recovery inside the focused confirmation form without copying old evidence', () => {

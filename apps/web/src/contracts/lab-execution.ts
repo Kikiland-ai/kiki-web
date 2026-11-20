@@ -52,6 +52,7 @@ export const LabExecutionStateSchema = z.object({
   workspace: z.object({
     id: Id, capture_session_id: Id.nullable(), capture_epoch: Integer,
     view_revision: Integer, parameter_revision: Integer, condition: z.string().max(80),
+    model_name: z.string().min(1).max(160).optional(),
   }).passthrough(),
   queue: z.object({ current_checkpoint_id: Checkpoint.nullable(), upcoming_checkpoint_ids: z.array(Checkpoint), done_checkpoint_ids: z.array(Checkpoint) }),
   guidance: z.object({
