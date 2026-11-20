@@ -1,3 +1,30 @@
+## Narration sync on every narrated clip - 21 November 2026
+
+PR #18 synced only C-AM-08 steps 2 and 3 (hand-placed cues). Now all 26 sample clips are timed:
+`scripts/build-narration-timings.mjs` (`npm run narration:timings`) rebuilds each clip's exact text
+(checked against `sourceTextSha256`), finds the pauses in its WAV, and places one per sentence
+boundary (dynamic programming near the text-length estimate, preferring long pauses). Output:
+`src/features/learning/narrationTimings.json`, keyed by audio hash, 131 sentences; against the
+hand-placed C-AM-08 cues every comparable boundary is within 0.10 s. Hand tracks still win where
+they exist (they carry the phase-scene beats).
+
+In the lesson: every timed clip lights the sentence being spoken with the reading edge, and the
+player is pinned while narrating. Whole-concept clips (C-AM-04 to 07, 09, 10) turn the steps with
+the voice; moving by hand stops that until "Follow the narration". Copy says how timing was found.
+Re-run the script whenever narration is regenerated (new hashes get no stale timing).
+
+Scenes follow too, as C-AM-08's does: `canvasBeats.ts` gives each concept's canvas (C-AM-01 to 07,
+09, 10) an ordered rule list matched against the sentence being spoken (English terms survive in
+the Odia text, so one list serves both): control values to ease to (on declared steps, checked
+against the model) and a one-line caption. `CamCanvas` gains a stage layout under the pinned
+player (graphs, readouts, "Following the narration · caption", controls folded into "Explore it
+yourself"); touching a control hands it to the student until "Follow the narration". The player
+keeps one place in the tree so turning the step never restarts the audio.
+
+Checks: tsc, ESLint, Vitest (narrationCues 3 new tests; the tutor suite times out only under
+parallel load and passes alone), Chrome 1280/390 on the sample: C-AM-06 steps 1→4 follow at
+3/20/68/76 s, manual move holds, Follow resumes, axe 0; C-AM-01 card highlight and growing edge;
+C-AM-08 definition lights; C-AM-08 concept scene still 0.50 at 21 s.
 ## Lab mode simplified, model name made explicit (branch feat/lab-mode-simplify) - 21 November 2026
 
 Lab mode now leads with "Step 1 · Save your model as dsb_sc.slx" (Blank Model → Save, MATLAB Drive),

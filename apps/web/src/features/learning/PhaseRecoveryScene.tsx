@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { PhaseRecoveryScene as Scene } from '../../contracts/concept-media'
 import { describeFraction, passesBehaviorTests, recoveryFraction, tracePath } from './phase-math'
-import type { NarrationCue } from './narrationCues'
+import type { SceneCue } from './narrationCues'
 import { useMediaQuery } from './useMediaQuery'
 import styles from './PhaseRecoveryScene.module.css'
 
@@ -11,7 +11,7 @@ const EASE_MS = 600
 type Props = {
   scene: Scene
   /** The narration cue in force, while a clip with hand-timed cues is open; null otherwise. */
-  cue?: NarrationCue | null
+  cue?: SceneCue | null
   /**
    * 'stage': the narrated layout. The scene sits at the top of the step with the slim player,
    * follows the narration, and folds its controls away. 'full': the reading layout.

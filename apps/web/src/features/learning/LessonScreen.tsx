@@ -10,7 +10,9 @@ import { checkManifestForLesson, verifyNarrationTextBindings, findRendition, nar
 import { lacksOdia, pick, placardMode, shouldShowKeyIdea } from './language'
 import { PlacardText } from './PlacardText'
 import { NarrationPlayer } from './NarrationPlayer'
-import { activeCueIndex, cueTrackFor, readingSplit } from './narrationCues'
+import { activeCueIndex, cuePlacardId, cueTextRange, cueTrackFor, readingSplit } from './narrationCues'
+import { canvasBeat, type CanvasBeat } from './canvasBeats'
+import { CamCanvas } from './CamCanvas'
 import { createNarrationCache, type NarrationCache } from './narrationCache'
 import { scenesFor } from './scenes'
 import { PhaseRecoveryScene } from './PhaseRecoveryScene'
@@ -33,11 +35,15 @@ type Media =
   | { status: 'error'; message: string }
   | { status: 'ready'; manifest: MediaManifest; cache: NarrationCache }
 
+/** Narrating, but no sentence on this step has a beat yet: the canvas keeps its picture. */
+const IDLE_BEAT: CanvasBeat = { set: {}, caption: '' }
+
 /**
  * A concept lesson (/concepts/:conceptId): four placards in order
  * (definition, concept, application, recap), the language dial, term
  * details at every notch, and "Check this concept" at the end. The lesson
- * resumes at the saved placard and saves each move.
+ * resumes at the saved placard and saves each move. Narration with sentence
+ * timing lights the sentence being spoken and moves the step's scene with it.
  */
 export function LessonScreen() {
   const { conceptId = '' } = useParams()
@@ -69,6 +75,8 @@ export function LessonScreen() {
   const [cueAt, setCueAt] = useState<{ renditionId: string; index: number | null } | null>(null)
   // The clip's clock, for the reading edge that moves through the sentence being spoken
   const [voiceAt, setVoiceAt] = useState<{ renditionId: string; t: number } | null>(null)
+  // Whole-concept clips turn the steps with the voice until the student moves by hand
+  const [followVoice, setFollowVoice] = useState(true)
   useEffect(() => {
     const mark = document.querySelector('[data-testid="reading-now"]')
     const stage = document.querySelector('[data-narration-stage]')
@@ -179,17 +187,31 @@ export function LessonScreen() {
   const audioLang: NarrationLang = mode.alsoEnglish && narrationLang ? narrationLang : mode.primary
   const manifest = media.status === 'ready' ? media.manifest : null
   const clip = findRendition(manifest, placard.id, audioLang)
+  // Sentence timing for this exact clip: hand-placed (with scene beats) or found from its pauses
   const cueTrack = listening ? cueTrackFor(clip) : null
-  const cue = cueTrack && cueAt?.renditionId === cueTrack.renditionId && cueAt.index !== null ? cueTrack.cues[cueAt.index] : null
-  // The narrated layout: the step's scene moves to the top with a slim player, and the text follows
-  const cuedScene = cueTrack && media.status === 'ready' ? manifest?.artifacts.find((a) => a.placardIds.includes(placard.id) && a.renderer === 'coherent-phase-recovery/v1') : undefined
+  const handTrack = cueTrack?.timing === 'manual' ? cueTrack : null
+  const cue = handTrack && cueAt?.renditionId === handTrack.renditionId && cueAt.index !== null ? handTrack.cues[cueAt.index] : null
+  // The phase-recovery scene follows the hand-placed beats: it moves to the top with a slim player
+  const cuedScene = handTrack && media.status === 'ready' ? manifest?.artifacts.find((a) => a.placardIds.includes(placard.id) && a.renderer === 'coherent-phase-recovery/v1') : undefined
   const narrated = cuedScene?.renderer === 'coherent-phase-recovery/v1' ? cuedScene : undefined
+  const wholeConcept = Boolean(clip && 'scope' in clip)
+  // Every other concept's canvas follows the narration too: it moves to the beat of the sentence
+  // being spoken on this step (canvasBeats.ts), and takes the player into its stage
+  const canvasScene = cueTrack?.timing === 'pauses' && media.status === 'ready' ? manifest?.artifacts.find((a) => a.renderer === 'cam-concept-canvas/v1' && a.placardIds.includes(placard.id)) : undefined
+  const canvas = canvasScene?.renderer === 'cam-concept-canvas/v1' ? canvasScene : undefined
+  const spoken = (() => {
+    if (!canvas || !cueTrack || cueAt?.renditionId !== cueTrack.renditionId || cueAt.index === null) return null
+    const text = placard.body[audioLang]
+    const range = cueTextRange(cueTrack, cueAt.index, text, placard.id)
+    return range ? text.slice(range.start, range.end) : null
+  })()
+  const beat = spoken ? canvasBeat(conceptId, spoken) : null
   // The sentence being spoken, split at the word the voice has reached: spoken words in a stronger
-  // mark, the rest of the sentence lighter. Even pace within each hand-placed sentence, not word alignment.
+  // mark, the rest of the sentence lighter. Even pace within each sentence, not word alignment.
   const readingNow = (lang: NarrationLang, text: string) => {
-    if (!narrated || !cueTrack || !clip || cueAt?.renditionId !== cueTrack.renditionId || cueAt.index === null || lang !== audioLang) return []
+    if (!cueTrack || !clip || cueAt?.renditionId !== cueTrack.renditionId || cueAt.index === null || lang !== audioLang) return []
     const t = voiceAt?.renditionId === cueTrack.renditionId ? voiceAt.t : cueTrack.cues[cueAt.index].at
-    const split = readingSplit(cueTrack, cueAt.index, t, clip.durationSeconds, text)
+    const split = readingSplit(cueTrack, cueAt.index, t, clip.durationSeconds, text, placard.id)
     if (!split) return []
     return [
       { start: split.start, end: split.readTo, className: styles.readingDone, read: true },
@@ -220,7 +242,16 @@ export function LessonScreen() {
   function goTo(index: number) {
     if (!placards[index]) return
     moved.current = true
+    // Moving by hand during a whole-concept clip hands the steps to the student until they follow again
+    if (listening && wholeConcept) setFollowVoice(false)
     setStep(index); setSaveError(''); setPositionSaved(false); if (!clip || !('scope' in clip)) setListening(false)
+    placeSaver.current?.save(placards[index].id)
+  }
+  // The voice moved on to another placard of a whole-concept clip: turn the page with it (no focus jump)
+  function followTo(placardId: string) {
+    const index = placards.findIndex((p) => p.id === placardId)
+    if (index < 0 || index === step) return
+    setStep(index); setSaveError(''); setPositionSaved(false)
     placeSaver.current?.save(placards[index].id)
   }
 
@@ -302,7 +333,7 @@ export function LessonScreen() {
               {title.text}
             </h2>
             {clip && lesson.mediaExperience?.audioAvailable !== false && !listening && (
-              <Button variant="secondary" icon={<SpeakerIcon size={20} />} onClick={() => setListening(true)} className={styles.listen}>
+              <Button variant="secondary" icon={<SpeakerIcon size={20} />} onClick={() => { setFollowVoice(true); setListening(true) }} className={styles.listen}>
                 Listen
               </Button>
             )}
@@ -315,13 +346,17 @@ export function LessonScreen() {
                 rendition={clip}
                 title={'scope' in clip ? lesson.title.en : title.text}
                 label={narrationLabel(clip, media.manifest.release)}
-                detail={'scope' in clip ? "Plays the whole concept across all four steps. Navigate manually; no placard offsets or sentence timing are available." : "Plays this whole step. Words are not highlighted: the clip has no sentence timing yet."}
+                detail={!cueTrack
+                  ? ('scope' in clip ? "Plays the whole concept across all four steps. Navigate manually; no sentence timing is available." : "Plays this whole step. Words are not highlighted: the clip has no sentence timing yet.")
+                  : ('scope' in clip ? 'Plays the whole concept. The steps turn and the sentence being spoken lights up as the voice moves on.' : 'The sentence being spoken lights up as the voice moves on.')}
                 compact={Boolean(narrated)}
                 onTimeChange={cueTrack ? (t) => {
                   const id = cueTrack.renditionId, index = activeCueIndex(cueTrack, t)
                   // Same sentence: keep the same state so the follow-scroll runs only when the sentence changes
                   setCueAt((prev) => (prev?.renditionId === id && prev.index === index ? prev : { renditionId: id, index }))
-                  if (narrated) setVoiceAt({ renditionId: id, t })
+                  setVoiceAt({ renditionId: id, t })
+                  const on = index === null ? null : cuePlacardId(cueTrack, index)
+                  if (on && followVoice && on !== placard.id) followTo(on)
                 } : undefined}
                 speed={speed}
                 onSpeedChange={setSpeed}
@@ -338,6 +373,18 @@ export function LessonScreen() {
                   <PhaseRecoveryScene key={narrated.artifactId} scene={narrated} cue={cue} layout="stage" player={bar} />
                   </div>
                   <p className={styles.narratedNote}>The scene and the text follow the narration. Sentence starts were placed by hand; within a sentence the highlight moves at an even pace, not word by word.</p>
+                </>
+              ) : cueTrack ? (
+                <>
+                  {/* The player keeps one place in the tree, so turning the step never restarts the audio */}
+                  <div ref={bringStageUp} className={`${styles.stageSlot} ${styles.playerSlot}`} data-narration-stage="">
+                    {bar}
+                    {canvas && <CamCanvas key={canvas.artifactId} artifact={canvas} cue={beat ?? IDLE_BEAT} layout="stage" />}
+                  </div>
+                  {wholeConcept && !followVoice && (
+                    <Button variant="text" onClick={() => { setFollowVoice(true); const i = cueAt?.index; const on = i == null ? null : cuePlacardId(cueTrack, i); if (on) followTo(on) }}>Follow the narration</Button>
+                  )}
+                  <p className={styles.narratedNote}>{canvas ? 'The scene and the text follow the narration.' : 'The text follows the narration.'} Sentence starts were found from the pauses in this recording; within a sentence the highlight moves at an even pace, not word by word.</p>
                 </>
               ) : bar
             })()}
@@ -360,7 +407,7 @@ export function LessonScreen() {
                 <Button variant="text" onClick={() => setMediaAttempt((n) => n + 1)}>Retry lesson media</Button>
               </p>
             )}
-            {scenesFor(lesson, manifest, placard, { terms: lesson.terms, selectedTermId, onTermOpen: openTerm }).filter((slot) => slot.key !== narrated?.artifactId).map((slot) => (
+            {scenesFor(lesson, manifest, placard, { terms: lesson.terms, selectedTermId, onTermOpen: openTerm }).filter((slot) => slot.key !== narrated?.artifactId && slot.key !== canvas?.artifactId).map((slot) => (
               <Fragment key={slot.key}>{slot.node}</Fragment>
             ))}
             {placard.sources.length > 0 && (
