@@ -49,7 +49,7 @@ export function Report({ report, question, lang, onRestart }: { report: ReportDa
           <h3 id="tutor-sheet-title">Your revision sheet</h3>
           <Button variant="secondary" onClick={() => window.print()}>Print or save as PDF</Button>
         </div>
-        <Whiteboard items={report.board} shown={shown} lang={lang} label="Revision sheet" />
+        <Whiteboard items={report.board} shown={shown} lang={lang} label="Revision sheet" mode="sheet" stages={question.stages} />
       </section>
       <Button variant="text" onClick={onRestart}>Talk it through again</Button>
     </section>

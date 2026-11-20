@@ -266,9 +266,35 @@ def _lt(text) -> dict:
     return text.model_dump(by_alias=True, exclude_none=True)
 
 
+_STAGE_OF: dict[tuple[str, str], dict[str, str]] = {}
+
+
+def item_stages(q: TutorQuestion) -> dict[str, str]:
+    """Board item → the first stage that can reveal it (pinned items belong to no stage)."""
+    key = (q.id, q.version)
+    if key not in _STAGE_OF:
+        out: dict[str, str] = {}
+        for s in q.stages:
+            ids = [r.item for r in s.intro.reveal]
+            for n in s.nodes.values():
+                ids += [r.item for r in n.line.reveal]
+                ids += [r.item for h in n.hints for r in h.reveal]
+                ids += [i for b in n.branches() for i in b.reveal]
+            for i in ids:
+                out.setdefault(i, s.id)
+        for p in q.pinned:
+            out.pop(p, None)
+        _STAGE_OF[key] = out
+    return _STAGE_OF[key]
+
+
 def board_item(q: TutorQuestion, item_id: str) -> dict:
-    """A revealed board item for the client; term items carry their term text and meaning."""
+    """A revealed board item for the client; term items carry their term text and meaning,
+    and every item says which stage it belongs to (so finished stages can collapse)."""
     item = q.board[item_id].model_dump(by_alias=True, exclude_none=True)
+    stage = item_stages(q).get(item_id)
+    if stage:
+        item["stage"] = stage
     if item["kind"] == "term":
         term = next((t for t in q.terms if t.id == item["termId"]), None)
         if term:

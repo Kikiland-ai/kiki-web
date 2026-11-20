@@ -39,7 +39,7 @@ export function useTutorSession(api: TutorApi | undefined, questionId: string, l
   const reveal = useCallback((ids: string[]) => {
     if (!ids.length) return;
     setShown(prev => { const next = new Set(prev); ids.forEach(i => next.add(i)); return next; });
-    setFresh(new Set(ids));
+    setFresh(prev => { const next = new Set(prev); ids.forEach(i => next.add(i)); return next; });   // fresh = everything this turn revealed
   }, []);
 
   const apply = useCallback((v: TurnView, mode: 'text' | 'voice' | 'resume') => {
@@ -47,6 +47,7 @@ export function useTutorSession(api: TutorApi | undefined, questionId: string, l
     timers.current = [];
     viewRef.current = v;
     setView(v);
+    setFresh(new Set());                 // a new turn starts a new set of fresh items
     const newIds = new Set(v.revealed);
     const old = v.board.map(i => i.id).filter(i => !newIds.has(i));
     if (mode === 'resume') { setShown(new Set(v.board.map(i => i.id))); pending.current = []; return; }

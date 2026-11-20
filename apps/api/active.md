@@ -1,3 +1,30 @@
+## Tutor mode: hardening, envelope-design question, canvas pass - 20 November 2026 (evening)
+
+Branch `feat/tutor-voice`, local commits only (not pushed or deployed).
+
+- Hardening: config fails fast without a key; tutor startup isolated (bad content disables only
+  the tutor); public `/tutor/health`; session ids include question and language; caps (8 voice
+  tokens, 3000 events, leak logs once per turn); voice/turn race re-applies the label on the fresh
+  state; one 1.5 s retry on 429. Web voice resumes after drops/go-away with a fresh token and the
+  Live handle (3 tries), checks availability before the mic prompt, and explains mic errors.
+- Plug-in kit: `apps/api/scripts/tutor_preflight.py`, `scripts/tutor_image_check.py`,
+  `apps/api/TUTOR_RUNBOOK.md`. Preflight on the current free key correctly reports NOT READY
+  (daily quota used; Live "prepayment credits are depleted").
+- New question `ece-am-envelope-design` (hard; offered on C-AM-03).
+- Canvas: finished stages fold to their results; compact question bar (sticky on desktop);
+  newest item scrolls into view; wipe then fading highlight; waveform traces fixed; equations
+  shrink to fit; vertical block diagrams on phones; conversation docked above the tab bar on
+  ≤860 px (portalled to body); report replaces the live board when done. Captures before and
+  after: `Desktop/KiKi/tutor-canvas-review/{before,after}` (spec `tests/tutor-canvas.capture.spec.ts`).
+
+Checks run: API 249 passed, 8 skipped; web 287 unit, lint, typecheck, build; Playwright tutor
+specs 3/3; full Playwright 115 passed, 3 failed in parallel: two pass serially (24/24), the
+third is `lab-student-input.spec.ts` (standalone lab harness, untouched by this work).
+
+Exact next: paid key → preflight READY → runbook steps; owner decides push/PR.
+
+---
+
 ## Tutor mode (voice, staged decision graphs) built on feat/tutor-voice - 20 November 2026
 
 Branch `feat/tutor-voice` from `origin/main` 5ecdd2e, committed locally as adityathenerd; not

@@ -51,12 +51,34 @@ it('runs a whole session by chips, uncovering the board only as it is earned, to
   chip(/Use a model sentence/);
 
   await screen.findByRole('heading', { name: 'Your scorecard' });
-  expect(items()).toContain('result');
+  expect(screen.queryByRole('region', { name: 'Whiteboard' })).toBeNull();      // the sheet replaces the live board
   const sheet = screen.getByRole('region', { name: 'Revision sheet' });
   expect(sheet.querySelectorAll('[data-item]').length).toBeGreaterThan(8);
+  expect(sheet.querySelector('[data-item="result"]')).not.toBeNull();
+  expect([...sheet.querySelectorAll('[data-stage]')].every(s => s.getAttribute('data-open') === 'true')).toBe(true);
   const metrics = screen.getByRole('list', { name: 'How you did' });
   expect(within(metrics).getAllByText('Got it').length).toBeGreaterThanOrEqual(2);
   expect(screen.queryByRole('group', { name: 'Quick replies' })).toBeNull();
+});
+
+it('folds finished stages to their results and keeps the current stage open', async () => {
+  open(undefined, 'ece-am-envelope-design');
+  fireEvent.click(await screen.findByRole('button', { name: 'Start talking it through' }));
+  await waitFor(() => expect(items()).toContain('q'));
+  expect(screen.getByRole('button', { name: 'Show only the given values' })).toBeTruthy();   // full question before any work
+  const click = (route: string) => fireEvent.click(document.querySelector(`[data-route="${route}"]`)!);
+  click('pt-59');
+  await waitFor(() => expect(board().querySelector('[data-stage="power"]')).not.toBeNull());
+  expect(screen.getByRole('button', { name: 'Show the full question' })).toBeTruthy();       // compact once work starts
+  click('eta-15');                                       // finishes "power"; its fresh result keeps it open
+  await waitFor(() => expect(board().querySelector('[data-stage="window"]')).not.toBeNull());
+  expect(board().querySelector('[data-stage="power"]')!.getAttribute('data-open')).toBe('true');
+  click('window-both');                                  // next reveal: "power" folds to its results
+  await waitFor(() => expect(board().querySelector('[data-stage="power"]')!.getAttribute('data-open')).toBe('false'));
+  const power = board().querySelector('[data-stage="power"]')!;
+  expect(power.querySelectorAll('.katex').length).toBeGreaterThan(0);                     // results still readable
+  fireEvent.click(within(power as HTMLElement).getByRole('button'));                      // the student can reopen it
+  expect(power.getAttribute('data-open')).toBe('true');
 });
 
 it('routes a misconception through its explanation and shows hints for an unclear reply', async () => {

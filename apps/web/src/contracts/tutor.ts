@@ -9,7 +9,7 @@ export const Dim = z.enum(['concept', 'words', 'english', 'lab']);
 export type Dim = z.infer<typeof Dim>;
 
 const Tone = z.object({ a: z.number(), f: z.number(), phaseDeg: z.number().optional() });
-const Base = { id: z.string() };
+const Base = { id: z.string(), stage: z.string().optional() };
 export const BoardItem = z.discriminatedUnion('kind', [
   z.object({ ...Base, kind: z.literal('question'), text: LText, given: z.array(LText).optional() }),
   z.object({ ...Base, kind: z.literal('equation'), tex: z.string(), label: LText.optional() }),

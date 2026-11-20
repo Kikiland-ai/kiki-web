@@ -16,47 +16,80 @@
 .langPick legend { font: var(--learning-text-label); color: var(--learning-pencil); margin-bottom: 6px; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: var(--learning-space-4); align-items: start; }
-@media (max-width: 860px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 1100px) and (min-width: 861px) { .layout { grid-template-columns: minmax(0, 1fr) 300px; } }
 
-/* whiteboard */
-.board { background: var(--learning-paper-raised); border: 1px solid var(--learning-line); border-radius: var(--learning-radius-card); padding: var(--learning-space-4); min-height: 320px; box-shadow: var(--learning-key-edge-neutral);
+/* ---------------------------------------------------------------- whiteboard */
+.board, .sheetBoard { background: var(--learning-paper-raised); border: 1px solid var(--learning-line); border-radius: var(--learning-radius-card); padding: var(--learning-space-4); min-width: 0;
   background-image: radial-gradient(var(--learning-grid-dot) 1px, transparent 1px); background-size: 18px 18px; }
+.board { min-height: 320px; box-shadow: var(--learning-key-edge-neutral); }
 .boardList { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--learning-space-3); }
-.boardItem { background: var(--learning-paper); border-radius: 6px; padding: var(--learning-space-2) var(--learning-space-3); overflow-x: auto; }
-.boardItem[data-kind='question'] { border-left: 3px solid var(--learning-ink); }
+.boardItem { background: var(--learning-paper); border-radius: 6px; padding: var(--learning-space-2) var(--learning-space-3); min-width: 0; scroll-margin: 96px 0 calc(var(--tutor-dock, 0px) + 24px); }
 .boardItem[data-kind='result'] { border: 2px solid var(--learning-green); background: var(--learning-green-tint); }
 .boardItem[data-kind='note'] { border-left: 3px solid var(--learning-yellow); }
-.fresh { animation: kiki-write 600ms ease-out both; }
-.focus { outline: 2px solid var(--learning-focus-ring); outline-offset: 2px; }
-@keyframes kiki-write { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
-@media (prefers-reduced-motion: reduce) { .fresh { animation: none; } }
+
+/* the question: full before work starts, then a sticky bar of the given values */
+.questionBar { position: sticky; top: 0; z-index: 2; background: var(--learning-paper); border: 1px solid var(--learning-line); border-left: 3px solid var(--learning-ink);
+  border-radius: 6px; padding: var(--learning-space-2) var(--learning-space-3); margin-bottom: var(--learning-space-3); box-shadow: 0 6px 12px -10px rgba(0,0,0,.35); }
+.questionSheet { background: var(--learning-paper); border-left: 3px solid var(--learning-ink); border-radius: 6px; padding: var(--learning-space-2) var(--learning-space-3); margin-bottom: var(--learning-space-3); }
+.questionBar[data-expanded='true'] { position: static; box-shadow: none; }
+.givens { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font: var(--learning-text-label); }
+.givens li:lang(or) { font: var(--learning-text-label-odia); }
+.questionToggle { margin-top: 6px; background: none; border: 0; padding: 0; font: var(--learning-text-label); color: var(--learning-pencil); text-decoration: underline; cursor: pointer; }
 .questionItem p { margin: 0 0 6px; font-weight: 600; }
 .questionItem p:lang(or), .note:lang(or) { font: var(--learning-text-body-odia); }
 .questionItem ul { margin: 0; padding-left: 18px; color: var(--learning-pencil); }
-.equation, .step { display: grid; gap: 2px; }
+
+/* stages: the current one open, finished ones folded to their results */
+.stageGroup { margin-bottom: var(--learning-space-3); }
+.stageHead { display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: 0; border-bottom: 1px dashed var(--learning-line);
+  padding: 4px 0 6px; margin-bottom: var(--learning-space-2); font: var(--learning-text-label); color: var(--learning-pencil); text-align: left; cursor: pointer; }
+.stageHead:disabled { cursor: default; }
+.stageHead:lang(or), .stageHead span:lang(or) { font: var(--learning-text-label-odia); }
+.stageGroup[data-open='true'] .stageHead { color: var(--learning-ink); }
+.stageNum { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1px solid currentColor; font-size: 11px; }
+.stageDone { margin-left: auto; color: var(--learning-green-ink); }
+.stageSummary { display: grid; gap: 6px; }
+.stageSummary .result { border: 1px solid var(--learning-green); background: var(--learning-green-tint); border-radius: 6px; padding: 4px 10px; font: var(--learning-text-label); }
+.stageMore { font: var(--learning-text-label); color: var(--learning-pencil); }
+
+/* reveal: a left-to-right write-on, then a short highlight so the eye finds what just appeared */
+.fresh { animation: kiki-write 600ms ease-out backwards, kiki-glow 2000ms ease-out 600ms; }   /* write-on, then a fading tint; no clip left behind */
+.focus { outline: 2px solid var(--learning-focus-ring); outline-offset: 2px; }
+@keyframes kiki-write { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+@keyframes kiki-glow { from { background-color: var(--learning-yellow-tint); } }
+@media (prefers-reduced-motion: reduce) { .fresh { animation: none; outline: 2px solid var(--learning-yellow); outline-offset: 1px; } }
+
+.equation, .step { display: grid; gap: 2px; min-width: 0; }
 .itemLabel, .stepNote { font: var(--learning-text-label); color: var(--learning-pencil); }
+.tex { display: block; min-width: 0; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 .tex :global(.katex-display) { margin: 4px 0; text-align: left; }
+.stageSummary .tex, .stageSummary .result .tex { display: inline; overflow: visible; }
 .note { margin: 0; }
 .result p { margin: 4px 0 0; font-weight: 600; }
 .termRow { display: flex; flex-wrap: wrap; gap: var(--learning-space-2); margin-top: var(--learning-space-3); }
 .term { display: inline-block; font: var(--learning-text-term); padding: 3px 10px; border-radius: var(--learning-radius-pill); background: var(--learning-red-tint); color: var(--learning-red-ink); border: 1px solid var(--learning-red); }
 
-/* figures: dark scope plots, as in the lesson canvases */
+/* figures: dark scope plots, as in the lesson canvases. Traces are strokes, never fills. */
 .figureItem { margin: 0; }
 .figureItem figcaption { font: var(--learning-text-label); color: var(--learning-pencil); margin-top: 4px; }
 .figure { width: 100%; max-width: 560px; display: block; background: var(--learning-scope-glass); border-radius: 6px; }
+.figure path[data-series] { fill: none; }
 .axis { stroke: var(--learning-scope-grid); stroke-width: 1; }
-.axisLabel, .lineLabel, .legendText { fill: var(--learning-scope-text); font: 500 9px/1 var(--learning-font-mono); }
-.wave_reference { stroke: var(--learning-scope-text); stroke-width: 1.2; stroke-dasharray: 4 3; fill: var(--learning-scope-text); }
-.wave_signal { stroke: var(--learning-scope-trace); stroke-width: 2; fill: var(--learning-scope-trace); }
-.wave_envelope { stroke: var(--learning-yellow); stroke-width: 1.4; stroke-dasharray: 2 2; fill: var(--learning-yellow); }
-.wave_muted { stroke: var(--learning-scope-grid); stroke-width: 1.4; fill: var(--learning-scope-grid); }
-.legend text { stroke: none; }
+.axisLabel, .lineLabel, .legendText { font: 500 9px/1 var(--learning-font-mono); stroke: none; }
+.axisLabel { fill: var(--learning-scope-text); }
+.wave_reference { stroke: var(--learning-scope-text); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.wave_signal { stroke: var(--learning-scope-trace); stroke-width: 1.6; }
+.wave_envelope { stroke: var(--learning-yellow); stroke-width: 2; stroke-dasharray: 5 3; }
+.wave_muted { stroke: var(--learning-scope-grid); stroke-width: 1.4; }
+.legendText.wave_reference, .legendText.wave_signal, .legendText.wave_envelope, .legendText.wave_muted { stroke: none; stroke-dasharray: none; }
+.legendText.wave_reference { fill: var(--learning-scope-text); }
+.legendText.wave_signal { fill: var(--learning-scope-trace); }
+.legendText.wave_envelope { fill: var(--learning-yellow); }
+.legendText.wave_muted { fill: var(--learning-scope-grid); }
 .line_carrier { stroke: var(--learning-yellow); fill: var(--learning-yellow); }
 .line_sideband { stroke: var(--learning-scope-trace); fill: var(--learning-scope-trace); }
 .line_message { stroke: var(--learning-blue-tint); fill: var(--learning-blue-tint); }
 .line_muted { stroke: var(--learning-scope-grid); fill: var(--learning-scope-grid); }
-.lineLabel { stroke: none; }
 .band { fill: var(--learning-scope-grid); opacity: 0.35; }
 .edge { stroke: var(--learning-scope-text); stroke-width: 1.4; }
 .arrowHead { fill: var(--learning-scope-text); }
@@ -64,10 +97,10 @@
 .block_oscillator { fill: var(--learning-yellow-tint); }
 .block_filter { fill: var(--learning-blue-tint); }
 .block_output { fill: var(--learning-green-tint); }
-.blockLabel { font: 500 9px/1.15 var(--learning-font-ui); color: var(--learning-ink); display: grid; place-items: center; height: 100%; text-align: center; overflow: hidden; }
+.blockLabel { font: 500 10px/1.15 var(--learning-font-ui); color: var(--learning-ink); display: grid; place-items: center; height: 100%; text-align: center; overflow: hidden; }
 
-/* conversation */
-.talk { display: grid; gap: var(--learning-space-3); position: sticky; top: var(--learning-space-4); }
+/* ---------------------------------------------------------------- conversation */
+.talk { display: grid; gap: var(--learning-space-3); position: sticky; top: var(--learning-space-4); min-width: 0; }
 .kikiRow { display: flex; align-items: center; gap: var(--learning-space-3); }
 .voiceStatus { font: var(--learning-text-label); color: var(--learning-pencil); }
 .log { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--learning-space-2); max-height: 46vh; overflow-y: auto; }
@@ -84,7 +117,32 @@
 .alert { color: var(--learning-red-ink); margin: 0; }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* report */
+/* phones and narrow tablets: the conversation docks at the bottom (above the app's tab bar on
+   phones), showing KiKi's latest lines and the reply; the board scrolls above it */
+@media (max-width: 860px) {
+  .screen { --tutor-dock: 46vh; }
+  .layout { grid-template-columns: minmax(0, 1fr); padding-bottom: calc(var(--tutor-dock) + 16px); }
+  .talk { position: fixed; top: auto; left: 0; right: 0; bottom: 0; z-index: 15; max-height: var(--tutor-dock, 46vh); overflow-y: auto;
+    font: var(--learning-text-body); color: var(--learning-ink);
+    background: var(--learning-paper); border-top: 1px solid var(--learning-line); box-shadow: 0 -8px 20px -14px rgba(0,0,0,.4);
+    padding: var(--learning-space-3) var(--learning-space-4) var(--learning-space-3); gap: var(--learning-space-2); }
+  .log { max-height: 18vh; }
+  .kikiRow { display: none; }
+  .questionBar { top: 0; }
+}
+@media (max-width: 599px) {
+  .talk { bottom: calc(71px + env(safe-area-inset-bottom)); max-height: 46vh; }
+  .questionBar { position: static; box-shadow: none; }      /* phones: the givens scroll away; the board gets the room */
+  .boardItem { scroll-margin-top: 12px; }
+  .log { max-height: 16vh; }
+  .screen { --tutor-dock: 46vh; }
+  .layout { padding-bottom: calc(var(--tutor-dock) + 88px); }
+  .board { padding: var(--learning-space-3); }
+  .tex { font-size: 0.86em; }
+  .reply textarea { min-height: 44px; }
+}
+
+/* ---------------------------------------------------------------- report */
 .report { margin-top: var(--learning-space-6); display: grid; gap: var(--learning-space-4); }
 .report h2 { font: var(--learning-text-display-m); margin: 0; }
 .summary { font-size: 18px; margin: 0; max-width: 70ch; }
@@ -105,5 +163,5 @@
 .sheetHead { display: flex; justify-content: space-between; align-items: center; gap: var(--learning-space-2); flex-wrap: wrap; }
 @media print {
   .head, .layout, .metrics, .pointers, .stages, .summary, .sheetHead button, .report > button { display: none !important; }
-  .sheet .board { box-shadow: none; background-image: none; border: 0; }
+  .sheet .sheetBoard { background-image: none; border: 0; }
 }

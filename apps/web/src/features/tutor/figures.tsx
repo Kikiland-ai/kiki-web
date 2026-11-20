@@ -1,5 +1,6 @@
 import type { z } from 'zod';
 import { BlockParams, SpectrumParams, WaveformParams, type LText } from '../../contracts/tutor';
+import { useMediaQuery } from '../learning/useMediaQuery';
 import styles from './Tutor.module.css';
 
 type Lang = 'en' | 'or';
@@ -86,14 +87,23 @@ export function layoutBlocks(p: z.infer<typeof BlockParams>) {
 export function BlockDiagram({ params, lang, caption }: { params: unknown; lang: Lang; caption: string }) {
   const p = BlockParams.parse(params);
   const { pos, cols } = layoutBlocks(p);
-  const bw = 88, bh = 44, gx = 22, gy = 30, width = cols * (bw + gx) + gx, height = 2 * (bh + gy) + 10;
-  const box = (id: string) => { const { col, row } = pos.get(id)!; return { x: gx + col * (bw + gx), y: 10 + row * (bh + gy) }; };
+  // phones: the chain runs top to bottom with side inputs to the right, so labels stay readable
+  const vertical = useMediaQuery('(max-width: 560px)');
+  const bw = vertical ? 150 : 96, bh = vertical ? 40 : 46, gx = vertical ? 28 : 22, gy = vertical ? 22 : 30;
+  const width = vertical ? 2 * (bw + gx) + gx : cols * (bw + gx) + gx;
+  const height = vertical ? cols * (bh + gy) + gy : 2 * (bh + gy) + 10;
+  const box = (id: string) => {
+    const { col, row } = pos.get(id)!;
+    return vertical ? { x: gx + (1 - row) * (bw + gx), y: gy + col * (bh + gy) } : { x: gx + col * (bw + gx), y: 10 + row * (bh + gy) };
+  };
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className={styles.figure} role="img" aria-label={caption}>
       <defs><marker id="kiki-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" className={styles.arrowHead} /></marker></defs>
       {p.edges.map((e, i) => {
         const a = box(e.from), b = box(e.to), same = pos.get(e.from)!.row === pos.get(e.to)!.row;
-        const [x1, y1, x2, y2] = same ? [a.x + bw, a.y + bh / 2, b.x, b.y + bh / 2] : [a.x + bw / 2, a.y + bh, b.x + bw / 2, b.y];
+        const [x1, y1, x2, y2] = vertical
+          ? (same ? [a.x + bw / 2, a.y + bh, b.x + bw / 2, b.y] : [a.x, a.y + bh / 2, b.x + bw, b.y + bh / 2])
+          : (same ? [a.x + bw, a.y + bh / 2, b.x, b.y + bh / 2] : [a.x + bw / 2, a.y + bh, b.x + bw / 2, b.y]);
         return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} className={styles.edge} markerEnd="url(#kiki-arrow)" />;
       })}
       {p.blocks.map(b => {

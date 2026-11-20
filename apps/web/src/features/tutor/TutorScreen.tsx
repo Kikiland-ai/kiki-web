@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+import { useMediaQuery } from '../learning/useMediaQuery';
 import { Link, useParams } from 'react-router';
 import { useSession } from '../../app/Session';
 import type { QuestionView } from '../../contracts/tutor';
@@ -28,6 +30,10 @@ export function TutorScreen() {
     onProgress: s.spokenProgress,
   });
   const logEnd = useRef<HTMLLIElement>(null);
+  // narrow screens: the conversation docks to the bottom of the viewport. It is portalled to <body>
+  // so no app-shell ancestor (transforms, containment) can turn `position: fixed` into page flow.
+  const docked = useMediaQuery('(max-width: 860px)');
+  const dock = (node: ReactNode) => (docked && typeof document !== 'undefined' ? createPortal(node, document.body) : node);
 
   useEffect(() => {
     if (!api) return;
@@ -86,11 +92,12 @@ export function TutorScreen() {
             <Button onClick={() => { setStarted(true); void s.start(); }}>Start talking it through</Button>
           </div>
         </section>
-      ) : (
+      ) : done && s.report ? null : (
         <div className={styles.layout}>
           <Whiteboard items={view?.board ?? []} shown={s.shown} fresh={s.fresh} lang={lang}
+            stages={question.stages} currentStage={done ? question.stages.length : stageIndex}
             focus={view?.brief.segments.flatMap(seg => seg.focus) ?? []} />
-          <section className={styles.talk} aria-label="Conversation with KiKi">
+          {dock(<section className={styles.talk} aria-label="Conversation with KiKi">
             <div className={styles.kikiRow}>
               <Kiki state={kikiPose} size={48} label="" />
               <span role="status" className={styles.voiceStatus}>{s.busy ? 'KiKi is thinking…' : VOICE_LABEL[voice.status]}</span>
@@ -131,7 +138,7 @@ export function TutorScreen() {
                 </div>
               </>
             )}
-          </section>
+          </section>)}
         </div>
       )}
       {done && s.report && <Report report={s.report} question={question} lang={lang} onRestart={() => void s.start(true)} />}
