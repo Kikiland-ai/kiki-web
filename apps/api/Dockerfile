@@ -6,6 +6,7 @@ COPY apps/api/pyproject.toml apps/api/uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
 COPY apps/api/src ./src
 COPY data-model/media/cam-contract /app/data-model/media/cam-contract
+COPY data-model/tutor/questions /app/data-model/tutor/questions
 ENV PATH="/opt/venv/bin:$PATH" PYTHONPATH=/app/apps/api/src
 USER 65532:65532
 EXPOSE 8080

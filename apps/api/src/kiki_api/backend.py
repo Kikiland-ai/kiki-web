@@ -41,6 +41,7 @@ class Services:
     learning: "FirestoreLearning | None" = None
     lab_preparations: "LabPreparations | None" = None
     lab_executions: "LabExecutions | None" = None
+    tutor: "TutorService | None" = None
 
 
 class FirebaseVerifier:
@@ -224,6 +225,17 @@ def firebase_services(settings: Settings) -> Services:
 
         executions = LabExecutions(preparations, LabUpstream(settings))
         preparations.execution_status = executions.status
+    tutor = None
+    if settings.tutor_enabled and settings.gemini_api_key:
+        from .tutor.classifier import GeminiClassifier
+        from .tutor.service import TutorService, load_questions
+        from .tutor.store import FirestoreTutorStore
+
+        tutor = TutorService(
+            load_questions(),
+            GeminiClassifier(settings.gemini_api_key.get_secret_value(), settings.tutor_classifier_model),
+            FirestoreTutorStore(client),
+        )
     return Services(
         FirebaseVerifier(app),
         profiles,
@@ -231,4 +243,5 @@ def firebase_services(settings: Settings) -> Services:
         learning,
         preparations,
         executions,
+        tutor,
     )

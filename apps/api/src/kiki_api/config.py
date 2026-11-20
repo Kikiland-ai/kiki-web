@@ -19,6 +19,11 @@ class Settings(BaseSettings):
     lab_backend_origin: str | None = None
     lab_proxy_secret: SecretStr | None = None
     environment: Literal["cloud", "emulator"] = "cloud"
+    # Tutor mode stays off until explicitly enabled with a server-side Gemini key.
+    tutor_enabled: bool = False
+    gemini_api_key: SecretStr | None = None
+    tutor_classifier_model: str = "gemini-3.5-flash-lite"
+    tutor_live_model: str = "gemini-3.8-live"
     cors_origins: list[str] = ["http://127.0.0.1:5174", "http://localhost:5174"]
 
     @model_validator(mode="after")
