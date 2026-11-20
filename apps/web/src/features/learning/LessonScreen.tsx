@@ -1,6 +1,6 @@
 import { StateScreen } from '../../ui/kit'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { Link, useParams, useSearchParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptLesson } from '../../contracts/api'
 import { ServiceError, readableError } from '../../services/types'
 import { useSession } from '../../app/Session'
@@ -47,6 +47,10 @@ const IDLE_BEAT: CanvasBeat = { set: {}, caption: '' }
  */
 export function LessonScreen() {
   const { conceptId = '' } = useParams()
+  // The landing page's "Try a lesson" link opens a mid-chapter concept as a framed sample
+  const [search] = useSearchParams()
+  const fromLanding = search.get('from') === 'landing'
+  const articleRef = useRef<HTMLElement>(null)
   const { services, profile } = useSession()
   const uid = profile?.id
   const placeSaver = useRef<ReturnType<typeof createPlaceSaver> | null>(null)
@@ -161,7 +165,11 @@ export function LessonScreen() {
 
   // After Back or Next, move focus to the new placard so it's read out and in view
   useEffect(() => {
-    if (moved.current) headingRef.current?.focus()
+    if (!moved.current) return
+    headingRef.current?.focus({ preventScroll: true })
+    // Next sits in a bar pinned to the bottom, so bring the new card's top into view
+    const top = articleRef.current?.getBoundingClientRect().top
+    if (top !== undefined && (top < 0 || top > window.innerHeight * 0.6)) articleRef.current?.scrollIntoView({ block: 'start', behavior: 'instant' })
   }, [step])
 
   if (load.status === 'loading') return <LoadingState message="Loading the lesson…" />
@@ -291,8 +299,8 @@ export function LessonScreen() {
         </p>
       )}
 
-      {missingPrerequisites.length > 0 && <aside aria-label="Prerequisite concepts" className={styles.prerequisitePanel}><details><summary><strong>{missingPrerequisites.length} prior {missingPrerequisites.length === 1 ? 'concept' : 'concepts'} to review</strong><span>You can preview this lesson.</span></summary><p>Review these prerequisite concepts before progressing:</p><ul className={styles.prerequisites}>{missingPrerequisites.map(id => <li key={id}><Link to={`/concepts/${id}`}>{chapter.concepts.find(c => c.id === id)?.title.en ?? id}</Link></li>)}</ul></details></aside>}
-      {services.mode === 'fixture' && <p className="helper-note">Sample lesson · places save in this browser after confirmation. Reading does not pass a concept check.</p>}
+      {fromLanding && concept && concept.order > 1 && <aside className={styles.sampleFrame} aria-label="Sample lesson"><p><strong>A sample lesson from the middle of the chapter.</strong> Concept {String(concept.order).padStart(2, '0')} builds on earlier ideas; read it as a preview.</p><LinkButton to={`/concepts/${chapter.concepts.find(c => c.order === 1)?.id ?? conceptId}`} variant="secondary">Start from Concept 01</LinkButton></aside>}
+      {!fromLanding && missingPrerequisites.length > 0 && <aside aria-label="Prerequisite concepts" className={styles.prerequisitePanel}><details><summary><strong>{missingPrerequisites.length} prior {missingPrerequisites.length === 1 ? 'concept' : 'concepts'} to review</strong><span>You can preview this lesson.</span></summary><p>Review these prerequisite concepts before progressing:</p><ul className={styles.prerequisites}>{missingPrerequisites.map(id => <li key={id}><Link to={`/concepts/${id}`}>{chapter.concepts.find(c => c.id === id)?.title.en ?? id}</Link></li>)}</ul></details></aside>}
       {/* From 768px: steps in a column on the left, the card held in place on the right */}
       <div className={styles.reader}>
         <nav aria-label="Lesson steps" className={styles.stepsNav}>
@@ -311,7 +319,7 @@ export function LessonScreen() {
                     <span className={styles.stepNumber} aria-hidden="true">
                       {i + 1}
                     </span>
-                    <span lang={t.lang}>{t.text}</span>
+                    <span lang={t.lang} className={styles.stepLabel}>{t.text}</span>
                   </button>
                 </li>
               )
@@ -325,7 +333,7 @@ export function LessonScreen() {
       {positionSaved && !savingPosition && !saveError && <p role="status">{services.mode === 'fixture' ? 'Place saved in this browser' : 'Place saved'}</p>}
       {saveError && <div role="alert">Your place was not saved. {saveError} <Button variant="text" onClick={() => goTo(step)}>Retry saving place</Button></div>}
           </div>
-          <article className={styles.placard} aria-labelledby="placard-title">
+          <article ref={articleRef} className={styles.placard} aria-labelledby="placard-title">
             <p className={styles.stepOf}>
               Step {step + 1} of {placards.length}
             </p>
@@ -441,7 +449,7 @@ export function LessonScreen() {
             </Button>
             {nextTitle ? (
               <Button icon={<ArrowForwardIcon size={20} />} onClick={() => goTo(step + 1)}>
-                Next: <span lang={nextTitle.lang}>{nextTitle.text}</span>
+                Next<span className={styles.nextTitle}>: <span lang={nextTitle.lang}>{nextTitle.text}</span></span>
               </Button>
             ) : (
               <LinkButton to={`/assessments/${lesson.assessmentId}/new`} icon={<ArrowForwardIcon size={20} />}>
@@ -450,6 +458,7 @@ export function LessonScreen() {
             )}
           </div>
           <TalkItThroughRow conceptId={conceptId} />
+          {services.mode === 'fixture' && <p className="helper-note">Sample lesson · places save in this browser after confirmation. Reading does not pass a concept check.</p>}
         </div>
       </div>
 

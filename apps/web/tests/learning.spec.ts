@@ -2,8 +2,10 @@ import { test, expect, type Page } from '@playwright/test';
 import bank from '../src/fixtures/assessment-bank.json' with { type: 'json' };
 async function setup(page: Page) {
   await page.goto('/auth'); await page.getByRole('button',{name:'Open sample student'}).click();
-  for(let i=0;i<3;i++) await page.getByRole('button',{name:'Save and continue'}).click();
-  await page.getByRole('button',{name:'Go to my home'}).click();
+  await page.getByRole('button',{name:'Start learning'}).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('link',{name:'Add your subject',exact:true}).click();
   await page.getByLabel('Semester',{exact:true}).selectOption('5'); await page.getByRole('button',{name:'Add subject',exact:true}).click();
   await page.getByRole('link',{name:'Learn',exact:true}).click();
@@ -111,7 +113,7 @@ test('failed concept and retry update the same map, preserving prior attempts',a
   await setup(page); await openFirst(page); await lastPlacard(page); await result(page,2);
   const url=page.url(); await page.getByRole('link',{name:'Chapter map',exact:true}).click();
   await expect(page.getByRole('link',{name:/^Concept 1:/})).toContainText('Revisit');
-  await page.goto(url); await page.getByRole('checkbox',{name:'I reviewed the feedback or revisited my notes.'}).check();
+  await page.goto(url);
   await page.getByRole('link',{name:'Retry this check',exact:true}).click(); await result(page,3);
   await page.getByRole('link',{name:'Chapter map',exact:true}).click(); await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','1');
   await page.goto('/practice'); await expect(page.getByText('Attempt 1 · 2/5 correct',{exact:true})).toBeVisible(); await expect(page.getByText('Attempt 2 · 3/5 correct',{exact:true})).toBeVisible();
@@ -247,7 +249,7 @@ test('moving to another placard stops the sound; the chosen speed carries over',
   await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
   await page.getByRole('button',{name:'1.25×',exact:true}).click();
   await expect.poll(async()=>(await audio(page))!.rate).toBe(1.25);
-  await page.getByRole('button',{name:/^Next:/}).click();
+  await page.getByRole('button',{name:/^Next\b/}).click();
   await expect(page.locator('audio')).toHaveCount(0);
   await page.getByRole('button',{name:'Listen',exact:true}).click(); await playing(page);
   expect((await audio(page))!.rate).toBe(1.25); expect((await audio(page))!.clip).toMatch(/^CARD-AM-08-concept\./);
