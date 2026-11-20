@@ -74,6 +74,39 @@ Secret Manager; signed-in walkthrough by voice and text; native Odia review.
 
 ---
 
+## Narrated lesson layout, local review - 20 November 2026
+
+Branch `feature/canvas-audio-sync` (from main `5ecdd2e`); merged to main as PR #18 on 21 November 2026.
+Revised after review: narration now plays behind the lesson instead of in front
+of it. Pressing Listen on C-AM-08 steps 2-3 switches to a narrated layout: the
+phase-recovery scene rises to the top of the step as a pinned "stage" with a slim
+one-row player (source label kept), the scope follows the narration (eases φ to
+0/60/90°, outlines what is described, one-line caption), and the placard text
+below highlights the sentence being read, with a reading edge that moves
+through it as the audio plays (spoken words in a stronger band, the rest
+lighter; even pace between hand-placed sentence starts, not word alignment,
+and labelled so), scrolling it into view only when it is hidden. Controls fold into "Explore it yourself"; touching them hands
+control to the student until "Follow the narration". Closing the player restores
+the reading layout. Cues (`narrationCues.ts`) are keyed to rendition ID and exact
+`audioSha256`, carry each sentence's opening words, and were placed by hand from
+pauses in the WAVs; the media contract stays `clip_duration_only` /
+`not_performed` and the UI says the cues are hand-placed.
+
+Checks: TypeScript, ESLint and production build pass; Vitest full suite with
+`--maxWorkers=4` (default 43-worker runs time out in unrelated files that pass
+alone). Tests cover cue anchors against the real Odia/English placard text,
+highlight marking with term chips, stage layout, follow/takeover and the compact
+player. Local sample browser check (Chrome, 1280 and 390 px), Odia concept clip
+seeked to 2/21/26/31/42 s: readings 1.00/0.50/0.00/0.00/1.00, scope and the
+highlighted sentence both on screen at every point, takeover works, axe 0
+violations, no horizontal overflow, closing restores the full scene. Cue times
+not yet checked by ear.
+
+Exact next: user reviews on the local server; adjust cue times or layout; then
+commit (identity to confirm) and push on request.
+
+---
+
 ## Canvas fix deployed and verified - 19 November 2026
 
 Application source `2b7f32d0f8e8189b9b30086b7394983e752aabb6` was committed

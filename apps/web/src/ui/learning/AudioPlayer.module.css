@@ -127,3 +127,13 @@
   font: var(--learning-text-label);
   color: var(--learning-pencil);
 }
+
+/* Compact: one slim row, so narration sits behind the lesson rather than in front of it */
+.compact { gap: 2px; padding: 6px var(--learning-space-2); border-left-width: 4px; }
+.compact .controls { gap: var(--learning-space-1); }
+.compact .play { min-width: 40px; min-height: 40px; }
+.compact .scrub { flex: 1 1 auto; min-width: 60px; }
+.compact .segment { min-width: 48px; border-radius: var(--learning-radius-pill); background: transparent; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--learning-space-1) var(--learning-space-2); padding-left: 4px; }
+.metaLabel { font: var(--learning-text-label); color: var(--learning-pencil); }
+@media (max-width: 600px) { .compact .metaLabel { font-size: 12px; } .compact .play { min-width: 36px; min-height: 36px; } .compact .segment { min-width: 40px; } }

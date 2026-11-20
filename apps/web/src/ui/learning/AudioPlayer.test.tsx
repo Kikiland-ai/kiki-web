@@ -92,6 +92,27 @@ describe('AudioPlayer', () => {
     expect(audio.currentTime).toBe(30)
   })
 
+  it('reports the clip position from playback and from the scrubber', () => {
+    const onTimeChange = vi.fn()
+    const { audio } = renderPlayer({ onTimeChange })
+    loaded(audio, 41)
+    Object.defineProperty(audio, 'currentTime', { configurable: true, writable: true, value: 7.3 })
+    fireEvent.timeUpdate(audio)
+    expect(onTimeChange).toHaveBeenLastCalledWith(7.3)
+    fireEvent.change(screen.getByRole('slider', { name: 'Position' }), { target: { value: '21' } })
+    expect(onTimeChange).toHaveBeenLastCalledWith(21)
+  })
+
+  it('has a compact bar that keeps the source label and cycles speed', () => {
+    const { onSpeedChange, onClose } = renderPlayer({ compact: true, detail: 'Long detail' })
+    expect(screen.getByText('Placeholder sound, not narration')).toBeTruthy()
+    expect(screen.queryByText('Long detail')).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'Speed 1×, change to 1.25×' }))
+    expect(onSpeedChange).toHaveBeenCalledWith(1.25)
+    fireEvent.click(screen.getByRole('button', { name: 'Close player' }))
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
   it('applies the speed to the audio and reports the chosen one', () => {
     const { audio, onSpeedChange, rerender } = renderPlayer()
     const fast = screen.getByRole('button', { name: '1.25×' })
