@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 test('generic setup saves language and field; Aditya’s ECE example follows explicit preferences', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('Understanding in Odia');
+  await expect(page.locator('h1')).toContainText('Learn it in your language.');
   await expect(page.getByText(/One learner\. One example\.|Meet Aditya, an ECE student/)).toHaveCount(0);
   await page.getByRole('link', { name: 'Student sign in', exact: true }).click();
   await page.getByRole('button', { name: 'Open sample student' }).click();
