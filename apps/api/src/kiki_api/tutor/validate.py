@@ -156,8 +156,12 @@ def validate(q: TutorQuestion) -> Report:
         if not any(EXIT in successors(n) for n in stage.nodes.values()):
             r.errors.append(f"{where}: no path reaches {EXIT}")
 
-    if r.errors:
-        return r
+    graph_broken = any(
+        k in e for e in r.errors
+        for k in ("not a node in this stage", "is not a node", "cycle", "unreachable", "no path")
+    )
+    if graph_broken:
+        return r   # leak analysis needs a sound graph; reference errors alone don't block it
 
     # answers only once earned (conservative over all paths)
     earlier: set[str] = set(q.pinned)

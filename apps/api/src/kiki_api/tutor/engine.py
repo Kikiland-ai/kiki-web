@@ -188,6 +188,17 @@ def allowed_labels(q: TutorQuestion, state: TutorState) -> list[str]:
     return [b.id for b in node.branches()] + [UNCLEAR, OFF_TOPIC]
 
 
+def state_at(q: TutorQuestion, node: str, lang: str = "en") -> TutorState:
+    """A waiting state at `node` (for evaluation and tests; the board is left empty)."""
+    for i, s in enumerate(q.stages):
+        if node in s.nodes:
+            return TutorState(
+                questionId=q.id, questionVersion=q.version, lang=lang, stageIndex=i, node=node,
+                hintLevel=0, turn=0, status="active", board=[], seq=0, version=0,
+            )
+    raise KeyError(node)
+
+
 def start(q: TutorQuestion, lang: str) -> Step:
     if lang not in q.languages:
         raise EngineError(f"Language {lang} is not offered for this question")

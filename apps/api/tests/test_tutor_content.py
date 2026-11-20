@@ -93,6 +93,14 @@ def test_answer_from_an_ancestor_branch_in_the_same_stage():
     assert any("check-again" in e and "result" in e for e in errs), errs
 
 
+def test_a_reference_error_does_not_hide_a_leak():
+    def m(d):
+        node(d, "predict", "predict-60")["expect"][0]["metric"] = "nope"            # reference error
+        node(d, "calculate", "calc-60")["line"]["reveal"].append({"item": "cos60", "on": "enter"})
+    errs = errors_for(m)
+    assert any("unknown metric" in e for e in errs) and any("shown before earned" in e for e in errs)
+
+
 def test_scripted_line_says_a_forbidden_phrase():
     def m(d):
         node(d, "calculate", "calc-60")["line"]["say"]["en"] = "At 60°, is it half? What fraction comes out?"

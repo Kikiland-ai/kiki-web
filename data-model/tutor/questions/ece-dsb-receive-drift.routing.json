@@ -1,0 +1,40 @@
+{
+ "questionId": "ece-dsb-receive-drift",
+ "replies": [
+  {"stage": "spectrum", "node": "p-spectrum", "text": "Two lines, one at 99 kHz and one at 101 kHz, so it occupies 2 kHz. Nothing sits at 100 kHz.", "lang": "en", "label": "two-sidebands", "note": "Both sideband frequencies, no carrier line and the 2 kHz bandwidth: the full ok answer."},
+  {"stage": "spectrum", "node": "p-spectrum", "text": "99 kHz au 101 kHz re duita sideband, bandwidth 2 kHz.", "lang": "mixed", "label": "two-sidebands", "note": "Romanised Odia ('au' = and, 're' = at) with English terms; same content as the ok answer."},
+  {"stage": "spectrum", "node": "p-spectrum", "text": "It has 99 and 101 kHz, and the bandwidth is 1 kHz because the message is 1 kHz.", "lang": "en", "label": "bw-equals-fm", "note": "Right lines, bandwidth taken as fm instead of 2fm."},
+  {"stage": "spectrum", "node": "p-spectrum", "text": "99, 100 ଓ 101 kHz ରେ ତିନୋଟି Line ଅଛି।", "lang": "or", "label": "carrier-line-in-dsb", "note": "Odia script: 'three lines at 99, 100 and 101 kHz' adds a carrier line, as in conventional AM."},
+  {"stage": "spectrum", "node": "p-spectrum", "text": "A big carrier spike at 100 kHz with the two sidebands either side of it.", "lang": "en", "label": "carrier-line-in-dsb", "note": "Describes the conventional AM spectrum for a DSB-SC product."},
+
+  {"stage": "envelope", "node": "p-envelope", "text": "It follows the peaks, so you get |m(t)|, a rectified cosine; the negative half flips up and the sign is lost.", "lang": "en", "label": "sign-lost", "note": "Names |m(t)| and the lost sign: the ok answer."},
+  {"stage": "envelope", "node": "p-envelope", "text": "Envelope detector diode re message 1 kHz tone pheri asiba, AM pari.", "lang": "mixed", "label": "M-AM-03", "note": "Romanised Odia: 'the 1 kHz tone comes back, like AM'. Treats DSB-SC like AM."},
+  {"stage": "envelope", "node": "p-envelope", "text": "The envelope is the message, so the detector recovers m(t) fine.", "lang": "en", "label": "M-AM-03", "note": "Assumes the DSB-SC envelope equals m(t); it is |m(t)|."},
+  {"stage": "envelope", "node": "p-envelope", "text": "Ki hela bujhi parili nahin, au thare kahibe?", "lang": "mixed", "label": "unclear", "note": "Romanised Odia: 'didn't understand what happened, can you say it again?'. A request to repeat, not an answer."},
+
+  {"stage": "envelope", "node": "p-carrier", "text": "A kam se kam 2 volt heba darkar, nahele mu 1 ru adhika heijiba.", "lang": "mixed", "label": "a-min-2", "note": "Romanised Odia: 'A must be at least 2 V, else mu goes above 1'. The ok answer with reason."},
+  {"stage": "envelope", "node": "p-carrier", "text": "A equal to 1 volt should do it, then mu is one.", "lang": "en", "label": "a-min-1", "note": "Ignores that the message peak is 2 V, so A = 1 V gives mu = 2."},
+  {"stage": "envelope", "node": "p-carrier", "text": "ଟିକିଏ Carrier ଯୋଡ଼ିଦେଲେ ହିଁ Envelope detector କାମ କରିବ।", "lang": "or", "label": "any-carrier-enough", "note": "Odia script: 'just adding a little carrier makes the envelope detector work'. Ignores overmodulation."},
+  {"stage": "envelope", "node": "p-carrier", "text": "Any carrier is fine, even 0.5 V; once a carrier is present the detector can lock onto it.", "lang": "en", "label": "any-carrier-enough", "note": "A 0.5 V carrier gives mu = 4; believes presence alone is enough."},
+  {"stage": "envelope", "node": "p-carrier", "text": "Mu is the ratio of something to something, I forgot which way round.", "lang": "en", "label": "unclear", "note": "No value of A given and no usable claim; hint ladder, not a branch."},
+
+  {"stage": "coherent", "node": "p-lpf", "text": "You get 1 kHz plus stuff near 200 kHz, so put the cutoff at 100 kHz, the carrier frequency.", "lang": "en", "label": "cutoff-between", "note": "Router discipline: 'cutoff at the carrier' sounds like a confusion, but 100 kHz lies between 1 kHz and 199 kHz, so an ideal filter works. Label the content, not the sound."},
+  {"stage": "coherent", "node": "p-lpf", "text": "Set it at 500 Hz so nothing high gets through.", "lang": "en", "label": "cutoff-too-low", "note": "A 500 Hz cutoff removes the 1 kHz message itself (like lab fault F-AM-LPF)."},
+  {"stage": "coherent", "node": "p-lpf", "text": "Exam re ei chapter ru kete marks asiba?", "lang": "mixed", "label": "off_topic", "note": "Romanised Odia: 'how many marks come from this chapter in the exam?'. Not about the filter."},
+
+  {"stage": "drift", "node": "p-freq", "text": "It's like the 1050 Hz and 950 Hz tones together, so the amplitude goes up and down.", "lang": "en", "label": "beat-two-tones", "note": "Router discipline: mentions 1050 Hz, which tempts offset-shifts-tone, but names both tones and the varying amplitude. That is the ok answer."},
+  {"stage": "drift", "node": "p-freq", "text": "Still a 1 kHz tone but its loudness keeps wobbling slowly.", "lang": "en", "label": "fades-vague", "note": "Right picture without the m(t)cos(2π·50t) form or the two frequencies."},
+  {"stage": "drift", "node": "p-freq", "text": "The output tone just moves up by 50 Hz to 1050 Hz.", "lang": "en", "label": "offset-shifts-tone", "note": "A single shifted tone is SSB behaviour; DSB gives two tones."},
+  {"stage": "drift", "node": "p-freq", "text": "50 Hz ta bahut chhota, output re kichhi pharak padiba nahin.", "lang": "mixed", "label": "M-AM-06", "note": "Romanised Odia: '50 Hz is very small, no difference in the output'. Treats a close carrier as good enough."},
+  {"stage": "drift", "node": "p-freq", "text": "That's only 0.05 percent error, and the lowpass filter cleans it up anyway, so you still get m(t).", "lang": "en", "label": "M-AM-06", "note": "Judges the offset against the carrier and thinks the filter removes it."},
+
+  {"stage": "drift", "node": "p-fade", "text": "The cosine is 50 Hz, but its magnitude repeats every 10 ms, so it fades 100 times a second.", "lang": "en", "label": "hundred-per-second", "note": "Router discipline: says '50 Hz', which tempts fifty-per-second, but the answer given is 100 per second. Label the final claim."},
+  {"stage": "drift", "node": "p-fade", "text": "Offset 50 Hz, tenu second re 50 thara zero heba.", "lang": "mixed", "label": "fifty-per-second", "note": "Romanised Odia: 'offset is 50 Hz, so it goes to zero 50 times a second'. Misses two zeros per cycle."},
+  {"stage": "drift", "node": "p-fade", "text": "It never fades, it is just a steady tone at a new pitch.", "lang": "en", "label": "offset-shifts-tone", "note": "Same single-shifted-tone belief at a second node."},
+  {"stage": "drift", "node": "p-fade", "text": "Can we take a short break? I'm really hungry.", "lang": "en", "label": "off_topic", "note": "Not about the question."},
+
+  {"stage": "explain", "node": "p-explain", "text": "The frequency mismatch moves the two sidebands to 950 and 1050 Hz, and those two tones beat, so the output fades every 10 ms. The local oscillator has to be locked to the carrier.", "lang": "en", "label": "mechanism", "note": "Mechanism (two sidebands move apart and beat) plus the consequence: the ok answer."},
+  {"stage": "explain", "node": "p-explain", "text": "Oscillator match hebar darkar, nahele output kharap hei jaye.", "lang": "mixed", "label": "vague-mismatch", "note": "Romanised Odia: 'the oscillator must match, otherwise the output goes bad'. True but gives no mechanism."},
+  {"stage": "explain", "node": "p-explain", "text": "Because of noise, I think?", "lang": "en", "label": "unclear", "note": "Noise is not part of this problem and the reply makes no claim about mismatch; send it up the hint ladder."}
+ ]
+}
