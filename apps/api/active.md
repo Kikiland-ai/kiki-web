@@ -8,7 +8,7 @@ and 16000-byte request bound, creation forwards Idempotency-Key, upstream error
 statuses are preserved safely, and responses are private/no-store. The engine
 and SQLite data remain in kiki-backend, not this web API.
 
-Validation: 274 API tests passed, 8 opt-in skips; Ruff passed; OpenAPI regenerated.
+Validation: 275 API tests passed after integrating main 17aa078, 8 opt-in skips; Ruff passed; OpenAPI regenerated.
 Local synthetic web relay → real sibling physical engine completed nine actions
 and returned 1000 Hz / 0.5 V peak. No Google/Firestore/provider calls. Exact next:
 paired PR review, correct upstream revision/configuration and signed-in hosted

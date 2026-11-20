@@ -1,6 +1,6 @@
 # Physical lab UI integration
 
-User intent: the reusable experiment pipeline belongs in kiki-backend, while the student-facing physical lab experience follows the existing kiki-web Lab mode. This branch starts from current main `08644eb` and preserves the software experiment and its screen-share workflow.
+User intent: the reusable experiment pipeline belongs in kiki-backend, while the student-facing physical lab experience follows the existing kiki-web Lab mode. This branch started from main `08644eb` and incorporates current main `17aa078` (landing PR #20 and Lab simplification PR #21) and preserves the software experiment and its screen-share workflow.
 
 ## Ownership and flow
 
@@ -35,12 +35,12 @@ Open `http://127.0.0.1:5202/tests/physical-lab/index.html`. This explicitly labe
 
 ## Verification and remaining acceptance
 
-- Full web unit suite: 317 passed; TypeScript, ESLint and connected production build passed.
+- Full web unit suite: 319 passed; TypeScript, ESLint and connected production build passed.
 - Ten renderer/picking/hint/CRO checks moved from the backend and pass in frontend CI.
-- Full web API suite: 274 passed, 8 opt-in skips; Ruff passed.
+- Full web API suite: 275 passed, 8 opt-in skips; Ruff passed.
 - Six React flow checks cover creation without theory clicks, guide names/hover labels, all nine recorded engine steps, exact event retry, pinned pack load and mismatch rejection. Three service checks cover auth/creation, conflicts and wrong session identity. Ten proxy cases cover auth, ownership, origin/body/path bounds, statuses and disabled configuration.
 - Live local HTTP acceptance through web relay + real backend completed all nine actions, ending `experiment_complete` with theory unassessed and recovered 1000 Hz / 0.5 V peak.
 - Native Chrome verified the frontend model, component hints, name-only guide, fullscreen, wrong-lead rejection, progression and a retry. Full nine-step native-browser acceptance and signed-in Firebase/hosted acceptance remain distinct from recorded unit/HTTP acceptance.
-- Local dependency installation hit disk pressure. Frontend checks reused matching installed dependencies plus the declared KaTeX package; API dependencies were installed from uv.lock. Later backend test reruns reproduced `SQLITE_IOERR_SHMSIZE`, including in unchanged stores and a bare WAL reopen probe. Do not represent those reruns as passes or change storage policy to hide the machine failure; verify the backend CI.
+- Local dependency installation hit disk pressure. Frontend checks reused matching installed dependencies plus the declared KaTeX package; API dependencies were installed from uv.lock. Later backend test reruns reproduced `SQLITE_IOERR_SHMSIZE`, including in unchanged stores and a bare WAL reopen probe. Those reruns remain recorded failures. After removing rebuildable dependency caches, the backend full local rerun passed all 222 tests (35 skips) and normal preparation smoke, without a storage-policy workaround. The combined frontend/main rerun also passes.
 
 Last completed: [frontend PR #22](https://github.com/Kikiland-ai/kiki-web/pull/22) published and backend PR #14 updated with the repository boundary. [Backend clean-runner acceptance passed](https://github.com/Kikiland-ai/kiki-backend/actions/runs/44823028370), including the full offline gate and physical pipeline/schema/asset smoke. Next: review the frontend companion and backend PR #14, configure the authenticated upstream, and perform signed-in hosted acceptance. No merge, deployment, IAM change or learner migration is included.
