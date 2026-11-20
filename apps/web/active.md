@@ -17,7 +17,7 @@ lead, progression and retry. Local synthetic acceptance is separate from a
 signed-in Firebase/hosted round trip. Disk pressure caused dependency install
 failure and later backend SQLITE_IOERR_SHMSIZE reruns; recorded in the handoff.
 
-Last completed: frontend integration and boundary split prepared for paired PRs.
+Last completed: published frontend PR #22 (https://github.com/Kikiland-ai/kiki-web/pull/22) and updated backend PR #14 with the repository split.
 Exact next: review companion PR and backend #14, confirm backend CI, configure
 KIKI_PHYSICAL_LABS_ENABLED and the existing trusted upstream, then signed-in
 acceptance. No deployment or learner-data changes. See
