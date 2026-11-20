@@ -2,6 +2,7 @@ import { LearningContinuation } from './LearningContinuation';
 import { useTutorAvailable } from '../tutor/available';
 import { ResumeLab } from '../labs/ResumeLab';
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { useSession } from '../../app/Session';
 import { COURSE } from '../../contracts/profile';
 import { demoPathAvailable, fieldName, selectedField, languageName } from '../../contracts/learning-preferences';
@@ -35,7 +36,7 @@ export function Home() {
       <aside className="home-aside" aria-label="Learning overview">
         <Card className="dimensions-card"><span className="eyebrow">FOUR WAYS TO GROW</span><h2>Your learning, clearly.</h2><p>Each area grows from its own evidence.</p>{checks.overview?.attempts.some(a => a.run.origin === 'preview_setup') && <p className="helper-note">Includes explicitly loaded preview prerequisite setup.</p>}<ul className="dimension-list">{[{ dot: 'concept', label: 'Concept understanding' }, { dot: 'words', label: 'Technical words' }, { dot: 'english', label: 'Academic English' }, { dot: 'lab', label: 'Practical application' }].map(d => <li key={d.dot}><i className={`${d.dot}-dot`} /><span>{d.label}</span><small>{d.dot === 'concept' ? conceptCoverage : 'Not assessed'}</small></li>)}</ul></Card>
         {enrolled && <ResumeLab />}
-        {materials.requests.length > 0 && <Card className="recent-material"><span className="eyebrow">RECENT UPLOADS</span>{materials.requests.slice(0,3).map(r => <div key={r.id}><strong>{r.sources.map(source => source.title).join(', ')}</strong><IntakeStatus status={r.status} /></div>)}<ActionLink to="/library" variant="text">View Library<Icon name="arrow_forward" /></ActionLink></Card>}
+        {materials.requests.length > 0 && <Card className="recent-material"><span className="eyebrow">RECENT UPLOADS</span>{materials.requests.slice(0,3).map(r => <div key={r.id}><strong>{r.status === 'text_saved' ? r.sources.map(source => source.title).join(', ') : <Link to={`/intake/${r.id}`}>{r.sources.map(source => source.title).join(', ')}</Link>}</strong><IntakeStatus status={r.status} /></div>)}<ActionLink to="/library" variant="text">View Library<Icon name="arrow_forward" /></ActionLink></Card>}
       </aside>
     </div>
   </div>;

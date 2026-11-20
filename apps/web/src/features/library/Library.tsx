@@ -3,7 +3,9 @@ import { useSession } from '../../app/Session';
 import { MATERIAL_LABELS } from '../../contracts/intake';
 import { COURSE } from '../../contracts/profile';
 import { useMaterials } from '../intake/Materials';
+import { Link } from 'react-router';
 import { ActionLink, Alert, Button, Card, Icon, LoadingNotice, PageTitle } from '../../ui/kit';
+import { IntakeStatus } from '../../ui/IntakeStatus';
 
 export function Library() {
   const { requests, loading, error, refresh, hasMore, loadingMore, loadMore, uploading, uploadError, cancelUpload } = useMaterials();
@@ -19,8 +21,9 @@ export function Library() {
     {loading && !uploads.length ? <LoadingNotice>Loading your uploads…</LoadingNotice> : !uploads.length && error ? null : !uploads.length ? <Card className="library-empty"><Icon name="folder_open" /><h2>A home for your first notes.</h2><p>Add your syllabus or something taught today. Your previous uploads will appear here.</p><ActionLink to={enrolled ? `/subjects/${COURSE.id}/material` : '/subjects'}>Add your first material<Icon name="arrow_forward" /></ActionLink></Card> : <>
       <div className="section-title"><h2>Previous uploads</h2><span className="helper-note">{uploads.length} document{uploads.length === 1 ? '' : 's'}{hasMore ? ' loaded' : ''}</span></div>
       <div className="library-grid">{uploads.map(({ source, request }) => <article className="card library-card upload-card" key={source.id} aria-label={`Uploaded material: ${source.title}`}>
-        <div className="subject-top"><span className="upload-file-icon"><Icon name={source.mime === 'application/pdf' ? 'picture_as_pdf' : source.mime.startsWith('image/') ? 'image' : 'description'} /></span><span className="status-pill"><Icon name="check" />Uploaded</span></div>
-        <h3>{source.title}</h3><span className="eyebrow">{MATERIAL_LABELS[request.kind].toUpperCase()}</span><p>{request.topic} · Analog Communication</p>
+        <div className="subject-top"><span className="upload-file-icon"><Icon name={source.mime === 'application/pdf' ? 'picture_as_pdf' : source.mime.startsWith('image/') ? 'image' : 'description'} /></span><IntakeStatus status={request.status} /></div>
+        {/* Requests past plain saving have a status page (outline review, lessons ready) */}
+        <h3>{request.status === 'text_saved' ? source.title : <Link to={`/intake/${request.id}`} className="card-link">{source.title}</Link>}</h3><span className="eyebrow">{MATERIAL_LABELS[request.kind].toUpperCase()}</span><p>{request.topic} · Analog Communication</p>
         <div className="upload-card-footer"><span>{source.mime === 'application/pdf' ? 'PDF' : source.mime.includes('presentation') ? 'PPTX' : source.mime.startsWith('image/') ? 'Image' : 'Document'}</span><span>Uploaded <time dateTime={source.createdAt}>{new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(source.createdAt))}</time></span></div>
       </article>)}</div>
     </>}

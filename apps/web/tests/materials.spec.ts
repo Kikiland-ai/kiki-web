@@ -12,8 +12,10 @@ function pdf(text: string) {
 }
 async function setup(page: Page) {
   await page.goto('/auth'); await page.getByRole('button', { name: 'Open sample student' }).click();
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('link', { name: 'Add your subject', exact: true }).click();
   await page.getByLabel('Semester', { exact: true }).selectOption('5');
   await page.getByRole('button', { name: 'Add subject', exact: true }).click();

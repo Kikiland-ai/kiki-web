@@ -7,3 +7,4 @@ const RETURN = 'kiki:return:v1';
 export function rememberReturn(value: string) { sessionStorage.setItem(RETURN, safeReturn(value)); }
 export function destination() { return safeReturn(sessionStorage.getItem(RETURN)); }
 export function clearReturn() { sessionStorage.removeItem(RETURN); }
+export function hasReturn() { try { return sessionStorage.getItem(RETURN) !== null; } catch { return false; } }

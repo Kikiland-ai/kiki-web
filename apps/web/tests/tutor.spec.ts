@@ -2,8 +2,10 @@ import { test, expect, type Page } from '@playwright/test';
 
 async function sampleStudent(page: Page) {
   await page.goto('/auth'); await page.getByRole('button', { name: 'Open sample student' }).click();
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
+  // A new student on the prepared path opens the chapter map first
+  await expect(page).toHaveURL(/\/chapters\/LP-ANALOG-MODULATION$/);
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
   await page.getByRole('link', { name: 'Add your subject', exact: true }).click(); await page.getByLabel('Semester', { exact: true }).selectOption('5');
   await page.getByRole('button', { name: 'Add subject', exact: true }).click();
 }
@@ -62,8 +64,7 @@ test('a tutor link opened signed out survives sign-in and onboarding', async ({ 
   await page.goto(link);
   await expect(page).toHaveURL(/\/auth\?returnTo=%2Fconcepts%2FC-AM-03%2Ftalk%2Fece-am-envelope-design$/);
   await page.getByRole('button', { name: 'Open sample student' }).click();
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
   await expect(page).toHaveURL(new RegExp(`${link}$`));
   await expect(page.getByRole('button', { name: 'Start talking it through' })).toBeVisible();
 });

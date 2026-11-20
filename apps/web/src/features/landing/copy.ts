@@ -6,7 +6,8 @@
  */
 export type PageLang = 'en' | 'or'
 
-export const STUDENT_TRY_PATH = '/auth?returnTo=/concepts/C-AM-08'
+// Opens concept 8 (the narrated lesson) framed as a mid-chapter sample
+export const STUDENT_TRY_PATH = '/auth?returnTo=/concepts/C-AM-08?from=landing'
 
 /** Shown in their own scripts under the hero: who KiKi is for. Only Odia is built today; the copy says so. */
 export const SCRIPTS = [

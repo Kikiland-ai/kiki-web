@@ -18,6 +18,129 @@ Verification covered all nine physical step transitions, two consecutive
 Simulink steps, Replay, Mute, and stopping playback. The combined preview
 decoded hosted WAVs for both guides. Frontend tests, build, and lint passed.
 
+---
+
+## Approved extension logo — 21 November 2026
+
+User approved the capital K + green dot preview and authorized inclusion in PR #25.
+Added editable vector and transparent 16/32/48/128 PNGs in apps/web/assets/lab-extension.
+The web packager includes the approved assets, sets manifest.icons and
+action.default_icon, and preserves upstream permissions. Release is now 0.1.5;
+config announcement, runtime manifest and latest.json versions match. Updated the
+reviewable backend patch's canonical version bump; no backend PR was published.
+Folder preparation now accepts/writes the four icon files and can upgrade an
+existing iconless folder in place. The running 5174 preview download is synced.
+
+Checks: 18 focused status/setup tests, lint, typecheck and build passed; three
+Chrome cases passed against this updated branch. Added actual ZIP PNG header/size,
+manifest toolbar/manager mapping and iconless-folder update checks. Native Chrome
+installation remains manual. Last completed: approved logo packaged and verified.
+Approved for publication to PR #25. Exact next after push: review GitHub checks.
+No merge or deployment.
+
+---
+
+## Extension status PR #25 published — 21 November 2026
+
+Published [web PR #25](https://github.com/Kikiland-ai/kiki-web/pull/25) from
+codex/lab-extension-status into main as akshitanitr. Implementation commit 3cea022
+is based on main 90f7d59; physical-lab PR #22 remains separate. Fresh isolated
+checks passed: 331 web tests, lint/typecheck/build, three Chrome cases and canonical
+extension packaging. The web PR includes a reviewable companion backend patch;
+no backend branch or PR was published. GitHub CI status is available on the PR.
+Last completed: commit, push and PR creation requested by the user.
+Exact next: review PR #25 and GitHub checks; native folder-permission, actual
+installed-extension and hosted acceptance remain manual. No merge/deployment.
+
+---
+
+## Extension status PR preparation — 21 November 2026
+
+User authorized a web PR. Isolated codex/lab-extension-status from current
+origin/main 90f7d59, preserving narration PR #23 and excluding physical-lab PR #22.
+Original physical-lab checkout, uncommitted changes and running 5174 preview remain
+intact. Reconciled package scripts to retain narration:timings alongside the new
+extension packager. The reviewable backend source patch is included in
+[docs/patches/lab-extension-status-backend.patch](../../docs/patches/lab-extension-status-backend.patch);
+no backend PR or deployment is part of this request.
+
+Fresh isolated-branch checks: 331 web tests, typecheck, lint and production build
+passed. Three Chrome cases against this branch on port 5198 passed; canonical
+0.1.4 release packaging passed. The 5198 test server stopped after tests. Native
+folder permission/installed-extension/Google/hosted acceptance remain manual.
+Last completed: isolated publication diff and fresh validation.
+Publication followed in PR #25; the newer entry above is current. No merge or deployment.
+
+---
+
+## Assisted extension setup and attention icon — 21 November 2026
+
+Updated the running local preview at http://127.0.0.1:5174/.
+Missing/outdated status now uses a puzzle piece, red/yellow exclamation badge,
+Install/Update text on desktop and a brief three-cycle pulse (reduced motion
+respected). Mobile retains the icon/badge and accessible status label.
+
+Prepare extension folder uses Chrome's user-approved directory picker, downloads
+and extracts the canonical release into an empty or recognized existing Kiki
+folder. Refuses unrelated files/extensions, writes manifest last and uses a
+small setup marker for retry after partial writes. Updates reuse the selected
+folder. ZIP fallback, Copy extensions address, and Reload Kiki are available.
+No automatic Developer-mode toggle, browser extension installation/reload, or
+unattended writes. Web Store distribution remains the path to Chrome automatic
+updates. No store listing or publication was created.
+
+Checks: 16 focused status/setup tests; typecheck, ESLint and production build
+passed. Three Chrome tests passed at mobile/desktop widths, covering setup via
+folder-picker double, actual release fetch, alert states and reduced motion.
+An earlier trace-enabled run hit ENOSPC; rerun without traces passed. Native
+folder permission/actual loaded extension/hosted acceptance remain manual.
+Last completed: assisted setup, attention styling, local verification.
+Exact next: refresh local preview and try Prepare extension folder; approve the
+folder selection, then use Chrome's Load unpacked/Reload controls. For production,
+choose/publish Chrome Web Store distribution separately. Nothing committed or deployed.
+
+---
+
+## Latest main and local extension preview — 21 November 2026
+
+Fetched origin/main at 17aa078; this branch already contains it (ff-only merge
+reported Already up to date). Preserved existing physical-lab and uncommitted
+extension changes. Vite sample preview is running at http://127.0.0.1:5174/ from
+this checkout. Start command: npm run dev -- --port 5174, using prepared Node 24.
+
+Fresh checks: focused extension suite 10 passed, typecheck passed, Chrome browser
+suite 3 passed against running 5174. Browser scenarios cover green/yellow protocol
+doubles at mobile/desktop widths and a real missing-extension result in an isolated
+Chrome profile; metadata and ZIP downloads return correctly. Screenshot inspected:
+apps/web/test-results/extension-status-local-missing.png (ignored).
+Browser-control host was unavailable, so the user's own browser tab was not opened.
+No real Google/installed-extension acceptance, commit, push or deployment.
+Last completed: latest-main ancestry check and running local preview verification.
+Exact next: user opens 5174, chooses Open sample student for the labelled preview,
+or arranges connected sign-in and actual extension acceptance separately.
+
+---
+
+## Lab extension header status — 21 November 2026
+
+Implemented locally in this checkout: green/current, red/not detected and
+yellow/update or verification needed icon immediately left of Lab mode, replacing
+the language tag. Periodic/focus/online checks, bounded failures, accessible setup
+panel and canonical 0.1.4 release ZIP/metadata included. No duplicate-install flow;
+unpacked package updates replace files in the original extension folder.
+A minimal companion backend reader_status probe leaves lab control untouched.
+
+Checks: full web suite 328 passed before the final legacy timing regression;
+final focused status suite 10 passed; typecheck/lint/build passed; backend lifecycle
+19 passed; Chrome sample checks at 390/1280px 2 passed and screenshots inspected.
+No Google/Firestore/actual installed extension or hosted acceptance performed.
+Last completed: implementation, packaging and local verification.
+Exact next: review web + companion extension changes, then publish when requested
+and verify real signed-in hosted installation/update. Nothing committed, pushed
+or deployed. [Behavior, files and release instructions](../../docs/plans/lab-extension-status.md).
+
+---
+
 ## End-to-end suite green after the narration merges - 21 November 2026
 
 Main `90f7d59` (PRs #18-#21, #23) passed CI, but CI runs no Playwright. Sample-mode e2e (all specs

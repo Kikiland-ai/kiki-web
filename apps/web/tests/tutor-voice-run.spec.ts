@@ -64,8 +64,7 @@ test('a full envelope-design session by voice', async ({ baseURL }) => {
 
   await page.goto(`${baseURL}/concepts/C-AM-03/talk/ece-am-envelope-design`);
   await page.getByRole('button', { name: 'Open sample student' }).click();
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Save and continue' }).click();
-  await page.getByRole('button', { name: 'Go to my home' }).click();
+  await page.getByRole('button', { name: 'Start learning' }).click();
   await page.getByLabel('English').check();
   await page.getByRole('button', { name: 'Start talking it through' }).click();
   await expect(page.getByText(/how much power sits in the carrier/).first()).toBeVisible();

@@ -355,7 +355,8 @@ button.termOn { background: var(--english-tint); }
   .inner { width: calc(100% - 32px); }
   .header { padding-inline: 16px; }
   .nav { gap: 10px; }
-  .nav .quietLink { display: none; }
+  /* Students arrive on phones: keep their way in visible */
+  .nav .quietLink { font-size: 13px; line-height: 1.2; max-width: 9ch; text-align: right; }
   .hero { padding-block: 36px 28px; }
   .bandInner { padding-block: 56px; }
   .heroMedia { padding: 10px; box-shadow: 4px 4px 0 var(--ink); }
