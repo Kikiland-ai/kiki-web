@@ -345,3 +345,8 @@
   .support { position:static; grid-column:2; grid-row:1/5; width:auto; max-width:none; margin:0; }
   .header > p[role='status'],.header > div[role='alert'] { grid-column:1/-1; }
 }
+
+/* tutor entry: own wrapping row so long question titles never widen the page */
+.talk { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px; min-width:0; }
+.talk > a { white-space:normal; max-width:100%; text-align:left; }
+.talkLabel { flex-basis:100%; font:var(--learning-text-label); color:var(--learning-pencil); }

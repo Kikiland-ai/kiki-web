@@ -14,6 +14,7 @@ import { createNarrationCache, type NarrationCache } from './narrationCache'
 import { scenesFor } from './scenes'
 import { createPlaceSaver } from './placeSaver'
 import { useDialLevel } from './useDialLevel'
+import { TUTOR_QUESTIONS } from '../../contracts/tutor'
 import styles from './LessonScreen.module.css'
 
 type Load =
@@ -343,6 +344,17 @@ export function LessonScreen() {
               </LinkButton>
             )}
           </div>
+          {services.tutor && (TUTOR_QUESTIONS[conceptId] ?? []).length > 0 && (
+            <nav className={styles.talk} aria-label="Talk it through with KiKi">
+              <span className={styles.talkLabel}>TALK IT THROUGH WITH KIKI</span>
+              {TUTOR_QUESTIONS[conceptId].map(q => (
+                <LinkButton key={q.id} variant="secondary" to={`/concepts/${conceptId}/talk/${q.id}`}
+                  aria-label={`Talk it through with KiKi: ${q.title} (${q.difficulty})`}>
+                  {q.title} · {q.difficulty}
+                </LinkButton>
+              ))}
+            </nav>
+          )}
         </div>
       </div>
 

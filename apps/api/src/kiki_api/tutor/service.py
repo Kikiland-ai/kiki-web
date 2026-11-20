@@ -78,7 +78,7 @@ class TutorService:
         rep = analyse(q, self.store.events(uid, sid))
         for row in rep["revise"] + rep["strengthen"]:
             row["title"] = self.titles.get(row["concept"], row["concept"])
-        rep["board"] = [q.board[i].model_dump(by_alias=True, exclude_none=True) for i in rep["sheet"]]
+        rep["board"] = [board_item(q, i) for i in rep["sheet"]]
         rep["summary"] = None
         if state.status == "completed":
             if self.summarizer:
@@ -117,7 +117,7 @@ class TutorService:
             },
             "chips": [{"label": _lt(c.label), "route": c.route} for c in node.chips]
             if state.status == "active" else [],
-            "board": [q.board[i].model_dump(by_alias=True, exclude_none=True) for i in state.board],
+            "board": [board_item(q, i) for i in state.board],
             "revealed": revealed,
             "route": route,
             "done": state.status == "completed",
@@ -232,3 +232,15 @@ class TutorService:
 
 def _lt(text) -> dict:
     return text.model_dump(by_alias=True, exclude_none=True)
+
+
+def board_item(q: TutorQuestion, item_id: str) -> dict:
+    """A revealed board item for the client; term items carry their term text and meaning."""
+    item = q.board[item_id].model_dump(by_alias=True, exclude_none=True)
+    if item["kind"] == "term":
+        term = next((t for t in q.terms if t.id == item["termId"]), None)
+        if term:
+            item["term"] = term.term
+            if term.meaning:
+                item["meaning"] = _lt(term.meaning)
+    return item
