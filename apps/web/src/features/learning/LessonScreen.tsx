@@ -1,5 +1,5 @@
 import { StateScreen } from '../../ui/kit'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptLesson } from '../../contracts/api'
 import { ServiceError, readableError } from '../../services/types'
@@ -10,8 +10,11 @@ import { checkManifestForLesson, verifyNarrationTextBindings, findRendition, nar
 import { lacksOdia, pick, placardMode, shouldShowKeyIdea } from './language'
 import { PlacardText } from './PlacardText'
 import { NarrationPlayer } from './NarrationPlayer'
+import { activeCueIndex, cueTrackFor, readingSplit } from './narrationCues'
 import { createNarrationCache, type NarrationCache } from './narrationCache'
 import { scenesFor } from './scenes'
+import { PhaseRecoveryScene } from './PhaseRecoveryScene'
+import { useMediaQuery } from './useMediaQuery'
 import { createPlaceSaver } from './placeSaver'
 import { useDialLevel } from './useDialLevel'
 import styles from './LessonScreen.module.css'
@@ -54,6 +57,26 @@ export function LessonScreen() {
   const [speed, setSpeed] = useState<AudioSpeed>(1)
   const [narrationLang, setNarrationLang] = useState<NarrationLang | null>(null)
   const player = useRef<AudioPlayerHandle>(null)
+  // The hand-timed cue in force for the open clip; tied to its rendition so a new clip starts clean
+  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  // Narrated layout: when the stage appears it rises to the top of the screen; as the narration
+  // moves on, the sentence being read is kept in view just below it (only if it was out of view)
+  const bringStageUp = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return
+    requestAnimationFrame(() => el.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' }))
+  }, [reduceMotion])
+  const [cueAt, setCueAt] = useState<{ renditionId: string; index: number | null } | null>(null)
+  // The clip's clock, for the reading edge that moves through the sentence being spoken
+  const [voiceAt, setVoiceAt] = useState<{ renditionId: string; t: number } | null>(null)
+  useEffect(() => {
+    const mark = document.querySelector('[data-testid="reading-now"]')
+    const stage = document.querySelector('[data-narration-stage]')
+    if (!mark || !stage) return
+    const below = stage.getBoundingClientRect().bottom
+    const r = mark.getBoundingClientRect()
+    if (r.top >= below && r.bottom <= window.innerHeight) return
+    window.scrollBy({ top: r.top - below - 16, behavior: reduceMotion ? 'auto' : 'smooth' })
+  }, [cueAt, reduceMotion])
   const [media, setMedia] = useState<Media>({ status: 'none' })
   const [mediaAttempt, setMediaAttempt] = useState(0)
   const mediaLesson = load.status === 'ready' ? load.lesson : null
@@ -155,6 +178,23 @@ export function LessonScreen() {
   const audioLang: NarrationLang = mode.alsoEnglish && narrationLang ? narrationLang : mode.primary
   const manifest = media.status === 'ready' ? media.manifest : null
   const clip = findRendition(manifest, placard.id, audioLang)
+  const cueTrack = listening ? cueTrackFor(clip) : null
+  const cue = cueTrack && cueAt?.renditionId === cueTrack.renditionId && cueAt.index !== null ? cueTrack.cues[cueAt.index] : null
+  // The narrated layout: the step's scene moves to the top with a slim player, and the text follows
+  const cuedScene = cueTrack && media.status === 'ready' ? manifest?.artifacts.find((a) => a.placardIds.includes(placard.id) && a.renderer === 'coherent-phase-recovery/v1') : undefined
+  const narrated = cuedScene?.renderer === 'coherent-phase-recovery/v1' ? cuedScene : undefined
+  // The sentence being spoken, split at the word the voice has reached: spoken words in a stronger
+  // mark, the rest of the sentence lighter. Even pace within each hand-placed sentence, not word alignment.
+  const readingNow = (lang: NarrationLang, text: string) => {
+    if (!narrated || !cueTrack || !clip || cueAt?.renditionId !== cueTrack.renditionId || cueAt.index === null || lang !== audioLang) return []
+    const t = voiceAt?.renditionId === cueTrack.renditionId ? voiceAt.t : cueTrack.cues[cueAt.index].at
+    const split = readingSplit(cueTrack, cueAt.index, t, clip.durationSeconds, text)
+    if (!split) return []
+    return [
+      { start: split.start, end: split.readTo, className: styles.readingDone, read: true },
+      { start: split.readTo, end: split.end, className: styles.readingNow },
+    ]
+  }
   const clipLanguages = mode.alsoEnglish
     ? (['or', 'en'] as const)
         .filter((l) => findRendition(manifest, placard.id, l))
@@ -265,7 +305,8 @@ export function LessonScreen() {
                 Listen
               </Button>
             )}
-            {clip && lesson.mediaExperience?.audioAvailable !== false && listening && media.status === 'ready' && (
+            {clip && lesson.mediaExperience?.audioAvailable !== false && listening && media.status === 'ready' && (() => {
+              const bar = (
               <NarrationPlayer
                 key={`audio-${clip.renditionId}`}
                 ref={player}
@@ -274,6 +315,13 @@ export function LessonScreen() {
                 title={'scope' in clip ? lesson.title.en : title.text}
                 label={narrationLabel(clip, media.manifest.release)}
                 detail={'scope' in clip ? "Plays the whole concept across all four steps. Navigate manually; no placard offsets or sentence timing are available." : "Plays this whole step. Words are not highlighted: the clip has no sentence timing yet."}
+                compact={Boolean(narrated)}
+                onTimeChange={cueTrack ? (t) => {
+                  const id = cueTrack.renditionId, index = activeCueIndex(cueTrack, t)
+                  // Same sentence: keep the same state so the follow-scroll runs only when the sentence changes
+                  setCueAt((prev) => (prev?.renditionId === id && prev.index === index ? prev : { renditionId: id, index }))
+                  if (narrated) setVoiceAt({ renditionId: id, t })
+                } : undefined}
                 speed={speed}
                 onSpeedChange={setSpeed}
                 languages={clipLanguages}
@@ -282,7 +330,16 @@ export function LessonScreen() {
                 onClose={() => setListening(false)}
                 autoPlay
               />
-            )}
+              )
+              return narrated ? (
+                <>
+                  <div ref={bringStageUp} className={styles.stageSlot}>
+                  <PhaseRecoveryScene key={narrated.artifactId} scene={narrated} cue={cue} layout="stage" player={bar} />
+                  </div>
+                  <p className={styles.narratedNote}>The scene and the text follow the narration. Sentence starts were placed by hand; within a sentence the highlight moves at an even pace, not word by word.</p>
+                </>
+              ) : bar
+            })()}
             {manifest && !clip && <p className="helper-note">No {audioLang === 'en' ? 'English' : 'Odia'} narration is available for this step. The text is complete.</p>}
             {clip && lesson.mediaExperience?.audioAvailable === false && <p className="helper-note">Narration is prepared, but private audio delivery is unavailable. You can still read and explore this lesson.</p>}
             <PlacardText
@@ -293,15 +350,16 @@ export function LessonScreen() {
               showMeaning={mode.showMeaning}
               onTermOpen={openTerm}
               className={styles.body}
+              highlights={readingNow(mode.primary, placard.body[mode.primary])}
             />
-            {mode.alsoEnglish && <PlacardText text={placard.body.en} lang="en" terms={[]} className={styles.english} />}
+            {mode.alsoEnglish && <PlacardText text={placard.body.en} lang="en" terms={[]} className={styles.english} highlights={readingNow('en', placard.body.en)} />}
             {media.status === 'error' && (
               <p className="helper-note">
                 Audio and interactives for this lesson are unavailable: {media.message} The text is complete.{' '}
                 <Button variant="text" onClick={() => setMediaAttempt((n) => n + 1)}>Retry lesson media</Button>
               </p>
             )}
-            {scenesFor(lesson, manifest, placard, { terms: lesson.terms, selectedTermId, onTermOpen: openTerm }).map((slot) => (
+            {scenesFor(lesson, manifest, placard, { terms: lesson.terms, selectedTermId, onTermOpen: openTerm }).filter((slot) => slot.key !== narrated?.artifactId).map((slot) => (
               <Fragment key={slot.key}>{slot.node}</Fragment>
             ))}
             {placard.sources.length > 0 && (
