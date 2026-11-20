@@ -1,5 +1,4 @@
 import { StateScreen } from '../../ui/kit'
-import { useTutorAvailable } from '../tutor/available'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import type { ChapterProgress, ChapterView, ConceptLesson } from '../../contracts/api'
@@ -15,7 +14,7 @@ import { createNarrationCache, type NarrationCache } from './narrationCache'
 import { scenesFor } from './scenes'
 import { createPlaceSaver } from './placeSaver'
 import { useDialLevel } from './useDialLevel'
-import { TUTOR_QUESTIONS } from '../../contracts/tutor'
+import { TalkItThroughRow } from '../tutor/TalkItThroughRow'
 import styles from './LessonScreen.module.css'
 
 type Load =
@@ -40,7 +39,6 @@ type Media =
 export function LessonScreen() {
   const { conceptId = '' } = useParams()
   const { services, profile } = useSession()
-  const tutorOn = useTutorAvailable()
   const uid = profile?.id
   const placeSaver = useRef<ReturnType<typeof createPlaceSaver> | null>(null)
   const [saveError, setSaveError] = useState(''), [savingPosition, setSavingPosition] = useState(false), [positionSaved, setPositionSaved] = useState(false)
@@ -346,17 +344,7 @@ export function LessonScreen() {
               </LinkButton>
             )}
           </div>
-          {tutorOn && (TUTOR_QUESTIONS[conceptId] ?? []).length > 0 && (
-            <nav className={styles.talk} aria-label="Talk it through with KiKi">
-              <span className={styles.talkLabel}>TALK IT THROUGH WITH KIKI</span>
-              {TUTOR_QUESTIONS[conceptId].map(q => (
-                <LinkButton key={q.id} variant="secondary" to={`/concepts/${conceptId}/talk/${q.id}`}
-                  aria-label={`Talk it through with KiKi: ${q.title} (${q.difficulty})`}>
-                  {q.title} · {q.difficulty}
-                </LinkButton>
-              ))}
-            </nav>
-          )}
+          <TalkItThroughRow conceptId={conceptId} />
         </div>
       </div>
 
