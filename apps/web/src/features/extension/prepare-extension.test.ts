@@ -28,7 +28,7 @@ it('extracts the actual release into the chosen folder and writes manifest last'
   expect(folder.getFileHandle.mock.calls.at(-1)?.[0]).toBe('manifest.json');
   expect(JSON.parse(strFromU8(files.get('manifest.json')!)).version).toBe('0.1.6');
 });
-it('updates in the same selected Kiki folder and leaves Finder metadata alone', async () => {
+it('updates in the same selected KiKi folder and leaves Finder metadata alone', async () => {
   const { files, picker } = setup({ ...unzipSync(release), '.DS_Store': strToU8('finder') });
   await prepareExtensionFolder(); expect(picker).toHaveBeenCalledTimes(1);
   expect(strFromU8(files.get('.DS_Store')!)).toBe('finder'); expect(files.has('.kiki-extension-setup.json')).toBe(false);
@@ -74,7 +74,7 @@ it('ships the approved logo at Chrome toolbar and management sizes', () => {
   }
 });
 
-it('adds icons when updating an existing iconless Kiki folder', async () => {
+it('adds icons when updating an existing iconless KiKi folder', async () => {
   const previous = unzipSync(release);
   for (const name of Object.keys(previous)) if (name.startsWith('icon-')) delete previous[name];
   const manifest = JSON.parse(strFromU8(previous['manifest.json']));

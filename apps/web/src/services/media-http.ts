@@ -30,7 +30,7 @@ export function createMediaApi(baseUrl: string, auth: AuthService, fetcher: type
   return {
     getManifest: async (conceptId, signal) => {
       const result = MediaManifestEnvelope.safeParse(await (await get(`/concepts/${id(conceptId)}/media`, signal, 15)).json());
-      if (!result.success) throw new ServiceError('The lesson media is not supported by this version of Kiki.');
+      if (!result.success) throw new ServiceError('The lesson media is not supported by this version of KiKi.');
       if (result.data.manifest.conceptId !== conceptId) throw new ServiceError('The lesson media belongs to another concept.');
       return result.data.manifest;
     },

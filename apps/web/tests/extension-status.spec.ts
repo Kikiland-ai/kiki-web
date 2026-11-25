@@ -65,7 +65,7 @@ test('isolated browser without extension shows install action and serves the rel
   await expect(page.getByText(/^Files ready\./)).toBeVisible();
   expect(await page.evaluate(() => (window as Window & { preparedNames?: string[] }).preparedNames)).toContain('manifest.json');
   await expect(page.getByRole('button', { name: 'Copy extensions address' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Reload Kiki' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Reload KiKi' })).toBeVisible();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   expect(await page.locator('.extension-status-button').evaluate(element => getComputedStyle(element).animationName)).toBe('none');
   await page.screenshot({ path: 'test-results/extension-status-local-missing.png' });

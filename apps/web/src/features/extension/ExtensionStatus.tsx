@@ -13,7 +13,7 @@ export function ExtensionStatus() {
   async function prepare() {
     if (preparing) return;
     setPreparing(true); setSetupMessage('');
-    try { await prepareExtensionFolder(); setSetupMessage('Files ready. Open chrome://extensions and load this folder, or press Reload on your existing Kiki extension.'); }
+    try { await prepareExtensionFolder(); setSetupMessage('Files ready. Open chrome://extensions and load this folder, or press Reload on your existing KiKi extension.'); }
     catch (error) { if (!(error instanceof DOMException && error.name === 'AbortError')) setSetupMessage(error instanceof Error ? error.message : 'Could not prepare the folder. Retry the same folder or use the ZIP download.'); }
     finally { setPreparing(false); }
   }
@@ -36,14 +36,14 @@ export function ExtensionStatus() {
     <span className="sr-only" role="status">{labels[state.kind]}</span>
     {open && <section id={id} className="extension-status-panel" aria-label="Lab extension setup">
       <strong>{labels[state.kind]}</strong>
-      <p>{state.installed ? `Installed: ${state.installed}.` : 'Kiki checks this browser profile. Use desktop Chrome and allow the extension on Kiki.'} {state.latest && `Latest: ${state.latest}.`}</p>
+      <p>{state.installed ? `Installed: ${state.installed}.` : 'KiKi checks this browser profile. Use desktop Chrome and allow the extension on KiKi.'} {state.latest && `Latest: ${state.latest}.`}</p>
       {setupMessage && <p role="status">{setupMessage}</p>}
       {state.kind === 'current' ? <p>Your Lab extension is ready. No installation needed.</p> : <>
-        <p>{canPrepareExtension() ? 'Let Kiki download and extract the files into a folder you choose. For updates, choose your existing Kiki extension folder.' : 'Download the ZIP and extract it into a permanent folder. For updates, replace the files in your existing Kiki extension folder.'} Chrome asks you to approve loading the extension.</p>
+        <p>{canPrepareExtension() ? 'Let KiKi download and extract the files into a folder you choose. For updates, choose your existing KiKi extension folder.' : 'Download the ZIP and extract it into a permanent folder. For updates, replace the files in your existing KiKi extension folder.'} Chrome asks you to approve loading the extension.</p>
         {canPrepareExtension() && <button type="button" className="button button-primary" disabled={preparing} onClick={() => { void prepare(); }}>{preparing ? 'Preparing files…' : 'Prepare extension folder'}<Icon name="folder_open" /></button>}
         <a className="button button-secondary" href="/lab-extension/kiki-lab-extension.zip" download>Download latest extension<Icon name="download" /></a>
-        <ol><li>{canPrepareExtension() ? 'Prepare an empty permanent folder above, or download and extract the ZIP yourself.' : 'Download and extract the ZIP into a permanent folder.'}</li><li>Open <code>chrome://extensions</code> and turn on Developer mode.</li><li>First install: choose <strong>Load unpacked</strong> and select that folder. Updating: prepare your existing extension folder above, then press <strong>Reload</strong> on its extension card. Do not load a second copy.</li><li>Return here and press <strong>Reload Kiki</strong> after installing, updating or enabling the extension.</li></ol>
-        <div className="extension-setup-actions"><button type="button" className="button button-secondary" onClick={() => { void copyAddress(); }}>Copy extensions address</button><button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload Kiki<Icon name="refresh" /></button></div>
+        <ol><li>{canPrepareExtension() ? 'Prepare an empty permanent folder above, or download and extract the ZIP yourself.' : 'Download and extract the ZIP into a permanent folder.'}</li><li>Open <code>chrome://extensions</code> and turn on Developer mode.</li><li>First install: choose <strong>Load unpacked</strong> and select that folder. Updating: prepare your existing extension folder above, then press <strong>Reload</strong> on its extension card. Do not load a second copy.</li><li>Return here and press <strong>Reload KiKi</strong> after installing, updating or enabling the extension.</li></ol>
+        <div className="extension-setup-actions"><button type="button" className="button button-secondary" onClick={() => { void copyAddress(); }}>Copy extensions address</button><button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload KiKi<Icon name="refresh" /></button></div>
       </>}
       <button type="button" className="button button-secondary" onClick={() => { void watcher.current?.check(); }}>Check again<Icon name="refresh" /></button>
     </section>}

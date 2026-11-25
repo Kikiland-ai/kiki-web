@@ -20,12 +20,12 @@ export async function prepareExtensionFolder(): Promise<void> {
   for await (const [name] of folder.entries()) names.push(name);
   const contentNames = names.filter(name => name !== '.DS_Store' && name !== markerName);
   if (contentNames.length || names.includes(markerName)) {
-    if (contentNames.some(name => !expectedFiles.includes(name))) throw new Error('Choose an empty folder or your existing Kiki extension folder.');
+    if (contentNames.some(name => !expectedFiles.includes(name))) throw new Error('Choose an empty folder or your existing KiKi extension folder.');
     const identityName = contentNames.includes('manifest.json') ? 'manifest.json' : names.includes(markerName) ? markerName : null;
-    if (!identityName) throw new Error('Choose an empty folder or your existing Kiki extension folder.');
+    if (!identityName) throw new Error('Choose an empty folder or your existing KiKi extension folder.');
     const existing = JSON.parse(await (await (await folder.getFileHandle(identityName)).getFile()).text());
     const recognized = identityName === markerName ? existing.source === 'Kiki windows' && existing.schema === 1 : existing.name === 'Kiki windows' && existing.manifest_version === 3;
-    if (!recognized) throw new Error('This folder belongs to another extension. Choose an empty folder or the existing Kiki extension folder.');
+    if (!recognized) throw new Error('This folder belongs to another extension. Choose an empty folder or the existing KiKi extension folder.');
   }
   const response = await fetch('/lab-extension/kiki-lab-extension.zip', { cache: 'no-store', signal: AbortSignal.timeout(15000) });
   if (!response.ok) throw new Error('The extension download failed. Try again.');

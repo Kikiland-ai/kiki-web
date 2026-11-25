@@ -9,7 +9,7 @@ const fixture = JSON.parse(readFileSync(new URL('../../src/features/labs/__fixtu
 test('plays nine real recordings once per saved physical step and stops on completion', async ({ page }) => {
   await page.goto('/tests/physical-lab/index.html');
   await page.getByRole('button', { name: 'Start experiment', exact: true }).click();
-  const guide = page.getByRole('complementary', { name: 'Kiki experiment guide' });
+  const guide = page.getByRole('complementary', { name: 'KiKi experiment guide' });
   await expect(guide.getByRole('heading')).toHaveText('Connect Message output to Message input.');
   const view = await observeNarration(page);
   const response = page.waitForResponse(r => r.url().endsWith('/narration'));

@@ -164,7 +164,7 @@ test('later concepts can be previewed with their prerequisite explanation',async
 });
 
 // Arpan, 16 Oct: kit and lesson checks carried over from the original kit tests
-test('Kiki keeps its four colours on the map',async({page})=>{
+test('KiKi keeps its four colours on the map',async({page})=>{
   await setup(page);
   const fills=await page.evaluate(()=>[...document.querySelectorAll('svg rect')].filter(r=>(r.getAttribute('style')??'').includes('fill')).slice(0,4).map(r=>getComputedStyle(r).fill));
   expect(fills).toEqual(['rgb(66, 133, 244)','rgb(234, 67, 53)','rgb(251, 188, 5)','rgb(52, 168, 83)']);

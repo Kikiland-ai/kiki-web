@@ -217,7 +217,7 @@
     {
       "id": "CP-DSB-12",
       "stepNumber": 12,
-      "targetLabel": "Local carrier, Run, Save and Kiki observations",
+      "targetLabel": "Local carrier, Run, Save and KiKi observations",
       "instruction": {
         "en": "Restore, rerun, save and explain",
         "or": "ପୂର୍ବ Setting ଫେରାଇ, ପୁଣି ଚଲାଇ, Save କରି ବୁଝାନ୍ତୁ"

@@ -73,7 +73,7 @@ export function LabStudentInput({ view, submitInput, retryRequirements, declareC
         </fieldset>
       </form>
       <form id="kiki-lab-confirmation" tabIndex={-1} aria-label="Current step confirmation" onSubmit={event => { event.preventDefault(); void submit(true); }}>
-        {['CP-DSB-01', 'CP-DSB-12'].includes(checkpoint.id) && <p>Save your model in MATLAB first, as <code>{modelName}.slx</code>. Kiki can’t see saves, so confirming records your word; it does not save the MATLAB model or check the file.</p>}
+        {['CP-DSB-01', 'CP-DSB-12'].includes(checkpoint.id) && <p>Save your model in MATLAB first, as <code>{modelName}.slx</code>. KiKi can’t see saves, so confirming records your word; it does not save the MATLAB model or check the file.</p>}
         {stale && <div role="alert"><p>Your earlier draft is kept. Open a separate draft for this context before confirming. Your earlier selections and note will not be copied or submitted.</p><Button variant="secondary" disabled={submitting || view.inputBusy} onClick={useCurrentStep}>Use current step for confirmation</Button></div>}
         <fieldset disabled={disabled}><legend>Confirm evidence you reviewed</legend>
           <p>Tick only what you checked yourself.</p>

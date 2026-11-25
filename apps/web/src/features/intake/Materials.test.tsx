@@ -60,7 +60,7 @@ it('shows saved originals without pretending that a processor is reading them', 
   await screen.findByRole('heading', { name: 'Your files are saved.' });
   expect(screen.getByText('Saved in Library')).toBeDefined();
   expect(screen.getByText(/Reading the material and preparing lessons are not available yet/)).toBeDefined();
-  expect(screen.queryByText('Kiki is reading the uploaded material.')).toBeNull();
+  expect(screen.queryByText('KiKi is reading the uploaded material.')).toBeNull();
   expect(screen.queryByRole('button', { name: /Preview/ })).toBeNull();
 });
 it('does not describe a failed Library fetch as an empty library', async () => {

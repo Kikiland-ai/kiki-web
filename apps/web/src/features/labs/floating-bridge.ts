@@ -24,7 +24,7 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, onDisp
   let helloPending = false;
   let ownershipEpoch = 0, bindingEpoch = 0;
   let reports: { at: number; rects: Rect[] }[] = [], viewport: { w: number; h: number } | null = null, moving = false;
-  let safety: SampleSafety = { mode: 'block', reason: 'Show Kiki on your MATLAB tab before sharing.' };
+  let safety: SampleSafety = { mode: 'block', reason: 'Show KiKi on your MATLAB tab before sharing.' };
   const waiting = new Map<number, { resolve(value: Record<string, unknown>): void; timer: number }>();
   const post = (message: Record<string, unknown>) => new Promise<Record<string, unknown>>(resolve => {
     if (disposed) { resolve({ ok: false }); return; }
@@ -137,10 +137,10 @@ export function createFloatingPublisher({ onCommand, onChange = () => {}, onDisp
     sampleSafety(track: CaptureTrack, width: number, height: number): SampleSafety {
       const block = (reason: string): SampleSafety => safety = { mode: 'block', reason };
       const settings = track.getSettings(), handle = track.getCaptureHandle?.();
-      if (!present || !binding || superseded) return block('Show Kiki on your MATLAB tab before sharing.');
-      if (settings.displaySurface !== 'browser' || handle?.handle !== binding.handle || handle.origin !== binding.target_origin) return block('Share the same Chrome tab where Kiki is shown.');
-      if (!viewport || !reports.length || performance.now() - reports[reports.length - 1].at > 4000) return block('Waiting for fresh Kiki window positions before reading the screen.');
-      if (moving) return block('A Kiki window is moving; the next frame will be read.');
+      if (!present || !binding || superseded) return block('Show KiKi on your MATLAB tab before sharing.');
+      if (settings.displaySurface !== 'browser' || handle?.handle !== binding.handle || handle.origin !== binding.target_origin) return block('Share the same Chrome tab where KiKi is shown.');
+      if (!viewport || !reports.length || performance.now() - reports[reports.length - 1].at > 4000) return block('Waiting for fresh KiKi window positions before reading the screen.');
+      if (moving) return block('A KiKi window is moving; the next frame will be read.');
       const sx = width / viewport.w, sy = height / viewport.h;
       if (!(sx > 0 && sy > 0) || Math.abs(sx - sy) / sx > 0.04) return block('The shared tab size changed. Share your MATLAB tab again.');
       const now = performance.now();

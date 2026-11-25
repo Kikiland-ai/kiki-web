@@ -1,5 +1,5 @@
 /**
- * Kiki API contract, v0.4 aligned locally, 14 Oct 2026. Explained in ../../CONTRACTS.md.
+ * KiKi API contract, v0.4 aligned locally, 14 Oct 2026. Explained in ../../CONTRACTS.md.
  *
  * These shapes reconcile Arpan’s draft with the working React app; Python sign-off is pending.
  * The backend mirrors them in Pydantic; once it publishes OpenAPI, generate
@@ -306,7 +306,7 @@ export type LabSessionStatus =
   | 'preparing' //    required concept checks still missing
   | 'ready' //        checks passed; software not connected
   | 'connecting' //   software opened, waiting for workspace/observation
-  | 'active' //       Kiki is guiding
+  | 'active' //       KiKi is guiding
   | 'paused'
   | 'disconnected' // sharing stopped, lease lost or wrong workspace
   | 'completed'

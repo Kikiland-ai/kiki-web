@@ -19,7 +19,7 @@ export type LanguageDialProps = {
   value: DialLevel
   /** Only the student moves the dial: called from their tap, drag, key or chip press. */
   onChange: (value: DialLevel) => void
-  /** Kiki's suggested notch: a dashed ghost knob plus a chip the student can accept. */
+  /** KiKi's suggested notch: a dashed ghost knob plus a chip the student can accept. */
   suggested?: DialLevel | null
   onAcceptSuggestion?: (value: DialLevel) => void
   compact?: boolean

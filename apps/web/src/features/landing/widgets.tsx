@@ -194,7 +194,7 @@ export function SplitMarks({ t }: { t: PageCopy['prove'] }) {
 
 /** Where to look on the real lab screenshot in each phase, as % of the image. */
 const LAB_SPOTS = [
-  { left: 75.5, top: 16, width: 23.5, height: 22 }, // Look: Kiki's NOW card
+  { left: 75.5, top: 16, width: 23.5, height: 22 }, // Look: KiKi's NOW card
   { left: 75.5, top: 33, width: 23.5, height: 8 }, // Why: Step details
   { left: 32, top: 66, width: 30, height: 34 }, // Do: the student's model
   { left: 75.5, top: 51, width: 23.5, height: 30 }, // Check: What I can see

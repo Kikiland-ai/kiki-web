@@ -59,7 +59,7 @@ export class LabCaptureController {
     this.publisher = createFloatingPublisher({ targetOrigins: api.targetOrigins, onChange: () => {
       if (this.disposed) return;
       const extension = this.publisher.status();
-      if (this.stream && (!extension.bound || extension.superseded)) this.stop('Kiki lost its MATLAB tab. Show Kiki there and share again.');
+      if (this.stream && (!extension.bound || extension.superseded)) this.stop('KiKi lost its MATLAB tab. Show KiKi there and share again.');
       this.emit();
     }, onCommand: command => this.command(command),
     onDisplayed: state => { if (this.phase === 'active') this.narration?.shown(state); },
@@ -122,7 +122,7 @@ export class LabCaptureController {
       if (this.lifetime.signal.aborted || this.disposed) return;
       this.phase = error instanceof ServiceError && error.status === 404 ? 'ready' : 'unavailable';
       this.canRecover = error instanceof ServiceError && error.status === 503 && error.code === 'lab_creation_pending';
-      this.reason = this.phase === 'ready' ? 'Show Kiki on MATLAB, then choose that Chrome tab to start.' : readableError(error);
+      this.reason = this.phase === 'ready' ? 'Show KiKi on MATLAB, then choose that Chrome tab to start.' : readableError(error);
     } finally { this.loadBusy = false; this.emit(); }
   }
   recheckExtension() { this.publisher.recheck(); }
@@ -178,7 +178,7 @@ export class LabCaptureController {
   async share() {
     if (this.disposed || this.lifetime.signal.aborted || this.stream || this.phase === 'connecting') return;
     if (!this.publisher.status().bound || !window.isSecureContext || !navigator.mediaDevices?.getDisplayMedia) {
-      this.reason = 'Use desktop Chrome and show Kiki on the MATLAB tab first.'; this.emit(); return;
+      this.reason = 'Use desktop Chrome and show KiKi on the MATLAB tab first.'; this.emit(); return;
     }
     const current = ++this.generation;
     this.phase = 'connecting'; this.reason = 'Choose the Chrome tab showing MATLAB, not a window or entire screen.'; this.emit();
@@ -193,7 +193,7 @@ export class LabCaptureController {
       track.addEventListener('capturehandlechange', () => {
         // Chromium can publish the initial, correct handle after play() starts.
         // An event from an older capture must never stop a fresh Share gesture.
-        if (this.current(current) && !this.publisher.matchesTarget(track)) this.stop('The shared tab changed or reloaded. Show Kiki on MATLAB, then share again.');
+        if (this.current(current) && !this.publisher.matchesTarget(track)) this.stop('The shared tab changed or reloaded. Show KiKi on MATLAB, then share again.');
       });
       this.video = document.createElement('video'); this.video.muted = true; this.video.playsInline = true; this.video.srcObject = stream;
       await this.video.play();

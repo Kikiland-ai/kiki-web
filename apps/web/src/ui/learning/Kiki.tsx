@@ -13,7 +13,7 @@ export type KikiState =
   | 'unsure'
   | 'examiner'
 
-/** Dot centres in a 64×64 box, in Google order: blue, red, yellow, green. Ported from Breadboard Kiki. */
+/** Dot centres in a 64×64 box, in Google order: blue, red, yellow, green. Ported from Breadboard KiKi. */
 const POSITIONS: Record<KikiState, [number, number][]> = {
   idle: [[24, 24], [40, 24], [24, 40], [40, 40]],
   listening: [[14, 32], [26, 32], [38, 32], [50, 32]],
@@ -27,15 +27,15 @@ const POSITIONS: Record<KikiState, [number, number][]> = {
 }
 
 const DEFAULT_LABELS: Record<KikiState, string> = {
-  idle: 'Kiki',
-  listening: 'Kiki is listening',
-  thinking: 'Kiki is thinking',
-  speaking: 'Kiki is speaking',
-  pointing: 'Kiki is pointing',
-  asking: 'Kiki is asking a question',
-  celebrating: 'Kiki is celebrating',
-  unsure: 'Kiki is not sure',
-  examiner: 'Kiki in examiner mode',
+  idle: 'KiKi',
+  listening: 'KiKi is listening',
+  thinking: 'KiKi is thinking',
+  speaking: 'KiKi is speaking',
+  pointing: 'KiKi is pointing',
+  asking: 'KiKi is asking a question',
+  celebrating: 'KiKi is celebrating',
+  unsure: 'KiKi is not sure',
+  examiner: 'KiKi in examiner mode',
 }
 
 export type KikiProps = {
@@ -51,7 +51,7 @@ export type KikiProps = {
 
 /**
  * The helper character: four Google-coloured dots that rearrange to show
- * what Kiki is doing. Animations stop under prefers-reduced-motion; each
+ * what KiKi is doing. Animations stop under prefers-reduced-motion; each
  * state's arrangement still reads on its own.
  */
 export function Kiki({ state, size = 64, lead, label, className }: KikiProps) {
