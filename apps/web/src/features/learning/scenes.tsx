@@ -32,7 +32,7 @@ export function scenesFor(lesson: ConceptLesson, manifest: MediaManifest | null,
     if (scene.placardIds.includes(placard.id)) slots.push({ key: scene.artifactId, node: scene.renderer === 'cam-concept-canvas/v1' ? RENDERERS[scene.renderer](scene) : RENDERERS[scene.renderer](scene) })
   }
   if (manifest?.unsupportedArtifacts.some((a) => a.placardIds.includes(placard.id))) {
-    slots.push({ key: 'unsupported', node: <p className="helper-note">An interactive for this step needs a newer version of Kiki. The text above is complete.</p> })
+    slots.push({ key: 'unsupported', node: <p className="helper-note">An interactive for this step needs a newer version of KiKi. The text above is complete.</p> })
   }
   return slots
 }

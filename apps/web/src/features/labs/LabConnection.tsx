@@ -6,7 +6,7 @@ import { LabCaptureController, type LabCaptureView } from './lab-capture';
 import { LabStudentInput } from './LabStudentInput';
 import styles from './LabConnection.module.css';
 
-/** modelName is the saved name Kiki will follow; sharing waits until it is valid and saved. */
+/** modelName is the saved name KiKi will follow; sharing waits until it is valid and saved. */
 export function LabConnection({ preparationId, api, auth, modelName, modelNameReady = true, onModelName }: { preparationId: string; api: LabExecutionApi; auth: AuthService; modelName: string; modelNameReady?: boolean; onModelName?(name: string): void }) {
   const controller = useRef<LabCaptureController | null>(null);
   const [view, setView] = useState<LabCaptureView | null>(null);
@@ -24,11 +24,11 @@ export function LabConnection({ preparationId, api, auth, modelName, modelNameRe
   const narration = view.narration;
   const phase = ({ loading: 'Checking connection', ready: 'Ready to share', connecting: 'Connecting', active: 'Sharing active', paused: 'Paused', disconnected: 'Disconnected', completed: 'Completed', unavailable: 'Connection unavailable' })[view.phase];
   return <section className={styles.panel} aria-label="Lab connection">
-    <div className={styles.heading}><div><span className="eyebrow">STEP 2 · CONNECT YOUR MATLAB TAB</span><h2>Let Kiki see your model.</h2></div><span className={styles.phase} data-state={view.phase}>{phase}</span></div>
+    <div className={styles.heading}><div><span className="eyebrow">STEP 2 · CONNECT YOUR MATLAB TAB</span><h2>Let KiKi see your model.</h2></div><span className={styles.phase} data-state={view.phase}>{phase}</span></div>
     <p className={styles.status} role="status">{view.reason}</p>
     {!active && !paused && view.phase !== 'completed' && <ol className={styles.setup}>
       <li><span><strong>Open <code>{linkedName ?? modelName}.slx</code> in MATLAB</strong><span>Use Chrome, and keep the model in its own tab.</span></span><a className="button button-secondary" href="https://matlab.mathworks.com/" target="_blank" rel="noopener noreferrer">Open MATLAB<Icon name="open_in_new" /></a></li>
-      <li><span><strong>Show Kiki on that tab</strong><span>{view.extension.bound ? 'Done. Kiki is on your MATLAB tab.' : view.extension.present ? 'On the MATLAB tab, click the Kiki extension and choose “Show Kiki on this tab”. Then come back here.' : 'Install the Kiki extension your team shared, reload this page, then show Kiki on your MATLAB tab.'}</span></span><Button variant="secondary" onClick={() => controller.current?.recheckExtension()}>Check Kiki extension<Icon name="refresh" /></Button></li>
+      <li><span><strong>Show KiKi on that tab</strong><span>{view.extension.bound ? 'Done. KiKi is on your MATLAB tab.' : view.extension.present ? 'On the MATLAB tab, click the KiKi extension and choose “Show KiKi on this tab”. Then come back here.' : 'Install the KiKi extension your team shared, reload this page, then show KiKi on your MATLAB tab.'}</span></span><Button variant="secondary" onClick={() => controller.current?.recheckExtension()}>Check KiKi extension<Icon name="refresh" /></Button></li>
       <li><span><strong>Share that tab</strong><span>{!view.state && !modelNameReady ? 'First save a valid model name in step 1.' : 'In Chrome’s picker, choose the same MATLAB tab.'}</span></span><Button disabled={!view.extension.bound || (!view.state && !modelNameReady) || ['loading', 'connecting', 'unavailable'].includes(view.phase)} onClick={() => void controller.current?.share()}>Share your MATLAB tab<Icon name="screen_share" /></Button></li>
     </ol>}
     {view.phase === 'unavailable' && <Button variant="secondary" disabled={view.recovering} onClick={() => void controller.current?.load(true)}>{view.recovering ? 'Checking saved lab…' : view.canRecover ? 'Recover saved lab' : 'Retry connection'}<Icon name="refresh" /></Button>}

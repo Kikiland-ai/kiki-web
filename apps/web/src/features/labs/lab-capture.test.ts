@@ -109,7 +109,7 @@ it('a cancelled pending picker is stopped and cannot create an execution after n
   expect(video.stop).toHaveBeenCalled(); expect(api.start).not.toHaveBeenCalled();
 });
 it('wrong-tab capture ends before execution or frame encoding', async () => {
-  const { video, api } = setup(); mocks.safety = { mode: 'block', reason: 'Share the same Chrome tab where Kiki is shown.' };
+  const { video, api } = setup(); mocks.safety = { mode: 'block', reason: 'Share the same Chrome tab where KiKi is shown.' };
   await connection.share(); expect(video.stop).toHaveBeenCalled(); expect(api.start).not.toHaveBeenCalled();
   expect(connection.view().phase).toBe('disconnected');
 });
@@ -141,7 +141,7 @@ it('a skipped frame keeps sharing active, skips the check and sends again on the
   } finally { vi.useRealTimers(); }
 });
 it('missing/moving window positions never encode or send an unsafe frame', async () => {
-  const { channel } = setup(); mocks.safety = { mode: 'block', reason: 'Waiting for fresh Kiki window positions.' };
+  const { channel } = setup(); mocks.safety = { mode: 'block', reason: 'Waiting for fresh KiKi window positions.' };
   vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({ drawImage: vi.fn() } as unknown as CanvasRenderingContext2D);
   const encode = vi.spyOn(HTMLCanvasElement.prototype, 'toBlob'); await connection.share();
   await vi.waitFor(() => expect(mocks.apply).toHaveBeenCalled()); expect(encode).not.toHaveBeenCalled(); expect(channel.sendFrame).not.toHaveBeenCalled();

@@ -40,7 +40,7 @@ test('protected lab deep link survives sign-in and onboarding; no pointer claim'
   await onboarding(page);
   await expect(page).toHaveURL(/\/labs\/session-123\?handoff=abc$/);
   await expect(page.getByRole('heading', { name: 'Your lab preparation couldn’t open.', exact: true })).toBeVisible();
-  await expect(page.getByText('Kiki is guiding', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('KiKi is guiding', { exact: true })).toHaveCount(0);
 });
 test('failed fixture save stays on the current step and offers retry', async ({ page }) => {
   await sample(page);

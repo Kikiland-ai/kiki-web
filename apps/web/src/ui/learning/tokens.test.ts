@@ -18,7 +18,7 @@ const defined = new Set(
 )
 
 describe('learning kit tokens', () => {
-  // An undefined var() makes a colour silently fall back (Kiki's dots turned black after the --learning- rename)
+  // An undefined var() makes a colour silently fall back (KiKi's dots turned black after the --learning- rename)
   it('defines every CSS variable the kit and learning screens use', () => {
     const missing: string[] = []
     for (const { name: file, text } of files) {

@@ -1,6 +1,6 @@
 import type { Dimension } from '../../contracts/api'
 
-/** Kiki's identity colours, always in this order. They are not the skill colours. */
+/** KiKi's identity colours, always in this order. They are not the skill colours. */
 export const KIKI_DOT_FILLS = ['var(--learning-blue)', 'var(--learning-red)', 'var(--learning-yellow)', 'var(--learning-green)']
 
 /** Which dot grows for each dimension: green concept, red words, yellow English, blue lab. */

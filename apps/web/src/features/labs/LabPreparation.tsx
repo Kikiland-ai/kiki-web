@@ -28,10 +28,10 @@ export function LabHome(){
     {services.mode==='fixture'&&<p className="helper-note">Sample preview · No college records are changed.</p>}
     {error&&<Alert>{error}<Button variant="text" onClick={()=>setReload(n=>n+1)}>Retry</Button></Alert>}
     <div className={styles.modeChoices}>
-      <Card><span className="dimension-label lab-text">BUILD ON YOUR SCREEN</span><h2>Software Lab</h2><p>Conduct your experiment in Simulink Online with Kiki guiding you one step at a time.</p>
-        {load?<><h3>{load.practical.title}</h3><ol className={styles.howItWorks}><li>Save a blank Simulink model as <code>{DEFAULT_MODEL_NAME}.slx</code>.</li>{services.labExecution?<><li>Share that MATLAB tab with Kiki.</li><li>Follow the <strong>Now</strong> step until all 12 steps are done.</li></>:<li>Read the 12 steps and plan your notes.</li>}</ol><Button disabled={busy} onClick={start}>{busy?'Opening the lab…':load.active?'Resume lab preparation':'Start lab preparation'}</Button></>:!error&&<LoadingNotice>Opening Software Lab…</LoadingNotice>}
+      <Card><span className="dimension-label lab-text">BUILD ON YOUR SCREEN</span><h2>Software Lab</h2><p>Conduct your experiment in Simulink Online with KiKi guiding you one step at a time.</p>
+        {load?<><h3>{load.practical.title}</h3><ol className={styles.howItWorks}><li>Save a blank Simulink model as <code>{DEFAULT_MODEL_NAME}.slx</code>.</li>{services.labExecution?<><li>Share that MATLAB tab with KiKi.</li><li>Follow the <strong>Now</strong> step until all 12 steps are done.</li></>:<li>Read the 12 steps and plan your notes.</li>}</ol><Button disabled={busy} onClick={start}>{busy?'Opening the lab…':load.active?'Resume lab preparation':'Start lab preparation'}</Button></>:!error&&<LoadingNotice>Opening Software Lab…</LoadingNotice>}
       </Card>
-      <Card><span className="dimension-label lab-text">GET TO KNOW YOUR EQUIPMENT</span><h2>Physical Lab</h2><p>Explore your college equipment in 3D and practise the experiment before going to the lab.</p><h3>DSB-SC trainer experiment</h3><p>Identify the sockets, connect the leads and see the recovered signal as Kiki checks each step.</p><p className="helper-note">Virtual practice · Prerequisite knowledge assumed for this demo.</p><ActionLink to="/labs/physical">Open Physical Lab</ActionLink></Card>
+      <Card><span className="dimension-label lab-text">GET TO KNOW YOUR EQUIPMENT</span><h2>Physical Lab</h2><p>Explore your college equipment in 3D and practise the experiment before going to the lab.</p><h3>DSB-SC trainer experiment</h3><p>Identify the sockets, connect the leads and see the recovered signal as KiKi checks each step.</p><p className="helper-note">Virtual practice · Prerequisite knowledge assumed for this demo.</p><ActionLink to="/labs/physical">Open Physical Lab</ActionLink></Card>
     </div>
     {load&&<Card><details><summary>Theory for Software Lab</summary><Readiness value={load.readiness}/></details></Card>}
   </div>;
@@ -54,7 +54,7 @@ export function LabTracker(){
   const index=saved.practical.checkpoints.findIndex(c=>c.id===draft.currentCheckpointId),checkpoint=saved.practical.checkpoints[index],dial=profile?.supportLanguage==='en'?5:profile?.dialLevel??2;
   const instruction=pick(checkpoint.instruction,dial),why=pick(checkpoint.why,dial),link=window.location.origin+saved.sessionPath;
   const edit=(change:Partial<PreparationFields>)=>{setDraft({...draft,...change});setJustSaved(false);};
-  // The name is fixed once Kiki starts following a model; until then it must be one Simulink can save.
+  // The name is fixed once KiKi starts following a model; until then it must be one Simulink can save.
   const nameError=linkedName?'':modelNameError(draft.projectRef),draftName=modelName(draft.projectRef);
   const nameReady=!modelNameError(saved.projectRef)&&draft.projectRef===saved.projectRef;
   const blocked=busy||conflict||Boolean(nameError);
@@ -65,7 +65,7 @@ export function LabTracker(){
     <section className={styles.modelCard} aria-labelledby="lab-model-title">
       <span className="eyebrow">STEP 1 · YOUR SIMULINK MODEL</span>
       {linkedName?<>
-        <h2 id="lab-model-title">Kiki is following <code>{linkedName}.slx</code></h2>
+        <h2 id="lab-model-title">KiKi is following <code>{linkedName}.slx</code></h2>
         <p>Keep building in this model. Its name is fixed for this lab.</p>
       </>:<>
         <h2 id="lab-model-title">Save your model as <code>{draftName}.slx</code></h2>
@@ -92,7 +92,7 @@ export function LabTracker(){
       <Card><details className={styles.readiness}><summary>Continue on another device</summary><p>Sign in with the same Google account on the other device. Save first.</p><label htmlFor="lab-session-link">Session link</label><input id="lab-session-link" readOnly value={link}/><Button variant="secondary" disabled={dirty||busy} onClick={async()=>{try{await navigator.clipboard.writeText(link);setCopied(true);setCopyError('');}catch{setCopyError('Copy the session link from the field above.');}}}>Copy session link</Button>{copied&&<p role="status">Session link copied</p>}{copyError&&<p role="status">{copyError}</p>}{['127.0.0.1','localhost','[::1]'].includes(window.location.hostname)&&<p className="helper-note">Local preview: this address works on this computer. Phone/laptop continuation needs the app at a shared hosted address.</p>}</details></Card>
       <Card><details className={styles.readiness}><summary>Content sources · {saved.practical.reviewStatus}</summary><ul>{saved.practical.sources.map((source,i)=><li key={i}>{source.url?<a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>:source.label}</li>)}</ul></details></Card>
     </aside></div>
-    <p className="helper-note">Kiki’s screen reads guide you; they don’t grade your practical. Your notes and confirmations are your own reports. Your model lives in your {MODEL_FOLDER}, not in Kiki.</p>
+    <p className="helper-note">KiKi’s screen reads guide you; they don’t grade your practical. Your notes and confirmations are your own reports. Your model lives in your {MODEL_FOLDER}, not in KiKi.</p>
     {blocker.state==='blocked'&&<LeavePreparation onStay={()=>blocker.reset()}><h2 id="lab-leave-title">Save your preparation before leaving?</h2><p id="lab-leave-description">Your changes are still on this page.</p>{error&&<Alert>{error}</Alert>}<div className="form-actions"><Button variant="secondary" disabled={busy} onClick={()=>blocker.reset()}>Keep editing</Button><Button variant="secondary" disabled={busy} onClick={()=>blocker.proceed()}>Leave without saving</Button><Button disabled={blocked} onClick={async()=>{if(await save())blocker.proceed();}}>Save and leave</Button></div></LeavePreparation>}
   </div>;
 }

@@ -16,7 +16,7 @@ export function createLearnerApi(baseUrl: string, auth: AuthService, fetcher: ty
       throw new ServiceError(response.status === 401 ? 'Your sign-in has expired. Sign out and sign in again.' : response.status === 403 ? 'You do not have access to this record.' : options.failureMessage ?? 'Your changes were not saved. Please retry.', response.status);
     }
     const result = schema.safeParse(await response.json());
-    if (!result.success) throw new ServiceError('Kiki received an unsupported response. Your changes have not been confirmed.');
+    if (!result.success) throw new ServiceError('KiKi received an unsupported response. Your changes have not been confirmed.');
     // A bad/mismatched API response must never render another learner's profile.
     return result.data;
   }

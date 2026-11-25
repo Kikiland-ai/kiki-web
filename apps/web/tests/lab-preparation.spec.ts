@@ -28,7 +28,7 @@ test('preparation saves notes and place, copies owner-only link, resumes after s
   await expect(page.getByLabel('Model name',{exact:true})).toHaveValue('dsb_sc_first.slx');
   await expect(page.getByText('Step 3 of 12',{exact:true})).toBeVisible();
   await expect(page.getByText('Screen guidance is off in this preview',{exact:true})).toBeVisible();
-  await expect(page.getByText('Kiki is guiding',{exact:true})).toHaveCount(0);
+  await expect(page.getByText('KiKi is guiding',{exact:true})).toHaveCount(0);
   await page.getByRole('link',{name:'Learn',exact:true}).click();await expect(page.getByRole('progressbar',{name:'Concept checks passed'})).toHaveAttribute('value','0');
   await page.getByRole('link',{name:'Home',exact:true}).click();await page.getByRole('link',{name:'Resume lab preparation',exact:true}).click();await expect(page).toHaveURL(url);
   await page.getByRole('link',{name:'Profile',exact:true}).click();await page.getByRole('button',{name:'Sign out',exact:true}).click();await page.goto(url);await expect(page.getByRole('button',{name:'Open sample student'})).toBeVisible();await page.getByRole('button',{name:'Open sample student'}).click();await expect(page.getByLabel('Observation 1 · Your notes',{exact:true})).toHaveValue('Baseline not run yet.');

@@ -62,16 +62,16 @@ const en = {
   },
   do: {
     eyebrow: 'DO',
-    title: 'In the lab, Kiki points. The student does every action.',
+    title: 'In the lab, KiKi points. The student does every action.',
     current: 'Checkpoint 5 of 12 · Build the local carrier',
     phases: [
-      ['Look', 'Kiki’s card beside the model names the next step: add a third Sine Wave block, the local carrier.'],
+      ['Look', 'KiKi’s card beside the model names the next step: add a third Sine Wave block, the local carrier.'],
       ['Why', 'Step details explain why it matters, in the student’s language, before they touch anything.'],
-      ['Do', 'The student places the block in their own model. Kiki never clicks for them.'],
-      ['Check', 'Gemini reads the screen and reports what it can see. If it isn’t sure, Kiki says so and asks.'],
+      ['Do', 'The student places the block in their own model. KiKi never clicks for them.'],
+      ['Check', 'Gemini reads the screen and reports what it can see. If it isn’t sure, KiKi says so and asks.'],
     ],
     progress: 'Trial progress', reached: 'reached checkpoint 6 of 12',
-    alt: 'Kiki guide card over a real Simulink DSB-SC model: Now, add a third Sine Wave block; Next, match the local carrier.',
+    alt: 'KiKi guide card over a real Simulink DSB-SC model: Now, add a third Sine Wave block; Next, match the local carrier.',
   },
   system: {
     eyebrow: 'WHY YOU CAN TRUST IT',
@@ -105,7 +105,7 @@ const en = {
     },
     guide: {
       name: 'Guide',
-      headline: 'In the lab, the same map tells Kiki the student’s next step.',
+      headline: 'In the lab, the same map tells KiKi the student’s next step.',
       loop: ['Student’s screen', 'Gemini reads it', 'Checkpoint tracker', 'Next step, in their language'],
       center: ['Checkpoint 11', 'Try the 90° phase fault'],
       stat: '78 of 79 screen reads turned into guidance · 4.7 s median',
@@ -116,7 +116,7 @@ const en = {
     title: 'Running today, not a mock-up.',
     stats: [
       ['78 of 79', 'screen reads in a real MATLAB Online session turned into guidance'],
-      ['4.7 s', 'median from screenshot to Kiki’s next step'],
+      ['4.7 s', 'median from screenshot to KiKi’s next step'],
       ['87', 'bilingual checks across 10 concepts and 30 technical terms'],
       ['Gemini', 'and Google Cloud power the reading, speech and hosting'],
     ],
@@ -167,7 +167,7 @@ const en = {
     title: 'Honest with students. Careful with their data.',
     points: [
       'Students sign in with their Google account. Their progress is theirs.',
-      'Kiki sees the screen only in lab mode, and only when the student starts it.',
+      'KiKi sees the screen only in lab mode, and only when the student starts it.',
       'Voices are machine-generated and labelled. Content shows its review status.',
       'We will share our data-handling notes for your review.',
     ],
@@ -230,16 +230,16 @@ const or: PageCopy = {
   },
   do: {
     eyebrow: 'କର',
-    title: 'Lab ରେ Kiki ଦେଖାଏ। ପ୍ରତ୍ୟେକ କାମ ଛାତ୍ର ନିଜେ କରନ୍ତି।',
+    title: 'Lab ରେ KiKi ଦେଖାଏ। ପ୍ରତ୍ୟେକ କାମ ଛାତ୍ର ନିଜେ କରନ୍ତି।',
     current: 'Checkpoint 5 (12 ରୁ) · Local carrier ତିଆରି',
     phases: [
-      ['ଦେଖ', 'Model ପାଖରେ Kiki ର card ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ କହେ: ତୃତୀୟ Sine Wave block, local carrier ଯୋଡ଼ନ୍ତୁ।'],
+      ['ଦେଖ', 'Model ପାଖରେ KiKi ର card ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ କହେ: ତୃତୀୟ Sine Wave block, local carrier ଯୋଡ଼ନ୍ତୁ।'],
       ['କାହିଁକି', 'କିଛି ଛୁଇଁବା ପୂର୍ବରୁ Step details ଛାତ୍ରଙ୍କ ଭାଷାରେ ଏହା କାହିଁକି ଦରକାର ବୁଝାଏ।'],
-      ['କର', 'ଛାତ୍ର ନିଜ model ରେ block ରଖନ୍ତି। Kiki କେବେ ତାଙ୍କ ପାଇଁ click କରେ ନାହିଁ।'],
-      ['ଯାଞ୍ଚ', 'Gemini screen ପଢ଼ି କ’ଣ ଦେଖୁଛି କହେ। ନିଶ୍ଚିତ ନହେଲେ Kiki ତାହା କହି ପଚାରେ।'],
+      ['କର', 'ଛାତ୍ର ନିଜ model ରେ block ରଖନ୍ତି। KiKi କେବେ ତାଙ୍କ ପାଇଁ click କରେ ନାହିଁ।'],
+      ['ଯାଞ୍ଚ', 'Gemini screen ପଢ଼ି କ’ଣ ଦେଖୁଛି କହେ। ନିଶ୍ଚିତ ନହେଲେ KiKi ତାହା କହି ପଚାରେ।'],
     ],
     progress: 'Trial ପ୍ରଗତି', reached: '12 ରୁ checkpoint 6 ପର୍ଯ୍ୟନ୍ତ ପହଞ୍ଚିଲା',
-    alt: 'Kiki guide card over a real Simulink DSB-SC model: Now, add a third Sine Wave block; Next, match the local carrier.',
+    alt: 'KiKi guide card over a real Simulink DSB-SC model: Now, add a third Sine Wave block; Next, match the local carrier.',
   },
   system: {
     eyebrow: 'କାହିଁକି ଭରସା କରିବେ',
@@ -273,7 +273,7 @@ const or: PageCopy = {
     },
     guide: {
       name: 'ମାର୍ଗଦର୍ଶନ',
-      headline: 'Lab ରେ ସେହି map Kiki କୁ ଛାତ୍ରଙ୍କ ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ କହେ।',
+      headline: 'Lab ରେ ସେହି map KiKi କୁ ଛାତ୍ରଙ୍କ ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ କହେ।',
       loop: ['ଛାତ୍ରଙ୍କ screen', 'Gemini ପଢ଼େ', 'Checkpoint tracker', 'ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ, ସେମାନଙ୍କ ଭାଷାରେ'],
       center: ['Checkpoint 11', '90° phase fault ପରୀକ୍ଷା'],
       stat: '79 ରୁ 78 screen read ମାର୍ଗଦର୍ଶନ ହେଲା · 4.7 s median',
@@ -284,7 +284,7 @@ const or: PageCopy = {
     title: 'ଆଜି ଚାଲୁଛି, ଏକ mock-up ନୁହେଁ।',
     stats: [
       ['79 ରୁ 78', 'ଏକ ପ୍ରକୃତ MATLAB Online session ରେ screen read ମାର୍ଗଦର୍ଶନରେ ପରିଣତ ହେଲା'],
-      ['4.7 s', 'screenshot ରୁ Kiki ର ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ ପର୍ଯ୍ୟନ୍ତ median'],
+      ['4.7 s', 'screenshot ରୁ KiKi ର ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପ ପର୍ଯ୍ୟନ୍ତ median'],
       ['87', '10 ଟି concept ଓ 30 ଟି technical term ରେ ଦ୍ୱିଭାଷୀ check'],
       ['Gemini', 'ଓ Google Cloud ପଢ଼ିବା, ସ୍ୱର ଓ hosting ଚଳାନ୍ତି'],
     ],
@@ -335,7 +335,7 @@ const or: PageCopy = {
     title: 'ଛାତ୍ରଙ୍କ ସହ ସଚ୍ଚୋଟ। ସେମାନଙ୍କ data ପ୍ରତି ସାବଧାନ।',
     points: [
       'ଛାତ୍ରଛାତ୍ରୀ ନିଜ Google account ରେ sign in କରନ୍ତି। ସେମାନଙ୍କ ପ୍ରଗତି ସେମାନଙ୍କର।',
-      'Kiki କେବଳ lab mode ରେ screen ଦେଖେ, ଏବଂ କେବଳ ଛାତ୍ର ଆରମ୍ଭ କଲେ।',
+      'KiKi କେବଳ lab mode ରେ screen ଦେଖେ, ଏବଂ କେବଳ ଛାତ୍ର ଆରମ୍ଭ କଲେ।',
       'ସ୍ୱର machine-generated ଏବଂ ଚିହ୍ନିତ। Content ତା’ର ସମୀକ୍ଷା ସ୍ଥିତି ଦେଖାଏ।',
       'ଆପଣଙ୍କ ସମୀକ୍ଷା ପାଇଁ ଆମେ ଆମର data-handling ବିବରଣୀ ଦେବୁ।',
     ],

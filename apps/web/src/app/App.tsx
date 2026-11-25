@@ -47,7 +47,7 @@ function Gate({ onboarding = false }: { onboarding?: boolean }) {
 function PublicGate() {
   const { status, identity, services, error, retry, logout } = useSession();
   if (status === 'checking' || status === 'loading') return <StateScreen busy title={status === 'checking' ? 'Checking your sign-in…' : 'Opening your learning space…'} />;
-  if (status === 'error') return <StateScreen title={identity && services.mode === 'connected' ? 'You’re signed in. Your learning profile couldn’t open.' : 'We couldn’t finish opening Kiki.'} action={<div className="form-actions"><Button onClick={retry}>Retry</Button><Button variant="secondary" onClick={() => { logout().catch(() => undefined); }}>Sign out</Button></div>}>{error}</StateScreen>;
+  if (status === 'error') return <StateScreen title={identity && services.mode === 'connected' ? 'You’re signed in. Your learning profile couldn’t open.' : 'We couldn’t finish opening KiKi.'} action={<div className="form-actions"><Button onClick={retry}>Retry</Button><Button variant="secondary" onClick={() => { logout().catch(() => undefined); }}>Sign out</Button></div>}>{error}</StateScreen>;
   return <Outlet />;
 }
 function StudyRoute({ children }: { children: ReactNode }) { const { profile } = useSession(); return profile && demoPathAvailable(profile) ? children : <StudyPath />; }
@@ -55,11 +55,11 @@ function SelectedSubject() { const { courseId } = useParams(); return courseId =
 class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
-  render() { return this.state.failed ? <StateScreen title="Something interrupted Kiki." action={<Button onClick={() => window.location.reload()}>Reload Kiki</Button>}>Your saved preferences will be loaded again.</StateScreen> : this.props.children; }
+  render() { return this.state.failed ? <StateScreen title="Something interrupted KiKi." action={<Button onClick={() => window.location.reload()}>Reload KiKi</Button>}>Your saved preferences will be loaded again.</StateScreen> : this.props.children; }
 }
 function Providers({ services }: { services: Services }) { return <SessionProvider services={services}><MaterialsProvider><AssessmentProvider><Outlet /></AssessmentProvider></MaterialsProvider></SessionProvider>; }
 export function createAppRouter(services: Services) {
-  return createBrowserRouter(createRoutesFromElements(<Route element={<Providers services={services} />} errorElement={<StateScreen title="Something interrupted Kiki." action={<Button onClick={() => window.location.reload()}>Reload Kiki</Button>} />} >
+  return createBrowserRouter(createRoutesFromElements(<Route element={<Providers services={services} />} errorElement={<StateScreen title="Something interrupted KiKi." action={<Button onClick={() => window.location.reload()}>Reload KiKi</Button>} />} >
     {ConnectionCheck && <Route path="/connection" element={<Deferred><ConnectionCheck /></Deferred>} />}
     <Route element={<PublicGate />}><Route path="/" element={<Welcome />} /><Route path="/auth" element={<SignIn />} /></Route>
     <Route element={<Gate onboarding />}><Route path="/onboarding" element={<Onboarding />} /></Route>

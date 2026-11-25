@@ -173,7 +173,10 @@ button, input, select, textarea { font: inherit; }
   .check-row-actions { gap: 12px; }
 }
 
-.wordmark-window { width: .88em; }
+/* KiKi: the window is wide while the Odia, Hindi and Tamil syllables roll, then closes to the width of "Ki" so the two capitals sit together. */
+.wordmark-window { width: .82em; }
+.wordmark-animate .wordmark-window { animation: logo-window 2.4s cubic-bezier(.4,0,.2,1) both; }
+@keyframes logo-window { 0%,65% { width: 1.06em; } 85%,100% { width: .82em; } }
 @media (max-width: 359px) {
   .setup-actions { flex-direction: column-reverse; align-items: stretch; }
   .setup-actions .button-primary { flex: auto; }

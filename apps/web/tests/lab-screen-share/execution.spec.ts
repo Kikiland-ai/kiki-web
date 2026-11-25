@@ -12,7 +12,7 @@ async function isolatedLab() {
   const ext = resolve('test-artifacts/lab-extension');
   const context = await chromium.launchPersistentContext(profile, { channel: 'chromium', headless: true, viewport: null, args: [
     '--window-size=1280,888', `--disable-extensions-except=${ext}`, `--load-extension=${ext}`,
-    '--enable-usermedia-screen-capturing', '--allow-http-screen-capture', '--auto-select-tab-capture-source-by-title=Kiki target fixture',
+    '--enable-usermedia-screen-capturing', '--allow-http-screen-capture', '--auto-select-tab-capture-source-by-title=KiKi target fixture',
   ] });
   await context.grantPermissions(['local-network-access'], { origin: root });
   const target = context.pages()[0]; await target.goto('http://localhost:8871/');
@@ -97,7 +97,7 @@ test('rechecks, route replacement, worker restart and another reader preserve ex
     await expect(lab.reader.getByRole('button', { name: 'Share your MATLAB tab', exact: true })).toBeEnabled();
     await expect.poll(identity).not.toBeNull();
     const initial = await identity();
-    for (let i = 0; i < 3; i++) await lab.reader.getByRole('button', { name: 'Check Kiki extension', exact: true }).click();
+    for (let i = 0; i < 3; i++) await lab.reader.getByRole('button', { name: 'Check KiKi extension', exact: true }).click();
     await expect.poll(identity).toEqual(initial);
     await lab.reader.getByRole('button', { name: 'Share your MATLAB tab', exact: true }).click();
     await expect(lab.reader.getByRole('button', { name: 'Pause sharing', exact: true })).toBeVisible();
@@ -116,7 +116,7 @@ test('rechecks, route replacement, worker restart and another reader preserve ex
     expect(extensionWorker).toBeTruthy();
     expect((await protocol.send('Target.closeTarget', { targetId: extensionWorker!.targetId })).success).toBe(true);
     // A normal content-bridge recheck restarts the worker; storage.session retains identity.
-    await lab.reader.getByRole('button', { name: 'Check Kiki extension', exact: true }).click();
+    await lab.reader.getByRole('button', { name: 'Check KiKi extension', exact: true }).click();
     await expect(lab.reader.getByRole('button', { name: 'Share your MATLAB tab', exact: true })).toBeEnabled();
     await expect.poll(() => lab.reader.evaluate(() => (window as unknown as { helloDiagnostics: { count: number } }).helloDiagnostics.count)).toBeGreaterThan(hellos);
     const restarted = await lab.reader.evaluate(() => (window as unknown as { helloDiagnostics: { stream_id: string; generation: number } }).helloDiagnostics);
@@ -261,7 +261,7 @@ test('real dev extension and Python fake analyzer from React Lab mode', async ({
   // Native tab capture uses the actual window, not Playwright's emulated viewport.
   const context = await chromium.launchPersistentContext(profile, { channel: 'chromium', headless: true, viewport: null, args: [
     '--window-size=1280,888',
-    `--disable-extensions-except=${ext}`, `--load-extension=${ext}`, '--enable-usermedia-screen-capturing', '--allow-http-screen-capture', '--auto-select-tab-capture-source-by-title=Kiki target fixture',
+    `--disable-extensions-except=${ext}`, `--load-extension=${ext}`, '--enable-usermedia-screen-capturing', '--allow-http-screen-capture', '--auto-select-tab-capture-source-by-title=KiKi target fixture',
   ] });
   context.setDefaultTimeout(15000);
   context.setDefaultNavigationTimeout(20000);

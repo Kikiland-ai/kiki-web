@@ -24,7 +24,7 @@ export type MapNodeProps = {
   prerequisiteCount?: number
   prerequisiteNote?: string
   checkPercent?: number
-  /** The concept to study next: Kiki marks it. */
+  /** The concept to study next: KiKi marks it. */
   next?: boolean
   /** One of the concepts the lab needs. */
   requiredForLab?: boolean

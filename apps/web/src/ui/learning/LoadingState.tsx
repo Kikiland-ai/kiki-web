@@ -6,7 +6,7 @@ export type LoadingStateProps = {
   message: string
 }
 
-/** Kiki thinking beside a short message, announced politely to screen readers. */
+/** KiKi thinking beside a short message, announced politely to screen readers. */
 export function LoadingState({ message }: LoadingStateProps) {
   return (
     <div className={styles.loading} role="status">
